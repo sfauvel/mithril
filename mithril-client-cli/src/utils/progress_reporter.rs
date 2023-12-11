@@ -125,3 +125,89 @@ impl DownloadProgressReporter {
         }
     }
 }
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    use std::thread::sleep;
+
+    #[test]
+    fn progress_printer_tty() {
+        let progress_bar: ProgressPrinter = ProgressPrinter::new(ProgressOutputType::TTY, 6);
+
+        let _ = progress_bar.report_step(1, "First step")
+            .and(progress_bar.report_step(2, "Second step"))
+            .and(progress_bar.report_step(3, "Third step"));
+        
+        // Note that the output is merge with the output of other test using TTY. 
+        // There is probable a flush that not done.
+        // What is strange, is that first steps are displayed together then second steps.
+        // This is because rust run test in parallel. 
+        // To avoid that add the option: --test-thread=1
+    }
+
+    #[test]
+    fn progress_printer_json() {
+        let progress_bar: ProgressPrinter = ProgressPrinter::new(ProgressOutputType::JsonReporter, 6);
+        
+        let _ = progress_bar.report_step(1, "First step")
+            .and(progress_bar.report_step(2, "Second step"))
+            .and(progress_bar.report_step(3, "Third step"));
+    }
+
+    #[test]
+    fn progress_printer_tty_step_out_of_bound() {
+        let progress_bar: ProgressPrinter = ProgressPrinter::new(ProgressOutputType::TTY, 6);
+
+        let _ = progress_bar.report_step(1, "First step X")
+            .and(progress_bar.report_step(2, "Second step X"))
+            .and(progress_bar.report_step(10, "Step out of bound"));
+
+        // It displays 10/6 - Step out of bound, there is no check on bounds.
+    }
+
+    #[test]
+    fn progress_printer_tty_with_same_step_several_times() {
+        let progress_bar: ProgressPrinter = ProgressPrinter::new(ProgressOutputType::TTY, 6);
+
+        let _ = progress_bar.report_step(1, "First step 1")
+            .and(progress_bar.report_step(1, "Second step 1"))
+            .and(progress_bar.report_step(2, "First step 2"));
+
+        // The two steps are displayed, there is no check done on that.
+    }
+
+    #[test]
+    fn download_progress_reporter_check() {
+        let progress_bar = ProgressBar::new(10);
+        let download_progress_bar: DownloadProgressReporter = DownloadProgressReporter::new(progress_bar, ProgressOutputType::JsonReporter);
+        println!("");
+        download_progress_bar.report(2);
+        sleep(Duration::from_millis(500));
+        download_progress_bar.report(3);
+        sleep(Duration::from_millis(500));
+        download_progress_bar.report(4);
+        sleep(Duration::from_millis(500));
+
+        // We can see the progress bar with sleep.
+        // Othrwise, the progress bar disappeared at the end of the test.
+        // It may be overwrite by something else
+    }
+
+    #[test]
+    fn download_progress_reporter_json_with_hidden_progress_bar() {
+        let progress_bar = ProgressBar::hidden();
+        progress_bar.set_length(10);
+        let download_progress_bar: DownloadProgressReporter = DownloadProgressReporter::new(progress_bar, ProgressOutputType::JsonReporter);
+        println!("");
+        download_progress_bar.report(6);
+        sleep(Duration::from_millis(500));
+        download_progress_bar.report(7);
+        sleep(Duration::from_millis(500));
+        download_progress_bar.report(8);
+        sleep(Duration::from_millis(500));
+
+    }
+}
