@@ -129,9 +129,12 @@ impl DownloadProgressReporter {
 
 #[cfg(test)]
 mod tests {
+    use chrono::{Utc, NaiveDate};
+    use serde_json::json;
+
     use super::*;
 
-    use std::thread::sleep;
+    use std::thread::{sleep, self};
 
     #[test]
     fn progress_printer_tty() {
@@ -191,6 +194,7 @@ mod tests {
         download_progress_bar.report(4);
         sleep(Duration::from_millis(500));
 
+
         // We can see the progress bar with sleep.
         // Othrwise, the progress bar disappeared at the end of the test.
         // It may be overwrite by something else
@@ -208,6 +212,75 @@ mod tests {
         sleep(Duration::from_millis(500));
         download_progress_bar.report(8);
         sleep(Duration::from_millis(500));
+
+    }    
+
+    #[test]
+    fn progress_bar_eta() {
+        let pos = 1;
+        {
+            let progress_bar = ProgressBar::new(pos * 2);
+            thread::sleep(Duration::from_millis(123));
+            progress_bar.set_position(pos);
+            assert_eq!("0.123", format!("{}.{:0>3}", progress_bar.eta().as_secs(), progress_bar.eta().subsec_millis(),));
+        }
+        {
+            let progress_bar = ProgressBar::new(pos * 2);
+            thread::sleep(Duration::from_millis(1));
+            progress_bar.set_position(pos);
+            assert_eq!("0.001", format!("{}.{:0>3}", progress_bar.eta().as_secs(), progress_bar.eta().subsec_millis(),));
+        }
+    }
+
+    #[test]
+    fn format_json() {
+        let json = format!(
+            r#"{{ ""secondsLeft": {}.{} }}"#,
+            42,
+            687
+        );
+        assert_eq!(r#"{ ""secondsLeft": 42.687 }"#, json);
+    }
+    
+    #[test]
+    fn format_json_decimal_less_than_100() {
+        let json = format!(
+            r#"{{ ""secondsLeft": {}.{:0>3} }}"#,
+            42,
+            007
+        );
+        assert_eq!(r#"{ ""secondsLeft": 42.007 }"#, json);
+    }
+
+    #[test]
+    fn build_json() {
+        assert_eq!(r#"{"timestamp":"2023-12-13T15:34:04.818350196+00:00"}"#, json!(
+            {
+                "timestamp": NaiveDate::from_ymd_opt(2023, 12, 13).unwrap().and_hms_nano_opt(15, 34, 4, 818350196).unwrap().and_local_timezone(Utc).unwrap().to_rfc3339(),
+            }).to_string());
+        
+        assert_eq!(r#"{"bytes_total":100}"#, json!(
+            {
+                "bytes_total": 100,
+            }).to_string());
+
+
+        assert_eq!(r#"{"seconds_left":5.325}"#, json!(
+            {
+                "seconds_left": format!("{}.{}", 5, 325).parse::<f64>().unwrap(), // It's probably wrong because 
+            }).to_string());
+
+            assert_eq!(r#"{"seconds_left":0.1}"#, json!(
+                {
+                    "seconds_left": "0.1".parse::<f64>().unwrap(),
+                }).to_string());
+
+                
+            let five_seconds = Duration::new(5, 123);
+            assert_eq!(r#"{"seconds_left":{"nanos":123,"secs":5}}"#, json!(
+                {
+                    "seconds_left": five_seconds,
+                }).to_string());
 
     }
 }
