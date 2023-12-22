@@ -97,15 +97,16 @@ impl Args {
 
             let subcommands_table = if cmd.get_subcommands().peekable().peek().is_some() {
                 let subcommands_lines = cmd.get_subcommands().map(|command| {
-                    format!("| **{}** | {} |",
+                    format!("| **{}** | {} | {} |",
                         command.get_name(),
+                        command.get_all_aliases().collect::<Vec<&str>>().join(","),
                         command.get_about().map_or("".into(), StyledStr::to_string)
                     )
                 }).collect::<Vec<String>>();
 
                 let subcommands_table = format!("{}\n{}\n{}\n",
-                    "| Subcommand | Performed action |",
-                    "|------------|------------------|",
+                    "| Subcommand | Aliases | Performed action |",
+                    "|------------|---------|------------------|",
                     subcommands_lines.join("\n"),
                 );
 
@@ -259,6 +260,9 @@ enum ArtifactCommands {
 
     #[clap(subcommand, alias("msd"))]
     MithrilStakeDistribution(MithrilStakeDistributionCommands),
+
+    #[clap(alias("doc"))]
+    GenerateDoc(GenerateDocCommands),
 }
 
 impl ArtifactCommands {
@@ -266,18 +270,31 @@ impl ArtifactCommands {
         match self {
             Self::Snapshot(cmd) => cmd.execute(config_builder).await,
             Self::MithrilStakeDistribution(cmd) => cmd.execute(config_builder).await,
+            Self::GenerateDoc(cmd) => cmd.execute().await,
         }
     }
 }
+/// Generate documentation
+#[derive(Parser, Debug, Clone)]
+pub struct GenerateDocCommands {
+    /// Generated documentation file 
+    #[clap(long, default_value = "generated_doc.md")]
+    output: String,
+}
+impl GenerateDocCommands {
+    pub async fn execute(&self) -> StdResult<()> {
+        let doc = Args::doc_markdown();
+        let mut buffer: File = File::create(&self.output)?;
+        buffer.write(b"Generated doc\n\n")?;
+        buffer.write(doc.as_bytes())?;
+        println!("Documentation generated in file `{}`", &self.output);
+        Ok(())
+    }
+}
+
 
 #[tokio::main]
 async fn main() -> StdResult<()> {
-    //Args::document();
-    let doc = Args::doc_markdown();
-    let mut buffer: File = File::create("generated_doc.md")?;
-    buffer.write(b"Generated doc\n\n")?;
-    buffer.write(doc.as_bytes())?;
-
     // Load args
     let args = Args::parse();
     let _guard = slog_scope::set_global_logger(args.build_logger());
