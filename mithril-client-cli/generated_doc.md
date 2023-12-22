@@ -1,6 +1,6 @@
 Generated doc
 
-###  mithril-client
+### mithril-client
 
 This program shows, downloads and verifies certified blockchain artifacts.
 ```bash
@@ -62,7 +62,7 @@ Here is a list of the available parameters:
 | `config_directory` | `--config-directory` |  |  | ? | `./config` | Directory where configuration file is located | - |
 | `aggregator_endpoint` | `--aggregator-endpoint` |  | `AGGREGATOR_ENDPOINT` | ? |  | Override configuration Aggregator endpoint URL | - |
 
-### mithril-client  snapshot
+###  mithril-client snapshot
 
 Snapshot management
 ```bash
@@ -88,7 +88,7 @@ Options:
 | **download** | Download the snapshot and verify the certificate |
 
 
-### mithril-client snapshot  list
+###  mithril-client  snapshot list
 
 List available snapshots
 ```bash
@@ -120,7 +120,7 @@ Here is a list of the available parameters:
 | `json` | `--json` |  |  | ? |  | Enable JSON output | - |
 
 
-### mithril-client snapshot  show
+###  mithril-client  snapshot show
 
 Show detailed informations about a snapshot
 ```bash
@@ -159,7 +159,7 @@ Here is a list of the available parameters:
 | `digest` |  |  |  | ? |  | Snapshot digest | :heavy_check_mark: |
 
 
-### mithril-client snapshot  download
+###  mithril-client  snapshot download
 
 Download the snapshot and verify the certificate
 ```bash
@@ -208,7 +208,7 @@ Here is a list of the available parameters:
 | `genesis_verification_key` | `--genesis-verification-key` |  | `GENESIS_VERIFICATION_KEY` | ? |  | Genesis Verification Key to check the certifiate chain | - |
 
 
-### mithril-client  mithril-stake-distribution
+###  mithril-client mithril-stake-distribution
 
 Mithril Stake Distribution management (alias: msd)
 ```bash
@@ -232,7 +232,7 @@ Options:
 | **download** | Download and verify the given Mithril Stake Distribution |
 
 
-### mithril-client mithril-stake-distribution  list
+###  mithril-client  mithril-stake-distribution list
 
 List certified stake distributions
 ```bash
@@ -264,7 +264,7 @@ Here is a list of the available parameters:
 | `json` | `--json` |  |  | ? |  | Enable JSON output | - |
 
 
-### mithril-client mithril-stake-distribution  download
+###  mithril-client  mithril-stake-distribution download
 
 Download and verify the given Mithril Stake Distribution
 ```bash
