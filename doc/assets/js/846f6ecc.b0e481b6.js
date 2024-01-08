@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkmithril_doc=self.webpackChunkmithril_doc||[]).push([[5006],{69192:e=>{e.exports=JSON.parse('{"permalink":"/doc/dev-blog/tags/store","page":1,"postsPerPage":10,"totalPages":1,"totalCount":1,"blogDescription":"Blog","blogTitle":"Dev Blog"}')}}]);
