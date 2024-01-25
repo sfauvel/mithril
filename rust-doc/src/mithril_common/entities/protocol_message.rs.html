@@ -107,6 +107,11 @@
 <a href="#107" id="107">107</a>
 <a href="#108" id="108">108</a>
 <a href="#109" id="109">109</a>
+<a href="#110" id="110">110</a>
+<a href="#111" id="111">111</a>
+<a href="#112" id="112">112</a>
+<a href="#113" id="113">113</a>
+<a href="#114" id="114">114</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>serde::{Deserialize, Serialize};
 <span class="kw">use </span>sha2::{Digest, Sha256};
 <span class="kw">use </span>std::{collections::BTreeMap, fmt::Display};
@@ -117,6 +122,10 @@
     <span class="doccomment">/// The ProtocolMessage part key associated to the Snapshot Digest
     </span><span class="attr">#[serde(rename = <span class="string">&quot;snapshot_digest&quot;</span>)]
     </span>SnapshotDigest,
+
+    <span class="doccomment">/// The ProtocolMessage part key associated to the Cardano Transactions Merkle Root
+    </span><span class="attr">#[serde(rename = <span class="string">&quot;cardano_transactions_merkle_root&quot;</span>)]
+    </span>CardanoTransactionsMerkleRoot,
 
     <span class="doccomment">/// The ProtocolMessage part key associated to the Next epoch aggregate verification key
     /// The AVK that will be allowed to be used to sign during the next epoch
@@ -130,6 +139,7 @@
         <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
             <span class="self">Self</span>::SnapshotDigest =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;snapshot_digest&quot;</span>),
             <span class="self">Self</span>::NextAggregateVerificationKey =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;next_aggregate_verification_key&quot;</span>),
+            <span class="self">Self</span>::CardanoTransactionsMerkleRoot =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;cardano_transactions_merkle_root&quot;</span>),
         }
     }
 }

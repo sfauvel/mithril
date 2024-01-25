@@ -105,7 +105,15 @@
 <a href="#105" id="105">105</a>
 <a href="#106" id="106">106</a>
 <a href="#107" id="107">107</a>
-</pre></div><pre class="rust"><code><span class="kw">use </span>anyhow::Context;
+<a href="#108" id="108">108</a>
+<a href="#109" id="109">109</a>
+<a href="#110" id="110">110</a>
+<a href="#111" id="111">111</a>
+<a href="#112" id="112">112</a>
+<a href="#113" id="113">113</a>
+</pre></div><pre class="rust"><code><span class="kw">use </span>std::{fs::File, io::Write, path::PathBuf};
+
+<span class="kw">use </span>anyhow::Context;
 <span class="kw">use </span>clap::{Parser, Subcommand};
 <span class="kw">use </span>config::{builder::DefaultState, ConfigBuilder};
 <span class="kw">use </span>mithril_common::{
@@ -189,6 +197,10 @@
     <span class="doccomment">/// Era Markers Secret Key
     </span><span class="attr">#[clap(long, env = <span class="string">&quot;ERA_MARKERS_SECRET_KEY&quot;</span>)]
     </span>era_markers_secret_key: HexEncodedEraMarkersSecretKey,
+
+    <span class="doccomment">/// Target Path
+    </span><span class="attr">#[clap(long)]
+    </span>target_path: PathBuf,
 }
 
 <span class="kw">impl </span>GenerateTxDatumEraSubCommand {
@@ -200,14 +212,14 @@
             EraMarkersVerifierSecretKey::from_json_hex(<span class="kw-2">&amp;</span><span class="self">self</span>.era_markers_secret_key)
                 .with_context(|| <span class="string">&quot;json hex decode of era markers secret key failure&quot;</span>)<span class="question-mark">?</span>;
         <span class="kw">let </span>era_markers_signer = EraMarkersSigner::from_secret_key(era_markers_secret_key);
-        <span class="macro">print!</span>(
-            <span class="string">&quot;{}&quot;</span>,
-            era_tools.generate_tx_datum(
-                Epoch(<span class="self">self</span>.current_era_epoch),
-                <span class="self">self</span>.next_era_epoch.map(Epoch),
-                <span class="kw-2">&amp;</span>era_markers_signer
-            )<span class="question-mark">?
-        </span>);
+        <span class="kw">let </span>tx_datum = era_tools.generate_tx_datum(
+            Epoch(<span class="self">self</span>.current_era_epoch),
+            <span class="self">self</span>.next_era_epoch.map(Epoch),
+            <span class="kw-2">&amp;</span>era_markers_signer,
+        )<span class="question-mark">?</span>;
+
+        <span class="kw">let </span><span class="kw-2">mut </span>target_file = File::create(<span class="kw-2">&amp;</span><span class="self">self</span>.target_path)<span class="question-mark">?</span>;
+        target_file.write_all(tx_datum.as_bytes())<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(())
     }

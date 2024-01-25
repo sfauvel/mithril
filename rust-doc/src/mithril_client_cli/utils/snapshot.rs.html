@@ -82,12 +82,6 @@
 <a href="#82" id="82">82</a>
 <a href="#83" id="83">83</a>
 <a href="#84" id="84">84</a>
-<a href="#85" id="85">85</a>
-<a href="#86" id="86">86</a>
-<a href="#87" id="87">87</a>
-<a href="#88" id="88">88</a>
-<a href="#89" id="89">89</a>
-<a href="#90" id="90">90</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>anyhow::anyhow;
 <span class="kw">use </span>futures::Future;
 <span class="kw">use </span>indicatif::{MultiProgress, ProgressBar};
@@ -157,10 +151,7 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>check_disk_space_error_should_return_error_if_error_is_not_error_not_enough_space() {
-        <span class="kw">let </span>error = SnapshotUnpackerError::UnpackFailed {
-            dirpath: PathBuf::from(<span class="string">&quot;&quot;</span>),
-            error: anyhow::Error::msg(<span class="string">&quot;Some error message&quot;</span>),
-        };
+        <span class="kw">let </span>error = SnapshotUnpackerError::UnpackDirectoryAlreadyExists(PathBuf::new());
 
         <span class="kw">let </span>error = SnapshotUtils::check_disk_space_error(<span class="macro">anyhow!</span>(error))
             .expect_err(<span class="string">&quot;check_disk_space_error should fail&quot;</span>);
@@ -168,10 +159,7 @@
         <span class="macro">assert!</span>(
             <span class="macro">matches!</span>(
                 error.downcast_ref::&lt;SnapshotUnpackerError&gt;(),
-                <span class="prelude-val">Some</span>(SnapshotUnpackerError::UnpackFailed {
-                    dirpath: <span class="kw">_</span>,
-                    error: <span class="kw">_
-                </span>})
+                <span class="prelude-val">Some</span>(SnapshotUnpackerError::UnpackDirectoryAlreadyExists(<span class="kw">_</span>))
             ),
             <span class="string">&quot;Unexpected error: {:?}&quot;</span>,
             error

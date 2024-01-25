@@ -612,6 +612,10 @@
 <a href="#612" id="612">612</a>
 <a href="#613" id="613">613</a>
 <a href="#614" id="614">614</a>
+<a href="#615" id="615">615</a>
+<a href="#616" id="616">616</a>
+<a href="#617" id="617">617</a>
+<a href="#618" id="618">618</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::database::provider::{CertificateRepository, SignedEntityStorer};
 <span class="kw">use </span>anyhow::{anyhow, Context};
 <span class="kw">use </span>mithril_common::{entities::Certificate, StdResult};
@@ -810,7 +814,8 @@
         entities::{
             Beacon, Certificate, Epoch, ImmutableFileNumber,
             SignedEntityType::{
-                CardanoImmutableFilesFull, CardanoStakeDistribution, MithrilStakeDistribution,
+                CardanoImmutableFilesFull, CardanoStakeDistribution, CardanoTransactions,
+                MithrilStakeDistribution,
             },
             SignedEntityTypeDiscriminants,
         },
@@ -896,6 +901,9 @@
                         }
                         SignedEntityTypeDiscriminants::CardanoImmutableFilesFull =&gt; {
                             CardanoImmutableFilesFull(certificate.beacon.clone())
+                        }
+                        SignedEntityTypeDiscriminants::CardanoTransactions =&gt; {
+                            CardanoTransactions(certificate.beacon.clone())
                         }
                     };
                     <span class="comment">// Note: we don&#39;t need to have real artifacts for those tests

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["CardanoImmutableFilesFullSignableBuilder","MithrilSignableBuilderService","MithrilStakeDistributionSignableBuilder"],"trait":["Artifact","Beacon","SignableBuilder","SignableBuilderService"]};
+window.SIDEBAR_ITEMS = {"struct":["CardanoImmutableFilesFullSignableBuilder","CardanoTransactionsSignableBuilder","MithrilSignableBuilderService","MithrilStakeDistributionSignableBuilder"],"trait":["Artifact","Beacon","SignableBuilder","SignableBuilderService","TransactionStore"]};

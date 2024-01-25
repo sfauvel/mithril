@@ -263,18 +263,29 @@
 <a href="#263" id="263">263</a>
 <a href="#264" id="264">264</a>
 <a href="#265" id="265">265</a>
+<a href="#266" id="266">266</a>
+<a href="#267" id="267">267</a>
+<a href="#268" id="268">268</a>
+<a href="#269" id="269">269</a>
+<a href="#270" id="270">270</a>
+<a href="#271" id="271">271</a>
+<a href="#272" id="272">272</a>
+<a href="#273" id="273">273</a>
+<a href="#274" id="274">274</a>
+<a href="#275" id="275">275</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::sync::Arc;
 <span class="kw">use </span>tokio::sync::RwLock;
 
 <span class="kw">use </span>mithril_common::{
     api_version::APIVersionProvider,
+    cardano_transaction_parser::TransactionParser,
     certificate_chain::CertificateVerifier,
     chain_observer::ChainObserver,
     crypto_helper::ProtocolGenesisVerifier,
     digesters::{ImmutableDigester, ImmutableFileObserver},
     entities::{Epoch, ProtocolParameters, SignerWithStake, StakeDistribution},
     era::{EraChecker, EraReader},
-    signable_builder::SignableBuilderService,
+    signable_builder::{SignableBuilderService, TransactionStore},
     sqlite::SqliteConnection,
     store::StakeStorer,
     test_utils::MithrilFixture,
@@ -313,6 +324,9 @@
     /// services. Shall be private dependency.
     </span><span class="kw">pub </span>sqlite_connection: Arc&lt;SqliteConnection&gt;,
 
+    <span class="doccomment">/// SQLite database connection for Cardano transactions
+    </span><span class="kw">pub </span>sqlite_connection_transaction: Arc&lt;SqliteConnection&gt;,
+
     <span class="doccomment">/// Stake Store used by the StakeDistributionService
     /// It shall be a private dependency.
     </span><span class="kw">pub </span>stake_store: Arc&lt;StakePoolStore&gt;,
@@ -343,6 +357,12 @@
 
     <span class="doccomment">/// Beacon provider service.
     </span><span class="kw">pub </span>beacon_provider: Arc&lt;<span class="kw">dyn </span>BeaconProvider&gt;,
+
+    <span class="doccomment">/// Cardano transactions store.
+    </span><span class="kw">pub </span>transaction_store: Arc&lt;<span class="kw">dyn </span>TransactionStore&gt;,
+
+    <span class="doccomment">/// Cardano transactions parser.
+    </span><span class="kw">pub </span>transaction_parser: Arc&lt;<span class="kw">dyn </span>TransactionParser&gt;,
 
     <span class="doccomment">/// Immutable file observer service.
     </span><span class="kw">pub </span>immutable_file_observer: Arc&lt;<span class="kw">dyn </span>ImmutableFileObserver&gt;,

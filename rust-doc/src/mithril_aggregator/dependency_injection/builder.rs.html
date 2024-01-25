@@ -1268,13 +1268,123 @@
 <a href="#1268" id="1268">1268</a>
 <a href="#1269" id="1269">1269</a>
 <a href="#1270" id="1270">1270</a>
-</pre></div><pre class="rust"><code><span class="kw">use </span>std::sync::Arc;
-
-<span class="kw">use </span>anyhow::Context;
+<a href="#1271" id="1271">1271</a>
+<a href="#1272" id="1272">1272</a>
+<a href="#1273" id="1273">1273</a>
+<a href="#1274" id="1274">1274</a>
+<a href="#1275" id="1275">1275</a>
+<a href="#1276" id="1276">1276</a>
+<a href="#1277" id="1277">1277</a>
+<a href="#1278" id="1278">1278</a>
+<a href="#1279" id="1279">1279</a>
+<a href="#1280" id="1280">1280</a>
+<a href="#1281" id="1281">1281</a>
+<a href="#1282" id="1282">1282</a>
+<a href="#1283" id="1283">1283</a>
+<a href="#1284" id="1284">1284</a>
+<a href="#1285" id="1285">1285</a>
+<a href="#1286" id="1286">1286</a>
+<a href="#1287" id="1287">1287</a>
+<a href="#1288" id="1288">1288</a>
+<a href="#1289" id="1289">1289</a>
+<a href="#1290" id="1290">1290</a>
+<a href="#1291" id="1291">1291</a>
+<a href="#1292" id="1292">1292</a>
+<a href="#1293" id="1293">1293</a>
+<a href="#1294" id="1294">1294</a>
+<a href="#1295" id="1295">1295</a>
+<a href="#1296" id="1296">1296</a>
+<a href="#1297" id="1297">1297</a>
+<a href="#1298" id="1298">1298</a>
+<a href="#1299" id="1299">1299</a>
+<a href="#1300" id="1300">1300</a>
+<a href="#1301" id="1301">1301</a>
+<a href="#1302" id="1302">1302</a>
+<a href="#1303" id="1303">1303</a>
+<a href="#1304" id="1304">1304</a>
+<a href="#1305" id="1305">1305</a>
+<a href="#1306" id="1306">1306</a>
+<a href="#1307" id="1307">1307</a>
+<a href="#1308" id="1308">1308</a>
+<a href="#1309" id="1309">1309</a>
+<a href="#1310" id="1310">1310</a>
+<a href="#1311" id="1311">1311</a>
+<a href="#1312" id="1312">1312</a>
+<a href="#1313" id="1313">1313</a>
+<a href="#1314" id="1314">1314</a>
+<a href="#1315" id="1315">1315</a>
+<a href="#1316" id="1316">1316</a>
+<a href="#1317" id="1317">1317</a>
+<a href="#1318" id="1318">1318</a>
+<a href="#1319" id="1319">1319</a>
+<a href="#1320" id="1320">1320</a>
+<a href="#1321" id="1321">1321</a>
+<a href="#1322" id="1322">1322</a>
+<a href="#1323" id="1323">1323</a>
+<a href="#1324" id="1324">1324</a>
+<a href="#1325" id="1325">1325</a>
+<a href="#1326" id="1326">1326</a>
+<a href="#1327" id="1327">1327</a>
+<a href="#1328" id="1328">1328</a>
+<a href="#1329" id="1329">1329</a>
+<a href="#1330" id="1330">1330</a>
+<a href="#1331" id="1331">1331</a>
+<a href="#1332" id="1332">1332</a>
+<a href="#1333" id="1333">1333</a>
+<a href="#1334" id="1334">1334</a>
+<a href="#1335" id="1335">1335</a>
+<a href="#1336" id="1336">1336</a>
+<a href="#1337" id="1337">1337</a>
+<a href="#1338" id="1338">1338</a>
+<a href="#1339" id="1339">1339</a>
+<a href="#1340" id="1340">1340</a>
+<a href="#1341" id="1341">1341</a>
+<a href="#1342" id="1342">1342</a>
+<a href="#1343" id="1343">1343</a>
+<a href="#1344" id="1344">1344</a>
+<a href="#1345" id="1345">1345</a>
+<a href="#1346" id="1346">1346</a>
+<a href="#1347" id="1347">1347</a>
+<a href="#1348" id="1348">1348</a>
+<a href="#1349" id="1349">1349</a>
+<a href="#1350" id="1350">1350</a>
+<a href="#1351" id="1351">1351</a>
+<a href="#1352" id="1352">1352</a>
+<a href="#1353" id="1353">1353</a>
+<a href="#1354" id="1354">1354</a>
+<a href="#1355" id="1355">1355</a>
+<a href="#1356" id="1356">1356</a>
+<a href="#1357" id="1357">1357</a>
+<a href="#1358" id="1358">1358</a>
+<a href="#1359" id="1359">1359</a>
+<a href="#1360" id="1360">1360</a>
+<a href="#1361" id="1361">1361</a>
+<a href="#1362" id="1362">1362</a>
+<a href="#1363" id="1363">1363</a>
+<a href="#1364" id="1364">1364</a>
+<a href="#1365" id="1365">1365</a>
+<a href="#1366" id="1366">1366</a>
+<a href="#1367" id="1367">1367</a>
+<a href="#1368" id="1368">1368</a>
+<a href="#1369" id="1369">1369</a>
+<a href="#1370" id="1370">1370</a>
+<a href="#1371" id="1371">1371</a>
+<a href="#1372" id="1372">1372</a>
+<a href="#1373" id="1373">1373</a>
+<a href="#1374" id="1374">1374</a>
+<a href="#1375" id="1375">1375</a>
+<a href="#1376" id="1376">1376</a>
+<a href="#1377" id="1377">1377</a>
+<a href="#1378" id="1378">1378</a>
+<a href="#1379" id="1379">1379</a>
+<a href="#1380" id="1380">1380</a>
+<a href="#1381" id="1381">1381</a>
+</pre></div><pre class="rust"><code><span class="kw">use </span>anyhow::Context;
 <span class="kw">use </span>semver::Version;
 <span class="kw">use </span>slog::Logger;
 <span class="kw">use </span>slog_scope::debug;
 <span class="kw">use </span>sqlite::Connection;
+<span class="kw">use </span>std::sync::Arc;
 <span class="kw">use </span>tokio::{
     sync::{
         mpsc::{UnboundedReceiver, UnboundedSender},
@@ -1286,14 +1396,13 @@
 
 <span class="kw">use </span>mithril_common::{
     api_version::APIVersionProvider,
+    cardano_transaction_parser::TransactionParser,
     certificate_chain::{CertificateVerifier, MithrilCertificateVerifier},
-    chain_observer::{
-        CardanoCliChainObserver, CardanoCliRunner, ChainObserver, FakeObserver, PallasChainObserver,
-    },
+    chain_observer::{CardanoCliRunner, ChainObserver, ChainObserverBuilder, FakeObserver},
     crypto_helper::{
         ProtocolGenesisSigner, ProtocolGenesisVerificationKey, ProtocolGenesisVerifier,
     },
-    database::{ApplicationNodeType, DatabaseVersionChecker},
+    database::{ApplicationNodeType, DatabaseVersionChecker, SqlMigration},
     digesters::{
         cache::{ImmutableFileDigestCacheProvider, JsonImmutableFileDigestCacheProviderBuilder},
         CardanoImmutableDigester, DumbImmutableFileObserver, ImmutableDigester,
@@ -1307,21 +1416,25 @@
     signable_builder::{
         CardanoImmutableFilesFullSignableBuilder, MithrilStakeDistributionSignableBuilder,
     },
-    signable_builder::{MithrilSignableBuilderService, SignableBuilderService},
+    signable_builder::{
+        CardanoTransactionsSignableBuilder, MithrilSignableBuilderService, SignableBuilderService,
+        TransactionStore,
+    },
     sqlite::SqliteConnection,
     store::adapter::{MemoryAdapter, SQLiteAdapter, StoreAdapter},
-    BeaconProvider, BeaconProviderImpl,
+    BeaconProvider, BeaconProviderImpl, CardanoTransactionParser,
 };
 
 <span class="kw">use crate</span>::{
     artifact_builder::{
-        CardanoImmutableFilesFullArtifactBuilder, MithrilStakeDistributionArtifactBuilder,
+        CardanoImmutableFilesFullArtifactBuilder, CardanoTransactionsArtifactBuilder,
+        MithrilStakeDistributionArtifactBuilder,
     },
     configuration::ExecutionEnvironment,
     database::provider::{
-        CertificateRepository, EpochSettingStore, OpenMessageRepository, SignedEntityStoreAdapter,
-        SignedEntityStorer, SignerRegistrationStore, SignerStore, SingleSignatureRepository,
-        StakePoolStore,
+        CardanoTransactionRepository, CertificateRepository, EpochSettingStore,
+        OpenMessageRepository, SignedEntityStoreAdapter, SignedEntityStorer,
+        SignerRegistrationStore, SignerStore, SingleSignatureRepository, StakePoolStore,
     },
     event_store::{EventMessage, EventStore, TransmitterService},
     http_server::routes::router,
@@ -1341,6 +1454,7 @@
 <span class="kw">use super</span>::{DependenciesBuilderError, EpochServiceWrapper, <span class="prelude-ty">Result</span>};
 
 <span class="kw">const </span>SQLITE_FILE: <span class="kw-2">&amp;</span>str = <span class="string">&quot;aggregator.sqlite3&quot;</span>;
+<span class="kw">const </span>SQLITE_FILE_CARDANO_TRANSACTION: <span class="kw-2">&amp;</span>str = <span class="string">&quot;cardano-transaction.sqlite3&quot;</span>;
 
 <span class="doccomment">/// ## Dependencies container builder
 ///
@@ -1359,6 +1473,9 @@
 
     <span class="doccomment">/// SQLite database connection
     </span><span class="kw">pub </span>sqlite_connection: <span class="prelude-ty">Option</span>&lt;Arc&lt;SqliteConnection&gt;&gt;,
+
+    <span class="doccomment">/// Cardano transactions SQLite database connection
+    </span><span class="kw">pub </span>transaction_sqlite_connection: <span class="prelude-ty">Option</span>&lt;Arc&lt;SqliteConnection&gt;&gt;,
 
     <span class="doccomment">/// Stake Store used by the StakeDistributionService
     /// It shall be a private dependency.
@@ -1393,6 +1510,12 @@
 
     <span class="doccomment">/// Beacon provider service.
     </span><span class="kw">pub </span>beacon_provider: <span class="prelude-ty">Option</span>&lt;Arc&lt;<span class="kw">dyn </span>BeaconProvider&gt;&gt;,
+
+    <span class="doccomment">/// Cardano transactions store.
+    </span><span class="kw">pub </span>transaction_store: <span class="prelude-ty">Option</span>&lt;Arc&lt;<span class="kw">dyn </span>TransactionStore&gt;&gt;,
+
+    <span class="doccomment">/// Cardano transactions parser.
+    </span><span class="kw">pub </span>transaction_parser: <span class="prelude-ty">Option</span>&lt;Arc&lt;<span class="kw">dyn </span>TransactionParser&gt;&gt;,
 
     <span class="doccomment">/// Immutable file digester service.
     </span><span class="kw">pub </span>immutable_digester: <span class="prelude-ty">Option</span>&lt;Arc&lt;<span class="kw">dyn </span>ImmutableDigester&gt;&gt;,
@@ -1473,6 +1596,7 @@
         <span class="self">Self </span>{
             configuration,
             sqlite_connection: <span class="prelude-val">None</span>,
+            transaction_sqlite_connection: <span class="prelude-val">None</span>,
             stake_store: <span class="prelude-val">None</span>,
             snapshot_uploader: <span class="prelude-val">None</span>,
             multi_signer: <span class="prelude-val">None</span>,
@@ -1484,6 +1608,8 @@
             cardano_cli_runner: <span class="prelude-val">None</span>,
             chain_observer: <span class="prelude-val">None</span>,
             beacon_provider: <span class="prelude-val">None</span>,
+            transaction_parser: <span class="prelude-val">None</span>,
+            transaction_store: <span class="prelude-val">None</span>,
             immutable_digester: <span class="prelude-val">None</span>,
             immutable_file_observer: <span class="prelude-val">None</span>,
             immutable_cache_provider: <span class="prelude-val">None</span>,
@@ -1510,12 +1636,24 @@
         }
     }
 
-    <span class="kw">async fn </span>build_sqlite_connection(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Arc&lt;SqliteConnection&gt;&gt; {
+    <span class="kw">async fn </span>build_sqlite_connection(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        sqlite_file_name: <span class="kw-2">&amp;</span>str,
+        migrations: Vec&lt;SqlMigration&gt;,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;Arc&lt;SqliteConnection&gt;&gt; {
         <span class="kw">let </span>path = <span class="kw">match </span><span class="self">self</span>.configuration.environment {
             ExecutionEnvironment::Production =&gt; {
-                <span class="self">self</span>.configuration.get_sqlite_dir().join(SQLITE_FILE)
+                <span class="self">self</span>.configuration.get_sqlite_dir().join(sqlite_file_name)
             }
-            <span class="kw">_ </span>=&gt; <span class="self">self</span>.configuration.data_stores_directory.clone(),
+            <span class="kw">_ </span>=&gt; {
+                <span class="kw">if </span><span class="self">self</span>.configuration.data_stores_directory.to_string_lossy() == <span class="string">&quot;:memory:&quot; </span>{
+                    <span class="self">self</span>.configuration.data_stores_directory.clone()
+                } <span class="kw">else </span>{
+                    <span class="self">self</span>.configuration
+                        .data_stores_directory
+                        .join(sqlite_file_name)
+                }
+            }
         };
 
         <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="kw-2">&amp;</span>path)
@@ -1535,7 +1673,7 @@
             connection.as_ref(),
         );
 
-        <span class="kw">for </span>migration <span class="kw">in </span><span class="kw">crate</span>::database::migration::get_migrations() {
+        <span class="kw">for </span>migration <span class="kw">in </span>migrations {
             db_checker.add_migration(migration);
         }
 
@@ -1562,8 +1700,12 @@
         <span class="prelude-val">Ok</span>(connection)
     }
 
-    <span class="kw">async fn </span>drop_sqlite_connection(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+    <span class="kw">async fn </span>drop_sqlite_connections(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw">if let </span><span class="prelude-val">Some</span>(connection) = <span class="kw-2">&amp;</span><span class="self">self</span>.sqlite_connection {
+            <span class="kw">let _ </span>= connection.execute(<span class="string">&quot;pragma analysis_limit=400; pragma optimize;&quot;</span>);
+        }
+
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(connection) = <span class="kw-2">&amp;</span><span class="self">self</span>.transaction_sqlite_connection {
             <span class="kw">let _ </span>= connection.execute(<span class="string">&quot;pragma analysis_limit=400; pragma optimize;&quot;</span>);
         }
     }
@@ -1571,10 +1713,37 @@
     <span class="doccomment">/// Get SQLite connection
     </span><span class="kw">pub async fn </span>get_sqlite_connection(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Arc&lt;SqliteConnection&gt;&gt; {
         <span class="kw">if </span><span class="self">self</span>.sqlite_connection.is_none() {
-            <span class="self">self</span>.sqlite_connection = <span class="prelude-val">Some</span>(<span class="self">self</span>.build_sqlite_connection().<span class="kw">await</span><span class="question-mark">?</span>);
+            <span class="self">self</span>.sqlite_connection = <span class="prelude-val">Some</span>(
+                <span class="self">self</span>.build_sqlite_connection(
+                    SQLITE_FILE,
+                    <span class="kw">crate</span>::database::migration::get_migrations(),
+                )
+                .<span class="kw">await</span><span class="question-mark">?</span>,
+            );
         }
 
         <span class="prelude-val">Ok</span>(<span class="self">self</span>.sqlite_connection.as_ref().cloned().unwrap())
+    }
+
+    <span class="doccomment">/// Get SQLite connection for the cardano transactions store
+    </span><span class="kw">pub async fn </span>get_sqlite_connection_cardano_transaction(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;Arc&lt;SqliteConnection&gt;&gt; {
+        <span class="kw">if </span><span class="self">self</span>.transaction_sqlite_connection.is_none() {
+            <span class="self">self</span>.transaction_sqlite_connection = <span class="prelude-val">Some</span>(
+                <span class="self">self</span>.build_sqlite_connection(
+                    SQLITE_FILE_CARDANO_TRANSACTION,
+                    <span class="kw">crate</span>::database::cardano_transaction_migration::get_migrations(),
+                )
+                .<span class="kw">await</span><span class="question-mark">?</span>,
+            );
+        }
+
+        <span class="prelude-val">Ok</span>(<span class="self">self
+            </span>.transaction_sqlite_connection
+            .as_ref()
+            .cloned()
+            .unwrap())
     }
 
     <span class="kw">async fn </span>build_stake_store(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Arc&lt;StakePoolStore&gt;&gt; {
@@ -1757,16 +1926,24 @@
     <span class="kw">async fn </span>build_chain_observer(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Arc&lt;<span class="kw">dyn </span>ChainObserver&gt;&gt; {
         <span class="kw">let </span>chain_observer: Arc&lt;<span class="kw">dyn </span>ChainObserver&gt; = <span class="kw">match </span><span class="self">self</span>.configuration.environment {
             ExecutionEnvironment::Production =&gt; {
-                <span class="kw">let </span>fallback = CardanoCliChainObserver::new(<span class="self">self</span>.get_cardano_cli_runner().<span class="kw">await</span><span class="question-mark">?</span>);
-                <span class="kw">let </span>observer = PallasChainObserver::new(
-                    <span class="kw-2">&amp;</span><span class="self">self</span>.configuration.cardano_node_socket_path,
-                    <span class="self">self</span>.configuration.get_network().with_context(|| {
-                        <span class="string">&quot;Dependencies Builder can not get Cardano network while building cardano cli runner&quot;
-                    </span>})<span class="question-mark">?</span>,
-                    fallback,
+                <span class="kw">let </span>cardano_cli_runner = <span class="kw-2">&amp;</span><span class="self">self</span>.get_cardano_cli_runner().<span class="kw">await</span><span class="question-mark">?</span>;
+                <span class="kw">let </span>chain_observer_type = <span class="kw-2">&amp;</span><span class="self">self</span>.configuration.chain_observer_type;
+                <span class="kw">let </span>cardano_node_socket_path = <span class="kw-2">&amp;</span><span class="self">self</span>.configuration.cardano_node_socket_path;
+                <span class="kw">let </span>cardano_network = <span class="kw-2">&amp;</span><span class="self">self
+                    </span>.configuration
+                    .get_network()
+                    .with_context(|| <span class="string">&quot;Dependencies Builder can not get Cardano network while building the chain observer&quot;</span>)<span class="question-mark">?</span>;
+                <span class="kw">let </span>chain_observer_builder = ChainObserverBuilder::new(
+                    chain_observer_type,
+                    cardano_node_socket_path,
+                    cardano_network,
+                    <span class="prelude-val">Some</span>(cardano_cli_runner),
                 );
-                Arc::new(observer)
-            }
+
+                chain_observer_builder
+                    .build()
+                    .with_context(|| <span class="string">&quot;Dependencies Builder can not build chain observer&quot;</span>)<span class="question-mark">?
+            </span>}
             <span class="kw">_ </span>=&gt; Arc::new(FakeObserver::default()),
         };
 
@@ -1880,6 +2057,38 @@
     </span><span class="kw">pub async fn </span>get_logger(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Logger&gt; {
         <span class="self">self</span>.create_logger().<span class="kw">await
     </span>}
+
+    <span class="kw">async fn </span>build_transaction_store(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Arc&lt;<span class="kw">dyn </span>TransactionStore&gt;&gt; {
+        <span class="kw">let </span>transaction_store = CardanoTransactionRepository::new(
+            <span class="self">self</span>.get_sqlite_connection_cardano_transaction().<span class="kw">await</span><span class="question-mark">?</span>,
+        );
+
+        <span class="prelude-val">Ok</span>(Arc::new(transaction_store))
+    }
+
+    <span class="doccomment">/// Transaction store.
+    </span><span class="kw">pub async fn </span>get_transaction_store(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Arc&lt;<span class="kw">dyn </span>TransactionStore&gt;&gt; {
+        <span class="kw">if </span><span class="self">self</span>.transaction_store.is_none() {
+            <span class="self">self</span>.transaction_store = <span class="prelude-val">Some</span>(<span class="self">self</span>.build_transaction_store().<span class="kw">await</span><span class="question-mark">?</span>);
+        }
+
+        <span class="prelude-val">Ok</span>(<span class="self">self</span>.transaction_store.as_ref().cloned().unwrap())
+    }
+
+    <span class="kw">async fn </span>build_transaction_parser(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Arc&lt;<span class="kw">dyn </span>TransactionParser&gt;&gt; {
+        <span class="kw">let </span>transaction_parser = CardanoTransactionParser::default();
+
+        <span class="prelude-val">Ok</span>(Arc::new(transaction_parser))
+    }
+
+    <span class="doccomment">/// Transaction parser.
+    </span><span class="kw">pub async fn </span>get_transaction_parser(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Arc&lt;<span class="kw">dyn </span>TransactionParser&gt;&gt; {
+        <span class="kw">if </span><span class="self">self</span>.transaction_parser.is_none() {
+            <span class="self">self</span>.transaction_parser = <span class="prelude-val">Some</span>(<span class="self">self</span>.build_transaction_parser().<span class="kw">await</span><span class="question-mark">?</span>);
+        }
+
+        <span class="prelude-val">Ok</span>(<span class="self">self</span>.transaction_parser.as_ref().cloned().unwrap())
+    }
 
     <span class="kw">async fn </span>build_immutable_digester(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Arc&lt;<span class="kw">dyn </span>ImmutableDigester&gt;&gt; {
         <span class="kw">let </span>immutable_digester_cache = <span class="kw">match </span><span class="self">self</span>.configuration.environment {
@@ -2202,9 +2411,16 @@
             <span class="kw-2">&amp;</span><span class="self">self</span>.configuration.db_directory,
             <span class="self">self</span>.get_logger().<span class="kw">await</span><span class="question-mark">?</span>,
         ));
+        <span class="kw">let </span>cardano_transactions_builder = Arc::new(CardanoTransactionsSignableBuilder::new(
+            <span class="self">self</span>.get_transaction_parser().<span class="kw">await</span><span class="question-mark">?</span>,
+            <span class="self">self</span>.get_transaction_store().<span class="kw">await</span><span class="question-mark">?</span>,
+            <span class="kw-2">&amp;</span><span class="self">self</span>.configuration.db_directory,
+            <span class="self">self</span>.get_logger().<span class="kw">await</span><span class="question-mark">?</span>,
+        ));
         <span class="kw">let </span>signable_builder_service = Arc::new(MithrilSignableBuilderService::new(
             mithril_stake_distribution_builder,
             immutable_signable_builder,
+            cardano_transactions_builder,
         ));
 
         <span class="prelude-val">Ok</span>(signable_builder_service)
@@ -2237,10 +2453,13 @@
                 snapshot_uploader,
                 <span class="self">self</span>.configuration.snapshot_compression_algorithm,
             ));
+        <span class="kw">let </span>cardano_transactions_artifact_builder =
+            Arc::new(CardanoTransactionsArtifactBuilder::new());
         <span class="kw">let </span>signed_entity_service = Arc::new(MithrilSignedEntityService::new(
             signed_entity_storer,
             mithril_stake_distribution_artifact_builder,
             cardano_immutable_files_full_artifact_builder,
+            cardano_transactions_artifact_builder,
         ));
 
         <span class="prelude-val">Ok</span>(signed_entity_service)
@@ -2299,6 +2518,7 @@
         <span class="kw">let </span>dependency_manager = DependencyContainer {
             config: <span class="self">self</span>.configuration.clone(),
             sqlite_connection: <span class="self">self</span>.get_sqlite_connection().<span class="kw">await</span><span class="question-mark">?</span>,
+            sqlite_connection_transaction: <span class="self">self</span>.get_sqlite_connection_cardano_transaction().<span class="kw">await</span><span class="question-mark">?</span>,
             stake_store: <span class="self">self</span>.get_stake_store().<span class="kw">await</span><span class="question-mark">?</span>,
             snapshot_uploader: <span class="self">self</span>.get_snapshot_uploader().<span class="kw">await</span><span class="question-mark">?</span>,
             multi_signer: <span class="self">self</span>.get_multi_signer().<span class="kw">await</span><span class="question-mark">?</span>,
@@ -2330,6 +2550,8 @@
             signed_entity_storer: <span class="self">self</span>.get_signed_entity_storer().<span class="kw">await</span><span class="question-mark">?</span>,
             signer_getter: <span class="self">self</span>.get_signer_store().<span class="kw">await</span><span class="question-mark">?</span>,
             message_service: <span class="self">self</span>.get_message_service().<span class="kw">await</span><span class="question-mark">?</span>,
+            transaction_parser: <span class="self">self</span>.get_transaction_parser().<span class="kw">await</span><span class="question-mark">?</span>,
+            transaction_store: <span class="self">self</span>.get_transaction_store().<span class="kw">await</span><span class="question-mark">?</span>,
         };
 
         <span class="prelude-val">Ok</span>(dependency_manager)
@@ -2535,7 +2757,7 @@
 
     <span class="doccomment">/// Remove the dependencies builder from memory to release Arc instances.
     </span><span class="kw">pub async fn </span>vanish(<span class="self">self</span>) {
-        <span class="self">self</span>.drop_sqlite_connection().<span class="kw">await</span>;
+        <span class="self">self</span>.drop_sqlite_connections().<span class="kw">await</span>;
     }
 }
 </code></pre></div></section></main></body></html>

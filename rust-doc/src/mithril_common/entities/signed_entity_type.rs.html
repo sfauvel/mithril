@@ -145,6 +145,29 @@
 <a href="#145" id="145">145</a>
 <a href="#146" id="146">146</a>
 <a href="#147" id="147">147</a>
+<a href="#148" id="148">148</a>
+<a href="#149" id="149">149</a>
+<a href="#150" id="150">150</a>
+<a href="#151" id="151">151</a>
+<a href="#152" id="152">152</a>
+<a href="#153" id="153">153</a>
+<a href="#154" id="154">154</a>
+<a href="#155" id="155">155</a>
+<a href="#156" id="156">156</a>
+<a href="#157" id="157">157</a>
+<a href="#158" id="158">158</a>
+<a href="#159" id="159">159</a>
+<a href="#160" id="160">160</a>
+<a href="#161" id="161">161</a>
+<a href="#162" id="162">162</a>
+<a href="#163" id="163">163</a>
+<a href="#164" id="164">164</a>
+<a href="#165" id="165">165</a>
+<a href="#166" id="166">166</a>
+<a href="#167" id="167">167</a>
+<a href="#168" id="168">168</a>
+<a href="#169" id="169">169</a>
+<a href="#170" id="170">170</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::StdResult;
 <span class="kw">use </span>serde::{Deserialize, Serialize};
 <span class="kw">use </span>std::time::Duration;
@@ -165,6 +188,9 @@
 <span class="doccomment">/// Database representation of the SignedEntityType::CardanoImmutableFilesFull value
 </span><span class="kw">const </span>ENTITY_TYPE_CARDANO_IMMUTABLE_FILES_FULL: usize = <span class="number">2</span>;
 
+<span class="doccomment">/// Database representation of the SignedEntityType::CardanoTransactions value
+</span><span class="kw">const </span>ENTITY_TYPE_CARDANO_TRANSACTIONS: usize = <span class="number">3</span>;
+
 <span class="doccomment">/// The signed entity type that represents a type of data signed by the Mithril
 /// protocol Note: Each variant of this enum must be associated to an entry in
 /// the `signed_entity_type` table of the signer/aggregator nodes. The variant
@@ -183,6 +209,9 @@
 
     <span class="doccomment">/// Full Cardano Immutable Files
     </span>CardanoImmutableFilesFull(Beacon),
+
+    <span class="doccomment">/// Cardano Transactions
+    </span>CardanoTransactions(Beacon),
 }
 
 <span class="kw">impl </span>SignedEntityType {
@@ -194,7 +223,7 @@
     <span class="doccomment">/// Return the epoch from the intern beacon.
     </span><span class="kw">pub fn </span>get_epoch(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Epoch {
         <span class="kw">match </span><span class="self">self </span>{
-            <span class="self">Self</span>::CardanoImmutableFilesFull(b) =&gt; b.epoch,
+            <span class="self">Self</span>::CardanoImmutableFilesFull(b) | <span class="self">Self</span>::CardanoTransactions(b) =&gt; b.epoch,
             <span class="self">Self</span>::CardanoStakeDistribution(e) | <span class="self">Self</span>::MithrilStakeDistribution(e) =&gt; <span class="kw-2">*</span>e,
         }
     }
@@ -227,6 +256,14 @@
                     })<span class="question-mark">?</span>;
                     <span class="self">Self</span>::CardanoImmutableFilesFull(beacon)
                 }
+                ENTITY_TYPE_CARDANO_TRANSACTIONS =&gt; {
+                    <span class="kw">let </span>beacon: Beacon = serde_json::from_str(beacon_str).map_err(|e| {
+                        HydrationError::InvalidData(<span class="macro">format!</span>(
+                            <span class="string">&quot;Invalid Beacon JSON in open_message.beacon: &#39;{beacon_str}&#39;. Error: {e}&quot;
+                        </span>))
+                    })<span class="question-mark">?</span>;
+                    <span class="self">Self</span>::CardanoTransactions(beacon)
+                }
                 index =&gt; <span class="macro">panic!</span>(<span class="string">&quot;Invalid entity_type_id {index}.&quot;</span>),
             };
 
@@ -240,13 +277,16 @@
             <span class="self">Self</span>::MithrilStakeDistribution(<span class="kw">_</span>) =&gt; ENTITY_TYPE_MITHRIL_STAKE_DISTRIBUTION,
             <span class="self">Self</span>::CardanoStakeDistribution(<span class="kw">_</span>) =&gt; ENTITY_TYPE_CARDANO_STAKE_DISTRIBUTION,
             <span class="self">Self</span>::CardanoImmutableFilesFull(<span class="kw">_</span>) =&gt; ENTITY_TYPE_CARDANO_IMMUTABLE_FILES_FULL,
+            <span class="self">Self</span>::CardanoTransactions(<span class="kw">_</span>) =&gt; ENTITY_TYPE_CARDANO_TRANSACTIONS,
         }
     }
 
     <span class="doccomment">/// Return a JSON serialized value of the internal beacon
     </span><span class="kw">pub fn </span>get_json_beacon(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; StdResult&lt;String&gt; {
         <span class="kw">let </span>value = <span class="kw">match </span><span class="self">self </span>{
-            <span class="self">Self</span>::CardanoImmutableFilesFull(value) =&gt; serde_json::to_string(value)<span class="question-mark">?</span>,
+            <span class="self">Self</span>::CardanoImmutableFilesFull(value) | <span class="self">Self</span>::CardanoTransactions(value) =&gt; {
+                serde_json::to_string(value)<span class="question-mark">?
+            </span>}
             <span class="self">Self</span>::CardanoStakeDistribution(value) | <span class="self">Self</span>::MithrilStakeDistribution(value) =&gt; {
                 serde_json::to_string(value)<span class="question-mark">?
             </span>}
@@ -259,7 +299,9 @@
     </span><span class="kw">pub fn </span>get_open_message_timeout(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Duration&gt; {
         <span class="kw">match </span><span class="self">self </span>{
             <span class="self">Self</span>::MithrilStakeDistribution(<span class="kw">_</span>) | <span class="self">Self</span>::CardanoImmutableFilesFull(<span class="kw">_</span>) =&gt; <span class="prelude-val">None</span>,
-            <span class="self">Self</span>::CardanoStakeDistribution(<span class="kw">_</span>) =&gt; <span class="prelude-val">Some</span>(Duration::from_secs(<span class="number">600</span>)),
+            <span class="self">Self</span>::CardanoStakeDistribution(<span class="kw">_</span>) | <span class="self">Self</span>::CardanoTransactions(<span class="kw">_</span>) =&gt; {
+                <span class="prelude-val">Some</span>(Duration::from_secs(<span class="number">600</span>))
+            }
         }
     }
 
@@ -275,6 +317,9 @@
             SignedEntityTypeDiscriminants::CardanoImmutableFilesFull =&gt; {
                 <span class="self">Self</span>::CardanoImmutableFilesFull(beacon.to_owned())
             }
+            SignedEntityTypeDiscriminants::CardanoTransactions =&gt; {
+                <span class="self">Self</span>::CardanoTransactions(beacon.to_owned())
+            }
         }
     }
 }
@@ -286,6 +331,7 @@
             <span class="self">Self</span>::MithrilStakeDistribution =&gt; ENTITY_TYPE_MITHRIL_STAKE_DISTRIBUTION,
             <span class="self">Self</span>::CardanoStakeDistribution =&gt; ENTITY_TYPE_CARDANO_STAKE_DISTRIBUTION,
             <span class="self">Self</span>::CardanoImmutableFilesFull =&gt; ENTITY_TYPE_CARDANO_IMMUTABLE_FILES_FULL,
+            <span class="self">Self</span>::CardanoTransactions =&gt; ENTITY_TYPE_CARDANO_TRANSACTIONS,
         }
     }
 }

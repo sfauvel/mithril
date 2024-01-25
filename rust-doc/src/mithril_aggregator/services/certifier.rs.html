@@ -984,6 +984,7 @@
 <a href="#984" id="984">984</a>
 <a href="#985" id="985">985</a>
 <a href="#986" id="986">986</a>
+<a href="#987" id="987">987</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! ## Certifier Service
 //!
 //! This service is responsible of [OpenMessage] cycle of life. It creates open
@@ -1383,6 +1384,7 @@
                 }
             }
             SignedEntityType::CardanoImmutableFilesFull(beacon) =&gt; beacon.clone(),
+            SignedEntityType::CardanoTransactions(beacon) =&gt; beacon.clone(),
         };
         <span class="kw">let </span>metadata = CertificateMetadata::new(
             protocol_version,

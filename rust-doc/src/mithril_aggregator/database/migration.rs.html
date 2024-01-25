@@ -612,6 +612,15 @@
 <a href="#612" id="612">612</a>
 <a href="#613" id="613">613</a>
 <a href="#614" id="614">614</a>
+<a href="#615" id="615">615</a>
+<a href="#616" id="616">616</a>
+<a href="#617" id="617">617</a>
+<a href="#618" id="618">618</a>
+<a href="#619" id="619">619</a>
+<a href="#620" id="620">620</a>
+<a href="#621" id="621">621</a>
+<a href="#622" id="622">622</a>
+<a href="#623" id="623">623</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Migration module
 //!
 </span><span class="kw">use </span>mithril_common::database::SqlMigration;
@@ -1223,6 +1232,15 @@ update signer set last_registered_at = created_at;
 alter table open_message add column is_expired bool not null default false;
 alter table open_message add column expires_at text null;
         &quot;#</span>,
+        ),
+        <span class="comment">// Migration 21
+        // Add the `signed_entity_type` record for &#39;CardanoTransactions&#39;
+        </span>SqlMigration::new(
+            <span class="number">21</span>,
+            <span class="string">r#&quot;
+insert into signed_entity_type (signed_entity_type_id, name) 
+    values  (3, &#39;Cardano Transactions&#39;);
+&quot;#</span>,
         ),
     ]
 }

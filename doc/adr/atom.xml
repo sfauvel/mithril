@@ -477,7 +477,7 @@ the same format.</li>
 </ol>
 </li>
 </ol>
-<p><a target="_blank" href="https://mithril.network/doc/assets/files/release_process-a9ce55af510cd542b71e68a485251004.jpg"><img alt="Release Process" src="https://mithril.network/doc/assets/images/release_process-a9ce55af510cd542b71e68a485251004.jpg" width="1220" height="819"></a></p>
+<p><a target="_blank" data-nobrokenlinkcheck="true" href="https://mithril.network/doc/assets/files/release_process-a9ce55af510cd542b71e68a485251004.jpg"><img alt="Release Process" src="https://mithril.network/doc/assets/images/release_process-a9ce55af510cd542b71e68a485251004.jpg" width="1220" height="819"></a></p>
 <h3 id="hotfix-release">Hotfix Release</h3>
 <p>​
 In case of a blocking issue (following a distribution release) on the release environment that requires an immediate fix:

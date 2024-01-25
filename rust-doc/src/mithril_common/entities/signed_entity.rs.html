@@ -61,9 +61,26 @@
 <a href="#61" id="61">61</a>
 <a href="#62" id="62">62</a>
 <a href="#63" id="63">63</a>
+<a href="#64" id="64">64</a>
+<a href="#65" id="65">65</a>
+<a href="#66" id="66">66</a>
+<a href="#67" id="67">67</a>
+<a href="#68" id="68">68</a>
+<a href="#69" id="69">69</a>
+<a href="#70" id="70">70</a>
+<a href="#71" id="71">71</a>
+<a href="#72" id="72">72</a>
+<a href="#73" id="73">73</a>
+<a href="#74" id="74">74</a>
+<a href="#75" id="75">75</a>
+<a href="#76" id="76">76</a>
+<a href="#77" id="77">77</a>
+<a href="#78" id="78">78</a>
+<a href="#79" id="79">79</a>
+<a href="#80" id="80">80</a>
 </pre></div><pre class="rust"><code><span class="attr">#[cfg(feature = <span class="string">&quot;test_tools&quot;</span>)]
 </span><span class="kw">use super</span>::{Beacon, Epoch};
-<span class="kw">use super</span>::{MithrilStakeDistribution, SignedEntityType, Snapshot};
+<span class="kw">use super</span>::{CardanoTransactionsCommitment, MithrilStakeDistribution, SignedEntityType, Snapshot};
 <span class="kw">use </span><span class="kw">crate</span>::signable_builder::Artifact;
 <span class="attr">#[cfg(feature = <span class="string">&quot;test_tools&quot;</span>)]
 </span><span class="kw">use </span><span class="kw">crate</span>::test_utils::fake_data;
@@ -117,6 +134,23 @@
                 signed_entity_type: SignedEntityType::MithrilStakeDistribution(Epoch(<span class="number">1</span>)),
                 certificate_id: <span class="string">&quot;certificate-hash-123&quot;</span>.to_string(),
                 artifact: fake_data::mithril_stake_distributions(<span class="number">1</span>)[<span class="number">0</span>].to_owned(),
+                created_at: DateTime::parse_from_rfc3339(<span class="string">&quot;2023-01-19T13:43:05.618857482Z&quot;</span>)
+                    .unwrap()
+                    .with_timezone(<span class="kw-2">&amp;</span>Utc),
+            }
+        }
+    }
+}
+
+<span class="kw">impl </span>SignedEntity&lt;CardanoTransactionsCommitment&gt; {
+    <span class="macro">cfg_test_tools! </span>{
+        <span class="doccomment">/// Create a dummy [SignedEntity] for [CardanoTransactionsCommitment] entity
+        </span><span class="kw">pub fn </span>dummy() -&gt; <span class="self">Self </span>{
+            SignedEntity {
+                signed_entity_id: <span class="string">&quot;snapshot-id-123&quot;</span>.to_string(),
+                signed_entity_type: SignedEntityType::CardanoTransactions(Beacon::default()),
+                certificate_id: <span class="string">&quot;certificate-hash-123&quot;</span>.to_string(),
+                artifact: CardanoTransactionsCommitment::new(<span class="string">&quot;mkroot123&quot;</span>.to_string()),
                 created_at: DateTime::parse_from_rfc3339(<span class="string">&quot;2023-01-19T13:43:05.618857482Z&quot;</span>)
                     .unwrap()
                     .with_timezone(<span class="kw-2">&amp;</span>Utc),

@@ -1090,12 +1090,6 @@
 <a href="#1090" id="1090">1090</a>
 <a href="#1091" id="1091">1091</a>
 <a href="#1092" id="1092">1092</a>
-<a href="#1093" id="1093">1093</a>
-<a href="#1094" id="1094">1094</a>
-<a href="#1095" id="1095">1095</a>
-<a href="#1096" id="1096">1096</a>
-<a href="#1097" id="1097">1097</a>
-<a href="#1098" id="1098">1098</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>anyhow::Context;
 <span class="kw">use </span>mithril_common::{
     entities::{Epoch, ProtocolMessage, SignedEntityType, SingleSignatures},
@@ -2008,27 +2002,21 @@ else json_group_array( \
         <span class="kw">let </span>repository = OpenMessageRepository::new(connection.clone());
         <span class="kw">let </span>beacon = Beacon::new(<span class="string">&quot;devnet&quot;</span>.to_string(), <span class="number">1</span>, <span class="number">1</span>);
 
-        <span class="kw">let </span>signed_entity_type = SignedEntityType::MithrilStakeDistribution(beacon.epoch);
-        repository
-            .create_open_message(beacon.epoch, <span class="kw-2">&amp;</span>signed_entity_type, <span class="kw-2">&amp;</span>ProtocolMessage::new())
-            .<span class="kw">await
-            </span>.unwrap();
-        <span class="kw">let </span>open_message_result = repository
-            .get_open_message(<span class="kw-2">&amp;</span>signed_entity_type)
-            .<span class="kw">await
-            </span>.unwrap();
-        <span class="macro">assert!</span>(open_message_result.is_some());
-
-        <span class="kw">let </span>signed_entity_type = SignedEntityType::CardanoImmutableFilesFull(beacon.clone());
-        repository
-            .create_open_message(beacon.epoch, <span class="kw-2">&amp;</span>signed_entity_type, <span class="kw-2">&amp;</span>ProtocolMessage::new())
-            .<span class="kw">await
-            </span>.unwrap();
-        <span class="kw">let </span>open_message_result = repository
-            .get_open_message(<span class="kw-2">&amp;</span>signed_entity_type)
-            .<span class="kw">await
-            </span>.unwrap();
-        <span class="macro">assert!</span>(open_message_result.is_some());
+        <span class="kw">for </span>signed_entity_type <span class="kw">in </span>[
+            SignedEntityType::MithrilStakeDistribution(beacon.epoch),
+            SignedEntityType::CardanoImmutableFilesFull(beacon.clone()),
+            SignedEntityType::CardanoTransactions(beacon.clone()),
+        ] {
+            repository
+                .create_open_message(beacon.epoch, <span class="kw-2">&amp;</span>signed_entity_type, <span class="kw-2">&amp;</span>ProtocolMessage::new())
+                .<span class="kw">await
+                </span>.unwrap();
+            <span class="kw">let </span>open_message_result = repository
+                .get_open_message(<span class="kw-2">&amp;</span>signed_entity_type)
+                .<span class="kw">await
+                </span>.unwrap();
+            <span class="macro">assert!</span>(open_message_result.is_some());
+        }
     }
 
     <span class="attr">#[tokio::test]

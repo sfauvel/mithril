@@ -372,7 +372,7 @@
 
         <span class="self">self</span>.post_process_statequery(<span class="kw-2">&amp;mut </span>client).<span class="kw">await</span><span class="question-mark">?</span>;
 
-        drop(client.plexer_handle);
+        client.abort().<span class="kw">await</span>;
 
         <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(Epoch(epoch <span class="kw">as </span>u64)))
     }

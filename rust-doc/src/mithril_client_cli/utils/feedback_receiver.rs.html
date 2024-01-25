@@ -135,7 +135,7 @@
                 download_id: <span class="kw">_</span>,
                 size,
             } =&gt; {
-                <span class="kw">let </span>pb = <span class="kw">if </span><span class="self">self</span>.output_type == ProgressOutputType::TTY {
+                <span class="kw">let </span>pb = <span class="kw">if </span><span class="self">self</span>.output_type == ProgressOutputType::Tty {
                     ProgressBar::new(size)
                 } <span class="kw">else </span>{
                     ProgressBar::with_draw_target(<span class="prelude-val">Some</span>(size), ProgressDrawTarget::hidden())
@@ -168,7 +168,7 @@
             MithrilEvent::CertificateChainValidationStarted {
                 certificate_chain_validation_id: <span class="kw">_</span>,
             } =&gt; {
-                <span class="kw">let </span>pb = <span class="kw">if </span><span class="self">self</span>.output_type == ProgressOutputType::TTY {
+                <span class="kw">let </span>pb = <span class="kw">if </span><span class="self">self</span>.output_type == ProgressOutputType::Tty {
                     ProgressBar::new_spinner()
                 } <span class="kw">else </span>{
                     ProgressBar::hidden()

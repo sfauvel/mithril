@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["migration","provider"]};
+window.SIDEBAR_ITEMS = {"mod":["cardano_transaction_migration","migration","provider"]};

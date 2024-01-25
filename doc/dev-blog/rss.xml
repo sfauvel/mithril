@@ -4,10 +4,33 @@
         <title>Mithril. A complete guide. Blog</title>
         <link>https://mithril.network/doc/dev-blog</link>
         <description>Mithril. A complete guide. Blog</description>
-        <lastBuildDate>Wed, 03 Jan 2024 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 23 Jan 2024 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Mithril client npm package is released!]]></title>
+            <link>https://mithril.network/doc/dev-blog/2024/01/23/mithril-client-npm-package-released</link>
+            <guid>https://mithril.network/doc/dev-blog/2024/01/23/mithril-client-npm-package-released</guid>
+            <pubDate>Tue, 23 Jan 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[Mithril client npm is open to developers on npmjs.com]]></description>
+            <content:encoded><![CDATA[<h3 id="mithril-client-npm-is-open-to-developers-on-npmjscom">Mithril client npm is open to developers on npmjs.com</h3>
+<p>The Mithril team has published the first release (<strong>v0.1.7)</strong> of its <a href="https://www.npmjs.com/package/@mithril-dev/mithril-client-wasm">mithril-client-wasm</a> npm package on npmjs.com.</p>
+<p>The <strong>Mithril client npm package</strong> allows developers to use all the tooling necessary to manipulate Mithril certified types from a Mithril Aggregator directly in their (web) applications and to develop their own Mithril clients in any supported browser!</p>
+<p>Here are some useful documentation that can be used by developers:</p>
+<ul>
+<li><strong>Example of implementations</strong>: <a href="https://mithril.network/doc/manual/developer-docs/nodes/mithril-client-library-wasm">https://mithril.network/doc/manual/developer-docs/nodes/mithril-client-library-wasm</a></li>
+<li><strong>Mithril client npm package repository</strong>: <a href="https://github.com/input-output-hk/mithril/tree/main/mithril-client-wasm">https://github.com/input-output-hk/mithril/tree/main/mithril-client-wasm</a></li>
+<li><strong>npm</strong>: <a href="https://www.npmjs.com/package/@mithril-dev/mithril-client-wasm">https://www.npmjs.com/package/@mithril-dev/mithril-client-wasm</a></li>
+</ul>
+<p>Feel free to reach out to us on the <a href="https://discord.gg/5kaErDKDRq">Discord channel</a> for questions and/or help.</p>]]></content:encoded>
+            <category>wasm</category>
+            <category>web assembly</category>
+            <category>mithril client</category>
+            <category>library</category>
+            <category>npm</category>
+            <category>registry</category>
+        </item>
         <item>
             <title><![CDATA[Mithril signer service new configuration]]></title>
             <link>https://mithril.network/doc/dev-blog/2024/01/03/signer-service-new-configuration</link>
@@ -107,7 +130,7 @@ EOF'
 <li class="task-list-item"><input type="checkbox" disabled="" checked=""> <!-- -->Create the genesis certificate of the <code>release-mainnet</code> network (1 epoch).</li>
 <li class="task-list-item"><input type="checkbox" disabled="" checked=""> <!-- -->Wait for the first certificates to be produced by the <code>release-mainnet</code> network.</li>
 </ol>
-<p><a target="_blank" href="https://mithril.network/doc/assets/files/mainnet-launch-timeline-f89399ebabf6e728ea740691234d2f50.png"><img alt="Mainnet Beta Launch Timeline" src="https://mithril.network/doc/assets/images/mainnet-launch-timeline-f89399ebabf6e728ea740691234d2f50.png" width="834" height="704"></a></p>
+<p><a target="_blank" data-nobrokenlinkcheck="true" href="https://mithril.network/doc/assets/files/mainnet-launch-timeline-f89399ebabf6e728ea740691234d2f50.png"><img alt="Mainnet Beta Launch Timeline" src="https://mithril.network/doc/assets/images/mainnet-launch-timeline-f89399ebabf6e728ea740691234d2f50.png" width="834" height="704"></a></p>
 <p>This is an expected timeline, in case of modification, we will amend this post with a new one.</p>
 <p>Also, the documentation has been updated with the configuration of the <code>release-mainnet</code> network. It is available <a href="https://mithril.network/doc/manual/developer-docs/references#mithril-networks">here</a>.</p>
 <admonition type="danger"><p>As a Cardano SPO, before being able to setup a Mithril signer on the <code>mainnet</code>, it is required to complete the <strong>step 2</strong> of the <a href="https://mithril.network/doc/manual/getting-started/SPO-on-boarding-guide#step-2-get-mithril-ready-for-mainnet">SPO onboarding guide</a></p></admonition>
@@ -130,9 +153,9 @@ EOF'
 <p>All these information will be available at the updated <a href="https://mithril.network/doc/manual/getting-started/run-signer-node"><code>Run a Mithril Signer node (SPO)</code></a> guide. In the mean time, a preview of the Mithril signer setup with the <strong>production</strong> deployment model is available <a href="https://mithril.network/doc/next/manual/getting-started/run-signer-node">here</a>. In the new <strong>production</strong> deployment model, a new <strong>Mithril Relay</strong> has been introduced and requires an extra setup effort versus the <strong>naive</strong> deployment model that is currently ran by the pioneer SPOs on the Mithril test networks.</p>
 <admonition type="info"><p>We strongly encourage the volunteer SPOs to test the <strong>production</strong> deployment (once it is available of the <code>pre-release-preview</code> network) and to give us their feedback on the setup (clarity of the documentation, if you needed some fixes to make it work, ...).</p></admonition>
 <p>Here is the schema of the <strong>production</strong> deployment for the <code>mainnet</code>:
-<a target="_blank" href="https://mithril.network/doc/assets/files/signer-deployment-production-d33184629147bf7b0c79bb731673cd6c.jpg"><img alt="Production Mithril Signer Deployment Model" src="https://mithril.network/doc/assets/images/signer-deployment-production-d33184629147bf7b0c79bb731673cd6c.jpg" width="2179" height="458"></a></p>
+<a target="_blank" data-nobrokenlinkcheck="true" href="https://mithril.network/doc/assets/files/signer-deployment-production-d33184629147bf7b0c79bb731673cd6c.jpg"><img alt="Production Mithril Signer Deployment Model" src="https://mithril.network/doc/assets/images/signer-deployment-production-d33184629147bf7b0c79bb731673cd6c.jpg" width="2179" height="458"></a></p>
 <p>and the schema of the <strong>naive</strong> deployment only for the <code>testnet</code>:
-<a target="_blank" href="https://mithril.network/doc/assets/files/signer-deployment-naive-b2092b7ecc1a39c7344fa0cb809c250c.jpg"><img alt="Naive Mithril Signer Deployment Model" src="https://mithril.network/doc/assets/images/signer-deployment-naive-b2092b7ecc1a39c7344fa0cb809c250c.jpg" width="2219" height="450"></a></p>
+<a target="_blank" data-nobrokenlinkcheck="true" href="https://mithril.network/doc/assets/files/signer-deployment-naive-b2092b7ecc1a39c7344fa0cb809c250c.jpg"><img alt="Naive Mithril Signer Deployment Model" src="https://mithril.network/doc/assets/images/signer-deployment-naive-b2092b7ecc1a39c7344fa0cb809c250c.jpg" width="2219" height="450"></a></p>
 <p>Feel free to reach out to us on the <a href="https://discord.gg/5kaErDKDRq">Discord channel</a> for questions and/or help.</p>]]></content:encoded>
             <category>spo</category>
             <category>mithril signer</category>
@@ -199,7 +222,7 @@ ERA_READER_ADAPTER_PARAMS={"address":"addr_test1qpkyv2ws0deszm67t840sdnruqgr492n
 </code></pre>
 <p>All these information will be available at the updated <a href="https://mithril.network/doc/manual/getting-started/run-signer-node"><code>Run a Mithril Signer node (SPO)</code></a> guide.</p>
 <p>Here is a schema that illustrates the era switch behavior:
-<a target="_blank" href="https://mithril.network/doc/assets/files/schema-44673422940a92bbe82f4db8598c5e45.jpg"><img alt="Era Switch Schema" src="https://mithril.network/doc/assets/images/schema-44673422940a92bbe82f4db8598c5e45.jpg" width="1537" height="650"></a></p>
+<a target="_blank" data-nobrokenlinkcheck="true" href="https://mithril.network/doc/assets/files/schema-44673422940a92bbe82f4db8598c5e45.jpg"><img alt="Era Switch Schema" src="https://mithril.network/doc/assets/images/schema-44673422940a92bbe82f4db8598c5e45.jpg" width="1537" height="650"></a></p>
 <p>More information is also available at this <a href="https://mithril.network/doc/adr/4">ADR</a>.</p>
 <p>Feel free to reach out to us on the <a href="https://discord.gg/5kaErDKDRq">Discord channel</a> for questions and/or help.</p>]]></content:encoded>
             <category>era</category>
@@ -225,7 +248,7 @@ ERA_READER_ADAPTER_PARAMS={"address":"addr_test1qpkyv2ws0deszm67t840sdnruqgr492n
 <li><em>Artifact Promotion</em>: An artifact is built <em>once and only once</em> and is <em>promoted</em> while travelling through the build pipeline.</li>
 </ul>
 <p>Here is a high-level picture of this process:</p>
-<p><a target="_blank" href="https://mithril.network/doc/assets/files/release_process-a9ce55af510cd542b71e68a485251004.jpg"><img alt="Release Process" src="https://mithril.network/doc/assets/images/release_process-a9ce55af510cd542b71e68a485251004.jpg" width="1220" height="819"></a></p>
+<p><a target="_blank" data-nobrokenlinkcheck="true" href="https://mithril.network/doc/assets/files/release_process-a9ce55af510cd542b71e68a485251004.jpg"><img alt="Release Process" src="https://mithril.network/doc/assets/images/release_process-a9ce55af510cd542b71e68a485251004.jpg" width="1220" height="819"></a></p>
 <ul>
 <li>We will use a custom version based on <a href="https://semver.org/">SemVer</a> for all the crates, binaries and containers of the repository and for the GitHub release.</li>
 <li>We release a new distribution every 2 weeks (this duration is subject to changes as the project matures)<!-- -->

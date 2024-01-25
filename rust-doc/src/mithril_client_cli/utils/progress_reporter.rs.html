@@ -212,6 +212,9 @@
 <a href="#212" id="212">212</a>
 <a href="#213" id="213">213</a>
 <a href="#214" id="214">214</a>
+<a href="#215" id="215">215</a>
+<a href="#216" id="216">216</a>
+<a href="#217" id="217">217</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>chrono::Utc;
 <span class="kw">use </span>indicatif::{MultiProgress, ProgressBar, ProgressDrawTarget};
 <span class="kw">use </span>mithril_common::StdResult;
@@ -228,7 +231,7 @@
     <span class="doccomment">/// Output to json
     </span>JsonReporter,
     <span class="doccomment">/// Output to tty
-    </span>TTY,
+    </span>Tty,
     <span class="doccomment">/// No output
     </span>Hidden,
 }
@@ -237,7 +240,7 @@
     <span class="kw">fn </span>from(value: ProgressOutputType) -&gt; <span class="self">Self </span>{
         <span class="kw">match </span>value {
             ProgressOutputType::JsonReporter =&gt; ProgressDrawTarget::hidden(),
-            ProgressOutputType::TTY =&gt; ProgressDrawTarget::stdout(),
+            ProgressOutputType::Tty =&gt; ProgressDrawTarget::stdout(),
             ProgressOutputType::Hidden =&gt; ProgressDrawTarget::hidden(),
         }
     }
@@ -268,7 +271,7 @@
                 timestamp = Utc::now().to_rfc3339(),
                 number_of_steps = <span class="self">self</span>.number_of_steps,
             ),
-            ProgressOutputType::TTY =&gt; <span class="self">self
+            ProgressOutputType::Tty =&gt; <span class="self">self
                 </span>.multi_progress
                 .println(<span class="macro">format!</span>(<span class="string">&quot;{step_number}/{} - {text}&quot;</span>, <span class="self">self</span>.number_of_steps))<span class="question-mark">?</span>,
             ProgressOutputType::Hidden =&gt; (),
@@ -286,10 +289,12 @@
     }
 }
 
-<span class="kw">pub struct </span>ProgressBarJsonFormatter;
+<span class="doccomment">/// Utility to format a [ProgressBar] status as json
+</span><span class="kw">pub struct </span>ProgressBarJsonFormatter;
 
 <span class="kw">impl </span>ProgressBarJsonFormatter {
-    <span class="kw">pub fn </span>format(progress_bar: <span class="kw-2">&amp;</span>ProgressBar) -&gt; String {
+    <span class="doccomment">/// Get a json formatted string given the progress bar status
+    </span><span class="kw">pub fn </span>format(progress_bar: <span class="kw-2">&amp;</span>ProgressBar) -&gt; String {
         <span class="macro">format!</span>(
             <span class="string">r#&quot;{{&quot;timestamp&quot;: &quot;{}&quot;, &quot;bytes_downloaded&quot;: {}, &quot;bytes_total&quot;: {}, &quot;seconds_left&quot;: {}.{:0&gt;3}, &quot;seconds_elapsed&quot;: {}.{:0&gt;3}}}&quot;#</span>,
             Utc::now().to_rfc3339(),
@@ -311,7 +316,7 @@
 }
 
 <span class="kw">impl </span>DownloadProgressReporter {
-    <span class="doccomment">/// Instanciate a new progress reporter
+    <span class="doccomment">/// Instantiate a new progress reporter
     </span><span class="kw">pub fn </span>new(progress_bar: ProgressBar, output_type: ProgressOutputType) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             progress_bar,
@@ -343,7 +348,8 @@
         };
     }
 
-    <span class="kw">pub fn </span>finish(<span class="kw-2">&amp;</span><span class="self">self</span>, message: <span class="kw-2">&amp;</span>str) {
+    <span class="doccomment">/// Report that the current download is finished and print the given message.
+    </span><span class="kw">pub fn </span>finish(<span class="kw-2">&amp;</span><span class="self">self</span>, message: <span class="kw-2">&amp;</span>str) {
         <span class="self">self</span>.progress_bar.finish_with_message(message.to_string());
     }
 
