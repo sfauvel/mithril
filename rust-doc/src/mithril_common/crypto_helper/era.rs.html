@@ -229,12 +229,12 @@
         <span class="self">Self</span>::create_test_signer(rng)
     }
 
-    <span class="macro">cfg_random! </span>{
-        <span class="doccomment">/// [EraMarkersSigner] non deterministic
-        </span><span class="kw">pub fn </span>create_non_deterministic_signer() -&gt; <span class="self">Self </span>{
-            <span class="kw">let </span>rng = rand_core::OsRng;
-            <span class="self">Self</span>::create_test_signer(rng)
-        }
+    <span class="attr">#[cfg(any(test, feature = <span class="string">&quot;random&quot;</span>))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;random&quot;</span>)))]
+    </span><span class="doccomment">/// [EraMarkersSigner] non deterministic
+    </span><span class="kw">pub fn </span>create_non_deterministic_signer() -&gt; <span class="self">Self </span>{
+        <span class="kw">let </span>rng = rand_core::OsRng;
+        <span class="self">Self</span>::create_test_signer(rng)
     }
 
     <span class="doccomment">/// [EraMarkersSigner] from [EraMarkersVerifierSecretKey]

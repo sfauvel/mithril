@@ -26,6 +26,8 @@
 <a href="#26" id="26">26</a>
 <a href="#27" id="27">27</a>
 <a href="#28" id="28">28</a>
+<a href="#29" id="29">29</a>
+<a href="#30" id="30">30</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Tools and types to abstract the use of the [Mithril STM library](https://mithril.network/rust-doc/mithril_stm/index.html)
 
 </span><span class="kw">mod </span>cardano;
@@ -33,11 +35,12 @@
 <span class="kw">mod </span>conversions;
 <span class="kw">mod </span>era;
 <span class="kw">mod </span>genesis;
-<span class="attr">#[cfg(feature = <span class="string">&quot;test_tools&quot;</span>)]
+<span class="kw">mod </span>merkle_tree;
+<span class="attr">#[cfg(any(test, feature = <span class="string">&quot;test_tools&quot;</span>))]
 </span><span class="kw">pub mod </span>tests_setup;
 <span class="kw">mod </span>types;
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;random&quot;</span>)]
+<span class="attr">#[cfg(any(test, feature = <span class="string">&quot;random&quot;</span>))]
 </span><span class="kw">pub use </span>cardano::ColdKeyGenerator;
 
 <span class="kw">pub use </span>cardano::{
@@ -50,6 +53,7 @@
     EraMarkersVerifierSignature, EraMarkersVerifierVerificationKey,
 };
 <span class="kw">pub use </span>genesis::{ProtocolGenesisError, ProtocolGenesisSigner, ProtocolGenesisVerifier};
+<span class="kw">pub use </span>merkle_tree::{MKProof, MKTree, MKTreeNode, MKTreeStore};
 <span class="kw">pub use </span>types::<span class="kw-2">*</span>;
 
 <span class="doccomment">/// The current protocol version

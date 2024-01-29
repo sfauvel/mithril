@@ -89,7 +89,7 @@
 <span class="kw">use </span>std::fmt::{Debug, Formatter};
 
 <span class="kw">use </span><span class="kw">crate</span>::entities::{HexEncodedSingleSignature, LotteryIndex, PartyId, SignedEntityType};
-<span class="attr">#[cfg(feature = <span class="string">&quot;test_tools&quot;</span>)]
+<span class="attr">#[cfg(any(test, feature = <span class="string">&quot;test_tools&quot;</span>))]
 </span><span class="kw">use </span><span class="kw">crate</span>::test_utils::fake_keys;
 
 <span class="macro">era_deprecate!</span>(<span class="string">&quot;make signed_entity_type of RegisterSignatureMessage not optional&quot;</span>);

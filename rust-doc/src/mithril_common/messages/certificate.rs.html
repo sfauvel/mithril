@@ -312,17 +312,19 @@
 <a href="#312" id="312">312</a>
 <a href="#313" id="313">313</a>
 <a href="#314" id="314">314</a>
+<a href="#315" id="315">315</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>anyhow::Context;
 <span class="kw">use </span>serde::{Deserialize, Serialize};
 <span class="kw">use </span>std::fmt::{Debug, Formatter};
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;test_tools&quot;</span>)]
+<span class="attr">#[cfg(any(test, feature = <span class="string">&quot;test_tools&quot;</span>))]
 </span><span class="kw">use </span><span class="kw">crate</span>::entities::ProtocolMessagePartKey;
 <span class="kw">use </span><span class="kw">crate</span>::entities::{
     Beacon, Certificate, CertificateMetadata, CertificateSignature, ProtocolMessage,
 };
 <span class="kw">use </span><span class="kw">crate</span>::messages::CertificateMetadataMessagePart;
-<span class="attr">#[cfg(feature = <span class="string">&quot;test_tools&quot;</span>)]
+
+<span class="attr">#[cfg(any(test, feature = <span class="string">&quot;test_tools&quot;</span>))]
 </span><span class="kw">use </span><span class="kw">crate</span>::test_utils::fake_keys;
 <span class="kw">use </span><span class="kw">crate</span>::StdError;
 

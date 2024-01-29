@@ -90,7 +90,10 @@
 <a href="#90" id="90">90</a>
 <a href="#91" id="91">91</a>
 <a href="#92" id="92">92</a>
+<a href="#93" id="93">93</a>
+<a href="#94" id="94">94</a>
 </pre></div><pre class="rust"><code><span class="attr">#![warn(missing_docs)]
+#![cfg_attr(docsrs, feature(doc_cfg))]
 
 </span><span class="doccomment">//! Shared datatypes and traits used by Mithril rust projects
 //!
@@ -125,7 +128,7 @@
 <span class="macro">macro_rules! </span>cfg_test_tools {
     ($(<span class="macro-nonterminal">$item</span>:item)<span class="kw-2">*</span>) =&gt; {
         $(
-            <span class="attr">#[cfg(feature = <span class="string">&quot;test_tools&quot;</span>)]
+            <span class="attr">#[cfg(any(test, feature = <span class="string">&quot;test_tools&quot;</span>))]
             #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;test_tools&quot;</span>)))]
             </span><span class="macro-nonterminal">$item
         </span>)*
@@ -158,8 +161,9 @@
 <span class="attr">#[cfg(feature = <span class="string">&quot;database&quot;</span>)]
 </span><span class="kw">pub mod </span>store;
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;test_tools&quot;</span>)]
-</span><span class="kw">pub mod </span>test_utils;
+<span class="macro">cfg_test_tools! </span>{
+    <span class="kw">pub mod </span>test_utils;
+}
 
 <span class="attr">#[cfg(feature = <span class="string">&quot;fs&quot;</span>)]
 </span><span class="kw">pub use </span>beacon_provider::{BeaconProvider, BeaconProviderImpl};

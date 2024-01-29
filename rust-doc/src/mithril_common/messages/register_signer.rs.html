@@ -158,7 +158,7 @@
 </pre></div><pre class="rust"><code><span class="kw">use </span>serde::{Deserialize, Serialize};
 <span class="kw">use </span>std::fmt::{Debug, Formatter};
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;test_tools&quot;</span>)]
+<span class="attr">#[cfg(any(test, feature = <span class="string">&quot;test_tools&quot;</span>))]
 </span><span class="kw">use </span><span class="kw">crate</span>::test_utils::fake_keys;
 <span class="kw">use crate</span>::{
     crypto_helper::KESPeriod,

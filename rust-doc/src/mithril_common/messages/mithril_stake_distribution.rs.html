@@ -105,7 +105,7 @@
 
 <span class="kw">use </span><span class="kw">crate</span>::entities::Epoch;
 <span class="kw">use </span><span class="kw">crate</span>::entities::ProtocolParameters;
-<span class="attr">#[cfg(feature = <span class="string">&quot;test_tools&quot;</span>)]
+<span class="attr">#[cfg(any(test, feature = <span class="string">&quot;test_tools&quot;</span>))]
 </span><span class="kw">use </span><span class="kw">crate</span>::test_utils::fake_data;
 
 <span class="kw">use </span><span class="kw">super</span>::SignerWithStakeMessagePart;

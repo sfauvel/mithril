@@ -37,25 +37,25 @@
 </span><span class="kw">mod </span>builder;
 <span class="attr">#[cfg(all(feature = <span class="string">&quot;fs&quot;</span>, feature = <span class="string">&quot;random&quot;</span>))]
 </span><span class="kw">mod </span>cli_observer;
-<span class="attr">#[cfg(feature = <span class="string">&quot;test_tools&quot;</span>)]
+<span class="attr">#[cfg(any(test, feature = <span class="string">&quot;test_tools&quot;</span>))]
 </span><span class="kw">mod </span>fake_observer;
 <span class="kw">mod </span>interface;
 <span class="kw">mod </span>model;
 <span class="attr">#[cfg(all(feature = <span class="string">&quot;fs&quot;</span>, feature = <span class="string">&quot;random&quot;</span>))]
 </span><span class="kw">mod </span>pallas_observer;
 
-<span class="attr">#[cfg(test)]
+<span class="attr">#[cfg(all(test, feature = <span class="string">&quot;fs&quot;</span>, feature = <span class="string">&quot;random&quot;</span>))]
 </span><span class="kw">mod </span>test_cli_runner;
-
-<span class="attr">#[cfg(test)]
-</span><span class="kw">pub use </span>cli_observer::CliRunner;
 
 <span class="attr">#[cfg(all(feature = <span class="string">&quot;fs&quot;</span>, feature = <span class="string">&quot;random&quot;</span>))]
 </span><span class="kw">pub use </span>builder::{ChainObserverBuilder, ChainObserverType};
 <span class="attr">#[cfg(all(feature = <span class="string">&quot;fs&quot;</span>, feature = <span class="string">&quot;random&quot;</span>))]
+</span><span class="kw">pub use </span>cli_observer::CliRunner;
+<span class="attr">#[cfg(all(feature = <span class="string">&quot;fs&quot;</span>, feature = <span class="string">&quot;random&quot;</span>))]
 </span><span class="kw">pub use </span>cli_observer::{CardanoCliChainObserver, CardanoCliRunner};
-<span class="attr">#[cfg(feature = <span class="string">&quot;test_tools&quot;</span>)]
-</span><span class="kw">pub use </span>fake_observer::FakeObserver;
+<span class="macro">cfg_test_tools! </span>{
+    <span class="kw">pub use </span>fake_observer::FakeObserver;
+}
 <span class="attr">#[cfg(test)]
 </span><span class="kw">pub use </span>interface::MockChainObserver;
 <span class="kw">pub use </span>interface::{ChainObserver, ChainObserverError};

@@ -21,27 +21,45 @@
 <a href="#21" id="21">21</a>
 <a href="#22" id="22">22</a>
 <a href="#23" id="23">23</a>
-</pre></div><pre class="rust"><code><span class="kw">use </span>serde::{Deserialize, Serialize};
+<a href="#24" id="24">24</a>
+<a href="#25" id="25">25</a>
+<a href="#26" id="26">26</a>
+<a href="#27" id="27">27</a>
+<a href="#28" id="28">28</a>
+<a href="#29" id="29">29</a>
+<a href="#30" id="30">30</a>
+<a href="#31" id="31">31</a>
+<a href="#32" id="32">32</a>
+</pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::signable_builder::Artifact;
+<span class="kw">use </span>serde::{Deserialize, Serialize};
+<span class="kw">use </span>sha2::{Digest, Sha256};
 
-<span class="kw">use </span><span class="kw">crate</span>::signable_builder::Artifact;
+<span class="kw">use </span><span class="kw">super</span>::Beacon;
 
 <span class="doccomment">/// Commitment of a set of Cardano transactions
 </span><span class="attr">#[derive(Clone, Debug, PartialEq, Eq, Default, Serialize, Deserialize)]
 </span><span class="kw">pub struct </span>CardanoTransactionsCommitment {
     merkle_root: String,
+    beacon: Beacon,
 }
 
 <span class="kw">impl </span>CardanoTransactionsCommitment {
     <span class="doccomment">/// Creates a new [CardanoTransactionsCommitment]
-    </span><span class="kw">pub fn </span>new(merkle_root: String) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{ merkle_root }
+    </span><span class="kw">pub fn </span>new(merkle_root: String, beacon: Beacon) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            merkle_root,
+            beacon,
+        }
     }
 }
 
 <span class="attr">#[typetag::serde]
 </span><span class="kw">impl </span>Artifact <span class="kw">for </span>CardanoTransactionsCommitment {
     <span class="kw">fn </span>get_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
-        <span class="self">self</span>.merkle_root.clone()
+        <span class="kw">let </span><span class="kw-2">mut </span>hasher = Sha256::new();
+        hasher.update(<span class="self">self</span>.merkle_root.clone().as_bytes());
+        hasher.update(<span class="self">self</span>.beacon.compute_hash().as_bytes());
+        hex::encode(hasher.finalize())
     }
 }
 </code></pre></div></section></main></body></html>
