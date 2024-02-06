@@ -83,12 +83,16 @@
 <a href="#83" id="83">83</a>
 <a href="#84" id="84">84</a>
 <a href="#85" id="85">85</a>
+<a href="#86" id="86">86</a>
+<a href="#87" id="87">87</a>
+<a href="#88" id="88">88</a>
+<a href="#89" id="89">89</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>anyhow::Context;
 <span class="kw">use </span>hex::{FromHex, ToHex};
 <span class="kw">use </span>kes_summed_ed25519::kes::Sum6KesSig;
 <span class="kw">use </span>mithril_stm::stm::{StmAggrSig, StmAggrVerificationKey, StmSig, StmVerificationKeyPoP};
 
-<span class="kw">use </span><span class="kw">crate</span>::crypto_helper::{OpCert, ProtocolKey, ProtocolKeyCodec, D};
+<span class="kw">use </span><span class="kw">crate</span>::crypto_helper::{MKProof, OpCert, ProtocolKey, ProtocolKeyCodec, D};
 <span class="kw">use </span><span class="kw">crate</span>::StdResult;
 
 <span class="doccomment">/// Wrapper of [MithrilStm:StmVerificationKeyPoP](type@StmVerificationKeyPoP) to add serialization
@@ -119,6 +123,9 @@
 
 <span class="doccomment">/// Wrapper of [MithrilStm:StmAggrVerificationKey](struct@StmAggrVerificationKey).
 </span><span class="kw">pub type </span>ProtocolAggregateVerificationKey = ProtocolKey&lt;StmAggrVerificationKey&lt;D&gt;&gt;;
+
+<span class="doccomment">/// Wrapper of [MKProof] to add serialization utilities.
+</span><span class="kw">pub type </span>ProtocolMkProof = ProtocolKey&lt;MKProof&gt;;
 
 <span class="kw">impl </span>ProtocolGenesisSignature {
     <span class="doccomment">/// Create an instance from a bytes hex representation
@@ -165,7 +172,8 @@
 
 <span class="macro">impl_codec_and_type_conversions_for_protocol_key!</span>(
     json_hex_codec =&gt; StmVerificationKeyPoP, Sum6KesSig, StmSig, StmAggrSig&lt;D&gt;, OpCert,
-        ed25519_dalek::VerifyingKey, ed25519_dalek::SigningKey, StmAggrVerificationKey&lt;D&gt;
+        ed25519_dalek::VerifyingKey, ed25519_dalek::SigningKey, StmAggrVerificationKey&lt;D&gt;,
+        MKProof
 );
 <span class="macro">impl_codec_and_type_conversions_for_protocol_key!</span>(no_default_codec =&gt; ed25519_dalek::Signature);
 </code></pre></div></section></main></body></html>

@@ -3,9 +3,13 @@
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
 <a href="#5" id="5">5</a>
-</pre></div><pre class="rust"><code><span class="kw">mod </span>certificate_metadata;
+<a href="#6" id="6">6</a>
+<a href="#7" id="7">7</a>
+</pre></div><pre class="rust"><code><span class="kw">mod </span>cardano_transactions_set_proof;
+<span class="kw">mod </span>certificate_metadata;
 <span class="kw">mod </span>signer;
 
+<span class="kw">pub use </span>cardano_transactions_set_proof::CardanoTransactionsSetProofMessagePart;
 <span class="kw">pub use </span>certificate_metadata::CertificateMetadataMessagePart;
 <span class="kw">pub use </span>signer::{SignerMessagePart, SignerWithStakeMessagePart};
 </code></pre></div></section></main></body></html>

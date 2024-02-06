@@ -102,11 +102,22 @@
 <a href="#102" id="102">102</a>
 <a href="#103" id="103">103</a>
 <a href="#104" id="104">104</a>
+<a href="#105" id="105">105</a>
+<a href="#106" id="106">106</a>
+<a href="#107" id="107">107</a>
+<a href="#108" id="108">108</a>
+<a href="#109" id="109">109</a>
+<a href="#110" id="110">110</a>
+<a href="#111" id="111">111</a>
+<a href="#112" id="112">112</a>
+<a href="#113" id="113">113</a>
 </pre></div><pre class="rust"><code><span class="kw">use crate</span>::{
     database::provider::SignerGetter,
     dependency_injection::EpochServiceWrapper,
     event_store::{EventMessage, TransmitterService},
-    services::{CertifierService, MessageService, SignedEntityService, TickerService},
+    services::{
+        CertifierService, MessageService, ProverService, SignedEntityService, TickerService,
+    },
     CertificatePendingStore, Configuration, DependencyContainer, SignerRegisterer,
     VerificationKeyStorer,
 };
@@ -205,5 +216,12 @@
     dependency_manager: Arc&lt;DependencyContainer&gt;,
 ) -&gt; <span class="kw">impl </span>Filter&lt;Extract = (Arc&lt;<span class="kw">dyn </span>MessageService&gt;,), Error = Infallible&gt; + Clone {
     warp::any().map(<span class="kw">move </span>|| dependency_manager.message_service.clone())
+}
+
+<span class="doccomment">/// With Prover service
+</span><span class="kw">pub fn </span>with_prover_service(
+    dependency_manager: Arc&lt;DependencyContainer&gt;,
+) -&gt; <span class="kw">impl </span>Filter&lt;Extract = (Arc&lt;<span class="kw">dyn </span>ProverService&gt;,), Error = Infallible&gt; + Clone {
+    warp::any().map(<span class="kw">move </span>|| dependency_manager.prover_service.clone())
 }
 </code></pre></div></section></main></body></html>
