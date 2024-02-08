@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-aggregator/src/services/message.rs`."><title>message.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_aggregator" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-aggregator/src/services/message.rs`."><title>message.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_aggregator" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -518,7 +519,7 @@
 <a href="#518" id="518">518</a>
 <a href="#519" id="519">519</a>
 <a href="#520" id="520">520</a>
-</pre></div><pre class="rust"><code><span class="doccomment">//! This service is responsible of providing HTTP server with messages as fast as possible.
+</pre></div><pre class="rust"><code><span class="doccomment">//! This service is responsible for providing HTTP server with messages as fast as possible.
 
 </span><span class="kw">use </span>std::sync::Arc;
 
@@ -528,9 +529,9 @@
 <span class="kw">use </span>mithril_common::{
     entities::SignedEntityTypeDiscriminants,
     messages::{
-        CardanoTransactionListMessage, CardanoTransactionMessage, CertificateListMessage,
-        CertificateMessage, MithrilStakeDistributionListMessage, MithrilStakeDistributionMessage,
-        SnapshotListMessage, SnapshotMessage,
+        CardanoTransactionCommitmentListMessage, CardanoTransactionCommitmentMessage,
+        CertificateListMessage, CertificateMessage, MithrilStakeDistributionListMessage,
+        MithrilStakeDistributionMessage, SnapshotListMessage, SnapshotMessage,
     },
     StdResult,
 };
@@ -544,7 +545,7 @@
 </span><span class="attr">#[derive(Debug, Error)]
 </span><span class="kw">pub enum </span>MessageServiceError {
     <span class="doccomment">/// There is no current PendingCertificate
-    </span><span class="attr">#[error(<span class="string">&quot;There is no current pending certificate.&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"There is no current pending certificate."</span>)]
     </span>PendingCertificateDoesNotExist,
 }
 <span class="doccomment">/// HTTP Message service trait.
@@ -587,13 +588,13 @@
     </span><span class="kw">async fn </span>get_cardano_transaction_message(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         signed_entity_id: <span class="kw-2">&amp;</span>str,
-    ) -&gt; StdResult&lt;<span class="prelude-ty">Option</span>&lt;CardanoTransactionMessage&gt;&gt;;
+    ) -&gt; StdResult&lt;<span class="prelude-ty">Option</span>&lt;CardanoTransactionCommitmentMessage&gt;&gt;;
 
     <span class="doccomment">/// Return the list of the last Cardano transactions set message
     </span><span class="kw">async fn </span>get_cardano_transaction_list_message(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         limit: usize,
-    ) -&gt; StdResult&lt;CardanoTransactionListMessage&gt;;
+    ) -&gt; StdResult&lt;CardanoTransactionCommitmentListMessage&gt;;
 }
 
 <span class="doccomment">/// Implementation of the [MessageService]
@@ -685,7 +686,7 @@
     <span class="kw">async fn </span>get_cardano_transaction_message(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         signed_entity_id: <span class="kw-2">&amp;</span>str,
-    ) -&gt; StdResult&lt;<span class="prelude-ty">Option</span>&lt;CardanoTransactionMessage&gt;&gt; {
+    ) -&gt; StdResult&lt;<span class="prelude-ty">Option</span>&lt;CardanoTransactionCommitmentMessage&gt;&gt; {
         <span class="kw">let </span>signed_entity = <span class="self">self
             </span>.signed_entity_storer
             .get_signed_entity(signed_entity_id)
@@ -697,7 +698,7 @@
     <span class="kw">async fn </span>get_cardano_transaction_list_message(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         limit: usize,
-    ) -&gt; StdResult&lt;CardanoTransactionListMessage&gt; {
+    ) -&gt; StdResult&lt;CardanoTransactionCommitmentListMessage&gt; {
         <span class="kw">let </span>signed_entity_type_id = SignedEntityTypeDiscriminants::CardanoTransactions;
         <span class="kw">let </span>entities = <span class="self">self
             </span>.signed_entity_storer
@@ -740,7 +741,7 @@
         <span class="kw">let </span>service = dep_builder.get_message_service().<span class="kw">await</span>.unwrap();
 
         <span class="comment">// test
-        </span><span class="kw">let </span>certificate_hash = <span class="string">&quot;whatever&quot;</span>;
+        </span><span class="kw">let </span>certificate_hash = <span class="string">"whatever"</span>;
         <span class="kw">let </span>certficate_message = service
             .get_certificate_message(certificate_hash)
             .<span class="kw">await
@@ -754,7 +755,7 @@
         </span><span class="kw">let </span>configuration = Configuration::new_sample();
         <span class="kw">let </span><span class="kw-2">mut </span>dep_builder = DependenciesBuilder::new(configuration);
         <span class="kw">let </span>service = dep_builder.get_message_service().<span class="kw">await</span>.unwrap();
-        <span class="kw">let </span>beacon = Beacon::new(<span class="string">&quot;devnet&quot;</span>.to_string(), <span class="number">3</span>, <span class="number">1</span>);
+        <span class="kw">let </span>beacon = Beacon::new(<span class="string">"devnet"</span>.to_string(), <span class="number">3</span>, <span class="number">1</span>);
         <span class="kw">let </span>fixture = MithrilFixtureBuilder::default().with_signers(<span class="number">3</span>).build();
         <span class="kw">let </span>genesis_beacon = Beacon {
             epoch: beacon.epoch - <span class="number">1</span>,
@@ -774,7 +775,7 @@
             .get_certificate_message(<span class="kw-2">&amp;</span>genesis_certificate.hash)
             .<span class="kw">await
             </span>.unwrap()
-            .expect(<span class="string">&quot;There should be a certificate.&quot;</span>);
+            .expect(<span class="string">"There should be a certificate."</span>);
         <span class="macro">assert_eq!</span>(genesis_certificate.hash, certficate_message.hash);
     }
 
@@ -783,7 +784,7 @@
         <span class="kw">let </span>configuration = Configuration::new_sample();
         <span class="kw">let </span><span class="kw-2">mut </span>dep_builder = DependenciesBuilder::new(configuration);
         <span class="kw">let </span>service = dep_builder.get_message_service().<span class="kw">await</span>.unwrap();
-        <span class="kw">let </span>beacon = Beacon::new(<span class="string">&quot;devnet&quot;</span>.to_string(), <span class="number">3</span>, <span class="number">1</span>);
+        <span class="kw">let </span>beacon = Beacon::new(<span class="string">"devnet"</span>.to_string(), <span class="number">3</span>, <span class="number">1</span>);
         <span class="kw">let </span>fixture = MithrilFixtureBuilder::default().with_signers(<span class="number">3</span>).build();
         <span class="kw">let </span>genesis_beacon = Beacon {
             epoch: beacon.epoch - <span class="number">1</span>,
@@ -818,7 +819,7 @@
         <span class="kw">let </span>configuration = Configuration::new_sample();
         <span class="kw">let </span><span class="kw-2">mut </span>dep_builder = DependenciesBuilder::new(configuration);
         <span class="kw">let </span>service = dep_builder.get_message_service().<span class="kw">await</span>.unwrap();
-        <span class="kw">let </span>snapshot = service.get_snapshot_message(<span class="string">&quot;whatever&quot;</span>).<span class="kw">await</span>.unwrap();
+        <span class="kw">let </span>snapshot = service.get_snapshot_message(<span class="string">"whatever"</span>).<span class="kw">await</span>.unwrap();
 
         <span class="macro">assert!</span>(snapshot.is_none());
     }
@@ -846,10 +847,10 @@
         dep_builder.signed_entity_storer = <span class="prelude-val">Some</span>(Arc::new(storer));
         <span class="kw">let </span>service = dep_builder.get_message_service().<span class="kw">await</span>.unwrap();
         <span class="kw">let </span>response = service
-            .get_snapshot_message(<span class="string">&quot;whatever&quot;</span>)
+            .get_snapshot_message(<span class="string">"whatever"</span>)
             .<span class="kw">await
             </span>.unwrap()
-            .expect(<span class="string">&quot;A SnapshotMessage was expected.&quot;</span>);
+            .expect(<span class="string">"A SnapshotMessage was expected."</span>);
 
         <span class="macro">assert_eq!</span>(message, response);
     }
@@ -903,10 +904,10 @@
         dep_builder.signed_entity_storer = <span class="prelude-val">Some</span>(Arc::new(storer));
         <span class="kw">let </span>service = dep_builder.get_message_service().<span class="kw">await</span>.unwrap();
         <span class="kw">let </span>response = service
-            .get_mithril_stake_distribution_message(<span class="string">&quot;whatever&quot;</span>)
+            .get_mithril_stake_distribution_message(<span class="string">"whatever"</span>)
             .<span class="kw">await
             </span>.unwrap()
-            .expect(<span class="string">&quot;A MithrilStakeDistributionMessage was expected.&quot;</span>);
+            .expect(<span class="string">"A MithrilStakeDistributionMessage was expected."</span>);
 
         <span class="macro">assert_eq!</span>(message, response);
     }
@@ -923,7 +924,7 @@
         dep_builder.signed_entity_storer = <span class="prelude-val">Some</span>(Arc::new(storer));
         <span class="kw">let </span>service = dep_builder.get_message_service().<span class="kw">await</span>.unwrap();
         <span class="kw">let </span>response = service
-            .get_mithril_stake_distribution_message(<span class="string">&quot;whatever&quot;</span>)
+            .get_mithril_stake_distribution_message(<span class="string">"whatever"</span>)
             .<span class="kw">await
             </span>.unwrap();
 
@@ -981,10 +982,10 @@
         dep_builder.signed_entity_storer = <span class="prelude-val">Some</span>(Arc::new(storer));
         <span class="kw">let </span>service = dep_builder.get_message_service().<span class="kw">await</span>.unwrap();
         <span class="kw">let </span>response = service
-            .get_cardano_transaction_message(<span class="string">&quot;whatever&quot;</span>)
+            .get_cardano_transaction_message(<span class="string">"whatever"</span>)
             .<span class="kw">await
             </span>.unwrap()
-            .expect(<span class="string">&quot;A CardanoTransactionMessage was expected.&quot;</span>);
+            .expect(<span class="string">"A CardanoTransactionMessage was expected."</span>);
 
         <span class="macro">assert_eq!</span>(message, response);
     }
@@ -1001,7 +1002,7 @@
         dep_builder.signed_entity_storer = <span class="prelude-val">Some</span>(Arc::new(storer));
         <span class="kw">let </span>service = dep_builder.get_message_service().<span class="kw">await</span>.unwrap();
         <span class="kw">let </span>response = service
-            .get_cardano_transaction_message(<span class="string">&quot;whatever&quot;</span>)
+            .get_cardano_transaction_message(<span class="string">"whatever"</span>)
             .<span class="kw">await
             </span>.unwrap();
 

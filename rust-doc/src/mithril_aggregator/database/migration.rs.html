@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-aggregator/src/database/migration.rs`."><title>migration.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_aggregator" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-aggregator/src/database/migration.rs`."><title>migration.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_aggregator" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -635,7 +636,7 @@
         // `stake_store` JSON format.
         </span>SqlMigration::new(
             <span class="number">1</span>,
-            <span class="string">r#&quot;
+            <span class="string">r#"
 create table stake_pool (
     stake_pool_id text      not null,
     epoch         integer   not null,
@@ -652,14 +653,14 @@ insert into stake_pool (epoch, stake_pool_id, stake)
     from stake, json_each(stake.value) as stake_dis 
     order by epoch asc;
 drop table stake;
-&quot;#</span>,
+"#</span>,
         ),
         <span class="comment">// Migration 2
         // Add the `epoch_setting` table and migration data from the previous
         // `protocol_parameters` JSON format.
         </span>SqlMigration::new(
             <span class="number">2</span>,
-            <span class="string">r#&quot;
+            <span class="string">r#"
 create table epoch_setting (
     epoch_setting_id    integer     not null,
     protocol_parameters json        not null,
@@ -673,29 +674,29 @@ insert into epoch_setting (epoch_setting_id, protocol_parameters)
     from protocol_parameters
     order by key asc;
 drop table protocol_parameters;
-&quot;#</span>,
+"#</span>,
         ),
         <span class="comment">// Migration 3
         // Add the `signed_entity_type` table and insert first types
         </span>SqlMigration::new(
             <span class="number">3</span>,
-            <span class="string">r#&quot;
+            <span class="string">r#"
 create table signed_entity_type (
     signed_entity_type_id       integer     not null,
     name                        text        not null,
     primary key (signed_entity_type_id)
 );
 insert into signed_entity_type (signed_entity_type_id, name) 
-    values  (0, &#39;Mithril Stake Distribution&#39;), 
-            (1, &#39;Cardano Stake Distribution&#39;),
-            (2, &#39;Full Cardano Immutable Files&#39;);
-&quot;#</span>,
+    values  (0, 'Mithril Stake Distribution'), 
+            (1, 'Cardano Stake Distribution'),
+            (2, 'Full Cardano Immutable Files');
+"#</span>,
         ),
         <span class="comment">// Migration 4
         // Add the new `certificate` table and migrate data from its previous version.
         </span>SqlMigration::new(
             <span class="number">4</span>,
-            <span class="string">r#&quot;
+            <span class="string">r#"
 create table if not exists certificate (key_hash text primary key, key json not null, value json not null);
 alter table certificate rename to certificate_temp;
 create table certificate (
@@ -729,35 +730,35 @@ insert into certificate (certificate_id,
                         initiated_at,
                         sealed_at)
     select 
-        json_extract(c.value, &#39;$.hash&#39;) as certificate_id,
+        json_extract(c.value, '$.hash') as certificate_id,
         case 
-            when json_extract(c.value, &#39;$.multi_signature&#39;) &lt;&gt; &#39;&#39; then json_extract(c.value, &#39;$.previous_hash&#39;) 
+            when json_extract(c.value, '$.multi_signature') &lt;&gt; '' then json_extract(c.value, '$.previous_hash') 
             else NULL 
         end as parent_certificate_id,
-        json_extract(c.value, &#39;$.signed_message&#39;) as message,
+        json_extract(c.value, '$.signed_message') as message,
         case 
-            when json_extract(c.value, &#39;$.multi_signature&#39;) &lt;&gt; &#39;&#39; then json_extract(c.value, &#39;$.multi_signature&#39;)
-            else json_extract(c.value, &#39;$.genesis_signature&#39;)
+            when json_extract(c.value, '$.multi_signature') &lt;&gt; '' then json_extract(c.value, '$.multi_signature')
+            else json_extract(c.value, '$.genesis_signature')
         end as signature,
-        json_extract(c.value, &#39;$.aggregate_verification_key&#39;) as aggregate_verification_key,
-        json_extract(c.value, &#39;$.beacon.epoch&#39;) as epoch,
-        json(json_extract(c.value, &#39;$.beacon&#39;)) as beacon,
-        json_extract(c.value, &#39;$.metadata.version&#39;) as protocol_version,
-        json(json_extract(c.value, &#39;$.metadata.parameters&#39;)) as protocol_parameters,
-        json(json_extract(c.value, &#39;$.protocol_message&#39;)) as protocol_message,
-        json(json_extract(c.value, &#39;$.metadata.signers&#39;)) as signers,
-        json_extract(c.value, &#39;$.metadata.initiated_at&#39;) as initiated_at,
-        json_extract(c.value, &#39;$.metadata.sealed_at&#39;) as sealed_at
+        json_extract(c.value, '$.aggregate_verification_key') as aggregate_verification_key,
+        json_extract(c.value, '$.beacon.epoch') as epoch,
+        json(json_extract(c.value, '$.beacon')) as beacon,
+        json_extract(c.value, '$.metadata.version') as protocol_version,
+        json(json_extract(c.value, '$.metadata.parameters')) as protocol_parameters,
+        json(json_extract(c.value, '$.protocol_message')) as protocol_message,
+        json(json_extract(c.value, '$.metadata.signers')) as signers,
+        json_extract(c.value, '$.metadata.initiated_at') as initiated_at,
+        json_extract(c.value, '$.metadata.sealed_at') as sealed_at
     from certificate_temp as c;
 create index epoch_index ON certificate(epoch);
 drop table certificate_temp;
-&quot;#</span>,
+"#</span>,
         ),
         <span class="comment">// Migration 5
         // Add the `open_message` table
         </span>SqlMigration::new(
             <span class="number">5</span>,
-            <span class="string">r#&quot;
+            <span class="string">r#"
 create table open_message (
 	open_message_id         text    not null,
     epoch_setting_id        int     not null,
@@ -769,14 +770,14 @@ create table open_message (
     foreign key (epoch_setting_id)     references epoch_setting (epoch_setting_id),
     foreign key (signed_entity_type_id) references signed_entity_type (signed_entity_type_id)
 );
-&quot;#</span>,
+"#</span>,
         ),
         <span class="comment">// Migration 6
         // Add the `signer_registration` table and migration data from the previous
         // `verification_key` JSON format.
         </span>SqlMigration::new(
             <span class="number">6</span>,
-            <span class="string">r#&quot;
+            <span class="string">r#"
 create table signer_registration (
     signer_id                   text        not null,
     epoch_setting_id            integer     not null,
@@ -800,23 +801,23 @@ insert into signer_registration (signer_id,
     select 
         verification_key_signer.key as signer_id,
         verification_key.key as epoch_setting_id, 
-        json_extract(verification_key_signer.value, &#39;$.verification_key&#39;) as verification_key,
-        json_extract(verification_key_signer.value, &#39;$.verification_key_signature&#39;) as verification_key_signature,
-        json_extract(verification_key_signer.value, &#39;$.operational_certificate&#39;) as operational_certificate,
-        json_extract(verification_key_signer.value, &#39;$.kes_period&#39;) as kes_period,
+        json_extract(verification_key_signer.value, '$.verification_key') as verification_key,
+        json_extract(verification_key_signer.value, '$.verification_key_signature') as verification_key_signature,
+        json_extract(verification_key_signer.value, '$.operational_certificate') as operational_certificate,
+        json_extract(verification_key_signer.value, '$.kes_period') as kes_period,
         stake_pool.stake as stake
     from verification_key, json_each(verification_key.value) as verification_key_signer 
     left join stake_pool on stake_pool.stake_pool_id = verification_key_signer.key and stake_pool.epoch = verification_key.key
     order by verification_key.key, verification_key_signer.key asc;
 drop table verification_key;
-&quot;#</span>,
+"#</span>,
         ),
         <span class="comment">// Migration 7
         // Add the `signed_entity` table and migration data from the previous
         // `snapshot` JSON format.
         </span>SqlMigration::new(
             <span class="number">7</span>,
-            <span class="string">r#&quot;
+            <span class="string">r#"
 create table signed_entity (
     signed_entity_id            text        not null,
     signed_entity_type_id       integer     not null,
@@ -835,21 +836,21 @@ insert into signed_entity (signed_entity_id,
                                 beacon,
                                 entity) 
     select 
-        json_extract(snapshot.value, &#39;$.digest&#39;) as signed_entity_id,
+        json_extract(snapshot.value, '$.digest') as signed_entity_id,
         2 as signed_entity_type_id,
-        json_extract(snapshot.value, &#39;$.certificate_hash&#39;) as certificate_id,
-        json_extract(snapshot.value, &#39;$.beacon&#39;) as beacon,
+        json_extract(snapshot.value, '$.certificate_hash') as certificate_id,
+        json_extract(snapshot.value, '$.beacon') as beacon,
         snapshot.value as entity
     from snapshot 
     order by ROWID asc;
 drop table snapshot;
-&quot;#</span>,
+"#</span>,
         ),
         <span class="comment">// Migration 8
         // Add the `signer` table and migration data from `signer_registration` table
         </span>SqlMigration::new(
             <span class="number">8</span>,
-            <span class="string">r#&quot;
+            <span class="string">r#"
 create table signer (
     signer_id                   text        not null,
     pool_ticker                 text,
@@ -882,13 +883,13 @@ create table signer_registration (
 );
 insert into signer_registration select * from signer_registration_temp order by ROWID asc;
 drop table signer_registration_temp;
-&quot;#</span>,
+"#</span>,
         ),
         <span class="comment">// Migration 9
         // Add the `single_signature` table and rename previous table to `single_signature_legacy`
         </span>SqlMigration::new(
             <span class="number">9</span>,
-            <span class="string">r#&quot;
+            <span class="string">r#"
 create table if not exists single_signature (key_hash text primary key, key json not null, value json not null);
 alter table single_signature rename to single_signature_legacy;
 create table single_signature (
@@ -902,24 +903,24 @@ create table single_signature (
     foreign key (open_message_id) references open_message(open_message_id) on delete cascade
     foreign key (signer_id, registration_epoch_setting_id) references signer_registration(signer_id, epoch_setting_id)
 );
-&quot;#</span>,
+"#</span>,
         ),
         <span class="comment">// Migration 10
         // Alter `open_message` table and drop `single_signature_legacy` table
         </span>SqlMigration::new(
             <span class="number">10</span>,
-            <span class="string">r#&quot;
+            <span class="string">r#"
 drop table single_signature_legacy;
 alter table open_message drop column message;
 alter table open_message add column protocol_message json not null;
 alter table open_message add column is_certified bool not null default false;
-&quot;#</span>,
+"#</span>,
         ),
         <span class="comment">// Migration 11
         // Alter `signed_entity` table
         </span>SqlMigration::new(
             <span class="number">11</span>,
-            <span class="string">r#&quot;
+            <span class="string">r#"
 alter table signed_entity rename to signed_entity_old;
 create table signed_entity (
     signed_entity_id            text        not null,
@@ -941,36 +942,36 @@ insert into signed_entity (signed_entity_id,
     from signed_entity_old 
     order by rowid asc;
 drop table signed_entity_old;
-&quot;#</span>,
+"#</span>,
         ),
         <span class="comment">// Migration 12
         // Alter `open_message` table
         </span>SqlMigration::new(
             <span class="number">12</span>,
-            <span class="string">r#&quot;
+            <span class="string">r#"
 create unique index open_message_unique_index on open_message(signed_entity_type_id, beacon);
-&quot;#</span>,
+"#</span>,
         ),
         <span class="comment">// Migration 13
         // Update signed_entity.artifact type MithrilStakeDistribution to add new fields in JSON.
         </span>SqlMigration::new(
             <span class="number">13</span>,
-            <span class="string">r#&quot;
+            <span class="string">r#"
 update signed_entity
     set artifact = json_insert(
         json_insert(
             artifact,
-            &#39;$.protocol_parameters&#39;, 
+            '$.protocol_parameters', 
             json(certificate.protocol_parameters)
         ), 
-        &#39;$.created_at&#39;, 
+        '$.created_at', 
         created_at
     )
 from certificate 
 where 
     signed_entity.signed_entity_type_id = 0
     and signed_entity.certificate_id = certificate.certificate_id
-&quot;#</span>,
+"#</span>,
         ),
         <span class="comment">// Migration 14
         // Alter `signer`, `signer_registration`, `single_signature`, `open_message`, `certificate`,
@@ -979,7 +980,7 @@ where
         // are stored in a compatible format).
         </span>SqlMigration::new(
             <span class="number">14</span>,
-            <span class="string">r#&quot;
+            <span class="string">r#"
 -- disable foreign keys since we will delete tables linked using them
 pragma foreign_keys=false;
 
@@ -993,8 +994,8 @@ create table new_signer (
 );
 
 insert into new_signer (signer_id, pool_ticker, created_at, updated_at)
-    select              signer_id, pool_ticker, strftime(&#39;%Y-%m-%dT%H:%M:%fZ&#39;, created_at),
-        strftime(&#39;%Y-%m-%dT%H:%M:%fZ&#39;, updated_at)
+    select              signer_id, pool_ticker, strftime('%Y-%m-%dT%H:%M:%fZ', created_at),
+        strftime('%Y-%m-%dT%H:%M:%fZ', updated_at)
     from signer order by rowid asc;
 
 drop table signer;
@@ -1018,7 +1019,7 @@ insert into new_signer_registration
         (  signer_id, epoch_setting_id, verification_key, verification_key_signature,
         operational_certificate, kes_period, stake, created_at)
     select signer_id, epoch_setting_id, verification_key, verification_key_signature,
-        operational_certificate, kes_period, stake, strftime(&#39;%Y-%m-%dT%H:%M:%fZ&#39;, created_at)
+        operational_certificate, kes_period, stake, strftime('%Y-%m-%dT%H:%M:%fZ', created_at)
     from signer_registration order by rowid asc;
 
 drop table signer_registration;
@@ -1040,7 +1041,7 @@ insert into new_single_signature
         (  open_message_id, signer_id, registration_epoch_setting_id, lottery_indexes, signature,
         created_at)
     select open_message_id, signer_id, registration_epoch_setting_id, lottery_indexes, signature,
-        strftime(&#39;%Y-%m-%dT%H:%M:%fZ&#39;, created_at)
+        strftime('%Y-%m-%dT%H:%M:%fZ', created_at)
     from single_signature order by rowid asc;
 
 drop table single_signature;
@@ -1066,7 +1067,7 @@ insert into new_open_message
         created_at)
     select open_message_id, epoch_setting_id, beacon, signed_entity_type_id,
         protocol_message, is_certified,
-        strftime(&#39;%Y-%m-%dT%H:%M:%fZ&#39;, created_at)
+        strftime('%Y-%m-%dT%H:%M:%fZ', created_at)
     from open_message order by rowid asc;
 
 drop table open_message;
@@ -1099,8 +1100,8 @@ insert into new_certificate
         sealed_at)
     select certificate_id, parent_certificate_id, message, signature, aggregate_verification_key,
         epoch, beacon, protocol_version, protocol_parameters, protocol_message, signers,
-        strftime(&#39;%Y-%m-%dT%H:%M:%fZ&#39;, initiated_at),
-        strftime(&#39;%Y-%m-%dT%H:%M:%fZ&#39;, sealed_at)
+        strftime('%Y-%m-%dT%H:%M:%fZ', initiated_at),
+        strftime('%Y-%m-%dT%H:%M:%fZ', sealed_at)
     from certificate order by rowid asc;
 
 drop table certificate;
@@ -1119,7 +1120,7 @@ create table new_stake_pool (
 
 insert into new_stake_pool
         (  stake_pool_id, epoch, stake, created_at)
-    select stake_pool_id, epoch, stake, strftime(&#39;%Y-%m-%dT%H:%M:%fZ&#39;, created_at)
+    select stake_pool_id, epoch, stake, strftime('%Y-%m-%dT%H:%M:%fZ', created_at)
     from stake_pool order by rowid asc;
 
 drop table stake_pool;
@@ -1141,7 +1142,7 @@ insert into new_signed_entity
         (  signed_entity_id, signed_entity_type_id, certificate_id, beacon, artifact,
         created_at)
     select signed_entity_id, signed_entity_type_id, certificate_id, beacon, artifact,
-        strftime(&#39;%Y-%m-%dT%H:%M:%fZ&#39;, created_at)
+        strftime('%Y-%m-%dT%H:%M:%fZ', created_at)
     from signed_entity order by rowid asc;
 
 drop table signed_entity;
@@ -1150,16 +1151,16 @@ alter table new_signed_entity rename to signed_entity;
 -- reenable foreign keys
 pragma foreign_key_check;
 pragma foreign_keys=true;
-        &quot;#</span>,
+        "#</span>,
         ),
         <span class="comment">// Migration 15
         // Alter `db_version` tables to remove `default current_timestamp` clause from its
         // `updated_at` field, and migrate old date data to rfc 3339.
         </span>SqlMigration::new(
             <span class="number">15</span>,
-            <span class="string">r&quot;
--- In some context, most likely tests, the db_version does not exist since the migrator isn&#39;t used
-create table if not exists &#39;db_version&#39; (application_type text not null primary key, version integer not null, updated_at text not null);
+            <span class="string">r"
+-- In some context, most likely tests, the db_version does not exist since the migrator isn't used
+create table if not exists 'db_version' (application_type text not null primary key, version integer not null, updated_at text not null);
 
 create table new_db_version (application_type text not null primary key, version integer not null, updated_at text not null);
 insert into new_db_version
@@ -1169,78 +1170,78 @@ insert into new_db_version
 
 drop table db_version;
 alter table new_db_version rename to db_version;
-            &quot;</span>,
+            "</span>,
         ),
         <span class="comment">// Migration 16
         // Update `signed_entity` table to remove `certificate_hash` and `created_at` from `artifact` JSON field.
         </span>SqlMigration::new(
             <span class="number">16</span>,
-            <span class="string">r#&quot;
+            <span class="string">r#"
 update signed_entity
     set artifact = json_remove(
         artifact, 
-        &#39;$.certificate_hash&#39;,
-        &#39;$.created_at&#39;
+        '$.certificate_hash',
+        '$.created_at'
     );
-&quot;#</span>,
+"#</span>,
         ),
         <span class="comment">// Migration 17
         // Alter `signed_entity` table to add `compression_algorithm` in `artifact` JSON field.
         </span>SqlMigration::new(
             <span class="number">17</span>,
-            <span class="string">r#&quot;
+            <span class="string">r#"
 update signed_entity
     set artifact = json_insert(
         json_insert(
             artifact,
-            &#39;$.compression_algorithm&#39;, 
-            &#39;gzip&#39;)
+            '$.compression_algorithm', 
+            'gzip')
     ) 
 where signed_entity.signed_entity_type_id = 2;
-        &quot;#</span>,
+        "#</span>,
         ),
         <span class="comment">// Migration 18
         // Alter `signed_entity` table to add `cardano_node_version` in `artifact` JSON field.
         </span>SqlMigration::new(
             <span class="number">18</span>,
-            <span class="string">r#&quot;
+            <span class="string">r#"
 update signed_entity
     set artifact = json_insert(
         json_insert(
             artifact,
-            &#39;$.cardano_node_version&#39;, 
-            &#39;8.1.2&#39;)
+            '$.cardano_node_version', 
+            '8.1.2')
     ) 
 where signed_entity.signed_entity_type_id = 2;
-        &quot;#</span>,
+        "#</span>,
         ),
         <span class="comment">// Migration 19
         // Alter `signer` table to add `last_registered_at` field with base value copied from the
         // `created_at` field.
         </span>SqlMigration::new(
             <span class="number">19</span>,
-            <span class="string">r#&quot;
+            <span class="string">r#"
 alter table signer add column last_registered_at text null;
 update signer set last_registered_at = created_at; 
-        &quot;#</span>,
+        "#</span>,
         ),
         <span class="comment">// Migration 20
-        // Alter `open_message` table to add `expires_at` and &#39;is_expired&#39; fields
+        // Alter `open_message` table to add `expires_at` and 'is_expired' fields
         </span>SqlMigration::new(
             <span class="number">20</span>,
-            <span class="string">r#&quot;
+            <span class="string">r#"
 alter table open_message add column is_expired bool not null default false;
 alter table open_message add column expires_at text null;
-        &quot;#</span>,
+        "#</span>,
         ),
         <span class="comment">// Migration 21
-        // Add the `signed_entity_type` record for &#39;CardanoTransactions&#39;
+        // Add the `signed_entity_type` record for 'CardanoTransactions'
         </span>SqlMigration::new(
             <span class="number">21</span>,
-            <span class="string">r#&quot;
+            <span class="string">r#"
 insert into signed_entity_type (signed_entity_type_id, name) 
-    values  (3, &#39;Cardano Transactions&#39;);
-&quot;#</span>,
+    values  (3, 'Cardano Transactions');
+"#</span>,
         ),
     ]
 }

@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-aggregator/src/database/provider/signed_entity.rs`."><title>signed_entity.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="mithril_aggregator" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-aggregator/src/database/provider/signed_entity.rs`."><title>signed_entity.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="mithril_aggregator" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1105,7 +1106,7 @@
         Beacon, Epoch, SignedEntity, SignedEntityType, SignedEntityTypeDiscriminants, Snapshot,
     },
     messages::{
-        CardanoTransactionListItemMessage, CardanoTransactionMessage,
+        CardanoTransactionCommitmentListItemMessage, CardanoTransactionCommitmentMessage,
         MithrilStakeDistributionListItemMessage, MithrilStakeDistributionMessage,
         SignerWithStakeMessagePart, SnapshotListItemMessage, SnapshotMessage,
     },
@@ -1148,7 +1149,7 @@
 
 <span class="kw">impl</span>&lt;T&gt; TryFrom&lt;SignedEntityRecord&gt; <span class="kw">for </span>SignedEntity&lt;T&gt;
 <span class="kw">where
-    for</span>&lt;<span class="lifetime">&#39;a</span>&gt; T: Artifact + Serialize + Deserialize&lt;<span class="lifetime">&#39;a</span>&gt;,
+    for</span>&lt;<span class="lifetime">'a</span>&gt; T: Artifact + Serialize + Deserialize&lt;<span class="lifetime">'a</span>&gt;,
 {
     <span class="kw">type </span>Error = serde_json::error::Error;
 
@@ -1231,7 +1232,7 @@
     }
 }
 
-<span class="kw">impl </span>TryFrom&lt;SignedEntityRecord&gt; <span class="kw">for </span>CardanoTransactionMessage {
+<span class="kw">impl </span>TryFrom&lt;SignedEntityRecord&gt; <span class="kw">for </span>CardanoTransactionCommitmentMessage {
     <span class="kw">type </span>Error = StdError;
 
     <span class="kw">fn </span>try_from(value: SignedEntityRecord) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
@@ -1242,7 +1243,7 @@
             hash: String,
         }
         <span class="kw">let </span>artifact = serde_json::from_str::&lt;TmpCardanoTransaction&gt;(<span class="kw-2">&amp;</span>value.artifact)<span class="question-mark">?</span>;
-        <span class="kw">let </span>cardano_transaction_message = CardanoTransactionMessage {
+        <span class="kw">let </span>cardano_transaction_message = CardanoTransactionCommitmentMessage {
             merkle_root: artifact.merkle_root,
             beacon: artifact.beacon,
             hash: artifact.hash,
@@ -1254,7 +1255,7 @@
     }
 }
 
-<span class="kw">impl </span>TryFrom&lt;SignedEntityRecord&gt; <span class="kw">for </span>CardanoTransactionListItemMessage {
+<span class="kw">impl </span>TryFrom&lt;SignedEntityRecord&gt; <span class="kw">for </span>CardanoTransactionCommitmentListItemMessage {
     <span class="kw">type </span>Error = StdError;
 
     <span class="kw">fn </span>try_from(value: SignedEntityRecord) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
@@ -1265,7 +1266,7 @@
             hash: String,
         }
         <span class="kw">let </span>artifact = serde_json::from_str::&lt;TmpCardanoTransaction&gt;(<span class="kw-2">&amp;</span>value.artifact)<span class="question-mark">?</span>;
-        <span class="kw">let </span>message = CardanoTransactionListItemMessage {
+        <span class="kw">let </span>message = CardanoTransactionCommitmentListItemMessage {
             merkle_root: artifact.merkle_root,
             beacon: artifact.beacon,
             hash: artifact.hash,
@@ -1306,8 +1307,8 @@
         <span class="kw">let </span>signed_entity_type_id_int = row.read::&lt;i64, <span class="kw">_</span>&gt;(<span class="number">1</span>);
         <span class="kw">let </span>certificate_id = row.read::&lt;<span class="kw-2">&amp;</span>str, <span class="kw">_</span>&gt;(<span class="number">2</span>).to_string();
         <span class="comment">// TODO: We need to check first that the cell can be read as a string first
-        // (e.g. when beacon json is &#39;{&quot;network&quot;: &quot;dev&quot;, &quot;epoch&quot;: 1, &quot;immutable_file_number&quot;: 2}&#39;).
-        // If it fails, we fallback on readign the cell as an integer (e.g. when beacon json is &#39;5&#39;).
+        // (e.g. when beacon json is '{"network": "dev", "epoch": 1, "immutable_file_number": 2}').
+        // If it fails, we fallback on readign the cell as an integer (e.g. when beacon json is '5').
         // Maybe there is a better way of doing this.
         </span><span class="kw">let </span>beacon_str = <span class="kw">match </span>row.try_read::&lt;<span class="kw-2">&amp;</span>str, <span class="kw">_</span>&gt;(<span class="number">3</span>) {
             <span class="prelude-val">Ok</span>(value) =&gt; value.to_string(),
@@ -1321,7 +1322,7 @@
             signed_entity_type: SignedEntityType::hydrate(
                 signed_entity_type_id_int.try_into().map_err(|e| {
                     HydrationError::InvalidData(<span class="macro">format!</span>(
-                        <span class="string">&quot;Could not cast i64 ({signed_entity_type_id_int}) to u64. Error: &#39;{e}&#39;&quot;
+                        <span class="string">"Could not cast i64 ({signed_entity_type_id_int}) to u64. Error: '{e}'"
                     </span>))
                 })<span class="question-mark">?</span>,
                 <span class="kw-2">&amp;</span>beacon_str,
@@ -1331,7 +1332,7 @@
             created_at: DateTime::parse_from_rfc3339(created_at)
                 .map_err(|e| {
                     HydrationError::InvalidData(<span class="macro">format!</span>(
-                        <span class="string">&quot;Could not turn string &#39;{created_at}&#39; to rfc3339 Datetime. Error: {e}&quot;
+                        <span class="string">"Could not turn string '{created_at}' to rfc3339 Datetime. Error: {e}"
                     </span>))
                 })<span class="question-mark">?
                 </span>.with_timezone(<span class="kw-2">&amp;</span>Utc),
@@ -1343,44 +1344,44 @@
     <span class="kw">fn </span>get_projection() -&gt; Projection {
         Projection::from(<span class="kw-2">&amp;</span>[
             (
-                <span class="string">&quot;signed_entity_id&quot;</span>,
-                <span class="string">&quot;{:signed_entity:}.signed_entity_id&quot;</span>,
-                <span class="string">&quot;text&quot;</span>,
+                <span class="string">"signed_entity_id"</span>,
+                <span class="string">"{:signed_entity:}.signed_entity_id"</span>,
+                <span class="string">"text"</span>,
             ),
             (
-                <span class="string">&quot;signed_entity_type_id&quot;</span>,
-                <span class="string">&quot;{:signed_entity:}.signed_entity_type_id&quot;</span>,
-                <span class="string">&quot;integer&quot;</span>,
+                <span class="string">"signed_entity_type_id"</span>,
+                <span class="string">"{:signed_entity:}.signed_entity_type_id"</span>,
+                <span class="string">"integer"</span>,
             ),
-            (<span class="string">&quot;certificate_id&quot;</span>, <span class="string">&quot;{:signed_entity:}.certificate_id&quot;</span>, <span class="string">&quot;text&quot;</span>),
-            (<span class="string">&quot;beacon&quot;</span>, <span class="string">&quot;{:signed_entity:}.beacon&quot;</span>, <span class="string">&quot;text&quot;</span>),
-            (<span class="string">&quot;artifact&quot;</span>, <span class="string">&quot;{:signed_entity:}.artifact&quot;</span>, <span class="string">&quot;text&quot;</span>),
-            (<span class="string">&quot;created_at&quot;</span>, <span class="string">&quot;{:signed_entity:}.created_at&quot;</span>, <span class="string">&quot;text&quot;</span>),
+            (<span class="string">"certificate_id"</span>, <span class="string">"{:signed_entity:}.certificate_id"</span>, <span class="string">"text"</span>),
+            (<span class="string">"beacon"</span>, <span class="string">"{:signed_entity:}.beacon"</span>, <span class="string">"text"</span>),
+            (<span class="string">"artifact"</span>, <span class="string">"{:signed_entity:}.artifact"</span>, <span class="string">"text"</span>),
+            (<span class="string">"created_at"</span>, <span class="string">"{:signed_entity:}.created_at"</span>, <span class="string">"text"</span>),
         ])
     }
 }
 
 <span class="doccomment">/// Simple [SignedEntityRecord] provider.
-</span><span class="kw">pub struct </span>SignedEntityRecordProvider&lt;<span class="lifetime">&#39;client</span>&gt; {
-    client: <span class="kw-2">&amp;</span><span class="lifetime">&#39;client </span>SqliteConnection,
+</span><span class="kw">pub struct </span>SignedEntityRecordProvider&lt;<span class="lifetime">'client</span>&gt; {
+    client: <span class="kw-2">&amp;</span><span class="lifetime">'client </span>SqliteConnection,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;client</span>&gt; SignedEntityRecordProvider&lt;<span class="lifetime">&#39;client</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'client</span>&gt; SignedEntityRecordProvider&lt;<span class="lifetime">'client</span>&gt; {
     <span class="doccomment">/// Create a new provider
-    </span><span class="kw">pub fn </span>new(client: <span class="kw-2">&amp;</span><span class="lifetime">&#39;client </span>SqliteConnection) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>new(client: <span class="kw-2">&amp;</span><span class="lifetime">'client </span>SqliteConnection) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{ client }
     }
 
     <span class="kw">fn </span>condition_by_signed_entity_id(<span class="kw-2">&amp;</span><span class="self">self</span>, signed_entity_id: <span class="kw-2">&amp;</span>str) -&gt; StdResult&lt;WhereCondition&gt; {
         <span class="prelude-val">Ok</span>(WhereCondition::new(
-            <span class="string">&quot;signed_entity_id = ?*&quot;</span>,
+            <span class="string">"signed_entity_id = ?*"</span>,
             <span class="macro">vec!</span>[Value::String(signed_entity_id.to_owned())],
         ))
     }
 
     <span class="kw">fn </span>condition_by_certificate_id(<span class="kw-2">&amp;</span><span class="self">self</span>, certificate_id: <span class="kw-2">&amp;</span>str) -&gt; StdResult&lt;WhereCondition&gt; {
         <span class="prelude-val">Ok</span>(WhereCondition::new(
-            <span class="string">&quot;certificate_id = ?*&quot;</span>,
+            <span class="string">"certificate_id = ?*"</span>,
             <span class="macro">vec!</span>[Value::String(certificate_id.to_owned())],
         ))
     }
@@ -1391,7 +1392,7 @@
             .map(|id| Value::String(id.to_string()))
             .collect();
 
-        WhereCondition::where_in(<span class="string">&quot;certificate_id&quot;</span>, ids_values)
+        WhereCondition::where_in(<span class="string">"certificate_id"</span>, ids_values)
     }
 
     <span class="kw">fn </span>condition_by_signed_entity_type(
@@ -1401,7 +1402,7 @@
         <span class="kw">let </span>signed_entity_type_id: i64 = signed_entity_type.index() <span class="kw">as </span>i64;
 
         <span class="prelude-val">Ok</span>(WhereCondition::new(
-            <span class="string">&quot;signed_entity_type_id = ?*&quot;</span>,
+            <span class="string">"signed_entity_type_id = ?*"</span>,
             <span class="macro">vec!</span>[Value::Integer(signed_entity_type_id)],
         ))
     }
@@ -1459,36 +1460,36 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;client</span>&gt; Provider&lt;<span class="lifetime">&#39;client</span>&gt; <span class="kw">for </span>SignedEntityRecordProvider&lt;<span class="lifetime">&#39;client</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'client</span>&gt; Provider&lt;<span class="lifetime">'client</span>&gt; <span class="kw">for </span>SignedEntityRecordProvider&lt;<span class="lifetime">'client</span>&gt; {
     <span class="kw">type </span>Entity = SignedEntityRecord;
 
-    <span class="kw">fn </span>get_connection(<span class="kw-2">&amp;</span><span class="lifetime">&#39;client </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;client </span>SqliteConnection {
+    <span class="kw">fn </span>get_connection(<span class="kw-2">&amp;</span><span class="lifetime">'client </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'client </span>SqliteConnection {
         <span class="self">self</span>.client
     }
 
     <span class="kw">fn </span>get_definition(<span class="kw-2">&amp;</span><span class="self">self</span>, condition: <span class="kw-2">&amp;</span>str) -&gt; String {
-        <span class="kw">let </span>aliases = SourceAlias::new(<span class="kw-2">&amp;</span>[(<span class="string">&quot;{:signed_entity:}&quot;</span>, <span class="string">&quot;se&quot;</span>)]);
+        <span class="kw">let </span>aliases = SourceAlias::new(<span class="kw-2">&amp;</span>[(<span class="string">"{:signed_entity:}"</span>, <span class="string">"se"</span>)]);
         <span class="kw">let </span>projection = <span class="self">Self</span>::Entity::get_projection().expand(aliases);
         <span class="macro">format!</span>(
-            <span class="string">&quot;select {projection} from signed_entity as se where {condition} order by ROWID desc&quot;
+            <span class="string">"select {projection} from signed_entity as se where {condition} order by ROWID desc"
         </span>)
     }
 }
 
 <span class="doccomment">/// Query to insert the signed_entity record
-</span><span class="kw">pub struct </span>InsertSignedEntityRecordProvider&lt;<span class="lifetime">&#39;conn</span>&gt; {
-    connection: <span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span>SqliteConnection,
+</span><span class="kw">pub struct </span>InsertSignedEntityRecordProvider&lt;<span class="lifetime">'conn</span>&gt; {
+    connection: <span class="kw-2">&amp;</span><span class="lifetime">'conn </span>SqliteConnection,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;conn</span>&gt; InsertSignedEntityRecordProvider&lt;<span class="lifetime">&#39;conn</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'conn</span>&gt; InsertSignedEntityRecordProvider&lt;<span class="lifetime">'conn</span>&gt; {
     <span class="doccomment">/// Create a new instance
-    </span><span class="kw">pub fn </span>new(connection: <span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span>SqliteConnection) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>new(connection: <span class="kw-2">&amp;</span><span class="lifetime">'conn </span>SqliteConnection) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{ connection }
     }
 
     <span class="kw">fn </span>get_insert_condition(<span class="kw-2">&amp;</span><span class="self">self</span>, signed_entity_record: SignedEntityRecord) -&gt; WhereCondition {
         WhereCondition::new(
-            <span class="string">&quot;(signed_entity_id, signed_entity_type_id, certificate_id, beacon, artifact, created_at) values (?*, ?*, ?*, ?*, ?*, ?*)&quot;</span>,
+            <span class="string">"(signed_entity_id, signed_entity_type_id, certificate_id, beacon, artifact, created_at) values (?*, ?*, ?*, ?*, ?*, ?*)"</span>,
             <span class="macro">vec!</span>[
                 Value::String(signed_entity_record.signed_entity_id),
                 Value::Integer(signed_entity_record.signed_entity_type.index() <span class="kw">as </span>i64),
@@ -1505,7 +1506,7 @@
 
         <span class="kw">let </span>entity = <span class="self">self</span>.find(filters)<span class="question-mark">?</span>.next().unwrap_or_else(|| {
             <span class="macro">panic!</span>(
-                <span class="string">&quot;No entity returned by the persister, signed_entity_record = {signed_entity_record:?}&quot;
+                <span class="string">"No entity returned by the persister, signed_entity_record = {signed_entity_record:?}"
             </span>)
         });
 
@@ -1513,10 +1514,10 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;conn</span>&gt; Provider&lt;<span class="lifetime">&#39;conn</span>&gt; <span class="kw">for </span>InsertSignedEntityRecordProvider&lt;<span class="lifetime">&#39;conn</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'conn</span>&gt; Provider&lt;<span class="lifetime">'conn</span>&gt; <span class="kw">for </span>InsertSignedEntityRecordProvider&lt;<span class="lifetime">'conn</span>&gt; {
     <span class="kw">type </span>Entity = SignedEntityRecord;
 
-    <span class="kw">fn </span>get_connection(<span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span>SqliteConnection {
+    <span class="kw">fn </span>get_connection(<span class="kw-2">&amp;</span><span class="lifetime">'conn </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'conn </span>SqliteConnection {
         <span class="self">self</span>.connection
     }
 
@@ -1524,18 +1525,18 @@
         <span class="comment">// it is important to alias the fields with the same name as the table
         // since the table cannot be aliased in a RETURNING statement in SQLite.
         </span><span class="kw">let </span>projection = <span class="self">Self</span>::Entity::get_projection()
-            .expand(SourceAlias::new(<span class="kw-2">&amp;</span>[(<span class="string">&quot;{:signed_entity:}&quot;</span>, <span class="string">&quot;signed_entity&quot;</span>)]));
+            .expand(SourceAlias::new(<span class="kw-2">&amp;</span>[(<span class="string">"{:signed_entity:}"</span>, <span class="string">"signed_entity"</span>)]));
 
-        <span class="macro">format!</span>(<span class="string">&quot;insert into signed_entity {condition} returning {projection}&quot;</span>)
+        <span class="macro">format!</span>(<span class="string">"insert into signed_entity {condition} returning {projection}"</span>)
     }
 }
 
-<span class="kw">struct </span>UpdateSignedEntityProvider&lt;<span class="lifetime">&#39;client</span>&gt; {
-    connection: <span class="kw-2">&amp;</span><span class="lifetime">&#39;client </span>SqliteConnection,
+<span class="kw">struct </span>UpdateSignedEntityProvider&lt;<span class="lifetime">'client</span>&gt; {
+    connection: <span class="kw-2">&amp;</span><span class="lifetime">'client </span>SqliteConnection,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;client</span>&gt; UpdateSignedEntityProvider&lt;<span class="lifetime">&#39;client</span>&gt; {
-    <span class="kw">pub fn </span>new(connection: <span class="kw-2">&amp;</span><span class="lifetime">&#39;client </span>SqliteConnection) -&gt; <span class="self">Self </span>{
+<span class="kw">impl</span>&lt;<span class="lifetime">'client</span>&gt; UpdateSignedEntityProvider&lt;<span class="lifetime">'client</span>&gt; {
+    <span class="kw">pub fn </span>new(connection: <span class="kw-2">&amp;</span><span class="lifetime">'client </span>SqliteConnection) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{ connection }
     }
 
@@ -1544,9 +1545,9 @@
         signed_entity_record: <span class="kw-2">&amp;</span>SignedEntityRecord,
     ) -&gt; StdResult&lt;WhereCondition&gt; {
         <span class="kw">let </span>expression =
-            <span class="string">&quot;signed_entity_type_id = ?*, certificate_id = ?*, beacon = ?*, artifact = ?*, \
+            <span class="string">"signed_entity_type_id = ?*, certificate_id = ?*, beacon = ?*, artifact = ?*, \
 created_at = ?* \
-where signed_entity_id = ?*&quot;</span>;
+where signed_entity_id = ?*"</span>;
         <span class="kw">let </span>parameters = <span class="macro">vec!</span>[
             Value::Integer(signed_entity_record.signed_entity_type.index() <span class="kw">as </span>i64),
             Value::String(signed_entity_record.certificate_id.to_owned()),
@@ -1565,25 +1566,25 @@ where signed_entity_id = ?*&quot;</span>;
 
         cursor.next().ok_or_else(|| {
             <span class="macro">panic!</span>(
-                <span class="string">&quot;Updating a signed_entity should not return nothing, id = {:?}&quot;</span>,
+                <span class="string">"Updating a signed_entity should not return nothing, id = {:?}"</span>,
                 signed_entity_record.signed_entity_id
             )
         })
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;client</span>&gt; Provider&lt;<span class="lifetime">&#39;client</span>&gt; <span class="kw">for </span>UpdateSignedEntityProvider&lt;<span class="lifetime">&#39;client</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'client</span>&gt; Provider&lt;<span class="lifetime">'client</span>&gt; <span class="kw">for </span>UpdateSignedEntityProvider&lt;<span class="lifetime">'client</span>&gt; {
     <span class="kw">type </span>Entity = SignedEntityRecord;
 
-    <span class="kw">fn </span>get_connection(<span class="kw-2">&amp;</span><span class="lifetime">&#39;client </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;client </span>SqliteConnection {
+    <span class="kw">fn </span>get_connection(<span class="kw-2">&amp;</span><span class="lifetime">'client </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'client </span>SqliteConnection {
         <span class="self">self</span>.connection
     }
 
     <span class="kw">fn </span>get_definition(<span class="kw-2">&amp;</span><span class="self">self</span>, condition: <span class="kw-2">&amp;</span>str) -&gt; String {
         <span class="kw">let </span>projection = <span class="self">Self</span>::Entity::get_projection()
-            .expand(SourceAlias::new(<span class="kw-2">&amp;</span>[(<span class="string">&quot;{:signed_entity:}&quot;</span>, <span class="string">&quot;signed_entity&quot;</span>)]));
+            .expand(SourceAlias::new(<span class="kw-2">&amp;</span>[(<span class="string">"{:signed_entity:}"</span>, <span class="string">"signed_entity"</span>)]));
 
-        <span class="macro">format!</span>(<span class="string">&quot;update signed_entity set {condition} returning {projection}&quot;</span>)
+        <span class="macro">format!</span>(<span class="string">"update signed_entity set {condition} returning {projection}"</span>)
     }
 }
 
@@ -1607,9 +1608,9 @@ where signed_entity_id = ?*&quot;</span>;
     ) -&gt; StdResult&lt;<span class="prelude-ty">Option</span>&lt;SignedEntityRecord&gt;&gt;;
 
     <span class="doccomment">/// Get signed entities type by certificates ids
-    </span><span class="kw">async fn </span>get_signed_entities_by_certificates_ids&lt;<span class="lifetime">&#39;a</span>&gt;(
+    </span><span class="kw">async fn </span>get_signed_entities_by_certificates_ids&lt;<span class="lifetime">'a</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        certificates_ids: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str],
+        certificates_ids: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="lifetime">'a </span>str],
     ) -&gt; StdResult&lt;Vec&lt;SignedEntityRecord&gt;&gt;;
 
     <span class="doccomment">/// Get last signed entities by signed entity type
@@ -1654,7 +1655,7 @@ where signed_entity_id = ?*&quot;</span>;
         <span class="kw">let </span>provider = SignedEntityRecordProvider::new(<span class="kw-2">&amp;</span><span class="self">self</span>.connection);
         <span class="kw">let </span><span class="kw-2">mut </span>cursor = provider
             .get_by_signed_entity_id(signed_entity_id)
-            .with_context(|| <span class="macro">format!</span>(<span class="string">&quot;get signed entity by id failure, id: {signed_entity_id}&quot;</span>))
+            .with_context(|| <span class="macro">format!</span>(<span class="string">"get signed entity by id failure, id: {signed_entity_id}"</span>))
             .map_err(AdapterError::GeneralError)<span class="question-mark">?</span>;
         <span class="kw">let </span>signed_entity = cursor.next();
 
@@ -1670,7 +1671,7 @@ where signed_entity_id = ?*&quot;</span>;
             .get_by_certificate_id(certificate_id)
             .with_context(|| {
                 <span class="macro">format!</span>(
-                    <span class="string">&quot;get signed entity by certificate id failure, certificate_id: {certificate_id}&quot;
+                    <span class="string">"get signed entity by certificate id failure, certificate_id: {certificate_id}"
                 </span>)
             })
             .map_err(AdapterError::GeneralError)<span class="question-mark">?</span>;
@@ -1679,9 +1680,9 @@ where signed_entity_id = ?*&quot;</span>;
         <span class="prelude-val">Ok</span>(signed_entity)
     }
 
-    <span class="kw">async fn </span>get_signed_entities_by_certificates_ids&lt;<span class="lifetime">&#39;a</span>&gt;(
+    <span class="kw">async fn </span>get_signed_entities_by_certificates_ids&lt;<span class="lifetime">'a</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        certificates_ids: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str],
+        certificates_ids: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="lifetime">'a </span>str],
     ) -&gt; StdResult&lt;Vec&lt;SignedEntityRecord&gt;&gt; {
         <span class="kw">let </span>provider = SignedEntityRecordProvider::new(<span class="kw-2">&amp;</span><span class="self">self</span>.connection);
         <span class="kw">let </span>cursor = provider.get_by_certificates_ids(certificates_ids)<span class="question-mark">?</span>;
@@ -1698,7 +1699,7 @@ where signed_entity_id = ?*&quot;</span>;
         <span class="kw">let </span>cursor = provider
             .get_by_signed_entity_type(signed_entity_type_id)
             .with_context(|| {
-                <span class="macro">format!</span>(<span class="string">&quot;get last signed entity by type failure, type: {signed_entity_type_id:?}&quot;</span>)
+                <span class="macro">format!</span>(<span class="string">"get last signed entity by type failure, type: {signed_entity_type_id:?}"</span>)
             })
             .map_err(AdapterError::GeneralError)<span class="question-mark">?</span>;
         <span class="kw">let </span>signed_entities: Vec&lt;SignedEntityRecord&gt; = cursor.take(total).collect();
@@ -1759,9 +1760,9 @@ where signed_entity_id = ?*&quot;</span>;
                     signed_entity_type: SignedEntityType::CardanoImmutableFilesFull(
                         snapshot.beacon,
                     ),
-                    certificate_id: <span class="macro">format!</span>(<span class="string">&quot;certificate-{idx}&quot;</span>),
+                    certificate_id: <span class="macro">format!</span>(<span class="string">"certificate-{idx}"</span>),
                     artifact: entity,
-                    created_at: DateTime::parse_from_rfc3339(<span class="string">&quot;2023-01-19T13:43:05.618857482Z&quot;</span>)
+                    created_at: DateTime::parse_from_rfc3339(<span class="string">"2023-01-19T13:43:05.618857482Z"</span>)
                         .unwrap()
                         .with_timezone(<span class="kw-2">&amp;</span>Utc),
                 }
@@ -1787,7 +1788,7 @@ where signed_entity_id = ?*&quot;</span>;
             <span class="kw">let </span>(sql_values, <span class="kw">_</span>) = insert_provider
                 .get_insert_condition(signed_entity_records.first().unwrap().to_owned())
                 .expand();
-            <span class="macro">format!</span>(<span class="string">&quot;insert into signed_entity {sql_values}&quot;</span>)
+            <span class="macro">format!</span>(<span class="string">"insert into signed_entity {sql_values}"</span>)
         };
 
         <span class="kw">for </span>signed_entity_record <span class="kw">in </span>signed_entity_records {
@@ -1823,67 +1824,67 @@ where signed_entity_id = ?*&quot;</span>;
 
     <span class="kw">fn </span>insert_golden_signed_entities(connection: <span class="kw-2">&amp;</span>SqliteConnection) {
         connection
-            .execute(<span class="string">r#&quot;
+            .execute(<span class="string">r#"
             -- Cardano immutable file full
             insert into signed_entity values(
-                &#39;bfcd77e372a25e13353bb77697d0d08785ba98b703e22640a317c5054dc05fb1&#39;,
+                'bfcd77e372a25e13353bb77697d0d08785ba98b703e22640a317c5054dc05fb1',
                 2,
-                &#39;258edf0f1238c60985d0229869a6d4c4c635c118915b4d524d2686515be99946&#39;,
-                &#39;{&quot;network&quot;:&quot;preview&quot;,&quot;epoch&quot;:142,&quot;immutable_file_number&quot;:2847}&#39;,
-                &#39;2023-05-09T13:11:15Z&#39;,
-                &#39;{
-                    &quot;digest&quot;:&quot;bfcd77e372a25e13353bb77697d0d08785ba98b703e22640a317c5054dc05fb1&quot;,
-                    &quot;beacon&quot;:{&quot;network&quot;:&quot;preview&quot;,&quot;epoch&quot;:142,&quot;immutable_file_number&quot;:2847},
-                    &quot;size&quot;:1689696245,
-                    &quot;locations&quot;:[&quot;https://storage.googleapis.com/mithril-testing-preview-cs/preview-e142-i2847.bfcd77e372a25e13353bb77697d0d08785ba98b703e22640a317c5054dc05fb1.tar.gz&quot;],
-                    &quot;compression_algorithm&quot;:&quot;gzip&quot;,
-                    &quot;cardano_node_version&quot;: &quot;0.0.1&quot;
-                }&#39;
+                '258edf0f1238c60985d0229869a6d4c4c635c118915b4d524d2686515be99946',
+                '{"network":"preview","epoch":142,"immutable_file_number":2847}',
+                '2023-05-09T13:11:15Z',
+                '{
+                    "digest":"bfcd77e372a25e13353bb77697d0d08785ba98b703e22640a317c5054dc05fb1",
+                    "beacon":{"network":"preview","epoch":142,"immutable_file_number":2847},
+                    "size":1689696245,
+                    "locations":["https://storage.googleapis.com/mithril-testing-preview-cs/preview-e142-i2847.bfcd77e372a25e13353bb77697d0d08785ba98b703e22640a317c5054dc05fb1.tar.gz"],
+                    "compression_algorithm":"gzip",
+                    "cardano_node_version": "0.0.1"
+                }'
             );
 
             -- Mithril stake distribution
             insert into signed_entity
             values(
-                &#39;2da62e3ffee5e284ffd1e29ee52ee5547c5ff5ef34bee0a49dc54ea5e375f77e&#39;,
+                '2da62e3ffee5e284ffd1e29ee52ee5547c5ff5ef34bee0a49dc54ea5e375f77e',
                 0,
-                &#39;ad2d3705693dfaae8baac099b6976a5cc3e0f708245d0fa79d149a3fcbc79f00&#39;,
+                'ad2d3705693dfaae8baac099b6976a5cc3e0f708245d0fa79d149a3fcbc79f00',
                 203,
-                &#39;2023-05-16T02:17:16.203859116Z&#39;,
-                &#39;{
-                    &quot;type&quot;:&quot;MithrilStakeDistribution&quot;,
-                    &quot;epoch&quot;:203,
-                    &quot;signers_with_stake&quot;:[{
-                        &quot;party_id&quot;:&quot;pool1r0tln8nct3mpyvehgy6uu3cdlmjnmtr2fxjcqnfl6v0qg0we42e&quot;,
-                        &quot;verification_key&quot;:&quot;7b22766b223a5b3138352c3132342c3231382c31362c3133312c3137382c3136302c37312c35382c3235312c31382c36382c37372c3135342c35382c3131352c3133392c3139392c38392c3230382c3139312c3235332c3138362c3232302c3133372c3135382c34312c3230332c382c3136352c3232362c3139342c3133382c3135322c35382c3131352c35342c3136322c3230332c32322c32332c3232382c3139342c34382c3137322c3139342c3130352c36382c302c3138302c3131332c3230312c3130392c3234372c39362c39342c3232372c3135372c36322c3139352c3134382c33352c3230352c3133372c3132312c3135322c3130302c3138342c3136372c3230362c3133322c34352c3133382c3131312c38392c3138322c3230352c3138372c3135382c32322c32332c3231382c36342c3137332c35392c3134312c3133332c3138302c3131392c36302c3134392c3134382c38332c3234312c3230312c33375d2c22706f70223a5b3137352c3135382c3130322c34352c3133322c38352c33312c3130342c36352c3230342c38352c312c34332c3137382c3138372c3233382c3135372c32372c39312c3230332c35342c37332c36322c35352c3131322c3131352c302c32312c3130302c3230382c37392c3135382c3233332c3132372c38332c3234352c3134362c3231382c3131382c3139332c38322c3139352c3137302c32312c36382c3231342c3138352c38372c3136382c3135372c3230322c3136382c3132392c3233332c38372c3230332c37372c36332c3232312c31362c3130392c33302c3235312c35312c38342c36392c3233372c39382c3133372c36302c39312c37362c38302c3232322c302c3130342c3231332c3132352c31332c3135312c3133312c3130312c3230312c33322c3138392c3137362c3139392c3131342c3234302c31352c33312c3136302c31332c3136352c32372c3134335d7d&quot;,
-                        &quot;verification_key_signature&quot;:&quot;7b227369676d61223a7b227369676d61223a7b227369676d61223a7b227369676d61223a7b227369676d61223a7b227369676d61223a5b36322c33302c32362c3131302c3134382c3137342c36302c32392c3139302c34362c37342c3135392c3137312c3134362c31342c3231362c37352c32302c38352c3134342c32332c3134352c3132352c39382c36362c3132342c3139332c32352c3233352c3234372c3130342c382c352c3133342c302c3134302c3131352c33362c31342c33382c31322c34392c39372c33392c3232312c3234352c39322c362c35302c3134362c3135372c3136362c32382c38352c33312c33352c3232392c3233312c34332c3230322c34372c3235352c3138322c375d2c226c68735f706b223a5b3234322c3132322c34322c39332c39352c31322c36352c3131332c31342c35322c3135352c3133372c3130312c3137382c3232362c3133332c31372c39302c3138332c3132312c3136362c35322c342c39312c3135332c3232332c32352c3133372c37332c3137332c3235332c3233315d2c227268735f706b223a5b322c3231312c3230372c3234392c3234322c362c3131322c362c3235322c31322c3135362c3139332c38362c3133362c3138352c36342c3132342c35302c3230392c38382c3138322c3133352c32392c3138372c3133302c3138392c34312c3134302c34322c33342c3135392c3234365d7d2c226c68735f706b223a5b37352c3232312c3235302c3235322c3135382c3134362c35362c34312c39382c3137362c3139382c3231392c33352c3130392c3136332c36312c3139362c3139342c3137382c3130392c3132382c3131352c3130302c3135322c33392c3231392c35382c34392c3235302c33312c3138342c395d2c227268735f706b223a5b3135372c3232312c38372c3139342c3235322c3234382c3132372c33312c3136362c3235322c3233342c3232362c33362c3139352c3230312c33312c34372c3232302c3233372c3137342c3130372c3134342c33382c3234372c3135352c3135382c34372c3139302c3235322c3134302c3235342c3131375d7d2c226c68735f706b223a5b34322c37372c37392c36302c3137312c3234372c31392c3230332c3232302c36332c3231352c3135372c3132392c3230382c3135382c35352c3131302c3232312c3139372c3233322c38372c33312c31312c3235342c3133352c32372c3234352c3137352c3135342c3231382c3232312c3138345d2c227268735f706b223a5b36382c3230332c38362c31352c37352c33352c3232332c342c3130392c3234392c3231372c3132352c34372c3231372c3130342c36352c3131332c3234312c3235332c3138332c3138362c36362c37352c3135302c3233342c3138362c3137332c3233302c3130332c3139342c3135322c3132375d7d2c226c68735f706b223a5b3133312c38372c3135382c3233352c34312c3233372c33332c34362c3235342c38302c3235322c3132392c37332c3234382c3135332c33382c3138332c33342c3231362c3135362c3131302c36392c37322c39302c32382c36382c3131342c33352c33352c3134332c3234312c3231305d2c227268735f706b223a5b3232382c3135352c3133332c34312c3137392c39342c3233362c3133392c3231362c3136302c3130382c3137362c3134362c3232352c3134302c3231352c35392c3130372c32302c3133372c3139372c33392c3135332c3132362c3233372c3135382c3132332c392c3133322c3139342c3132312c3232355d7d2c226c68735f706b223a5b3232322c39362c35332c34312c32342c38382c3136342c39382c3133312c33342c3132362c3133392c32382c37342c34362c3137332c35302c3133362c39372c3137312c3130312c3136322c33312c3137352c32332c3130352c3231352c36332c37362c3132342c31322c3131365d2c227268735f706b223a5b3133382c31382c31302c352c3231382c3134372c35332c35322c33362c3234342c33362c3131302c31302c33382c3134382c3132332c3235302c3131352c36342c36372c3137332c3130352c3137392c3235342c3130352c332c3132372c32302c31322c3230352c37372c3230365d7d2c226c68735f706b223a5b3132342c382c37312c3135302c34352c3130362c3232322c3234372c3130302c3137342c34352c3135322c3136312c3130382c3135382c32372c3234342c35362c3131352c3233322c3136332c3234342c38372c3138332c3232372c3235302c3232372c3234382c3137352c3136332c3230392c37345d2c227268735f706b223a5b3134302c33372c3131392c36332c39302c3132302c3131332c3135372c3130352c34362c31342c33332c3230372c3131322c3131332c3235342c38342c37332c3131302c33392c392c3230372c3133312c342c3232352c39302c3135312c32302c31352c36342c39372c39385d7d&quot;,
-                        &quot;operational_certificate&quot;:&quot;5b5b5b3138332c33342c3231362c34362c3232372c3235312c37342c3130312c31352c3233332c3234392c34322c312c37372c37322c3234382c3137392c32312c3137332c3131332c3131382c3139382c36322c3133352c34352c38382c3138372c3233332c34302c37322c31362c36365d2c312c3132332c5b31362c3136392c3134312c3138332c32322c3137342c3131312c33322c36342c35322c3234392c36382c3230322c33352c3130362c332c38362c3230352c37382c3230302c3138362c39342c3139372c3232382c37392c3137352c32392c31342c3132382c36332c35392c3139382c36322c3233302c34362c34312c38342c39382c3131392c3134352c32392c3132312c33352c3139372c3132382c3137322c302c3135342c392c31332c32362c3138332c3138362c3138362c33312c3234392c3133322c3232392c3235332c3134332c3130322c3235342c3231322c315d5d2c5b3234312c32372c31332c34342c3131342c37382c3138392c3234392c3135302c3135302c35332c3134342c3233362c3135312c38382c3134302c3132382c3136322c36302c3232382c38382c3131312c392c3134342c3233322c38332c39342c3231302c3135362c3136382c33352c3234325d5d&quot;,
-                        &quot;kes_period&quot;:12,
-                        &quot;stake&quot;:9497629046
+                '2023-05-16T02:17:16.203859116Z',
+                '{
+                    "type":"MithrilStakeDistribution",
+                    "epoch":203,
+                    "signers_with_stake":[{
+                        "party_id":"pool1r0tln8nct3mpyvehgy6uu3cdlmjnmtr2fxjcqnfl6v0qg0we42e",
+                        "verification_key":"7b22766b223a5b3138352c3132342c3231382c31362c3133312c3137382c3136302c37312c35382c3235312c31382c36382c37372c3135342c35382c3131352c3133392c3139392c38392c3230382c3139312c3235332c3138362c3232302c3133372c3135382c34312c3230332c382c3136352c3232362c3139342c3133382c3135322c35382c3131352c35342c3136322c3230332c32322c32332c3232382c3139342c34382c3137322c3139342c3130352c36382c302c3138302c3131332c3230312c3130392c3234372c39362c39342c3232372c3135372c36322c3139352c3134382c33352c3230352c3133372c3132312c3135322c3130302c3138342c3136372c3230362c3133322c34352c3133382c3131312c38392c3138322c3230352c3138372c3135382c32322c32332c3231382c36342c3137332c35392c3134312c3133332c3138302c3131392c36302c3134392c3134382c38332c3234312c3230312c33375d2c22706f70223a5b3137352c3135382c3130322c34352c3133322c38352c33312c3130342c36352c3230342c38352c312c34332c3137382c3138372c3233382c3135372c32372c39312c3230332c35342c37332c36322c35352c3131322c3131352c302c32312c3130302c3230382c37392c3135382c3233332c3132372c38332c3234352c3134362c3231382c3131382c3139332c38322c3139352c3137302c32312c36382c3231342c3138352c38372c3136382c3135372c3230322c3136382c3132392c3233332c38372c3230332c37372c36332c3232312c31362c3130392c33302c3235312c35312c38342c36392c3233372c39382c3133372c36302c39312c37362c38302c3232322c302c3130342c3231332c3132352c31332c3135312c3133312c3130312c3230312c33322c3138392c3137362c3139392c3131342c3234302c31352c33312c3136302c31332c3136352c32372c3134335d7d",
+                        "verification_key_signature":"7b227369676d61223a7b227369676d61223a7b227369676d61223a7b227369676d61223a7b227369676d61223a7b227369676d61223a5b36322c33302c32362c3131302c3134382c3137342c36302c32392c3139302c34362c37342c3135392c3137312c3134362c31342c3231362c37352c32302c38352c3134342c32332c3134352c3132352c39382c36362c3132342c3139332c32352c3233352c3234372c3130342c382c352c3133342c302c3134302c3131352c33362c31342c33382c31322c34392c39372c33392c3232312c3234352c39322c362c35302c3134362c3135372c3136362c32382c38352c33312c33352c3232392c3233312c34332c3230322c34372c3235352c3138322c375d2c226c68735f706b223a5b3234322c3132322c34322c39332c39352c31322c36352c3131332c31342c35322c3135352c3133372c3130312c3137382c3232362c3133332c31372c39302c3138332c3132312c3136362c35322c342c39312c3135332c3232332c32352c3133372c37332c3137332c3235332c3233315d2c227268735f706b223a5b322c3231312c3230372c3234392c3234322c362c3131322c362c3235322c31322c3135362c3139332c38362c3133362c3138352c36342c3132342c35302c3230392c38382c3138322c3133352c32392c3138372c3133302c3138392c34312c3134302c34322c33342c3135392c3234365d7d2c226c68735f706b223a5b37352c3232312c3235302c3235322c3135382c3134362c35362c34312c39382c3137362c3139382c3231392c33352c3130392c3136332c36312c3139362c3139342c3137382c3130392c3132382c3131352c3130302c3135322c33392c3231392c35382c34392c3235302c33312c3138342c395d2c227268735f706b223a5b3135372c3232312c38372c3139342c3235322c3234382c3132372c33312c3136362c3235322c3233342c3232362c33362c3139352c3230312c33312c34372c3232302c3233372c3137342c3130372c3134342c33382c3234372c3135352c3135382c34372c3139302c3235322c3134302c3235342c3131375d7d2c226c68735f706b223a5b34322c37372c37392c36302c3137312c3234372c31392c3230332c3232302c36332c3231352c3135372c3132392c3230382c3135382c35352c3131302c3232312c3139372c3233322c38372c33312c31312c3235342c3133352c32372c3234352c3137352c3135342c3231382c3232312c3138345d2c227268735f706b223a5b36382c3230332c38362c31352c37352c33352c3232332c342c3130392c3234392c3231372c3132352c34372c3231372c3130342c36352c3131332c3234312c3235332c3138332c3138362c36362c37352c3135302c3233342c3138362c3137332c3233302c3130332c3139342c3135322c3132375d7d2c226c68735f706b223a5b3133312c38372c3135382c3233352c34312c3233372c33332c34362c3235342c38302c3235322c3132392c37332c3234382c3135332c33382c3138332c33342c3231362c3135362c3131302c36392c37322c39302c32382c36382c3131342c33352c33352c3134332c3234312c3231305d2c227268735f706b223a5b3232382c3135352c3133332c34312c3137392c39342c3233362c3133392c3231362c3136302c3130382c3137362c3134362c3232352c3134302c3231352c35392c3130372c32302c3133372c3139372c33392c3135332c3132362c3233372c3135382c3132332c392c3133322c3139342c3132312c3232355d7d2c226c68735f706b223a5b3232322c39362c35332c34312c32342c38382c3136342c39382c3133312c33342c3132362c3133392c32382c37342c34362c3137332c35302c3133362c39372c3137312c3130312c3136322c33312c3137352c32332c3130352c3231352c36332c37362c3132342c31322c3131365d2c227268735f706b223a5b3133382c31382c31302c352c3231382c3134372c35332c35322c33362c3234342c33362c3131302c31302c33382c3134382c3132332c3235302c3131352c36342c36372c3137332c3130352c3137392c3235342c3130352c332c3132372c32302c31322c3230352c37372c3230365d7d2c226c68735f706b223a5b3132342c382c37312c3135302c34352c3130362c3232322c3234372c3130302c3137342c34352c3135322c3136312c3130382c3135382c32372c3234342c35362c3131352c3233322c3136332c3234342c38372c3138332c3232372c3235302c3232372c3234382c3137352c3136332c3230392c37345d2c227268735f706b223a5b3134302c33372c3131392c36332c39302c3132302c3131332c3135372c3130352c34362c31342c33332c3230372c3131322c3131332c3235342c38342c37332c3131302c33392c392c3230372c3133312c342c3232352c39302c3135312c32302c31352c36342c39372c39385d7d",
+                        "operational_certificate":"5b5b5b3138332c33342c3231362c34362c3232372c3235312c37342c3130312c31352c3233332c3234392c34322c312c37372c37322c3234382c3137392c32312c3137332c3131332c3131382c3139382c36322c3133352c34352c38382c3138372c3233332c34302c37322c31362c36365d2c312c3132332c5b31362c3136392c3134312c3138332c32322c3137342c3131312c33322c36342c35322c3234392c36382c3230322c33352c3130362c332c38362c3230352c37382c3230302c3138362c39342c3139372c3232382c37392c3137352c32392c31342c3132382c36332c35392c3139382c36322c3233302c34362c34312c38342c39382c3131392c3134352c32392c3132312c33352c3139372c3132382c3137322c302c3135342c392c31332c32362c3138332c3138362c3138362c33312c3234392c3133322c3232392c3235332c3134332c3130322c3235342c3231322c315d5d2c5b3234312c32372c31332c34342c3131342c37382c3138392c3234392c3135302c3135302c35332c3134342c3233362c3135312c38382c3134302c3132382c3136322c36302c3232382c38382c3131312c392c3134342c3233322c38332c39342c3231302c3135362c3136382c33352c3234325d5d",
+                        "kes_period":12,
+                        "stake":9497629046
                     }],
-                    &quot;hash&quot;:&quot;2da62e3ffee5e284ffd1e29ee52ee5547c5ff5ef34bee0a49dc54ea5e375f77e&quot;,
-                    &quot;protocol_parameters&quot;:{&quot;k&quot;:2422,&quot;m&quot;:20973,&quot;phi_f&quot;:0.2}}&#39;
+                    "hash":"2da62e3ffee5e284ffd1e29ee52ee5547c5ff5ef34bee0a49dc54ea5e375f77e",
+                    "protocol_parameters":{"k":2422,"m":20973,"phi_f":0.2}}'
             );
 
-            &quot;#</span>,
+            "#</span>,
             )
             .unwrap();
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_golden_master() {
-        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">&quot;:memory:&quot;</span>).unwrap();
+        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">":memory:"</span>).unwrap();
         setup_signed_entity_db(<span class="kw-2">&amp;</span>connection, <span class="macro">vec!</span>[]).unwrap();
         insert_golden_signed_entities(<span class="kw-2">&amp;</span>connection);
 
         <span class="kw">let </span>provider = SignedEntityRecordProvider::new(<span class="kw-2">&amp;</span>connection);
         <span class="kw">let </span>cardano_immutable_files_fulls: Vec&lt;SignedEntity&lt;Snapshot&gt;&gt; = provider
             .get_by_signed_entity_type(<span class="kw-2">&amp;</span>SignedEntityTypeDiscriminants::CardanoImmutableFilesFull)
-            .expect(<span class="string">&quot;Getting Golden snapshot signed entities should not fail&quot;</span>)
+            .expect(<span class="string">"Getting Golden snapshot signed entities should not fail"</span>)
             .map(|r| r.try_into().unwrap())
             .collect();
         <span class="kw">let </span>mithril_stake_distributions: Vec&lt;SignedEntity&lt;MithrilStakeDistribution&gt;&gt; = provider
             .get_by_signed_entity_type(<span class="kw-2">&amp;</span>SignedEntityTypeDiscriminants::MithrilStakeDistribution)
-            .expect(<span class="string">&quot;Getting Golden mithril stake distribution signed entities should not fail&quot;</span>)
+            .expect(<span class="string">"Getting Golden mithril stake distribution signed entities should not fail"</span>)
             .map(|r| r.try_into().unwrap())
             .collect();
 
@@ -1899,8 +1900,8 @@ where signed_entity_id = ?*&quot;</span>;
 
         <span class="kw">let </span>signed_entity: SignedEntityRecord = SignedEntityRecord::from_snapshot(
             snapshot,
-            <span class="string">&quot;certificate-1&quot;</span>.to_string(),
-            DateTime::parse_from_rfc3339(<span class="string">&quot;2023-01-19T13:43:05.618857482Z&quot;</span>)
+            <span class="string">"certificate-1"</span>.to_string(),
+            DateTime::parse_from_rfc3339(<span class="string">"2023-01-19T13:43:05.618857482Z"</span>)
                 .unwrap()
                 .with_timezone(<span class="kw-2">&amp;</span>Utc),
         );
@@ -1911,10 +1912,10 @@ where signed_entity_id = ?*&quot;</span>;
     <span class="attr">#[test]
     </span><span class="kw">fn </span>projection() {
         <span class="kw">let </span>projection = SignedEntityRecord::get_projection();
-        <span class="kw">let </span>aliases = SourceAlias::new(<span class="kw-2">&amp;</span>[(<span class="string">&quot;{:signed_entity:}&quot;</span>, <span class="string">&quot;se&quot;</span>)]);
+        <span class="kw">let </span>aliases = SourceAlias::new(<span class="kw-2">&amp;</span>[(<span class="string">"{:signed_entity:}"</span>, <span class="string">"se"</span>)]);
 
         <span class="macro">assert_eq!</span>(
-            <span class="string">&quot;se.signed_entity_id as signed_entity_id, se.signed_entity_type_id as signed_entity_type_id, se.certificate_id as certificate_id, se.beacon as beacon, se.artifact as artifact, se.created_at as created_at&quot;
+            <span class="string">"se.signed_entity_id as signed_entity_id, se.signed_entity_type_id as signed_entity_type_id, se.certificate_id as certificate_id, se.beacon as beacon, se.artifact as artifact, se.created_at as created_at"
                 </span>.to_string(),
             projection.expand(aliases)
         );
@@ -1922,7 +1923,7 @@ where signed_entity_id = ?*&quot;</span>;
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>get_signed_entity_record_by_signed_entity_type() {
-        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">&quot;:memory:&quot;</span>).unwrap();
+        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">":memory:"</span>).unwrap();
         <span class="kw">let </span>provider = SignedEntityRecordProvider::new(<span class="kw-2">&amp;</span>connection);
         <span class="kw">let </span>condition = provider
             .condition_by_signed_entity_type(
@@ -1931,49 +1932,49 @@ where signed_entity_id = ?*&quot;</span>;
             .unwrap();
         <span class="kw">let </span>(filter, values) = condition.expand();
 
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;signed_entity_type_id = ?1&quot;</span>.to_string(), filter);
+        <span class="macro">assert_eq!</span>(<span class="string">"signed_entity_type_id = ?1"</span>.to_string(), filter);
         <span class="macro">assert_eq!</span>(<span class="macro">vec!</span>[Value::Integer(<span class="number">2</span>)], values);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>get_signed_entity_record_by_signed_entity_id() {
-        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">&quot;:memory:&quot;</span>).unwrap();
+        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">":memory:"</span>).unwrap();
         <span class="kw">let </span>provider = SignedEntityRecordProvider::new(<span class="kw-2">&amp;</span>connection);
         <span class="kw">let </span>condition = provider
-            .condition_by_signed_entity_id(<span class="string">&quot;signed-ent-123&quot;</span>)
+            .condition_by_signed_entity_id(<span class="string">"signed-ent-123"</span>)
             .unwrap();
         <span class="kw">let </span>(filter, values) = condition.expand();
 
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;signed_entity_id = ?1&quot;</span>.to_string(), filter);
-        <span class="macro">assert_eq!</span>(<span class="macro">vec!</span>[Value::String(<span class="string">&quot;signed-ent-123&quot;</span>.to_string())], values);
+        <span class="macro">assert_eq!</span>(<span class="string">"signed_entity_id = ?1"</span>.to_string(), filter);
+        <span class="macro">assert_eq!</span>(<span class="macro">vec!</span>[Value::String(<span class="string">"signed-ent-123"</span>.to_string())], values);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>get_signed_entity_record_by_signed_certificate_id() {
-        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">&quot;:memory:&quot;</span>).unwrap();
+        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">":memory:"</span>).unwrap();
         <span class="kw">let </span>provider = SignedEntityRecordProvider::new(<span class="kw-2">&amp;</span>connection);
         <span class="kw">let </span>condition = provider
-            .condition_by_certificate_id(<span class="string">&quot;certificate_id&quot;</span>)
+            .condition_by_certificate_id(<span class="string">"certificate_id"</span>)
             .unwrap();
         <span class="kw">let </span>(filter, values) = condition.expand();
 
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;certificate_id = ?1&quot;</span>.to_string(), filter);
-        <span class="macro">assert_eq!</span>(<span class="macro">vec!</span>[Value::String(<span class="string">&quot;certificate_id&quot;</span>.to_string())], values);
+        <span class="macro">assert_eq!</span>(<span class="string">"certificate_id = ?1"</span>.to_string(), filter);
+        <span class="macro">assert_eq!</span>(<span class="macro">vec!</span>[Value::String(<span class="string">"certificate_id"</span>.to_string())], values);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>get_signed_entity_record_by_signed_certificates_ids() {
-        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">&quot;:memory:&quot;</span>).unwrap();
+        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">":memory:"</span>).unwrap();
         <span class="kw">let </span>provider = SignedEntityRecordProvider::new(<span class="kw-2">&amp;</span>connection);
-        <span class="kw">let </span>condition = provider.condition_by_certificates_ids(<span class="kw-2">&amp;</span>[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>]);
+        <span class="kw">let </span>condition = provider.condition_by_certificates_ids(<span class="kw-2">&amp;</span>[<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>]);
         <span class="kw">let </span>(condition, params) = condition.expand();
 
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;certificate_id in (?1, ?2, ?3)&quot;</span>.to_string(), condition);
+        <span class="macro">assert_eq!</span>(<span class="string">"certificate_id in (?1, ?2, ?3)"</span>.to_string(), condition);
         <span class="macro">assert_eq!</span>(
             <span class="macro">vec!</span>[
-                Value::String(<span class="string">&quot;a&quot;</span>.to_string()),
-                Value::String(<span class="string">&quot;b&quot;</span>.to_string()),
-                Value::String(<span class="string">&quot;c&quot;</span>.to_string()),
+                Value::String(<span class="string">"a"</span>.to_string()),
+                Value::String(<span class="string">"b"</span>.to_string()),
+                Value::String(<span class="string">"c"</span>.to_string()),
             ],
             params
         );
@@ -1985,18 +1986,18 @@ where signed_entity_id = ?*&quot;</span>;
         <span class="kw">let </span>snapshot = snapshots.first().unwrap().to_owned();
         <span class="kw">let </span>signed_entity_record: SignedEntityRecord = SignedEntityRecord::from_snapshot(
             snapshot,
-            <span class="string">&quot;certificate-1&quot;</span>.to_string(),
-            DateTime::parse_from_rfc3339(<span class="string">&quot;2023-01-19T13:43:05.618857482Z&quot;</span>)
+            <span class="string">"certificate-1"</span>.to_string(),
+            DateTime::parse_from_rfc3339(<span class="string">"2023-01-19T13:43:05.618857482Z"</span>)
                 .unwrap()
                 .with_timezone(<span class="kw-2">&amp;</span>Utc),
         );
-        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">&quot;:memory:&quot;</span>).unwrap();
+        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">":memory:"</span>).unwrap();
         <span class="kw">let </span>provider = InsertSignedEntityRecordProvider::new(<span class="kw-2">&amp;</span>connection);
         <span class="kw">let </span>condition = provider.get_insert_condition(signed_entity_record.clone());
         <span class="kw">let </span>(values, params) = condition.expand();
 
         <span class="macro">assert_eq!</span>(
-            <span class="string">&quot;(signed_entity_id, signed_entity_type_id, certificate_id, beacon, artifact, created_at) values (?1, ?2, ?3, ?4, ?5, ?6)&quot;</span>.to_string(),
+            <span class="string">"(signed_entity_id, signed_entity_type_id, certificate_id, beacon, artifact, created_at) values (?1, ?2, ?3, ?4, ?5, ?6)"</span>.to_string(),
             values
         );
         <span class="macro">assert_eq!</span>(
@@ -2021,7 +2022,7 @@ where signed_entity_id = ?*&quot;</span>;
     </span><span class="kw">fn </span>test_get_signed_entity_records() {
         <span class="kw">let </span>signed_entity_records = fake_signed_entity_records(<span class="number">5</span>);
 
-        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">&quot;:memory:&quot;</span>).unwrap();
+        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">":memory:"</span>).unwrap();
         setup_signed_entity_db(<span class="kw-2">&amp;</span>connection, signed_entity_records.clone()).unwrap();
 
         <span class="kw">let </span>provider = SignedEntityRecordProvider::new(<span class="kw-2">&amp;</span>connection);
@@ -2056,14 +2057,14 @@ where signed_entity_id = ?*&quot;</span>;
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>test_get_signed_entity_record_by_certificate_id() {
         <span class="kw">let </span>expected_record = fake_signed_entity_records(<span class="number">1</span>).remove(<span class="number">0</span>);
-        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">&quot;:memory:&quot;</span>).unwrap();
+        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">":memory:"</span>).unwrap();
         setup_signed_entity_db(<span class="kw-2">&amp;</span>connection, <span class="macro">vec!</span>[expected_record.clone()]).unwrap();
         <span class="kw">let </span>store = SignedEntityStoreAdapter::new(Arc::new(connection));
 
         <span class="kw">let </span>record = store
             .get_signed_entity_by_certificate_id(<span class="kw-2">&amp;</span>expected_record.certificate_id)
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;querying signed entity record by certificate id should not fail&quot;</span>);
+            </span>.expect(<span class="string">"querying signed entity record by certificate id should not fail"</span>);
 
         <span class="macro">assert_eq!</span>(<span class="prelude-val">Some</span>(expected_record), record);
     }
@@ -2071,7 +2072,7 @@ where signed_entity_id = ?*&quot;</span>;
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>test_get_signed_entity_record_by_certificates_ids() {
         <span class="kw">let </span>expected_records = fake_signed_entity_records(<span class="number">3</span>);
-        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">&quot;:memory:&quot;</span>).unwrap();
+        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">":memory:"</span>).unwrap();
         setup_signed_entity_db(<span class="kw-2">&amp;</span>connection, expected_records.clone()).unwrap();
         <span class="kw">let </span>store = SignedEntityStoreAdapter::new(Arc::new(connection));
         <span class="kw">let </span>certificates_ids: Vec&lt;<span class="kw-2">&amp;</span>str&gt; = expected_records
@@ -2082,7 +2083,7 @@ where signed_entity_id = ?*&quot;</span>;
         <span class="kw">let </span>queried_records = store
             .get_signed_entities_by_certificates_ids(<span class="kw-2">&amp;</span>certificates_ids)
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;querying signed entity record by certificates ids should not fail&quot;</span>);
+            </span>.expect(<span class="string">"querying signed entity record by certificates ids should not fail"</span>);
 
         <span class="macro">assert_eq!</span>(
             <span class="comment">// Records are inserted older to earlier and queried the other way round
@@ -2095,7 +2096,7 @@ where signed_entity_id = ?*&quot;</span>;
     </span><span class="kw">fn </span>test_insert_signed_entity_record() {
         <span class="kw">let </span>signed_entity_records = fake_signed_entity_records(<span class="number">5</span>);
 
-        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">&quot;:memory:&quot;</span>).unwrap();
+        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">":memory:"</span>).unwrap();
         setup_signed_entity_db(<span class="kw-2">&amp;</span>connection, Vec::new()).unwrap();
 
         <span class="kw">let </span>provider = InsertSignedEntityRecordProvider::new(<span class="kw-2">&amp;</span>connection);
@@ -2109,14 +2110,14 @@ where signed_entity_id = ?*&quot;</span>;
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>update_provider_condition() {
-        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">&quot;:memory:&quot;</span>).unwrap();
+        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">":memory:"</span>).unwrap();
         <span class="kw">let </span>provider = UpdateSignedEntityProvider::new(<span class="kw-2">&amp;</span>connection);
         <span class="kw">let </span>snapshots = fake_data::snapshots(<span class="number">1</span>);
         <span class="kw">let </span>snapshot = snapshots.first().unwrap().to_owned();
         <span class="kw">let </span>signed_entity_record: SignedEntityRecord = SignedEntityRecord::from_snapshot(
             snapshot,
-            <span class="string">&quot;certificate-1&quot;</span>.to_string(),
-            DateTime::parse_from_rfc3339(<span class="string">&quot;2023-01-19T13:43:05.618857482Z&quot;</span>)
+            <span class="string">"certificate-1"</span>.to_string(),
+            DateTime::parse_from_rfc3339(<span class="string">"2023-01-19T13:43:05.618857482Z"</span>)
                 .unwrap()
                 .with_timezone(<span class="kw-2">&amp;</span>Utc),
         );
@@ -2126,7 +2127,7 @@ where signed_entity_id = ?*&quot;</span>;
             .expand();
 
         <span class="macro">assert_eq!</span>(
-            <span class="string">&quot;signed_entity_type_id = ?1, certificate_id = ?2, beacon = ?3, artifact = ?4, created_at = ?5 where signed_entity_id = ?6&quot;
+            <span class="string">"signed_entity_type_id = ?1, certificate_id = ?2, beacon = ?3, artifact = ?4, created_at = ?5 where signed_entity_id = ?6"
                 </span>.to_string(),
             expr
         );
@@ -2152,14 +2153,14 @@ where signed_entity_id = ?*&quot;</span>;
     </span><span class="kw">async fn </span>update_only_given_entities() {
         <span class="kw">let </span><span class="kw-2">mut </span>signed_entity_records = fake_signed_entity_records(<span class="number">5</span>);
 
-        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">&quot;:memory:&quot;</span>).unwrap();
+        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">":memory:"</span>).unwrap();
         setup_signed_entity_db(<span class="kw-2">&amp;</span>connection, signed_entity_records.clone()).unwrap();
         <span class="kw">let </span>store = SignedEntityStoreAdapter::new(Arc::new(connection));
 
         <span class="kw">let </span>records_to_update: Vec&lt;SignedEntityRecord&gt; = signed_entity_records
             .drain(<span class="number">2</span>..)
             .map(|<span class="kw-2">mut </span>r| {
-                r.certificate_id = <span class="macro">format!</span>(<span class="string">&quot;updated-{}&quot;</span>, r.certificate_id);
+                r.certificate_id = <span class="macro">format!</span>(<span class="string">"updated-{}"</span>, r.certificate_id);
                 r
             })
             .collect();
@@ -2172,7 +2173,7 @@ where signed_entity_id = ?*&quot;</span>;
         <span class="kw">let </span>updated_records = store
             .update_signed_entities(records_to_update.clone())
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;updating signed entities should not fail&quot;</span>);
+            </span>.expect(<span class="string">"updating signed entities should not fail"</span>);
 
         <span class="kw">let </span>stored_records = store
             .get_last_signed_entities_by_type(
@@ -2180,7 +2181,7 @@ where signed_entity_id = ?*&quot;</span>;
                 usize::MAX,
             )
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;getting signed entities should not fail&quot;</span>);
+            </span>.expect(<span class="string">"getting signed entities should not fail"</span>);
 
         <span class="macro">assert_eq!</span>(records_to_update, updated_records);
         <span class="macro">assert_eq!</span>(expected_records, stored_records);

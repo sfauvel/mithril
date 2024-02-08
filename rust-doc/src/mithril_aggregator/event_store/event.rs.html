@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-aggregator/src/event_store/event.rs`."><title>event.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_aggregator" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-aggregator/src/event_store/event.rs`."><title>event.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_aggregator" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -297,20 +298,20 @@
     <span class="kw">where
         </span><span class="self">Self</span>: Sized,
     {
-        <span class="kw">let </span>created_at = <span class="kw-2">&amp;</span>row.read::&lt;<span class="kw-2">&amp;</span>str, <span class="kw">_</span>&gt;(<span class="string">&quot;created_at&quot;</span>);
+        <span class="kw">let </span>created_at = <span class="kw-2">&amp;</span>row.read::&lt;<span class="kw-2">&amp;</span>str, <span class="kw">_</span>&gt;(<span class="string">"created_at"</span>);
 
         <span class="kw">let </span>myself = <span class="self">Self </span>{
-            event_id: row.read::&lt;i64, <span class="kw">_</span>&gt;(<span class="string">&quot;event_id&quot;</span>),
+            event_id: row.read::&lt;i64, <span class="kw">_</span>&gt;(<span class="string">"event_id"</span>),
             created_at: DateTime::parse_from_rfc3339(created_at)
                 .map_err(|e| {
                     HydrationError::InvalidData(<span class="macro">format!</span>(
-                        <span class="string">&quot;Could not turn string &#39;{created_at}&#39; to rfc3339 Datetime. Error: {e}&quot;
+                        <span class="string">"Could not turn string '{created_at}' to rfc3339 Datetime. Error: {e}"
                     </span>))
                 })<span class="question-mark">?
                 </span>.with_timezone(<span class="kw-2">&amp;</span>Utc),
-            source: row.read::&lt;<span class="kw-2">&amp;</span>str, <span class="kw">_</span>&gt;(<span class="string">&quot;source&quot;</span>).to_string(),
-            action: row.read::&lt;<span class="kw-2">&amp;</span>str, <span class="kw">_</span>&gt;(<span class="string">&quot;action&quot;</span>).to_string(),
-            content: row.read::&lt;<span class="kw-2">&amp;</span>str, <span class="kw">_</span>&gt;(<span class="string">&quot;content&quot;</span>).to_string(),
+            source: row.read::&lt;<span class="kw-2">&amp;</span>str, <span class="kw">_</span>&gt;(<span class="string">"source"</span>).to_string(),
+            action: row.read::&lt;<span class="kw-2">&amp;</span>str, <span class="kw">_</span>&gt;(<span class="string">"action"</span>).to_string(),
+            content: row.read::&lt;<span class="kw-2">&amp;</span>str, <span class="kw">_</span>&gt;(<span class="string">"content"</span>).to_string(),
         };
 
         <span class="prelude-val">Ok</span>(myself)
@@ -318,22 +319,22 @@
 
     <span class="kw">fn </span>get_projection() -&gt; Projection {
         <span class="kw">let </span><span class="kw-2">mut </span>projection = Projection::default();
-        projection.add_field(<span class="string">&quot;event_id&quot;</span>, <span class="string">&quot;event_id&quot;</span>, <span class="string">&quot;int&quot;</span>);
-        projection.add_field(<span class="string">&quot;created_at&quot;</span>, <span class="string">&quot;created_at&quot;</span>, <span class="string">&quot;string&quot;</span>);
-        projection.add_field(<span class="string">&quot;source&quot;</span>, <span class="string">&quot;source&quot;</span>, <span class="string">&quot;string&quot;</span>);
-        projection.add_field(<span class="string">&quot;action&quot;</span>, <span class="string">&quot;action&quot;</span>, <span class="string">&quot;string&quot;</span>);
-        projection.add_field(<span class="string">&quot;content&quot;</span>, <span class="string">&quot;content&quot;</span>, <span class="string">&quot;string&quot;</span>);
+        projection.add_field(<span class="string">"event_id"</span>, <span class="string">"event_id"</span>, <span class="string">"int"</span>);
+        projection.add_field(<span class="string">"created_at"</span>, <span class="string">"created_at"</span>, <span class="string">"string"</span>);
+        projection.add_field(<span class="string">"source"</span>, <span class="string">"source"</span>, <span class="string">"string"</span>);
+        projection.add_field(<span class="string">"action"</span>, <span class="string">"action"</span>, <span class="string">"string"</span>);
+        projection.add_field(<span class="string">"content"</span>, <span class="string">"content"</span>, <span class="string">"string"</span>);
 
         projection
     }
 }
 
-<span class="kw">struct </span>EventPersisterProvider&lt;<span class="lifetime">&#39;conn</span>&gt; {
-    connection: <span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span>SqliteConnection,
+<span class="kw">struct </span>EventPersisterProvider&lt;<span class="lifetime">'conn</span>&gt; {
+    connection: <span class="kw-2">&amp;</span><span class="lifetime">'conn </span>SqliteConnection,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;conn</span>&gt; EventPersisterProvider&lt;<span class="lifetime">&#39;conn</span>&gt; {
-    <span class="kw">pub fn </span>new(connection: <span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span>SqliteConnection) -&gt; <span class="self">Self </span>{
+<span class="kw">impl</span>&lt;<span class="lifetime">'conn</span>&gt; EventPersisterProvider&lt;<span class="lifetime">'conn</span>&gt; {
+    <span class="kw">pub fn </span>new(connection: <span class="kw-2">&amp;</span><span class="lifetime">'conn </span>SqliteConnection) -&gt; <span class="self">Self </span>{
         <span class="kw">let </span>myself = <span class="self">Self </span>{ connection };
         myself.create_table_if_not_exists();
 
@@ -341,30 +342,30 @@
     }
 
     <span class="kw">fn </span>create_table_if_not_exists(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <span class="kw">let </span>sql = <span class="string">r#&quot;
+        <span class="kw">let </span>sql = <span class="string">r#"
         create table if not exists event (
             event_id integer primary key asc autoincrement,
             created_at text not null,
             source text not null,
             action text not null,
             content text nul null
-        )&quot;#</span>;
+        )"#</span>;
 
         <span class="self">self</span>.connection.execute(sql).unwrap();
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;conn</span>&gt; Provider&lt;<span class="lifetime">&#39;conn</span>&gt; <span class="kw">for </span>EventPersisterProvider&lt;<span class="lifetime">&#39;conn</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'conn</span>&gt; Provider&lt;<span class="lifetime">'conn</span>&gt; <span class="kw">for </span>EventPersisterProvider&lt;<span class="lifetime">'conn</span>&gt; {
     <span class="kw">type </span>Entity = Event;
 
-    <span class="kw">fn </span>get_connection(<span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span>SqliteConnection {
+    <span class="kw">fn </span>get_connection(<span class="kw-2">&amp;</span><span class="lifetime">'conn </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'conn </span>SqliteConnection {
         <span class="self">self</span>.connection
     }
 
     <span class="kw">fn </span>get_definition(<span class="kw-2">&amp;</span><span class="self">self</span>, data: <span class="kw-2">&amp;</span>str) -&gt; String {
         <span class="kw">let </span>projection = <span class="self">Self</span>::Entity::get_projection().expand(SourceAlias::default());
 
-        <span class="macro">format!</span>(<span class="string">r#&quot;insert into event {data} returning {projection}&quot;#</span>)
+        <span class="macro">format!</span>(<span class="string">r#"insert into event {data} returning {projection}"#</span>)
     }
 }
 
@@ -382,12 +383,12 @@
 
     <span class="kw">fn </span>get_persist_parameters(<span class="kw-2">&amp;</span><span class="self">self</span>, message: EventMessage) -&gt; StdResult&lt;WhereCondition&gt; {
         <span class="kw">let </span>filters = WhereCondition::new(
-            <span class="string">&quot;(source, action, content, created_at) values (?*, ?*, ?*, ?*)&quot;</span>,
+            <span class="string">"(source, action, content, created_at) values (?*, ?*, ?*, ?*)"</span>,
             <span class="macro">vec!</span>[
                 sqlite::Value::String(message.source),
                 sqlite::Value::String(message.action),
                 sqlite::Value::String(<span class="macro">format!</span>(
-                    <span class="string">r#&quot;{{&quot;headers&quot;: {}, &quot;content&quot;: {}}}&quot;#</span>,
+                    <span class="string">r#"{{"headers": {}, "content": {}}}"#</span>,
                     serde_json::to_string(<span class="kw-2">&amp;</span>message.headers)<span class="question-mark">?</span>,
                     message.content
                 )),
@@ -405,7 +406,7 @@
         <span class="kw">let </span><span class="kw-2">mut </span>rows = provider.find(<span class="self">self</span>.get_persist_parameters(message)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
 
         rows.next().ok_or(<span class="macro">anyhow!</span>(
-            <span class="string">&quot;No record from the database after I saved event message {log_message:?}&quot;
+            <span class="string">"No record from the database after I saved event message {log_message:?}"
         </span>))
     }
 }
@@ -421,20 +422,20 @@
         <span class="kw">let </span>projection = Event::get_projection();
 
         <span class="macro">assert_eq!</span>(
-            <span class="string">&quot;event_id as event_id, created_at as created_at, source as source, action as action, content as content&quot;</span>.to_string(),
+            <span class="string">"event_id as event_id, created_at as created_at, source as source, action as action, content as content"</span>.to_string(),
             projection.expand(SourceAlias::default())
         )
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>provider_sql() {
-        <span class="kw">let </span>connection = Arc::new(Connection::open_thread_safe(<span class="string">&quot;:memory:&quot;</span>).unwrap());
+        <span class="kw">let </span>connection = Arc::new(Connection::open_thread_safe(<span class="string">":memory:"</span>).unwrap());
         <span class="kw">let </span>persister = EventPersister::new(connection);
-        <span class="kw">let </span>message = EventMessage::new(<span class="string">&quot;source&quot;</span>, <span class="string">&quot;action&quot;</span>, <span class="string">&quot;content&quot;</span>);
+        <span class="kw">let </span>message = EventMessage::new(<span class="string">"source"</span>, <span class="string">"action"</span>, <span class="string">"content"</span>);
         <span class="kw">let </span>(parameters, values) = persister.get_persist_parameters(message).unwrap().expand();
 
         <span class="macro">assert_eq!</span>(
-            <span class="string">&quot;(source, action, content, created_at) values (?1, ?2, ?3, ?4)&quot;</span>.to_string(),
+            <span class="string">"(source, action, content, created_at) values (?1, ?2, ?3, ?4)"</span>.to_string(),
             parameters
         );
         <span class="macro">assert_eq!</span>(<span class="number">4</span>, values.len());
@@ -442,9 +443,9 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>can_persist_event() -&gt; StdResult&lt;()&gt; {
-        <span class="kw">let </span>connection = Arc::new(Connection::open_thread_safe(<span class="string">&quot;:memory:&quot;</span>).unwrap());
+        <span class="kw">let </span>connection = Arc::new(Connection::open_thread_safe(<span class="string">":memory:"</span>).unwrap());
         <span class="kw">let </span>persister = EventPersister::new(connection);
-        <span class="kw">let </span>message = EventMessage::new(<span class="string">&quot;source&quot;</span>, <span class="string">&quot;action&quot;</span>, <span class="string">&quot;content&quot;</span>);
+        <span class="kw">let </span>message = EventMessage::new(<span class="string">"source"</span>, <span class="string">"action"</span>, <span class="string">"content"</span>);
 
         <span class="kw">let </span>_event = persister.persist(message)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())

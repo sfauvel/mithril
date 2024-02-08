@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-aggregator/src/tools/certificates_hash_migrator.rs`."><title>certificates_hash_migrator.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_aggregator" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-aggregator/src/tools/certificates_hash_migrator.rs`."><title>certificates_hash_migrator.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_aggregator" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -642,7 +643,7 @@
 
     <span class="doccomment">/// Recompute all the certificates hashes the database.
     </span><span class="kw">pub async fn </span>migrate(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; StdResult&lt;()&gt; {
-        <span class="macro">info!</span>(<span class="string">&quot;🔧 Certificate Hash Migrator: starting&quot;</span>);
+        <span class="macro">info!</span>(<span class="string">"🔧 Certificate Hash Migrator: starting"</span>);
         <span class="kw">let </span>(old_certificates, old_and_new_hashes) =
             <span class="self">self</span>.create_certificates_with_updated_hash().<span class="kw">await</span><span class="question-mark">?</span>;
 
@@ -651,7 +652,7 @@
 
         <span class="self">self</span>.cleanup(old_certificates).<span class="kw">await</span><span class="question-mark">?</span>;
 
-        <span class="macro">info!</span>(<span class="string">&quot;🔧 Certificate Hash Migrator: all certificates have been migrated successfully&quot;</span>);
+        <span class="macro">info!</span>(<span class="string">"🔧 Certificate Hash Migrator: all certificates have been migrated successfully"</span>);
         <span class="prelude-val">Ok</span>(())
     }
 
@@ -660,7 +661,7 @@
     </span><span class="kw">async fn </span>create_certificates_with_updated_hash(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
     ) -&gt; StdResult&lt;(Vec&lt;Certificate&gt;, HashMap&lt;String, String&gt;)&gt; {
-        <span class="macro">info!</span>(<span class="string">&quot;🔧 Certificate Hash Migrator: recomputing all certificates hash&quot;</span>);
+        <span class="macro">info!</span>(<span class="string">"🔧 Certificate Hash Migrator: recomputing all certificates hash"</span>);
         <span class="kw">let </span>old_certificates = <span class="self">self
             </span>.certificate_repository
             <span class="comment">// arbitrary high value to get all existing certificates
@@ -675,7 +676,7 @@
         // Note: get_latest_certificates retrieve certificates from the earliest to the older,
         // in order to have a strong guarantee that when inserting a certificate in the db its
         // previous_hash exist we have to work in the reverse order.
-        </span><span class="macro">debug!</span>(<span class="string">&quot;🔧 Certificate Hash Migrator: computing new hash for all certificates&quot;</span>);
+        </span><span class="macro">debug!</span>(<span class="string">"🔧 Certificate Hash Migrator: computing new hash for all certificates"</span>);
         <span class="kw">for </span><span class="kw-2">mut </span>certificate <span class="kw">in </span>old_certificates.into_iter().rev() {
             <span class="kw">let </span>old_previous_hash = <span class="kw">if </span>certificate.is_genesis() {
                 certificate.previous_hash.clone()
@@ -684,7 +685,7 @@
                 certificate.previous_hash = old_and_new_hashes
                     .get(<span class="kw-2">&amp;</span>certificate.previous_hash)
                     .ok_or(<span class="macro">anyhow!</span>(
-                        <span class="string">&quot;Could not migrate certificate previous_hash: The hash &#39;{}&#39; doesn&#39;t exist in the certificate table&quot;</span>,
+                        <span class="string">"Could not migrate certificate previous_hash: The hash '{}' doesn't exist in the certificate table"</span>,
                         <span class="kw-2">&amp;</span>certificate.previous_hash
                     ))<span class="question-mark">?</span>.to_owned();
 
@@ -700,19 +701,19 @@
 
                 <span class="kw">if </span>certificate.is_genesis() {
                     <span class="macro">trace!</span>(
-                        <span class="string">&quot;🔧 Certificate Hash Migrator: new hash computed for genesis certificate {:?}&quot;</span>,
+                        <span class="string">"🔧 Certificate Hash Migrator: new hash computed for genesis certificate {:?}"</span>,
                         certificate.beacon;
-                        <span class="string">&quot;old_hash&quot; </span>=&gt; <span class="kw-2">&amp;</span>certificate.hash,
-                        <span class="string">&quot;new_hash&quot; </span>=&gt; <span class="kw-2">&amp;</span>new_hash,
+                        <span class="string">"old_hash" </span>=&gt; <span class="kw-2">&amp;</span>certificate.hash,
+                        <span class="string">"new_hash" </span>=&gt; <span class="kw-2">&amp;</span>new_hash,
                     );
                 } <span class="kw">else </span>{
                     <span class="macro">trace!</span>(
-                        <span class="string">&quot;🔧 Certificate Hash Migrator: new hash computed for certificate {:?}&quot;</span>,
+                        <span class="string">"🔧 Certificate Hash Migrator: new hash computed for certificate {:?}"</span>,
                         certificate.beacon;
-                        <span class="string">&quot;old_hash&quot; </span>=&gt; <span class="kw-2">&amp;</span>certificate.hash,
-                        <span class="string">&quot;new_hash&quot; </span>=&gt; <span class="kw-2">&amp;</span>new_hash,
-                        <span class="string">&quot;old_previous_hash&quot; </span>=&gt; <span class="kw-2">&amp;</span>old_previous_hash,
-                        <span class="string">&quot;new_previous_hash&quot; </span>=&gt; <span class="kw-2">&amp;</span>certificate.previous_hash
+                        <span class="string">"old_hash" </span>=&gt; <span class="kw-2">&amp;</span>certificate.hash,
+                        <span class="string">"new_hash" </span>=&gt; <span class="kw-2">&amp;</span>new_hash,
+                        <span class="string">"old_previous_hash" </span>=&gt; <span class="kw-2">&amp;</span>old_previous_hash,
+                        <span class="string">"new_previous_hash" </span>=&gt; <span class="kw-2">&amp;</span>certificate.previous_hash
                     );
                 }
 
@@ -726,7 +727,7 @@
 
         <span class="comment">// 2 - Certificates migrated, we can insert them in the db
         // (we do this by chunks in order to avoid reaching the limit of 32766 variables in a single query)
-        </span><span class="macro">debug!</span>(<span class="string">&quot;🔧 Certificate Hash Migrator: inserting migrated certificates in the database&quot;</span>);
+        </span><span class="macro">debug!</span>(<span class="string">"🔧 Certificate Hash Migrator: inserting migrated certificates in the database"</span>);
         <span class="kw">let </span>migrated_certificates_chunk_size = <span class="number">250</span>;
         <span class="kw">for </span>migrated_certificates_chunk <span class="kw">in
             </span>migrated_certificates.chunks(migrated_certificates_chunk_size)
@@ -735,7 +736,7 @@
             .create_many_certificates(migrated_certificates_chunk.to_owned())
             .<span class="kw">await
             </span>.with_context(|| {
-                <span class="string">&quot;Certificates Hash Migrator can not insert migrated certificates in the database&quot;
+                <span class="string">"Certificates Hash Migrator can not insert migrated certificates in the database"
             </span>})<span class="question-mark">?</span>;
         }
 
@@ -746,7 +747,7 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         old_and_new_certificate_hashes: HashMap&lt;String, String&gt;,
     ) -&gt; StdResult&lt;()&gt; {
-        <span class="macro">info!</span>(<span class="string">&quot;🔧 Certificate Hash Migrator: updating signed entities certificate ids&quot;</span>);
+        <span class="macro">info!</span>(<span class="string">"🔧 Certificate Hash Migrator: updating signed entities certificate ids"</span>);
         <span class="kw">let </span>old_hashes: Vec&lt;<span class="kw-2">&amp;</span>str&gt; = old_and_new_certificate_hashes
             .keys()
             .map(|k| k.as_str())
@@ -757,46 +758,46 @@
             .<span class="kw">await
             </span>.with_context(||
                 <span class="macro">format!</span>(
-                    <span class="string">&quot;Certificates Hash Migrator can not get signed entities by certificates ids with hashes: &#39;{:?}&#39;&quot;</span>, old_hashes
+                    <span class="string">"Certificates Hash Migrator can not get signed entities by certificates ids with hashes: '{:?}'"</span>, old_hashes
                 )
             )<span class="question-mark">?</span>;
 
-        <span class="macro">debug!</span>(<span class="string">&quot;🔧 Certificate Hash Migrator: updating signed entities certificate_ids to new computed hash&quot;</span>);
+        <span class="macro">debug!</span>(<span class="string">"🔧 Certificate Hash Migrator: updating signed entities certificate_ids to new computed hash"</span>);
         <span class="kw">for </span>signed_entity_record <span class="kw">in </span>records_to_migrate.iter_mut() {
             <span class="kw">let </span>new_certificate_hash =
                 old_and_new_certificate_hashes
                     .get(<span class="kw-2">&amp;</span>signed_entity_record.certificate_id)
                     .ok_or( <span class="macro">anyhow!</span>(
-                        <span class="string">&quot;Migration Error: no migrated hash found for signed entity with certificate id: {}&quot;</span>,
+                        <span class="string">"Migration Error: no migrated hash found for signed entity with certificate id: {}"</span>,
                         signed_entity_record.certificate_id
                     ))<span class="question-mark">?
                     </span>.to_owned();
 
             <span class="macro">trace!</span>(
-                <span class="string">&quot;🔧 Certificate Hash Migrator: migrating signed entity {} certificate hash computed for certificate&quot;</span>,
+                <span class="string">"🔧 Certificate Hash Migrator: migrating signed entity {} certificate hash computed for certificate"</span>,
                 signed_entity_record.signed_entity_id;
-                <span class="string">&quot;old_certificate_hash&quot; </span>=&gt; <span class="kw-2">&amp;</span>signed_entity_record.certificate_id,
-                <span class="string">&quot;new_certificate_hash&quot; </span>=&gt; <span class="kw-2">&amp;</span>new_certificate_hash
+                <span class="string">"old_certificate_hash" </span>=&gt; <span class="kw-2">&amp;</span>signed_entity_record.certificate_id,
+                <span class="string">"new_certificate_hash" </span>=&gt; <span class="kw-2">&amp;</span>new_certificate_hash
             );
             signed_entity_record.certificate_id = new_certificate_hash;
         }
 
-        <span class="macro">debug!</span>(<span class="string">&quot;🔧 Certificate Hash Migrator: updating migrated signed entities in the database&quot;</span>);
+        <span class="macro">debug!</span>(<span class="string">"🔧 Certificate Hash Migrator: updating migrated signed entities in the database"</span>);
         <span class="self">self</span>.signed_entity_storer
             .update_signed_entities(records_to_migrate)
             .<span class="kw">await
-            </span>.with_context(|| <span class="string">&quot;Certificates Hash Migrator can not update signed entities&quot;</span>)<span class="question-mark">?</span>;
+            </span>.with_context(|| <span class="string">"Certificates Hash Migrator can not update signed entities"</span>)<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(())
     }
 
     <span class="kw">async fn </span>cleanup(<span class="kw-2">&amp;</span><span class="self">self</span>, old_certificates: Vec&lt;Certificate&gt;) -&gt; StdResult&lt;()&gt; {
-        <span class="macro">info!</span>(<span class="string">&quot;🔧 Certificate Hash Migrator: deleting old certificates in the database&quot;</span>);
+        <span class="macro">info!</span>(<span class="string">"🔧 Certificate Hash Migrator: deleting old certificates in the database"</span>);
         <span class="self">self</span>.certificate_repository
             .delete_certificates(<span class="kw-2">&amp;</span>old_certificates.iter().collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;())
             .<span class="kw">await
             </span>.with_context(|| {
-                <span class="string">&quot;Certificates Hash Migrator can not delete old certificates in the database&quot;
+                <span class="string">"Certificates Hash Migrator can not delete old certificates in the database"
             </span>})<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(())
@@ -828,7 +829,7 @@
     <span class="kw">use </span><span class="kw">super</span>::CertificatesHashMigrator;
 
     <span class="kw">fn </span>connection_with_foreign_key_support() -&gt; SqliteConnection {
-        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">&quot;:memory:&quot;</span>).unwrap();
+        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">":memory:"</span>).unwrap();
         apply_all_migrations_to_db(<span class="kw-2">&amp;</span>connection).unwrap();
 
         connection
@@ -848,7 +849,7 @@
     ) -&gt; Certificate {
         <span class="kw">let </span>certificate = CertificateRecord::dummy_genesis(
             certificate_hash,
-            Beacon::new(<span class="string">&quot;testnet&quot;</span>.to_string(), epoch, immutable_file_number),
+            Beacon::new(<span class="string">"testnet"</span>.to_string(), epoch, immutable_file_number),
         );
 
         certificate.into()
@@ -863,7 +864,7 @@
         <span class="kw">let </span>certificate = CertificateRecord::dummy(
             certificate_hash,
             previous_hash,
-            Beacon::new(<span class="string">&quot;testnet&quot;</span>.to_string(), epoch, immutable_file_number),
+            Beacon::new(<span class="string">"testnet"</span>.to_string(), epoch, immutable_file_number),
         );
 
         certificate.into()
@@ -884,7 +885,7 @@
                 .<span class="kw">await
                 </span>.with_context(|| {
                     <span class="macro">format!</span>(
-                        <span class="string">&quot;Certificates Hash Migrator can not create certificate with hash: &#39;{}&#39;&quot;</span>,
+                        <span class="string">"Certificates Hash Migrator can not create certificate with hash: '{}'"</span>,
                         certificate.hash
                     )
                 })<span class="question-mark">?</span>;
@@ -906,11 +907,11 @@
                             CardanoTransactions(certificate.beacon.clone())
                         }
                     };
-                    <span class="comment">// Note: we don&#39;t need to have real artifacts for those tests
-                    </span><span class="kw">let </span>artifact = <span class="macro">format!</span>(<span class="string">&quot;{signed_entity_type:?}&quot;</span>);
+                    <span class="comment">// Note: we don't need to have real artifacts for those tests
+                    </span><span class="kw">let </span>artifact = <span class="macro">format!</span>(<span class="string">"{signed_entity_type:?}"</span>);
 
                     <span class="kw">let </span>signed_entity_record = SignedEntityRecord {
-                        signed_entity_id: <span class="macro">format!</span>(<span class="string">&quot;signed-entity-{}&quot;</span>, <span class="kw-2">&amp;</span>certificate.hash),
+                        signed_entity_id: <span class="macro">format!</span>(<span class="string">"signed-entity-{}"</span>, <span class="kw-2">&amp;</span>certificate.hash),
                         certificate_id: certificate.hash.clone(),
                         signed_entity_type,
                         artifact,
@@ -921,7 +922,7 @@
                         .store_signed_entity(<span class="kw-2">&amp;</span>signed_entity_record)
                         .<span class="kw">await
                         </span>.with_context(|| {
-                            <span class="string">&quot;Certificates Hash Migrator can not store signed entity&quot;
+                            <span class="string">"Certificates Hash Migrator can not store signed entity"
                         </span>})<span class="question-mark">?</span>;
 
                     <span class="prelude-val">Some</span>(signed_entity_record)
@@ -966,24 +967,24 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>recompute_hash_test_tool() {
         <span class="kw">let </span>cert_and_signed_entities = <span class="macro">vec!</span>[
-            (dummy_genesis(<span class="string">&quot;genesis&quot;</span>, <span class="number">1</span>, <span class="number">1</span>), <span class="prelude-val">None</span>),
+            (dummy_genesis(<span class="string">"genesis"</span>, <span class="number">1</span>, <span class="number">1</span>), <span class="prelude-val">None</span>),
             (
-                dummy_certificate(<span class="string">&quot;cert1&quot;</span>, <span class="string">&quot;genesis&quot;</span>, <span class="number">1</span>, <span class="number">2</span>),
+                dummy_certificate(<span class="string">"cert1"</span>, <span class="string">"genesis"</span>, <span class="number">1</span>, <span class="number">2</span>),
                 <span class="prelude-val">Some</span>(SignedEntityRecord {
-                    signed_entity_id: <span class="string">&quot;signed_entity_id&quot;</span>.to_string(),
+                    signed_entity_id: <span class="string">"signed_entity_id"</span>.to_string(),
                     signed_entity_type: MithrilStakeDistribution(Epoch(<span class="number">1</span>)),
-                    certificate_id: <span class="string">&quot;cert1&quot;</span>.to_string(),
-                    artifact: <span class="string">&quot;&quot;</span>.to_string(),
+                    certificate_id: <span class="string">"cert1"</span>.to_string(),
+                    artifact: <span class="string">""</span>.to_string(),
                     created_at: Default::default(),
                 }),
             ),
             (
-                dummy_certificate(<span class="string">&quot;cert2&quot;</span>, <span class="string">&quot;cert1&quot;</span>, <span class="number">2</span>, <span class="number">3</span>),
+                dummy_certificate(<span class="string">"cert2"</span>, <span class="string">"cert1"</span>, <span class="number">2</span>, <span class="number">3</span>),
                 <span class="prelude-val">Some</span>(SignedEntityRecord {
-                    signed_entity_id: <span class="string">&quot;signed_entity_id&quot;</span>.to_string(),
+                    signed_entity_id: <span class="string">"signed_entity_id"</span>.to_string(),
                     signed_entity_type: MithrilStakeDistribution(Epoch(<span class="number">2</span>)),
-                    certificate_id: <span class="string">&quot;cert2&quot;</span>.to_string(),
-                    artifact: <span class="string">&quot;&quot;</span>.to_string(),
+                    certificate_id: <span class="string">"cert2"</span>.to_string(),
+                    artifact: <span class="string">""</span>.to_string(),
                     created_at: Default::default(),
                 }),
             ),
@@ -991,7 +992,7 @@
         <span class="kw">let </span>expected = <span class="macro">vec!</span>[
             (
                 dummy_genesis(
-                    <span class="string">&quot;98b44c52ac3c82adcbc5aea27a0c99cbba716048dddaf401b27acded80f1abcd&quot;</span>,
+                    <span class="string">"98b44c52ac3c82adcbc5aea27a0c99cbba716048dddaf401b27acded80f1abcd"</span>,
                     <span class="number">1</span>,
                     <span class="number">1</span>,
                 ),
@@ -999,35 +1000,35 @@
             ),
             (
                 dummy_certificate(
-                    <span class="string">&quot;0b7c12daffe63ca93a9cded424e300361a5234ab8c52b3e7029ff9dfbd8a16bd&quot;</span>,
-                    <span class="string">&quot;98b44c52ac3c82adcbc5aea27a0c99cbba716048dddaf401b27acded80f1abcd&quot;</span>,
+                    <span class="string">"0b7c12daffe63ca93a9cded424e300361a5234ab8c52b3e7029ff9dfbd8a16bd"</span>,
+                    <span class="string">"98b44c52ac3c82adcbc5aea27a0c99cbba716048dddaf401b27acded80f1abcd"</span>,
                     <span class="number">1</span>,
                     <span class="number">2</span>,
                 ),
                 <span class="prelude-val">Some</span>(SignedEntityRecord {
-                    signed_entity_id: <span class="string">&quot;signed_entity_id&quot;</span>.to_string(),
+                    signed_entity_id: <span class="string">"signed_entity_id"</span>.to_string(),
                     signed_entity_type: MithrilStakeDistribution(Epoch(<span class="number">1</span>)),
                     certificate_id:
-                        <span class="string">&quot;0b7c12daffe63ca93a9cded424e300361a5234ab8c52b3e7029ff9dfbd8a16bd&quot;
+                        <span class="string">"0b7c12daffe63ca93a9cded424e300361a5234ab8c52b3e7029ff9dfbd8a16bd"
                             </span>.to_string(),
-                    artifact: <span class="string">&quot;&quot;</span>.to_string(),
+                    artifact: <span class="string">""</span>.to_string(),
                     created_at: Default::default(),
                 }),
             ),
             (
                 dummy_certificate(
-                    <span class="string">&quot;0aa74b928d3eade6548b22349435a12e9591f0c34c9ca2b0abfbeeefbb1acb37&quot;</span>,
-                    <span class="string">&quot;0b7c12daffe63ca93a9cded424e300361a5234ab8c52b3e7029ff9dfbd8a16bd&quot;</span>,
+                    <span class="string">"0aa74b928d3eade6548b22349435a12e9591f0c34c9ca2b0abfbeeefbb1acb37"</span>,
+                    <span class="string">"0b7c12daffe63ca93a9cded424e300361a5234ab8c52b3e7029ff9dfbd8a16bd"</span>,
                     <span class="number">2</span>,
                     <span class="number">3</span>,
                 ),
                 <span class="prelude-val">Some</span>(SignedEntityRecord {
-                    signed_entity_id: <span class="string">&quot;signed_entity_id&quot;</span>.to_string(),
+                    signed_entity_id: <span class="string">"signed_entity_id"</span>.to_string(),
                     signed_entity_type: MithrilStakeDistribution(Epoch(<span class="number">2</span>)),
                     certificate_id:
-                        <span class="string">&quot;0aa74b928d3eade6548b22349435a12e9591f0c34c9ca2b0abfbeeefbb1acb37&quot;
+                        <span class="string">"0aa74b928d3eade6548b22349435a12e9591f0c34c9ca2b0abfbeeefbb1acb37"
                             </span>.to_string(),
-                    artifact: <span class="string">&quot;&quot;</span>.to_string(),
+                    artifact: <span class="string">""</span>.to_string(),
                     created_at: Default::default(),
                 }),
             ),
@@ -1055,7 +1056,7 @@
                 <span class="kw">let </span>record = signed_entity_store
                     .get_signed_entity_by_certificate_id(<span class="kw-2">&amp;</span>certificate.hash)
                     .<span class="kw">await
-                    </span>.with_context(|| <span class="macro">format!</span>(<span class="string">&quot;Certificates Hash Migrator can not get signed entity type by certificate id with hash: &#39;{}&#39;&quot;</span>, certificate.hash))<span class="question-mark">?</span>;
+                    </span>.with_context(|| <span class="macro">format!</span>(<span class="string">"Certificates Hash Migrator can not get signed entity type by certificate id with hash: '{}'"</span>, certificate.hash))<span class="question-mark">?</span>;
                 result.push((certificate, record));
             }
         }
@@ -1091,7 +1092,7 @@
         migrator
             .migrate()
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;Certificates hash migration should not fail&quot;</span>);
+            </span>.expect(<span class="string">"Certificates hash migration should not fail"</span>);
 
         <span class="comment">// Assert
         </span><span class="kw">let </span>migrated_certificates_and_signed_entities =
@@ -1122,7 +1123,7 @@
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>migrate_genesis_certificate() {
         <span class="kw">let </span>connection = Arc::new(connection_without_foreign_key_support());
-        run_migration_test(connection, <span class="macro">vec!</span>[(dummy_genesis(<span class="string">&quot;old_hash&quot;</span>, <span class="number">1</span>, <span class="number">1</span>), <span class="prelude-val">None</span>)]).<span class="kw">await</span>;
+        run_migration_test(connection, <span class="macro">vec!</span>[(dummy_genesis(<span class="string">"old_hash"</span>, <span class="number">1</span>, <span class="number">1</span>), <span class="prelude-val">None</span>)]).<span class="kw">await</span>;
     }
 
     <span class="attr">#[tokio::test]
@@ -1131,9 +1132,9 @@
         run_migration_test(
             connection,
             <span class="macro">vec!</span>[
-                (dummy_genesis(<span class="string">&quot;old_genesis&quot;</span>, <span class="number">1</span>, <span class="number">1</span>), <span class="prelude-val">None</span>),
+                (dummy_genesis(<span class="string">"old_genesis"</span>, <span class="number">1</span>, <span class="number">1</span>), <span class="prelude-val">None</span>),
                 (
-                    dummy_certificate(<span class="string">&quot;old_hash_1&quot;</span>, <span class="string">&quot;old_genesis&quot;</span>, <span class="number">1</span>, <span class="number">2</span>),
+                    dummy_certificate(<span class="string">"old_hash_1"</span>, <span class="string">"old_genesis"</span>, <span class="number">1</span>, <span class="number">2</span>),
                     <span class="prelude-val">Some</span>(SignedEntityTypeDiscriminants::MithrilStakeDistribution),
                 ),
             ],
@@ -1148,29 +1149,29 @@
         run_migration_test(
             connection,
             <span class="macro">vec!</span>[
-                (dummy_genesis(<span class="string">&quot;old_genesis&quot;</span>, <span class="number">1</span>, <span class="number">1</span>), <span class="prelude-val">None</span>),
+                (dummy_genesis(<span class="string">"old_genesis"</span>, <span class="number">1</span>, <span class="number">1</span>), <span class="prelude-val">None</span>),
                 (
-                    dummy_certificate(<span class="string">&quot;old_hash_1&quot;</span>, <span class="string">&quot;old_genesis&quot;</span>, <span class="number">1</span>, <span class="number">2</span>),
+                    dummy_certificate(<span class="string">"old_hash_1"</span>, <span class="string">"old_genesis"</span>, <span class="number">1</span>, <span class="number">2</span>),
                     <span class="prelude-val">Some</span>(SignedEntityTypeDiscriminants::MithrilStakeDistribution),
                 ),
                 (
-                    dummy_certificate(<span class="string">&quot;old_hash_2&quot;</span>, <span class="string">&quot;old_genesis&quot;</span>, <span class="number">1</span>, <span class="number">3</span>),
+                    dummy_certificate(<span class="string">"old_hash_2"</span>, <span class="string">"old_genesis"</span>, <span class="number">1</span>, <span class="number">3</span>),
                     <span class="prelude-val">Some</span>(SignedEntityTypeDiscriminants::CardanoImmutableFilesFull),
                 ),
                 (
-                    dummy_certificate(<span class="string">&quot;old_hash_3&quot;</span>, <span class="string">&quot;old_hash_2&quot;</span>, <span class="number">2</span>, <span class="number">3</span>),
+                    dummy_certificate(<span class="string">"old_hash_3"</span>, <span class="string">"old_hash_2"</span>, <span class="number">2</span>, <span class="number">3</span>),
                     <span class="prelude-val">Some</span>(SignedEntityTypeDiscriminants::MithrilStakeDistribution),
                 ),
                 (
-                    dummy_certificate(<span class="string">&quot;old_hash_4&quot;</span>, <span class="string">&quot;old_hash_3&quot;</span>, <span class="number">2</span>, <span class="number">4</span>),
+                    dummy_certificate(<span class="string">"old_hash_4"</span>, <span class="string">"old_hash_3"</span>, <span class="number">2</span>, <span class="number">4</span>),
                     <span class="prelude-val">Some</span>(SignedEntityTypeDiscriminants::MithrilStakeDistribution),
                 ),
                 (
-                    dummy_certificate(<span class="string">&quot;old_hash_5&quot;</span>, <span class="string">&quot;old_hash_3&quot;</span>, <span class="number">3</span>, <span class="number">5</span>),
+                    dummy_certificate(<span class="string">"old_hash_5"</span>, <span class="string">"old_hash_3"</span>, <span class="number">3</span>, <span class="number">5</span>),
                     <span class="prelude-val">Some</span>(SignedEntityTypeDiscriminants::CardanoImmutableFilesFull),
                 ),
                 (
-                    dummy_certificate(<span class="string">&quot;old_hash_6&quot;</span>, <span class="string">&quot;old_hash_5&quot;</span>, <span class="number">4</span>, <span class="number">6</span>),
+                    dummy_certificate(<span class="string">"old_hash_6"</span>, <span class="string">"old_hash_5"</span>, <span class="number">4</span>, <span class="number">6</span>),
                     <span class="prelude-val">Some</span>(SignedEntityTypeDiscriminants::CardanoImmutableFilesFull),
                 ),
             ],
@@ -1184,27 +1185,27 @@
         run_migration_test(
             connection,
             <span class="macro">vec!</span>[
-                (dummy_genesis(<span class="string">&quot;old_genesis&quot;</span>, <span class="number">1</span>, <span class="number">1</span>), <span class="prelude-val">None</span>),
+                (dummy_genesis(<span class="string">"old_genesis"</span>, <span class="number">1</span>, <span class="number">1</span>), <span class="prelude-val">None</span>),
                 (
-                    dummy_certificate(<span class="string">&quot;old_hash_1&quot;</span>, <span class="string">&quot;old_genesis&quot;</span>, <span class="number">1</span>, <span class="number">2</span>),
+                    dummy_certificate(<span class="string">"old_hash_1"</span>, <span class="string">"old_genesis"</span>, <span class="number">1</span>, <span class="number">2</span>),
                     <span class="prelude-val">Some</span>(SignedEntityTypeDiscriminants::MithrilStakeDistribution),
                 ),
                 (
-                    dummy_certificate(<span class="string">&quot;old_hash_2&quot;</span>, <span class="string">&quot;old_genesis&quot;</span>, <span class="number">1</span>, <span class="number">3</span>),
+                    dummy_certificate(<span class="string">"old_hash_2"</span>, <span class="string">"old_genesis"</span>, <span class="number">1</span>, <span class="number">3</span>),
                     <span class="prelude-val">Some</span>(SignedEntityTypeDiscriminants::CardanoImmutableFilesFull),
                 ),
-                (dummy_genesis(<span class="string">&quot;old_genesis_2&quot;</span>, <span class="number">3</span>, <span class="number">5</span>), <span class="prelude-val">None</span>),
+                (dummy_genesis(<span class="string">"old_genesis_2"</span>, <span class="number">3</span>, <span class="number">5</span>), <span class="prelude-val">None</span>),
                 (
-                    dummy_certificate(<span class="string">&quot;old_hash_3&quot;</span>, <span class="string">&quot;old_genesis_2&quot;</span>, <span class="number">4</span>, <span class="number">6</span>),
+                    dummy_certificate(<span class="string">"old_hash_3"</span>, <span class="string">"old_genesis_2"</span>, <span class="number">4</span>, <span class="number">6</span>),
                     <span class="prelude-val">Some</span>(SignedEntityTypeDiscriminants::MithrilStakeDistribution),
                 ),
                 (
-                    dummy_certificate(<span class="string">&quot;old_hash_4&quot;</span>, <span class="string">&quot;old_hash_3&quot;</span>, <span class="number">5</span>, <span class="number">7</span>),
+                    dummy_certificate(<span class="string">"old_hash_4"</span>, <span class="string">"old_hash_3"</span>, <span class="number">5</span>, <span class="number">7</span>),
                     <span class="prelude-val">Some</span>(SignedEntityTypeDiscriminants::CardanoImmutableFilesFull),
                 ),
-                (dummy_genesis(<span class="string">&quot;old_genesis_3&quot;</span>, <span class="number">5</span>, <span class="number">7</span>), <span class="prelude-val">None</span>),
+                (dummy_genesis(<span class="string">"old_genesis_3"</span>, <span class="number">5</span>, <span class="number">7</span>), <span class="prelude-val">None</span>),
                 (
-                    dummy_certificate(<span class="string">&quot;old_hash_5&quot;</span>, <span class="string">&quot;old_genesis_3&quot;</span>, <span class="number">5</span>, <span class="number">8</span>),
+                    dummy_certificate(<span class="string">"old_hash_5"</span>, <span class="string">"old_genesis_3"</span>, <span class="number">5</span>, <span class="number">8</span>),
                     <span class="prelude-val">Some</span>(SignedEntityTypeDiscriminants::MithrilStakeDistribution),
                 ),
             ],
@@ -1216,7 +1217,7 @@
     </span><span class="kw">async fn </span>should_not_fail_if_some_hash_dont_change() {
         <span class="kw">let </span>connection = Arc::new(connection_without_foreign_key_support());
         <span class="kw">let </span>certificate = {
-            <span class="kw">let </span><span class="kw-2">mut </span>cert = dummy_genesis(<span class="string">&quot;whatever&quot;</span>, <span class="number">1</span>, <span class="number">2</span>);
+            <span class="kw">let </span><span class="kw-2">mut </span>cert = dummy_genesis(<span class="string">"whatever"</span>, <span class="number">1</span>, <span class="number">2</span>);
             cert.hash = cert.compute_hash();
             cert
         };
@@ -1231,7 +1232,7 @@
         migrator
             .migrate()
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;Migration should not fail if a hash doesn&#39;t change&quot;</span>);
+            </span>.expect(<span class="string">"Migration should not fail if a hash doesn't change"</span>);
     }
 }
 </code></pre></div></section></main></body></html>

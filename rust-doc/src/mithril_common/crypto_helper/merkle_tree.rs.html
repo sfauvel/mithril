@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-common/src/crypto_helper/merkle_tree.rs`."><title>merkle_tree.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-common/src/crypto_helper/merkle_tree.rs`."><title>merkle_tree.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -271,7 +272,38 @@
 <a href="#271" id="271">271</a>
 <a href="#272" id="272">272</a>
 <a href="#273" id="273">273</a>
+<a href="#274" id="274">274</a>
+<a href="#275" id="275">275</a>
+<a href="#276" id="276">276</a>
+<a href="#277" id="277">277</a>
+<a href="#278" id="278">278</a>
+<a href="#279" id="279">279</a>
+<a href="#280" id="280">280</a>
+<a href="#281" id="281">281</a>
+<a href="#282" id="282">282</a>
+<a href="#283" id="283">283</a>
+<a href="#284" id="284">284</a>
+<a href="#285" id="285">285</a>
+<a href="#286" id="286">286</a>
+<a href="#287" id="287">287</a>
+<a href="#288" id="288">288</a>
+<a href="#289" id="289">289</a>
+<a href="#290" id="290">290</a>
+<a href="#291" id="291">291</a>
+<a href="#292" id="292">292</a>
+<a href="#293" id="293">293</a>
+<a href="#294" id="294">294</a>
+<a href="#295" id="295">295</a>
+<a href="#296" id="296">296</a>
+<a href="#297" id="297">297</a>
+<a href="#298" id="298">298</a>
+<a href="#299" id="299">299</a>
+<a href="#300" id="300">300</a>
+<a href="#301" id="301">301</a>
+<a href="#302" id="302">302</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>anyhow::anyhow;
+<span class="attr">#[cfg(any(test, feature = <span class="string">"test_tools"</span>))]
+</span><span class="kw">use </span>anyhow::Context;
 <span class="kw">use </span>blake2::{Blake2s256, Digest};
 <span class="kw">use </span>ckb_merkle_mountain_range::{util::MemStore, Merge, MerkleProof, <span class="prelude-ty">Result </span><span class="kw">as </span>MMRResult, MMR};
 <span class="kw">use </span>serde::{Deserialize, Serialize};
@@ -333,7 +365,7 @@
     }
 }
 
-<span class="kw">impl </span>TryFrom&lt;MKTree&lt;<span class="lifetime">&#39;_</span>&gt;&gt; <span class="kw">for </span>MKTreeNode {
+<span class="kw">impl </span>TryFrom&lt;MKTree&lt;<span class="lifetime">'_</span>&gt;&gt; <span class="kw">for </span>MKTreeNode {
     <span class="kw">type </span>Error = StdError;
     <span class="kw">fn </span>try_from(other: MKTree) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
         other.compute_root()
@@ -371,6 +403,11 @@
 }
 
 <span class="kw">impl </span>MKProof {
+    <span class="doccomment">/// Return a reference to its merkle root.
+    </span><span class="kw">pub fn </span>root(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>MKTreeNode {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.inner_root
+    }
+
     <span class="doccomment">/// Verification of a Merkle proof
     </span><span class="kw">pub fn </span>verify(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; StdResult&lt;()&gt; {
         MerkleProof::&lt;MKTreeNode, MergeMKTreeNode&gt;::new(
@@ -379,7 +416,7 @@
         )
         .verify(<span class="self">self</span>.inner_root.to_owned(), <span class="self">self</span>.inner_leaves.to_owned())<span class="question-mark">?
         </span>.then_some(())
-        .ok_or(<span class="macro">anyhow!</span>(<span class="string">&quot;Invalid MKProof&quot;</span>))
+        .ok_or(<span class="macro">anyhow!</span>(<span class="string">"Invalid MKProof"</span>))
     }
 
     <span class="doccomment">/// Check if the proof contains the given leaves
@@ -388,7 +425,35 @@
             .iter()
             .all(|leaf| <span class="self">self</span>.inner_leaves.iter().any(|(<span class="kw">_</span>, l)| l == leaf))
             .then_some(())
-            .ok_or(<span class="macro">anyhow!</span>(<span class="string">&quot;Leaves not found in the MKProof&quot;</span>))
+            .ok_or(<span class="macro">anyhow!</span>(<span class="string">"Leaves not found in the MKProof"</span>))
+    }
+
+    <span class="macro">cfg_test_tools! </span>{
+        <span class="doccomment">/// Build a [MKProof] based on the given leaves (*Test only*).
+        </span><span class="kw">pub fn </span>from_leaves&lt;T: Into&lt;MKTreeNode&gt; + Clone&gt;(
+            leaves: <span class="kw-2">&amp;</span>[T],
+        ) -&gt; StdResult&lt;MKProof&gt; {
+            <span class="self">Self</span>::from_subset_of_leaves(leaves, leaves)
+        }
+
+        <span class="doccomment">/// Build a [MKProof] based on the given leaves (*Test only*).
+        </span><span class="kw">pub fn </span>from_subset_of_leaves&lt;T: Into&lt;MKTreeNode&gt; + Clone&gt;(
+            leaves: <span class="kw-2">&amp;</span>[T],
+            leaves_to_verify: <span class="kw-2">&amp;</span>[T],
+        ) -&gt; StdResult&lt;MKProof&gt; {
+            <span class="kw">let </span>leaves = <span class="self">Self</span>::list_to_mknode(leaves);
+            <span class="kw">let </span>leaves_to_verify =
+                <span class="self">Self</span>::list_to_mknode(leaves_to_verify);
+
+            <span class="kw">let </span>store = MKTreeStore::default();
+            <span class="kw">let </span>mktree =
+                MKTree::new(<span class="kw-2">&amp;</span>leaves, <span class="kw-2">&amp;</span>store).with_context(|| <span class="string">"MKTree creation should not fail"</span>)<span class="question-mark">?</span>;
+            mktree.compute_proof(<span class="kw-2">&amp;</span>leaves_to_verify)
+        }
+
+        <span class="kw">fn </span>list_to_mknode&lt;T: Into&lt;MKTreeNode&gt; + Clone&gt;(hashes: <span class="kw-2">&amp;</span>[T]) -&gt; Vec&lt;MKTreeNode&gt; {
+            hashes.iter().map(|h| h.clone().into()).collect()
+        }
     }
 }
 
@@ -396,14 +461,14 @@
 </span><span class="kw">pub type </span>MKTreeStore = MemStore&lt;MKTreeNode&gt;;
 
 <span class="doccomment">/// A Merkle tree
-</span><span class="kw">pub struct </span>MKTree&lt;<span class="lifetime">&#39;a</span>&gt; {
-    inner_leaves: HashMap&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>MKTreeNode, MKTreeLeafPosition&gt;,
-    inner_tree: MMR&lt;MKTreeNode, MergeMKTreeNode, <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>MKTreeStore&gt;,
+</span><span class="kw">pub struct </span>MKTree&lt;<span class="lifetime">'a</span>&gt; {
+    inner_leaves: HashMap&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>MKTreeNode, MKTreeLeafPosition&gt;,
+    inner_tree: MMR&lt;MKTreeNode, MergeMKTreeNode, <span class="kw-2">&amp;</span><span class="lifetime">'a </span>MKTreeStore&gt;,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; MKTree&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; MKTree&lt;<span class="lifetime">'a</span>&gt; {
     <span class="doccomment">/// MKTree factory
-    </span><span class="kw">pub fn </span>new(leaves: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[MKTreeNode], store: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>MKTreeStore) -&gt; StdResult&lt;<span class="self">Self</span>&gt; {
+    </span><span class="kw">pub fn </span>new(leaves: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>[MKTreeNode], store: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>MKTreeStore) -&gt; StdResult&lt;<span class="self">Self</span>&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>inner_tree = MMR::&lt;MKTreeNode, MergeMKTreeNode, <span class="kw-2">&amp;</span>MKTreeStore&gt;::new(<span class="number">0</span>, store);
         <span class="kw">let </span><span class="kw-2">mut </span>inner_leaves = HashMap::new();
         <span class="kw">for </span>leaf <span class="kw">in </span>leaves {
@@ -436,7 +501,7 @@
                 <span class="kw">if let </span><span class="prelude-val">Some</span>(leaf_position) = <span class="self">self</span>.inner_leaves.get(leaf) {
                     <span class="prelude-val">Ok</span>((<span class="kw-2">*</span>leaf_position, leaf.to_owned()))
                 } <span class="kw">else </span>{
-                    <span class="prelude-val">Err</span>(<span class="macro">anyhow!</span>(<span class="string">&quot;Leaf not found in the Merkle tree&quot;</span>))
+                    <span class="prelude-val">Err</span>(<span class="macro">anyhow!</span>(<span class="string">"Leaf not found in the Merkle tree"</span>))
                 }
             })
             .collect::&lt;StdResult&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;&gt;()<span class="question-mark">?</span>;
@@ -457,34 +522,25 @@
 
 <span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
-    <span class="kw">use </span>anyhow::Context;
-
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
 
     <span class="kw">fn </span>generate_leaves(total_leaves: usize) -&gt; Vec&lt;MKTreeNode&gt; {
         (<span class="number">0</span>..total_leaves)
-            .map(|i| <span class="macro">format!</span>(<span class="string">&quot;test-{i}&quot;</span>).into())
+            .map(|i| <span class="macro">format!</span>(<span class="string">"test-{i}"</span>).into())
             .collect()
-    }
-
-    <span class="kw">fn </span>build_proof(leaves: <span class="kw-2">&amp;</span>[MKTreeNode]) -&gt; StdResult&lt;MKProof&gt; {
-        <span class="kw">let </span>store = MKTreeStore::default();
-        <span class="kw">let </span>mktree =
-            MKTree::new(leaves, <span class="kw-2">&amp;</span>store).with_context(|| <span class="string">&quot;MKTree creation should not fail&quot;</span>)<span class="question-mark">?</span>;
-        mktree.compute_proof(leaves)
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_golden_merkle_root() {
-        <span class="kw">let </span>leaves = <span class="macro">vec!</span>[<span class="string">&quot;golden-1&quot;</span>, <span class="string">&quot;golden-2&quot;</span>, <span class="string">&quot;golden-3&quot;</span>, <span class="string">&quot;golden-4&quot;</span>, <span class="string">&quot;golden-5&quot;</span>];
+        <span class="kw">let </span>leaves = <span class="macro">vec!</span>[<span class="string">"golden-1"</span>, <span class="string">"golden-2"</span>, <span class="string">"golden-3"</span>, <span class="string">"golden-4"</span>, <span class="string">"golden-5"</span>];
         <span class="kw">let </span>leaves: Vec&lt;MKTreeNode&gt; = leaves.into_iter().map(|l| l.into()).collect();
         <span class="kw">let </span>store = MKTreeStore::default();
-        <span class="kw">let </span>mktree = MKTree::new(<span class="kw-2">&amp;</span>leaves, <span class="kw-2">&amp;</span>store).expect(<span class="string">&quot;MKTree creation should not fail&quot;</span>);
+        <span class="kw">let </span>mktree = MKTree::new(<span class="kw-2">&amp;</span>leaves, <span class="kw-2">&amp;</span>store).expect(<span class="string">"MKTree creation should not fail"</span>);
         <span class="kw">let </span>mkroot = mktree
             .compute_root()
-            .expect(<span class="string">&quot;MKRoot generation should not fail&quot;</span>);
+            .expect(<span class="string">"MKRoot generation should not fail"</span>);
         <span class="macro">assert_eq!</span>(
-            <span class="string">&quot;3bbced153528697ecde7345a22e50115306478353619411523e804f2323fd921&quot;</span>,
+            <span class="string">"3bbced153528697ecde7345a22e50115306478353619411523e804f2323fd921"</span>,
             mkroot.to_hex()
         );
     }
@@ -493,22 +549,24 @@
     </span><span class="kw">fn </span>test_should_accept_valid_proof_generated_by_merkle_tree() {
         <span class="kw">let </span>leaves = generate_leaves(<span class="number">100000</span>);
         <span class="kw">let </span>leaves_to_verify = <span class="kw-2">&amp;</span>[leaves[<span class="number">0</span>].to_owned(), leaves[<span class="number">3</span>].to_owned()];
-        <span class="kw">let </span>proof = build_proof(leaves_to_verify).expect(<span class="string">&quot;MKProof generation should not fail&quot;</span>);
-        proof.verify().expect(<span class="string">&quot;The MKProof should be valid&quot;</span>);
+        <span class="kw">let </span>proof =
+            MKProof::from_leaves(leaves_to_verify).expect(<span class="string">"MKProof generation should not fail"</span>);
+        proof.verify().expect(<span class="string">"The MKProof should be valid"</span>);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_should_reject_invalid_proof_generated_by_merkle_tree() {
         <span class="kw">let </span>leaves = generate_leaves(<span class="number">100000</span>);
         <span class="kw">let </span>leaves_to_verify = <span class="kw-2">&amp;</span>[leaves[<span class="number">0</span>].to_owned(), leaves[<span class="number">3</span>].to_owned()];
-        <span class="kw">let </span><span class="kw-2">mut </span>proof = build_proof(leaves_to_verify).expect(<span class="string">&quot;MKProof generation should not fail&quot;</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>proof =
+            MKProof::from_leaves(leaves_to_verify).expect(<span class="string">"MKProof generation should not fail"</span>);
         proof.inner_root = leaves[<span class="number">10</span>].to_owned();
-        proof.verify().expect_err(<span class="string">&quot;The MKProof should be invalid&quot;</span>);
+        proof.verify().expect_err(<span class="string">"The MKProof should be invalid"</span>);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>tree_node_from_to_string() {
-        <span class="kw">let </span>expected_str = <span class="string">&quot;my_string&quot;</span>;
+        <span class="kw">let </span>expected_str = <span class="string">"my_string"</span>;
         <span class="kw">let </span>expected_string = expected_str.to_string();
         <span class="kw">let </span>node_str: MKTreeNode = expected_str.into();
         <span class="kw">let </span>node_string: MKTreeNode = expected_string.clone().into();
@@ -521,7 +579,8 @@
     </span><span class="kw">fn </span>contains_leaves() {
         <span class="kw">let </span><span class="kw-2">mut </span>leaves_to_verify = generate_leaves(<span class="number">10</span>);
         <span class="kw">let </span>leaves_not_verified = leaves_to_verify.drain(<span class="number">3</span>..<span class="number">6</span>).collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;();
-        <span class="kw">let </span>proof = build_proof(<span class="kw-2">&amp;</span>leaves_to_verify).expect(<span class="string">&quot;MKProof generation should not fail&quot;</span>);
+        <span class="kw">let </span>proof =
+            MKProof::from_leaves(<span class="kw-2">&amp;</span>leaves_to_verify).expect(<span class="string">"MKProof generation should not fail"</span>);
 
         <span class="comment">// contains everything
         </span>proof.contains(<span class="kw-2">&amp;</span>leaves_to_verify).unwrap();
@@ -529,10 +588,10 @@
         <span class="comment">// contains subpart
         </span>proof.contains(<span class="kw-2">&amp;</span>leaves_to_verify[<span class="number">0</span>..<span class="number">2</span>]).unwrap();
 
-        <span class="comment">// don&#39;t contains all not verified
+        <span class="comment">// don't contains all not verified
         </span>proof.contains(<span class="kw-2">&amp;</span>leaves_not_verified).unwrap_err();
 
-        <span class="comment">// don&#39;t contains subpart of not verified
+        <span class="comment">// don't contains subpart of not verified
         </span>proof.contains(<span class="kw-2">&amp;</span>leaves_not_verified[<span class="number">1</span>..<span class="number">2</span>]).unwrap_err();
 
         <span class="comment">// fail if part verified and part unverified

@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-common/src/crypto_helper/era.rs`."><title>era.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-common/src/crypto_helper/era.rs`."><title>era.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -179,7 +180,7 @@
 <a href="#179" id="179">179</a>
 <a href="#180" id="180">180</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>ed25519_dalek::{Signer, SigningKey};
-<span class="attr">#[cfg(feature = <span class="string">&quot;random&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"random"</span>)]
 </span><span class="kw">use </span>rand_chacha::rand_core;
 <span class="kw">use </span>rand_chacha::rand_core::{CryptoRng, RngCore, SeedableRng};
 <span class="kw">use </span>rand_chacha::ChaCha20Rng;
@@ -203,7 +204,7 @@
 </span><span class="doccomment">/// [EraMarkersSigner] and [EraMarkersVerifier] related errors.
 </span><span class="kw">pub enum </span>EraMarkersVerifierError {
     <span class="doccomment">/// Error raised when a Signature verification fail
-    </span><span class="attr">#[error(<span class="string">&quot;era markers signature verification error&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"era markers signature verification error"</span>)]
     </span>SignatureVerification(<span class="attr">#[source] </span>StdError),
 }
 
@@ -229,8 +230,8 @@
         <span class="self">Self</span>::create_test_signer(rng)
     }
 
-    <span class="attr">#[cfg(any(test, feature = <span class="string">&quot;random&quot;</span>))]
-    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;random&quot;</span>)))]
+    <span class="attr">#[cfg(any(test, feature = <span class="string">"random"</span>))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"random"</span>)))]
     </span><span class="doccomment">/// [EraMarkersSigner] non deterministic
     </span><span class="kw">pub fn </span>create_non_deterministic_signer() -&gt; <span class="self">Self </span>{
         <span class="kw">let </span>rng = rand_core::OsRng;
@@ -281,21 +282,21 @@
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
 
     <span class="kw">const </span>GOLDEN_ERA_MARKERS_VERIFICATION_KEY: <span class="kw-2">&amp;</span>str =
-        <span class="string">&quot;5b32332c32372c3131322c362c35372c38342c3138302c342c3135302c3233322c3233372c3132362c3131392c\
+        <span class="string">"5b32332c32372c3131322c362c35372c38342c3138302c342c3135302c3233322c3233372c3132362c3131392c\
         3231342c33352c35342c38312c3230382c3231372c39392c3137302c3233312c3133392c362c3132322c39342c3\
-        9322c3137322c32332c3130322c3135372c3136375d&quot;</span>;
+        9322c3137322c32332c3130322c3135372c3136375d"</span>;
     <span class="kw">const </span>GOLDEN_ERA_MARKERS_SECRET_KEY: <span class="kw-2">&amp;</span>str =
-        <span class="string">&quot;5b34332c3133322c3232312c3138382c3235332c3132372c3235352c38362c3136322c3133312c3233332c3131\
+        <span class="string">"5b34332c3133322c3232312c3138382c3235332c3132372c3235352c38362c3136322c3133312c3233332c3131\
         362c3134322c3233352c3131312c3133332c3134312c3138332c302c33392c3132302c3139372c39322c3133302\
-        c3233342c34362c3135372c32352c3133322c31352c3234312c3235345d&quot;</span>;
+        c3233342c34362c3135372c32352c3133322c31352c3234312c3235345d"</span>;
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>golden_master() {
         EraMarkersVerifierVerificationKey::from_json_hex(GOLDEN_ERA_MARKERS_VERIFICATION_KEY)
-            .expect(<span class="string">&quot;Decoding golden verification key should not fail&quot;</span>);
+            .expect(<span class="string">"Decoding golden verification key should not fail"</span>);
 
         EraMarkersVerifierSecretKey::from_json_hex(GOLDEN_ERA_MARKERS_SECRET_KEY)
-            .expect(<span class="string">&quot;Decoding golden secret key should not fail&quot;</span>);
+            .expect(<span class="string">"Decoding golden secret key should not fail"</span>);
     }
 
     <span class="macro">cfg_random! </span>{
@@ -312,11 +313,11 @@
             );
 
             <span class="macro">println!</span>(
-                <span class="string">&quot;Deterministic Verification Key={}&quot;</span>,
+                <span class="string">"Deterministic Verification Key={}"</span>,
                 verifier.verification_key.to_json_hex().unwrap()
             );
             <span class="macro">println!</span>(
-                <span class="string">&quot;Deterministic Secret Key=={}&quot;</span>,
+                <span class="string">"Deterministic Secret Key=={}"</span>,
                 signer.secret_key.to_json_hex().unwrap()
             );
         }
@@ -327,11 +328,11 @@
         <span class="kw">let </span>verifier = signer.create_verifier();
 
         <span class="macro">println!</span>(
-            <span class="string">&quot;Non Deterministic Verification Key={}&quot;</span>,
+            <span class="string">"Non Deterministic Verification Key={}"</span>,
             verifier.verification_key.to_json_hex().unwrap()
         );
         <span class="macro">println!</span>(
-            <span class="string">&quot;Non Deterministic Secret Key=={}&quot;</span>,
+            <span class="string">"Non Deterministic Secret Key=={}"</span>,
             signer.secret_key.to_json_hex().unwrap()
         );
     }
@@ -349,12 +350,12 @@
         <span class="kw">let </span>signer_decoded = EraMarkersSigner::from_secret_key(secret_key_decoded);
         <span class="kw">let </span>verifier_decoded = EraMarkersVerifier::from_verification_key(verification_key_decoded);
 
-        <span class="kw">let </span>message: <span class="kw-2">&amp;</span>[u8] = <span class="string">b&quot;some message.&quot;</span>;
+        <span class="kw">let </span>message: <span class="kw-2">&amp;</span>[u8] = <span class="string">b"some message."</span>;
         <span class="kw">let </span>signature = signer_decoded.sign(message);
         <span class="kw">let </span>verify_signature = verifier_decoded.verify(message, <span class="kw-2">&amp;</span>signature);
         <span class="macro">assert!</span>(
             verify_signature.is_ok(),
-            <span class="string">&quot;signature verification should not fail&quot;
+            <span class="string">"signature verification should not fail"
         </span>);
     }
 }

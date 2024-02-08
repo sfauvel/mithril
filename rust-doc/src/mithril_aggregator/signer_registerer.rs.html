@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-aggregator/src/signer_registerer.rs`."><title>signer_registerer.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="mithril_aggregator" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-aggregator/src/signer_registerer.rs`."><title>signer_registerer.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="mithril_aggregator" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -488,11 +489,11 @@
 </span><span class="attr">#[derive(Error, Debug)]
 </span><span class="kw">pub enum </span>SignerRegistrationError {
     <span class="doccomment">/// No signer registration round opened yet
-    </span><span class="attr">#[error(<span class="string">&quot;a signer registration round is not opened yet, please try again later&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"a signer registration round is not opened yet, please try again later"</span>)]
     </span>RegistrationRoundNotYetOpened,
 
     <span class="doccomment">/// Registration round for unexpected epoch
-    </span><span class="attr">#[error(<span class="string">&quot;unexpected signer registration round epoch: current_round_epoch: {current_round_epoch}, received_epoch: {received_epoch}&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"unexpected signer registration round epoch: current_round_epoch: {current_round_epoch}, received_epoch: {received_epoch}"</span>)]
     </span>RegistrationRoundUnexpectedEpoch {
         <span class="doccomment">/// Epoch of the current round
         </span>current_round_epoch: Epoch,
@@ -501,23 +502,23 @@
     },
 
     <span class="doccomment">/// Chain observer error.
-    </span><span class="attr">#[error(<span class="string">&quot;chain observer error&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"chain observer error"</span>)]
     </span>ChainObserver(<span class="attr">#[from] </span>ChainObserverError),
 
     <span class="doccomment">/// Signer is already registered.
-    </span><span class="attr">#[error(<span class="string">&quot;signer already registered&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"signer already registered"</span>)]
     </span>ExistingSigner(Box&lt;SignerWithStake&gt;),
 
     <span class="doccomment">/// Store error.
-    </span><span class="attr">#[error(<span class="string">&quot;store error&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"store error"</span>)]
     </span>StoreError(<span class="attr">#[source] </span>StdError),
 
     <span class="doccomment">/// Signer registration failed.
-    </span><span class="attr">#[error(<span class="string">&quot;signer registration failed&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"signer registration failed"</span>)]
     </span>FailedSignerRegistration(<span class="attr">#[source] </span>StdError),
 
     <span class="doccomment">/// Signer recorder failed.
-    </span><span class="attr">#[error(<span class="string">&quot;signer recorder failed: &#39;{0}&#39;&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"signer recorder failed: '{0}'"</span>)]
     </span>FailedSignerRecorder(String),
 }
 
@@ -639,7 +640,7 @@
                 .<span class="kw">await
                 </span>.with_context(|| {
                     <span class="macro">format!</span>(
-                        <span class="string">&quot;VerificationKeyStorer can not prune verification keys below epoch: &#39;{}&#39;&quot;</span>,
+                        <span class="string">"VerificationKeyStorer can not prune verification keys below epoch: '{}'"</span>,
                         registration_epoch - retention_limit
                     )
                 })
@@ -683,7 +684,7 @@
                 .collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;(),
         );
         <span class="kw">let </span>party_id_register = <span class="kw">match </span>signer.party_id.as_str() {
-            <span class="string">&quot;&quot; </span>=&gt; <span class="prelude-val">None</span>,
+            <span class="string">"" </span>=&gt; <span class="prelude-val">None</span>,
             party_id =&gt; <span class="prelude-val">Some</span>(party_id.to_string()),
         };
         <span class="kw">let </span>kes_period = <span class="kw">match </span><span class="kw-2">&amp;</span>signer.operational_certificate {
@@ -706,7 +707,7 @@
             )
             .with_context(|| {
                 <span class="macro">format!</span>(
-                    <span class="string">&quot;KeyRegwrapper can not register signer with party_id: &#39;{:?}&#39;&quot;</span>,
+                    <span class="string">"KeyRegwrapper can not register signer with party_id: '{:?}'"</span>,
                     party_id_register
                 )
             })
@@ -731,7 +732,7 @@
             .<span class="kw">await
             </span>.with_context(|| {
                 <span class="macro">format!</span>(
-                    <span class="string">&quot;VerificationKeyStorer can not save verification keys for party_id: &#39;{}&#39; for epoch: &#39;{}&#39;&quot;</span>,
+                    <span class="string">"VerificationKeyStorer can not save verification keys for party_id: '{}' for epoch: '{}'"</span>,
                     signer_save.party_id,
                     registration_round.epoch
                 )
@@ -793,17 +794,17 @@
         signer_registerer
             .open_registration_round(registration_epoch, stake_distribution)
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;signer registration round opening should not fail&quot;</span>);
+            </span>.expect(<span class="string">"signer registration round opening should not fail"</span>);
 
         signer_registerer
             .register_signer(registration_epoch, <span class="kw-2">&amp;</span>signer_to_register)
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;signer registration should not fail&quot;</span>);
+            </span>.expect(<span class="string">"signer registration should not fail"</span>);
 
         <span class="kw">let </span>registered_signers = <span class="kw-2">&amp;</span>verification_key_store
             .get_verification_keys(registration_epoch)
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;registered signers retrieval should not fail&quot;</span>);
+            </span>.expect(<span class="string">"registered signers retrieval should not fail"</span>);
 
         <span class="macro">assert_eq!</span>(
             <span class="kw-2">&amp;</span><span class="prelude-val">Some</span>(HashMap::from([(
@@ -841,17 +842,17 @@
         signer_registerer
             .open_registration_round(registration_epoch, stake_distribution)
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;signer registration round opening should not fail&quot;</span>);
+            </span>.expect(<span class="string">"signer registration round opening should not fail"</span>);
 
         signer_registerer
             .register_signer(registration_epoch, <span class="kw-2">&amp;</span>signer_to_register)
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;signer registration should not fail&quot;</span>);
+            </span>.expect(<span class="string">"signer registration should not fail"</span>);
 
         <span class="kw">let </span>registered_signers = <span class="kw-2">&amp;</span>verification_key_store
             .get_verification_keys(registration_epoch)
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;registered signers retrieval should not fail&quot;</span>);
+            </span>.expect(<span class="string">"registered signers retrieval should not fail"</span>);
 
         <span class="macro">assert_eq!</span>(
             <span class="kw-2">&amp;</span><span class="prelude-val">Some</span>(HashMap::from([(
@@ -881,7 +882,7 @@
         signer_registerer
             .register_signer(registration_epoch, <span class="kw-2">&amp;</span>signer_to_register)
             .<span class="kw">await
-            </span>.expect_err(<span class="string">&quot;signer registration should fail if no round opened&quot;</span>);
+            </span>.expect_err(<span class="string">"signer registration should fail if no round opened"</span>);
     }
 
     <span class="attr">#[tokio::test]
@@ -912,7 +913,7 @@
         signer_registerer
             .open_registration_round(Epoch(<span class="number">5</span>), fixture.stake_distribution())
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;Opening a registration round should not fail&quot;</span>);
+            </span>.expect(<span class="string">"Opening a registration round should not fail"</span>);
 
         <span class="kw">for </span>epoch <span class="kw">in </span><span class="number">1</span>..=<span class="number">3 </span>{
             <span class="kw">let </span>verification_keys = verification_key_store
@@ -928,7 +929,7 @@
             </span>.unwrap();
         <span class="macro">assert!</span>(
             verification_keys.is_some(),
-            <span class="string">&quot;Verification keys of the previous epoch should not have been pruned&quot;
+            <span class="string">"Verification keys of the previous epoch should not have been pruned"
         </span>);
     }
 }

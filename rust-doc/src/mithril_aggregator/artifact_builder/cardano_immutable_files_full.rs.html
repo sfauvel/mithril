@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-aggregator/src/artifact_builder/cardano_immutable_files_full.rs`."><title>cardano_immutable_files_full.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_aggregator" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-aggregator/src/artifact_builder/cardano_immutable_files_full.rs`."><title>cardano_immutable_files_full.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_aggregator" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -370,7 +371,7 @@
 </span><span class="attr">#[derive(Debug, Error)]
 </span><span class="kw">pub enum </span>CardanoImmutableFilesFullArtifactError {
     <span class="doccomment">/// Protocol message part is missing
-    </span><span class="attr">#[error(<span class="string">&quot;Missing protocol message for beacon: &#39;{0}&#39;.&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"Missing protocol message for beacon: '{0}'."</span>)]
     </span>MissingProtocolMessage(Beacon),
 }
 
@@ -403,7 +404,7 @@
         beacon: <span class="kw-2">&amp;</span>Beacon,
         protocol_message: <span class="kw-2">&amp;</span>ProtocolMessage,
     ) -&gt; StdResult&lt;OngoingSnapshot&gt; {
-        <span class="macro">debug!</span>(<span class="string">&quot;CardanoImmutableFilesFullArtifactBuilder: create snapshot archive&quot;</span>);
+        <span class="macro">debug!</span>(<span class="string">"CardanoImmutableFilesFullArtifactBuilder: create snapshot archive"</span>);
 
         <span class="kw">let </span>snapshotter = <span class="self">self</span>.snapshotter.clone();
         <span class="kw">let </span>snapshot_digest = protocol_message
@@ -412,7 +413,7 @@
                 CardanoImmutableFilesFullArtifactError::MissingProtocolMessage(beacon.clone())
             })<span class="question-mark">?</span>;
         <span class="kw">let </span>snapshot_name = <span class="macro">format!</span>(
-            <span class="string">&quot;{}-e{}-i{}.{}.{}&quot;</span>,
+            <span class="string">"{}-e{}-i{}.{}.{}"</span>,
             beacon.network,
             <span class="kw-2">*</span>beacon.epoch,
             beacon.immutable_file_number,
@@ -426,7 +427,7 @@
             })
             .<span class="kw">await</span><span class="question-mark">??</span>;
 
-        <span class="macro">debug!</span>(<span class="string">&quot; &gt; snapshot created: &#39;{:?}&#39;&quot;</span>, ongoing_snapshot);
+        <span class="macro">debug!</span>(<span class="string">" &gt; snapshot created: '{:?}'"</span>, ongoing_snapshot);
 
         <span class="prelude-val">Ok</span>(ongoing_snapshot)
     }
@@ -435,7 +436,7 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         ongoing_snapshot: <span class="kw-2">&amp;</span>OngoingSnapshot,
     ) -&gt; StdResult&lt;Vec&lt;SnapshotLocation&gt;&gt; {
-        <span class="macro">debug!</span>(<span class="string">&quot;CardanoImmutableFilesFullArtifactBuilder: upload snapshot archive&quot;</span>);
+        <span class="macro">debug!</span>(<span class="string">"CardanoImmutableFilesFullArtifactBuilder: upload snapshot archive"</span>);
         <span class="kw">let </span>location = <span class="self">self
             </span>.snapshot_uploader
             .upload_snapshot(ongoing_snapshot.get_file_path())
@@ -443,7 +444,7 @@
 
         <span class="kw">if let </span><span class="prelude-val">Err</span>(error) = tokio::fs::remove_file(ongoing_snapshot.get_file_path()).<span class="kw">await </span>{
             <span class="macro">warn!</span>(
-                <span class="string">&quot; &gt; Post upload ongoing snapshot file removal failure: {}&quot;</span>,
+                <span class="string">" &gt; Post upload ongoing snapshot file removal failure: {}"</span>,
                 error
             );
         }
@@ -457,7 +458,7 @@
         ongoing_snapshot: <span class="kw-2">&amp;</span>OngoingSnapshot,
         remote_locations: Vec&lt;String&gt;,
     ) -&gt; StdResult&lt;Snapshot&gt; {
-        <span class="macro">debug!</span>(<span class="string">&quot;CardanoImmutableFilesFullArtifactBuilder: create snapshot&quot;</span>);
+        <span class="macro">debug!</span>(<span class="string">"CardanoImmutableFilesFullArtifactBuilder: create snapshot"</span>);
         <span class="kw">let </span>snapshot_digest = certificate
             .protocol_message
             .get_message_part(<span class="kw-2">&amp;</span>ProtocolMessagePartKey::SnapshotDigest)
@@ -491,13 +492,13 @@
             </span>.create_snapshot_archive(<span class="kw-2">&amp;</span>beacon, <span class="kw-2">&amp;</span>certificate.protocol_message)
             .<span class="kw">await
             </span>.with_context(|| {
-                <span class="string">&quot;Cardano Immutable Files Full Artifact Builder can not create snapshot archive&quot;
+                <span class="string">"Cardano Immutable Files Full Artifact Builder can not create snapshot archive"
             </span>})<span class="question-mark">?</span>;
         <span class="kw">let </span>locations = <span class="self">self
             </span>.upload_snapshot_archive(<span class="kw-2">&amp;</span>ongoing_snapshot)
             .<span class="kw">await
             </span>.with_context(|| {
-                <span class="macro">format!</span>(<span class="string">&quot;Cardano Immutable Files Full Artifact Builder can not upload snapshot archive to path: &#39;{:?}&#39;&quot;</span>, ongoing_snapshot.get_file_path())
+                <span class="macro">format!</span>(<span class="string">"Cardano Immutable Files Full Artifact Builder can not upload snapshot archive to path: '{:?}'"</span>, ongoing_snapshot.get_file_path())
             })<span class="question-mark">?</span>;
 
         <span class="kw">let </span>snapshot = <span class="self">self
@@ -523,7 +524,7 @@
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>should_compute_valid_artifact() {
         <span class="kw">let </span>beacon = fake_data::beacon();
-        <span class="kw">let </span>certificate = fake_data::certificate(<span class="string">&quot;certificate-123&quot;</span>.to_string());
+        <span class="kw">let </span>certificate = fake_data::certificate(<span class="string">"certificate-123"</span>.to_string());
         <span class="kw">let </span>snapshot_digest = certificate
             .protocol_message
             .get_message_part(<span class="kw-2">&amp;</span>ProtocolMessagePartKey::SnapshotDigest)
@@ -534,7 +535,7 @@
 
         <span class="kw">let </span>cardano_immutable_files_full_artifact_builder =
             CardanoImmutableFilesFullArtifactBuilder::new(
-                <span class="kw-2">&amp;</span>Version::parse(<span class="string">&quot;1.0.0&quot;</span>).unwrap(),
+                <span class="kw-2">&amp;</span>Version::parse(<span class="string">"1.0.0"</span>).unwrap(),
                 dumb_snapshotter.clone(),
                 dumb_snapshot_uploader.clone(),
                 CompressionAlgorithm::Zstandard,
@@ -546,19 +547,19 @@
         <span class="kw">let </span>last_ongoing_snapshot = dumb_snapshotter
             .get_last_snapshot()
             .unwrap()
-            .expect(<span class="string">&quot;A snapshot should have been &#39;created&#39;&quot;</span>);
+            .expect(<span class="string">"A snapshot should have been 'created'"</span>);
 
         <span class="kw">let </span>remote_locations = <span class="macro">vec!</span>[dumb_snapshot_uploader
             .get_last_upload()
             .unwrap()
-            .expect(<span class="string">&quot;A snapshot should have been &#39;uploaded&#39;&quot;</span>)];
+            .expect(<span class="string">"A snapshot should have been 'uploaded'"</span>)];
         <span class="kw">let </span>artifact_expected = Snapshot::new(
             snapshot_digest.to_owned(),
             certificate.beacon.to_owned(),
             <span class="kw-2">*</span>last_ongoing_snapshot.get_file_size(),
             remote_locations,
             CompressionAlgorithm::Zstandard,
-            <span class="kw-2">&amp;</span>Version::parse(<span class="string">&quot;1.0.0&quot;</span>).unwrap(),
+            <span class="kw-2">&amp;</span>Version::parse(<span class="string">"1.0.0"</span>).unwrap(),
         );
         <span class="macro">assert_eq!</span>(artifact_expected, artifact);
     }
@@ -571,7 +572,7 @@
 
         <span class="kw">let </span>cardano_immutable_files_full_artifact_builder =
             CardanoImmutableFilesFullArtifactBuilder::new(
-                <span class="kw-2">&amp;</span>Version::parse(<span class="string">&quot;1.0.0&quot;</span>).unwrap(),
+                <span class="kw-2">&amp;</span>Version::parse(<span class="string">"1.0.0"</span>).unwrap(),
                 Arc::new(DumbSnapshotter::new()),
                 Arc::new(DumbSnapshotUploader::new()),
                 CompressionAlgorithm::default(),
@@ -580,26 +581,26 @@
         cardano_immutable_files_full_artifact_builder
             .upload_snapshot_archive(<span class="kw-2">&amp;</span>snapshot)
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;Snapshot upload should not fail&quot;</span>);
+            </span>.expect(<span class="string">"Snapshot upload should not fail"</span>);
 
         <span class="macro">assert!</span>(
             !file_path.exists(),
-            <span class="string">&quot;Ongoing snapshot file should have been removed after upload&quot;
+            <span class="string">"Ongoing snapshot file should have been removed after upload"
         </span>);
     }
 
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>snapshot_archive_name_after_beacon_values() {
-        <span class="kw">let </span>beacon = Beacon::new(<span class="string">&quot;network&quot;</span>.to_string(), <span class="number">20</span>, <span class="number">145</span>);
+        <span class="kw">let </span>beacon = Beacon::new(<span class="string">"network"</span>.to_string(), <span class="number">20</span>, <span class="number">145</span>);
         <span class="kw">let </span><span class="kw-2">mut </span>message = ProtocolMessage::new();
         message.set_message_part(
             ProtocolMessagePartKey::SnapshotDigest,
-            <span class="string">&quot;test+digest&quot;</span>.to_string(),
+            <span class="string">"test+digest"</span>.to_string(),
         );
 
         <span class="kw">let </span>cardano_immutable_files_full_artifact_builder =
             CardanoImmutableFilesFullArtifactBuilder::new(
-                <span class="kw-2">&amp;</span>Version::parse(<span class="string">&quot;1.0.0&quot;</span>).unwrap(),
+                <span class="kw-2">&amp;</span>Version::parse(<span class="string">"1.0.0"</span>).unwrap(),
                 Arc::new(DumbSnapshotter::new()),
                 Arc::new(DumbSnapshotUploader::new()),
                 CompressionAlgorithm::Gzip,
@@ -608,12 +609,12 @@
         <span class="kw">let </span>ongoing_snapshot = cardano_immutable_files_full_artifact_builder
             .create_snapshot_archive(<span class="kw-2">&amp;</span>beacon, <span class="kw-2">&amp;</span>message)
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;create_snapshot_archive should not fail&quot;</span>);
+            </span>.expect(<span class="string">"create_snapshot_archive should not fail"</span>);
 
         <span class="macro">assert_eq!</span>(
             Path::new(<span class="kw-2">&amp;</span><span class="macro">format!</span>(
-                <span class="string">&quot;{}-e{}-i{}.{}.tar.gz&quot;</span>,
-                beacon.network, <span class="kw-2">*</span>beacon.epoch, beacon.immutable_file_number, <span class="string">&quot;test+digest&quot;
+                <span class="string">"{}-e{}-i{}.{}.tar.gz"</span>,
+                beacon.network, <span class="kw-2">*</span>beacon.epoch, beacon.immutable_file_number, <span class="string">"test+digest"
             </span>)),
             ongoing_snapshot.get_file_path()
         );
@@ -624,7 +625,7 @@
         <span class="kw">let </span><span class="kw-2">mut </span>message = ProtocolMessage::new();
         message.set_message_part(
             ProtocolMessagePartKey::SnapshotDigest,
-            <span class="string">&quot;test+digest&quot;</span>.to_string(),
+            <span class="string">"test+digest"</span>.to_string(),
         );
 
         <span class="kw">let </span><span class="kw-2">mut </span>invalid_result: Vec&lt;CompressionAlgorithm&gt; = <span class="macro">vec!</span>[];
@@ -632,7 +633,7 @@
         <span class="kw">for </span>algorithm <span class="kw">in </span>CompressionAlgorithm::list() {
             <span class="kw">let </span>cardano_immutable_files_full_artifact_builder =
                 CardanoImmutableFilesFullArtifactBuilder::new(
-                    <span class="kw-2">&amp;</span>Version::parse(<span class="string">&quot;1.0.0&quot;</span>).unwrap(),
+                    <span class="kw-2">&amp;</span>Version::parse(<span class="string">"1.0.0"</span>).unwrap(),
                     Arc::new(DumbSnapshotter::new()),
                     Arc::new(DumbSnapshotUploader::new()),
                     algorithm,
@@ -641,7 +642,7 @@
             <span class="kw">let </span>ongoing_snapshot = cardano_immutable_files_full_artifact_builder
                 .create_snapshot_archive(<span class="kw-2">&amp;</span>Beacon::default(), <span class="kw-2">&amp;</span>message)
                 .<span class="kw">await
-                </span>.expect(<span class="string">&quot;create_snapshot_archive should not fail&quot;</span>);
+                </span>.expect(<span class="string">"create_snapshot_archive should not fail"</span>);
             <span class="kw">let </span>file_name = ongoing_snapshot
                 .get_file_path()
                 .file_name()
@@ -656,7 +657,7 @@
 
         <span class="macro">assert!</span>(
             invalid_result.is_empty(),
-            <span class="string">&quot;Archive name did not contain some algorithms extension after snapshot, failing algorithm(s): {invalid_result:?}&quot;</span>,
+            <span class="string">"Archive name did not contain some algorithms extension after snapshot, failing algorithm(s): {invalid_result:?}"</span>,
         );
     }
 
@@ -668,12 +669,12 @@
         <span class="kw">let </span><span class="kw-2">mut </span>snapshot_uploader = MockSnapshotUploader::new();
         snapshot_uploader
             .expect_upload_snapshot()
-            .return_once(|<span class="kw">_</span>| <span class="prelude-val">Err</span>(<span class="macro">anyhow!</span>(<span class="string">&quot;an error&quot;</span>)))
+            .return_once(|<span class="kw">_</span>| <span class="prelude-val">Err</span>(<span class="macro">anyhow!</span>(<span class="string">"an error"</span>)))
             .once();
 
         <span class="kw">let </span>cardano_immutable_files_full_artifact_builder =
             CardanoImmutableFilesFullArtifactBuilder::new(
-                <span class="kw-2">&amp;</span>Version::parse(<span class="string">&quot;1.0.0&quot;</span>).unwrap(),
+                <span class="kw-2">&amp;</span>Version::parse(<span class="string">"1.0.0"</span>).unwrap(),
                 Arc::new(DumbSnapshotter::new()),
                 Arc::new(snapshot_uploader),
                 CompressionAlgorithm::default(),
@@ -682,11 +683,11 @@
         cardano_immutable_files_full_artifact_builder
             .upload_snapshot_archive(<span class="kw-2">&amp;</span>snapshot)
             .<span class="kw">await
-            </span>.expect_err(<span class="string">&quot;Snapshot upload should have failed&quot;</span>);
+            </span>.expect_err(<span class="string">"Snapshot upload should have failed"</span>);
 
         <span class="macro">assert!</span>(
             !file_path.exists(),
-            <span class="string">&quot;Ongoing snapshot file should have been removed even after upload failure&quot;
+            <span class="string">"Ongoing snapshot file should have been removed even after upload failure"
         </span>);
     }
 }

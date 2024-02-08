@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-common/src/crypto_helper/cardano/opcert.rs`."><title>opcert.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="mithril_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-common/src/crypto_helper/cardano/opcert.rs`."><title>opcert.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="mithril_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -249,17 +250,17 @@
 </span><span class="attr">#[derive(Error, Debug, PartialEq, Eq)]
 </span><span class="kw">pub enum </span>OpCertError {
     <span class="doccomment">/// Error raised when a pool address encoding fails
-    </span><span class="attr">#[error(<span class="string">&quot;pool address encoding error&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"pool address encoding error"</span>)]
     </span>PoolAddressEncoding,
 }
 
 <span class="doccomment">/// Raw Fields of the operational certificates (without including the cold VK)
 </span><span class="attr">#[derive(Clone, Debug, Deserialize, PartialEq, Eq, Serialize)]
 </span><span class="kw">struct </span>RawFields(
-    <span class="attr">#[serde(with = <span class="string">&quot;serde_bytes&quot;</span>)] </span>Vec&lt;u8&gt;,
+    <span class="attr">#[serde(with = <span class="string">"serde_bytes"</span>)] </span>Vec&lt;u8&gt;,
     u64,
     u64,
-    <span class="attr">#[serde(with = <span class="string">&quot;serde_bytes&quot;</span>)] </span>Vec&lt;u8&gt;,
+    <span class="attr">#[serde(with = <span class="string">"serde_bytes"</span>)] </span>Vec&lt;u8&gt;,
 );
 
 <span class="doccomment">/// Raw Operational Certificate
@@ -278,8 +279,8 @@
 }
 
 <span class="kw">impl </span>SerDeShelleyFileFormat <span class="kw">for </span>OpCert {
-    <span class="kw">const </span>TYPE: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;NodeOperationalCertificate&quot;</span>;
-    <span class="kw">const </span>DESCRIPTION: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;&quot;</span>;
+    <span class="kw">const </span>TYPE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"NodeOperationalCertificate"</span>;
+    <span class="kw">const </span>DESCRIPTION: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">""</span>;
 }
 
 <span class="kw">impl </span>OpCert {
@@ -345,7 +346,7 @@
         hasher.update(<span class="self">self</span>.cold_vk.as_bytes());
         <span class="kw">let </span><span class="kw-2">mut </span>pool_id = [<span class="number">0u8</span>; <span class="number">28</span>];
         pool_id.copy_from_slice(hasher.finalize().as_bytes());
-        bech32::encode(<span class="string">&quot;pool&quot;</span>, pool_id.to_base32(), Variant::Bech32)
+        bech32::encode(<span class="string">"pool"</span>, pool_id.to_base32(), Variant::Bech32)
             .map_err(|<span class="kw">_</span>| OpCertError::PoolAddressEncoding)
     }
 
@@ -387,19 +388,19 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>OpCert {
+<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>&gt; Deserialize&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>OpCert {
     <span class="kw">fn </span>deserialize&lt;D&gt;(deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, D::Error&gt;
     <span class="kw">where
-        </span>D: Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;,
+        </span>D: Deserializer&lt;<span class="lifetime">'de</span>&gt;,
     {
         <span class="kw">let </span>raw_cert = RawOpCert::deserialize(deserializer)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
             kes_vk: KesPublicKey::from_bytes(<span class="kw-2">&amp;</span>raw_cert.<span class="number">0 </span>.<span class="number">0</span>)
-                .map_err(|<span class="kw">_</span>| Error::custom(<span class="string">&quot;KES vk serialisation error&quot;</span>))<span class="question-mark">?</span>,
+                .map_err(|<span class="kw">_</span>| Error::custom(<span class="string">"KES vk serialisation error"</span>))<span class="question-mark">?</span>,
             issue_number: raw_cert.<span class="number">0 </span>.<span class="number">1</span>,
             start_kes_period: raw_cert.<span class="number">0 </span>.<span class="number">2</span>,
             cert_sig: EdSignature::from_slice(<span class="kw-2">&amp;</span>raw_cert.<span class="number">0 </span>.<span class="number">3</span>)
-                .map_err(|<span class="kw">_</span>| Error::custom(<span class="string">&quot;ed25519 signature serialisation error&quot;</span>))<span class="question-mark">?</span>,
+                .map_err(|<span class="kw">_</span>| Error::custom(<span class="string">"ed25519 signature serialisation error"</span>))<span class="question-mark">?</span>,
             cold_vk: raw_cert.<span class="number">1</span>,
         })
     }
@@ -415,8 +416,8 @@
     <span class="kw">use </span>std::{fs, path::PathBuf};
 
     <span class="kw">fn </span>setup_temp_directory() -&gt; PathBuf {
-        <span class="kw">let </span>temp_dir = std::env::temp_dir().join(<span class="string">&quot;mithril_cardano_opcert&quot;</span>);
-        fs::create_dir_all(<span class="kw-2">&amp;</span>temp_dir).expect(<span class="string">&quot;temp dir creation should not fail&quot;</span>);
+        <span class="kw">let </span>temp_dir = std::env::temp_dir().join(<span class="string">"mithril_cardano_opcert"</span>);
+        fs::create_dir_all(<span class="kw-2">&amp;</span>temp_dir).expect(<span class="string">"temp dir creation should not fail"</span>);
         temp_dir
     }
 
@@ -430,26 +431,26 @@
         <span class="kw">let </span>operational_certificate = OpCert::new(kes_verification_key, <span class="number">0</span>, <span class="number">0</span>, keypair);
         <span class="macro">assert!</span>(operational_certificate.validate().is_ok());
 
-        <span class="kw">let </span>operation_certificate_file = temp_dir.join(<span class="string">&quot;node.cert&quot;</span>);
+        <span class="kw">let </span>operation_certificate_file = temp_dir.join(<span class="string">"node.cert"</span>);
         operational_certificate
             .to_file(<span class="kw-2">&amp;</span>operation_certificate_file)
-            .expect(<span class="string">&quot;operational certificate file export should not fail&quot;</span>);
+            .expect(<span class="string">"operational certificate file export should not fail"</span>);
 
         <span class="kw">let </span>operational_certificate: OpCert = OpCert::from_file(<span class="kw-2">&amp;</span>operation_certificate_file)
-            .expect(<span class="string">&quot;operational certificate file import should not fail&quot;</span>);
+            .expect(<span class="string">"operational certificate file import should not fail"</span>);
         <span class="macro">assert!</span>(operational_certificate.validate().is_ok());
 
         <span class="kw">let </span>party_id = operational_certificate
             .compute_protocol_party_id()
-            .expect(<span class="string">&quot;compute protocol party_id should not fail&quot;</span>);
+            .expect(<span class="string">"compute protocol party_id should not fail"</span>);
         <span class="macro">assert_eq!</span>(
-            <span class="string">&quot;pool1mxyec46067n3querj9cxkk0g0zlag93pf3ya9vuyr3wgkq2e6t7&quot;</span>.to_string(),
+            <span class="string">"pool1mxyec46067n3querj9cxkk0g0zlag93pf3ya9vuyr3wgkq2e6t7"</span>.to_string(),
             party_id
         );
 
         <span class="kw">let </span>party_id_as_hash = operational_certificate.compute_protocol_party_id_as_hash();
         <span class="macro">assert_eq!</span>(
-            <span class="string">&quot;d9899c574fd7a710732391706b59e878bfd416214c49d2b3841c5c8b&quot;</span>.to_string(),
+            <span class="string">"d9899c574fd7a710732391706b59e878bfd416214c49d2b3841c5c8b"</span>.to_string(),
             party_id_as_hash
         );
     }

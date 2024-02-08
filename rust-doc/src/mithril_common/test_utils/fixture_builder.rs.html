@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-common/src/test_utils/fixture_builder.rs`."><title>fixture_builder.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-common/src/test_utils/fixture_builder.rs`."><title>fixture_builder.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -345,7 +346,7 @@
         <span class="self">self
     </span>}
 
-    <span class="doccomment">/// If set the generated signers won&#39;t be certified (meaning that they won&#39;t
+    <span class="doccomment">/// If set the generated signers won't be certified (meaning that they won't
     /// have a operational certificate).
     </span><span class="kw">pub fn </span>disable_signers_certification(<span class="kw-2">mut </span><span class="self">self</span>) -&gt; <span class="self">Self </span>{
         <span class="self">self</span>.enable_signers_certification = <span class="bool-val">false</span>;
@@ -420,7 +421,7 @@
                             <span class="kw-2">&amp;mut </span>kes_keys_seed,
                         )
                     } <span class="kw">else </span>{
-                        <span class="macro">format!</span>(<span class="string">&quot;{party_index:&lt;032}&quot;</span>)
+                        <span class="macro">format!</span>(<span class="string">"{party_index:&lt;032}"</span>)
                     }
                 });
                 signers_party_ids.collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;()
@@ -450,18 +451,18 @@
         <span class="kw">let </span>operational_certificate = OpCert::new(kes_verification_key, <span class="number">0</span>, <span class="number">0</span>, keypair);
         <span class="kw">let </span>party_id = operational_certificate
             .compute_protocol_party_id()
-            .expect(<span class="string">&quot;compute protocol party id should not fail&quot;</span>);
+            .expect(<span class="string">"compute protocol party id should not fail"</span>);
         <span class="kw">let </span>temp_dir = setup_temp_directory_for_signer(<span class="kw-2">&amp;</span>party_id, <span class="bool-val">true</span>)
-            .expect(<span class="string">&quot;setup temp directory should return a value&quot;</span>);
-        <span class="kw">if </span>!temp_dir.join(<span class="string">&quot;kes.sk&quot;</span>).exists() {
+            .expect(<span class="string">"setup temp directory should return a value"</span>);
+        <span class="kw">if </span>!temp_dir.join(<span class="string">"kes.sk"</span>).exists() {
             kes_bytes
-                .to_file(temp_dir.join(<span class="string">&quot;kes.sk&quot;</span>))
-                .expect(<span class="string">&quot;KES secret key file export should not fail&quot;</span>);
+                .to_file(temp_dir.join(<span class="string">"kes.sk"</span>))
+                .expect(<span class="string">"KES secret key file export should not fail"</span>);
         }
-        <span class="kw">if </span>!temp_dir.join(<span class="string">&quot;opcert.cert&quot;</span>).exists() {
+        <span class="kw">if </span>!temp_dir.join(<span class="string">"opcert.cert"</span>).exists() {
             operational_certificate
-                .to_file(temp_dir.join(<span class="string">&quot;opcert.cert&quot;</span>))
-                .expect(<span class="string">&quot;operational certificate file export should not fail&quot;</span>);
+                .to_file(temp_dir.join(<span class="string">"opcert.cert"</span>))
+                .expect(<span class="string">"operational certificate file export should not fail"</span>);
         }
         party_id
     }
@@ -514,7 +515,7 @@
             stake_distribution
                 .iter()
                 .all(|(<span class="kw">_</span>, stake)| <span class="kw-2">*</span>stake == expected_stake),
-            <span class="string">&quot;Generated stake distribution doesn&#39;t have uniform stakes: {stake_distribution:?}&quot;
+            <span class="string">"Generated stake distribution doesn't have uniform stakes: {stake_distribution:?}"
         </span>);
     }
 
@@ -534,7 +535,7 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>dont_generate_party_ids_for_custom_stake_distribution() {
-        <span class="kw">let </span>stake_distribution = StakeDistribution::from_iter([(<span class="string">&quot;party&quot;</span>.to_owned(), <span class="number">4</span>)]);
+        <span class="kw">let </span>stake_distribution = StakeDistribution::from_iter([(<span class="string">"party"</span>.to_owned(), <span class="number">4</span>)]);
         <span class="kw">let </span>builder = MithrilFixtureBuilder::default()
             .with_stake_distribution(StakeDistributionGenerationMethod::Custom(
                 stake_distribution,

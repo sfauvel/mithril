@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-common/src/chain_observer/pallas_observer.rs`."><title>pallas_observer.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-common/src/chain_observer/pallas_observer.rs`."><title>pallas_observer.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -301,7 +302,7 @@
         <span class="self">self</span>.new_client()
             .<span class="kw">await
             </span>.map_err(|err| <span class="macro">anyhow!</span>(err))
-            .with_context(|| <span class="string">&quot;PallasChainObserver Failed to create new client&quot;</span>)
+            .with_context(|| <span class="string">"PallasChainObserver Failed to create new client"</span>)
     }
 
     <span class="doccomment">/// Fetches the current epoch number using the provided `statequery` client.
@@ -310,17 +311,17 @@
             .acquire(<span class="prelude-val">None</span>)
             .<span class="kw">await
             </span>.map_err(|err| <span class="macro">anyhow!</span>(err))
-            .with_context(|| <span class="string">&quot;PallasChainObserver Failed to acquire statequery&quot;</span>)<span class="question-mark">?</span>;
+            .with_context(|| <span class="string">"PallasChainObserver Failed to acquire statequery"</span>)<span class="question-mark">?</span>;
 
         <span class="kw">let </span>era = queries_v16::get_current_era(statequery)
             .<span class="kw">await
             </span>.map_err(|err| <span class="macro">anyhow!</span>(err))
-            .with_context(|| <span class="string">&quot;PallasChainObserver Failed to get current era&quot;</span>)<span class="question-mark">?</span>;
+            .with_context(|| <span class="string">"PallasChainObserver Failed to get current era"</span>)<span class="question-mark">?</span>;
 
         <span class="kw">let </span>epoch = queries_v16::get_block_epoch_number(statequery, era)
             .<span class="kw">await
             </span>.map_err(|err| <span class="macro">anyhow!</span>(err))
-            .with_context(|| <span class="string">&quot;PallasChainObserver Failed to get block epoch number&quot;</span>)<span class="question-mark">?</span>;
+            .with_context(|| <span class="string">"PallasChainObserver Failed to get block epoch number"</span>)<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(epoch)
     }
@@ -332,13 +333,13 @@
             .send_release()
             .<span class="kw">await
             </span>.map_err(|err| <span class="macro">anyhow!</span>(err))
-            .with_context(|| <span class="string">&quot;PallasChainObserver send release failed&quot;</span>)<span class="question-mark">?</span>;
+            .with_context(|| <span class="string">"PallasChainObserver send release failed"</span>)<span class="question-mark">?</span>;
 
         statequery
             .send_done()
             .<span class="kw">await
             </span>.map_err(|err| <span class="macro">anyhow!</span>(err))
-            .with_context(|| <span class="string">&quot;PallasChainObserver send done failed&quot;</span>)<span class="question-mark">?</span>;
+            .with_context(|| <span class="string">"PallasChainObserver send done failed"</span>)<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(())
     }
@@ -350,7 +351,7 @@
             .send_done()
             .<span class="kw">await
             </span>.map_err(|err| <span class="macro">anyhow!</span>(err))
-            .with_context(|| <span class="string">&quot;PallasChainObserver chainsync send done failed&quot;</span>)<span class="question-mark">?</span>;
+            .with_context(|| <span class="string">"PallasChainObserver chainsync send done failed"</span>)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())
     }
 
@@ -417,7 +418,7 @@
         <span class="kw">let </span>query: localstate::queries_v16::Request =
             <span class="kw">match </span>server.statequery().recv_while_acquired().<span class="kw">await</span>.unwrap() {
                 ClientQueryRequest::Query(q) =&gt; q.into_decode().unwrap(),
-                x =&gt; <span class="macro">panic!</span>(<span class="string">&quot;unexpected message from client: {x:?}&quot;</span>),
+                x =&gt; <span class="macro">panic!</span>(<span class="string">"unexpected message from client: {x:?}"</span>),
             };
 
         <span class="kw">match </span>query {
@@ -432,17 +433,17 @@
                     localstate::queries_v16::BlockQuery::GetEpochNo,
                 ),
             ) =&gt; AnyCbor::from_encode([<span class="number">8</span>]),
-            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;unexpected query from client: {query:?}&quot;</span>),
+            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"unexpected query from client: {query:?}"</span>),
         }
     }
 
-    <span class="doccomment">/// Creates a new work directory in the system&#39;s temporary folder.
+    <span class="doccomment">/// Creates a new work directory in the system's temporary folder.
     </span><span class="kw">fn </span>create_temp_dir(folder_name: <span class="kw-2">&amp;</span>str) -&gt; PathBuf {
         <span class="kw">let </span>temp_dir = std::env::temp_dir().join(folder_name);
         <span class="kw">if </span>temp_dir.exists() {
-            fs::remove_dir_all(<span class="kw-2">&amp;</span>temp_dir).expect(<span class="string">&quot;Previous work dir removal failed&quot;</span>);
+            fs::remove_dir_all(<span class="kw-2">&amp;</span>temp_dir).expect(<span class="string">"Previous work dir removal failed"</span>);
         }
-        fs::create_dir_all(<span class="kw-2">&amp;</span>temp_dir).expect(<span class="string">&quot;Work dir creation failed&quot;</span>);
+        fs::create_dir_all(<span class="kw-2">&amp;</span>temp_dir).expect(<span class="string">"Work dir creation failed"</span>);
         temp_dir
     }
 
@@ -450,10 +451,10 @@
     </span><span class="kw">async fn </span>setup_server() -&gt; tokio::task::JoinHandle&lt;()&gt; {
         tokio::spawn({
             <span class="kw">async move </span>{
-                <span class="kw">let </span>temp_dir = create_temp_dir(<span class="string">&quot;pallas_chain_observer_test&quot;</span>);
-                <span class="kw">let </span>socket_path = temp_dir.join(<span class="string">&quot;node.socket&quot;</span>).as_path().to_owned();
+                <span class="kw">let </span>temp_dir = create_temp_dir(<span class="string">"pallas_chain_observer_test"</span>);
+                <span class="kw">let </span>socket_path = temp_dir.join(<span class="string">"node.socket"</span>).as_path().to_owned();
                 <span class="kw">if </span>socket_path.exists() {
-                    fs::remove_file(<span class="kw-2">&amp;</span>socket_path).expect(<span class="string">&quot;Previous socket removal failed&quot;</span>);
+                    fs::remove_file(<span class="kw-2">&amp;</span>socket_path).expect(<span class="string">"Previous socket removal failed"</span>);
                 }
 
                 <span class="kw">let </span>unix_listener = UnixListener::bind(socket_path.as_path()).unwrap();
@@ -477,7 +478,7 @@
     </span><span class="kw">async fn </span>get_current_epoch_with_fallback() {
         <span class="kw">let </span>server = setup_server().<span class="kw">await</span>;
         <span class="kw">let </span>client = tokio::spawn(<span class="kw">async move </span>{
-            <span class="kw">let </span>socket_path = std::env::temp_dir().join(<span class="string">&quot;pallas_chain_observer_test/node.socket&quot;</span>);
+            <span class="kw">let </span>socket_path = std::env::temp_dir().join(<span class="string">"pallas_chain_observer_test/node.socket"</span>);
             <span class="kw">let </span>fallback = CardanoCliChainObserver::new(Box::&lt;TestCliRunner&gt;::default());
             <span class="kw">let </span>observer = <span class="kw">super</span>::PallasChainObserver::new(
                 socket_path.as_path(),
@@ -488,7 +489,7 @@
         });
 
         <span class="kw">let </span>(<span class="kw">_</span>, client_res) = <span class="macro">tokio::join!</span>(server, client);
-        <span class="kw">let </span>epoch = client_res.expect(<span class="string">&quot;Client failed&quot;</span>);
+        <span class="kw">let </span>epoch = client_res.expect(<span class="string">"Client failed"</span>);
         <span class="macro">assert_eq!</span>(epoch, <span class="number">8</span>);
     }
 }

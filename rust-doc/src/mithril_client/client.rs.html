@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-client/src/client.rs`."><title>client.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="mithril_client" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-client/src/client.rs`."><title>client.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="mithril_client" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -209,32 +210,60 @@
 <a href="#209" id="209">209</a>
 <a href="#210" id="210">210</a>
 <a href="#211" id="211">211</a>
-</pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::aggregator_client::{AggregatorClient, AggregatorHTTPClient};
+<a href="#212" id="212">212</a>
+<a href="#213" id="213">213</a>
+<a href="#214" id="214">214</a>
+<a href="#215" id="215">215</a>
+<a href="#216" id="216">216</a>
+<a href="#217" id="217">217</a>
+<a href="#218" id="218">218</a>
+<a href="#219" id="219">219</a>
+<a href="#220" id="220">220</a>
+<a href="#221" id="221">221</a>
+<a href="#222" id="222">222</a>
+<a href="#223" id="223">223</a>
+<a href="#224" id="224">224</a>
+<a href="#225" id="225">225</a>
+<a href="#226" id="226">226</a>
+<a href="#227" id="227">227</a>
+<a href="#228" id="228">228</a>
+</pre></div><pre class="rust"><code><span class="kw">use </span>anyhow::{anyhow, Context};
+<span class="kw">use </span>mithril_common::api_version::APIVersionProvider;
+<span class="kw">use </span>reqwest::Url;
+<span class="kw">use </span>slog::{o, Logger};
+<span class="kw">use </span>std::sync::Arc;
+
+<span class="kw">use </span><span class="kw">crate</span>::aggregator_client::{AggregatorClient, AggregatorHTTPClient};
+<span class="attr">#[cfg(feature = <span class="string">"unstable"</span>)]
+</span><span class="kw">use </span><span class="kw">crate</span>::cardano_transaction_proof_client::CardanoTransactionProofClient;
 <span class="kw">use </span><span class="kw">crate</span>::certificate_client::{
     CertificateClient, CertificateVerifier, MithrilCertificateVerifier,
 };
 <span class="kw">use </span><span class="kw">crate</span>::feedback::{FeedbackReceiver, FeedbackSender};
 <span class="kw">use </span><span class="kw">crate</span>::mithril_stake_distribution_client::MithrilStakeDistributionClient;
 <span class="kw">use </span><span class="kw">crate</span>::snapshot_client::SnapshotClient;
-<span class="attr">#[cfg(feature = <span class="string">&quot;fs&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"fs"</span>)]
 </span><span class="kw">use </span><span class="kw">crate</span>::snapshot_downloader::{HttpSnapshotDownloader, SnapshotDownloader};
 <span class="kw">use </span><span class="kw">crate</span>::MithrilResult;
-<span class="kw">use </span>anyhow::{anyhow, Context};
-<span class="kw">use </span>mithril_common::api_version::APIVersionProvider;
-<span class="kw">use </span>reqwest::Url;
-<span class="kw">use </span>slog::{o, Logger};
-<span class="kw">use </span>std::sync::Arc;
 
 <span class="doccomment">/// Structure that aggregates the available clients for each of the Mithril types of certified data.
 ///
 /// Use the [ClientBuilder] to instantiate it easily.
 </span><span class="kw">pub struct </span>Client {
+    <span class="attr">#[cfg(feature = <span class="string">"unstable"</span>)]
+    </span>cardano_transaction_proof_client: Arc&lt;CardanoTransactionProofClient&gt;,
     certificate_client: Arc&lt;CertificateClient&gt;,
     mithril_stake_distribution_client: Arc&lt;MithrilStakeDistributionClient&gt;,
     snapshot_client: Arc&lt;SnapshotClient&gt;,
 }
 
 <span class="kw">impl </span>Client {
+    <span class="doccomment">/// Get the client that fetches and verifies Mithril Cardano transaction proof.
+    </span><span class="attr">#[cfg(feature = <span class="string">"unstable"</span>)]
+    </span><span class="kw">pub fn </span>cardano_transaction_proof(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Arc&lt;CardanoTransactionProofClient&gt; {
+        <span class="self">self</span>.cardano_transaction_proof_client.clone()
+    }
+
     <span class="doccomment">/// Get the client that fetches and verifies Mithril certificates.
     </span><span class="kw">pub fn </span>certificate(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Arc&lt;CertificateClient&gt; {
         <span class="self">self</span>.certificate_client.clone()
@@ -257,7 +286,7 @@
     genesis_verification_key: String,
     aggregator_client: <span class="prelude-ty">Option</span>&lt;Arc&lt;<span class="kw">dyn </span>AggregatorClient&gt;&gt;,
     certificate_verifier: <span class="prelude-ty">Option</span>&lt;Arc&lt;<span class="kw">dyn </span>CertificateVerifier&gt;&gt;,
-    <span class="attr">#[cfg(feature = <span class="string">&quot;fs&quot;</span>)]
+    <span class="attr">#[cfg(feature = <span class="string">"fs"</span>)]
     </span>snapshot_downloader: <span class="prelude-ty">Option</span>&lt;Arc&lt;<span class="kw">dyn </span>SnapshotDownloader&gt;&gt;,
     logger: <span class="prelude-ty">Option</span>&lt;Logger&gt;,
     feedback_receivers: Vec&lt;Arc&lt;<span class="kw">dyn </span>FeedbackReceiver&gt;&gt;,
@@ -272,7 +301,7 @@
             genesis_verification_key: genesis_verification_key.to_string(),
             aggregator_client: <span class="prelude-val">None</span>,
             certificate_verifier: <span class="prelude-val">None</span>,
-            <span class="attr">#[cfg(feature = <span class="string">&quot;fs&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"fs"</span>)]
             </span>snapshot_downloader: <span class="prelude-val">None</span>,
             logger: <span class="prelude-val">None</span>,
             feedback_receivers: <span class="macro">vec!</span>[],
@@ -281,7 +310,7 @@
 
     <span class="doccomment">/// Constructs a new `ClientBuilder` without any dependency set.
     ///
-    /// Use [ClientBuilder::aggregator] if you don&#39;t need to set a custom [AggregatorClient]
+    /// Use [ClientBuilder::aggregator] if you don't need to set a custom [AggregatorClient]
     /// to request data from the aggregator.
     </span><span class="kw">pub fn </span>new(genesis_verification_key: <span class="kw-2">&amp;</span>str) -&gt; ClientBuilder {
         <span class="self">Self </span>{
@@ -289,7 +318,7 @@
             genesis_verification_key: genesis_verification_key.to_string(),
             aggregator_client: <span class="prelude-val">None</span>,
             certificate_verifier: <span class="prelude-val">None</span>,
-            <span class="attr">#[cfg(feature = <span class="string">&quot;fs&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"fs"</span>)]
             </span>snapshot_downloader: <span class="prelude-val">None</span>,
             logger: <span class="prelude-val">None</span>,
             feedback_receivers: <span class="macro">vec!</span>[],
@@ -301,10 +330,9 @@
     /// The builder will try to create the missing dependencies using default implementations
     /// if possible.
     </span><span class="kw">pub fn </span>build(<span class="self">self</span>) -&gt; MithrilResult&lt;Client&gt; {
-        <span class="kw">let </span>logger = <span class="kw">match </span><span class="self">self</span>.logger {
-            <span class="prelude-val">Some</span>(logger) =&gt; logger,
-            <span class="prelude-val">None </span>=&gt; Logger::root(slog::Discard, <span class="macro">o!</span>()),
-        };
+        <span class="kw">let </span>logger = <span class="self">self
+            </span>.logger
+            .unwrap_or_else(|| Logger::root(slog::Discard, <span class="macro">o!</span>()));
 
         <span class="kw">let </span>feedback_sender = FeedbackSender::new(<span class="kw-2">&amp;</span><span class="self">self</span>.feedback_receivers);
 
@@ -312,32 +340,37 @@
             <span class="prelude-val">None </span>=&gt; {
                 <span class="kw">let </span>endpoint = <span class="self">self
                     </span>.aggregator_endpoint
-                    .ok_or(<span class="macro">anyhow!</span>(<span class="string">&quot;No aggregator endpoint set: \
-                    You must either provide an aggregator endpoint or your own AggregatorClient implementation&quot;</span>))<span class="question-mark">?</span>;
+                    .ok_or(<span class="macro">anyhow!</span>(<span class="string">"No aggregator endpoint set: \
+                    You must either provide an aggregator endpoint or your own AggregatorClient implementation"</span>))<span class="question-mark">?</span>;
                 <span class="kw">let </span>endpoint_url = Url::parse(<span class="kw-2">&amp;</span>endpoint)
-                    .with_context(|| <span class="macro">format!</span>(<span class="string">&quot;Invalid aggregator endpoint, it must be a correctly formed url: &#39;{endpoint}&#39;&quot;</span>))<span class="question-mark">?</span>;
+                    .with_context(|| <span class="macro">format!</span>(<span class="string">"Invalid aggregator endpoint, it must be a correctly formed url: '{endpoint}'"</span>))<span class="question-mark">?</span>;
 
                 Arc::new(
                     AggregatorHTTPClient::new(
                         endpoint_url,
                         APIVersionProvider::compute_all_versions_sorted()
-                            .with_context(|| <span class="string">&quot;Could not compute aggregator api versions&quot;</span>)<span class="question-mark">?</span>,
+                            .with_context(|| <span class="string">"Could not compute aggregator api versions"</span>)<span class="question-mark">?</span>,
                         logger.clone(),
                     )
-                    .with_context(|| <span class="string">&quot;Building aggregator client failed&quot;</span>)<span class="question-mark">?</span>,
+                    .with_context(|| <span class="string">"Building aggregator client failed"</span>)<span class="question-mark">?</span>,
                 )
             }
             <span class="prelude-val">Some</span>(client) =&gt; client,
         };
 
-        <span class="attr">#[cfg(feature = <span class="string">&quot;fs&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">"fs"</span>)]
         </span><span class="kw">let </span>snapshot_downloader = <span class="kw">match </span><span class="self">self</span>.snapshot_downloader {
             <span class="prelude-val">None </span>=&gt; Arc::new(
                 HttpSnapshotDownloader::new(feedback_sender.clone(), logger.clone())
-                    .with_context(|| <span class="string">&quot;Building snapshot downloader failed&quot;</span>)<span class="question-mark">?</span>,
+                    .with_context(|| <span class="string">"Building snapshot downloader failed"</span>)<span class="question-mark">?</span>,
             ),
             <span class="prelude-val">Some</span>(snapshot_downloader) =&gt; snapshot_downloader,
         };
+
+        <span class="attr">#[cfg(feature = <span class="string">"unstable"</span>)]
+        </span><span class="kw">let </span>cardano_transaction_proof_client = Arc::new(CardanoTransactionProofClient::new(
+            aggregator_client.clone(),
+        ));
 
         <span class="kw">let </span>certificate_verifier = <span class="kw">match </span><span class="self">self</span>.certificate_verifier {
             <span class="prelude-val">None </span>=&gt; Arc::new(
@@ -347,7 +380,7 @@
                     feedback_sender.clone(),
                     logger.clone(),
                 )
-                .with_context(|| <span class="string">&quot;Building certificate verifier failed&quot;</span>)<span class="question-mark">?</span>,
+                .with_context(|| <span class="string">"Building certificate verifier failed"</span>)<span class="question-mark">?</span>,
             ),
             <span class="prelude-val">Some</span>(verifier) =&gt; verifier,
         };
@@ -362,15 +395,17 @@
         ));
         <span class="kw">let </span>snapshot_client = Arc::new(SnapshotClient::new(
             aggregator_client,
-            <span class="attr">#[cfg(feature = <span class="string">&quot;fs&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"fs"</span>)]
             </span>snapshot_downloader,
-            <span class="attr">#[cfg(feature = <span class="string">&quot;fs&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"fs"</span>)]
             </span>feedback_sender,
-            <span class="attr">#[cfg(feature = <span class="string">&quot;fs&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"fs"</span>)]
             </span>logger,
         ));
 
         <span class="prelude-val">Ok</span>(Client {
+            <span class="attr">#[cfg(feature = <span class="string">"unstable"</span>)]
+            </span>cardano_transaction_proof_client,
             certificate_client,
             mithril_stake_distribution_client,
             snapshot_client,

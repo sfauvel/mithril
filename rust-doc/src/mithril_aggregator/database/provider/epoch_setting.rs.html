@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-aggregator/src/database/provider/epoch_setting.rs`."><title>epoch_setting.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="mithril_aggregator" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-aggregator/src/database/provider/epoch_setting.rs`."><title>epoch_setting.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="mithril_aggregator" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -572,13 +573,13 @@
         <span class="kw">let </span>epoch_setting_record = <span class="self">Self </span>{
             epoch_setting_id: Epoch(epoch_setting_id_int.try_into().map_err(|e| {
                 HydrationError::InvalidData(<span class="macro">format!</span>(
-                    <span class="string">&quot;Could not cast i64 ({epoch_setting_id_int}) to u64. Error: &#39;{e}&#39;&quot;
+                    <span class="string">"Could not cast i64 ({epoch_setting_id_int}) to u64. Error: '{e}'"
                 </span>))
             })<span class="question-mark">?</span>),
             protocol_parameters: serde_json::from_str(protocol_parameters_string).map_err(
                 |e| {
                     HydrationError::InvalidData(<span class="macro">format!</span>(
-                        <span class="string">&quot;Could not turn string &#39;{protocol_parameters_string}&#39; to ProtocolParameters. Error: {e}&quot;
+                        <span class="string">"Could not turn string '{protocol_parameters_string}' to ProtocolParameters. Error: {e}"
                     </span>))
                 },
             )<span class="question-mark">?</span>,
@@ -590,14 +591,14 @@
     <span class="kw">fn </span>get_projection() -&gt; Projection {
         <span class="kw">let </span><span class="kw-2">mut </span>projection = Projection::default();
         projection.add_field(
-            <span class="string">&quot;epoch_setting_id&quot;</span>,
-            <span class="string">&quot;{:epoch_setting:}.epoch_setting_id&quot;</span>,
-            <span class="string">&quot;integer&quot;</span>,
+            <span class="string">"epoch_setting_id"</span>,
+            <span class="string">"{:epoch_setting:}.epoch_setting_id"</span>,
+            <span class="string">"integer"</span>,
         );
         projection.add_field(
-            <span class="string">&quot;protocol_parameters&quot;</span>,
-            <span class="string">&quot;{:epoch_setting:}.protocol_parameters&quot;</span>,
-            <span class="string">&quot;text&quot;</span>,
+            <span class="string">"protocol_parameters"</span>,
+            <span class="string">"{:epoch_setting:}.protocol_parameters"</span>,
+            <span class="string">"text"</span>,
         );
 
         projection
@@ -605,23 +606,23 @@
 }
 
 <span class="doccomment">/// Simple [EpochSettingRecord] provider.
-</span><span class="kw">pub struct </span>EpochSettingProvider&lt;<span class="lifetime">&#39;client</span>&gt; {
-    client: <span class="kw-2">&amp;</span><span class="lifetime">&#39;client </span>SqliteConnection,
+</span><span class="kw">pub struct </span>EpochSettingProvider&lt;<span class="lifetime">'client</span>&gt; {
+    client: <span class="kw-2">&amp;</span><span class="lifetime">'client </span>SqliteConnection,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;client</span>&gt; EpochSettingProvider&lt;<span class="lifetime">&#39;client</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'client</span>&gt; EpochSettingProvider&lt;<span class="lifetime">'client</span>&gt; {
     <span class="doccomment">/// Create a new provider
-    </span><span class="kw">pub fn </span>new(client: <span class="kw-2">&amp;</span><span class="lifetime">&#39;client </span>SqliteConnection) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>new(client: <span class="kw-2">&amp;</span><span class="lifetime">'client </span>SqliteConnection) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{ client }
     }
 
     <span class="kw">fn </span>condition_by_epoch(<span class="kw-2">&amp;</span><span class="self">self</span>, epoch: <span class="kw-2">&amp;</span>Epoch) -&gt; StdResult&lt;WhereCondition&gt; {
         <span class="kw">let </span>epoch_setting_id: i64 = epoch
             .try_into()
-            .with_context(|| <span class="macro">format!</span>(<span class="string">&quot;Can not convert epoch: &#39;{epoch}&#39;&quot;</span>))<span class="question-mark">?</span>;
+            .with_context(|| <span class="macro">format!</span>(<span class="string">"Can not convert epoch: '{epoch}'"</span>))<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(WhereCondition::new(
-            <span class="string">&quot;epoch_setting_id = ?*&quot;</span>,
+            <span class="string">"epoch_setting_id = ?*"</span>,
             <span class="macro">vec!</span>[Value::Integer(epoch_setting_id)],
         ))
     }
@@ -643,28 +644,28 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;client</span>&gt; Provider&lt;<span class="lifetime">&#39;client</span>&gt; <span class="kw">for </span>EpochSettingProvider&lt;<span class="lifetime">&#39;client</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'client</span>&gt; Provider&lt;<span class="lifetime">'client</span>&gt; <span class="kw">for </span>EpochSettingProvider&lt;<span class="lifetime">'client</span>&gt; {
     <span class="kw">type </span>Entity = EpochSettingRecord;
 
-    <span class="kw">fn </span>get_connection(<span class="kw-2">&amp;</span><span class="lifetime">&#39;client </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;client </span>SqliteConnection {
+    <span class="kw">fn </span>get_connection(<span class="kw-2">&amp;</span><span class="lifetime">'client </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'client </span>SqliteConnection {
         <span class="self">self</span>.client
     }
 
     <span class="kw">fn </span>get_definition(<span class="kw-2">&amp;</span><span class="self">self</span>, condition: <span class="kw-2">&amp;</span>str) -&gt; String {
-        <span class="kw">let </span>aliases = SourceAlias::new(<span class="kw-2">&amp;</span>[(<span class="string">&quot;{:epoch_setting:}&quot;</span>, <span class="string">&quot;es&quot;</span>)]);
+        <span class="kw">let </span>aliases = SourceAlias::new(<span class="kw-2">&amp;</span>[(<span class="string">"{:epoch_setting:}"</span>, <span class="string">"es"</span>)]);
         <span class="kw">let </span>projection = <span class="self">Self</span>::Entity::get_projection().expand(aliases);
-        <span class="macro">format!</span>(<span class="string">&quot;select {projection} from epoch_setting as es where {condition} order by epoch_setting_id desc&quot;</span>)
+        <span class="macro">format!</span>(<span class="string">"select {projection} from epoch_setting as es where {condition} order by epoch_setting_id desc"</span>)
     }
 }
 
 <span class="doccomment">/// Query to update the epoch setting
-</span><span class="kw">pub struct </span>UpdateEpochSettingProvider&lt;<span class="lifetime">&#39;conn</span>&gt; {
-    connection: <span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span>SqliteConnection,
+</span><span class="kw">pub struct </span>UpdateEpochSettingProvider&lt;<span class="lifetime">'conn</span>&gt; {
+    connection: <span class="kw-2">&amp;</span><span class="lifetime">'conn </span>SqliteConnection,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;conn</span>&gt; UpdateEpochSettingProvider&lt;<span class="lifetime">&#39;conn</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'conn</span>&gt; UpdateEpochSettingProvider&lt;<span class="lifetime">'conn</span>&gt; {
     <span class="doccomment">/// Create a new instance
-    </span><span class="kw">pub fn </span>new(connection: <span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span>SqliteConnection) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>new(connection: <span class="kw-2">&amp;</span><span class="lifetime">'conn </span>SqliteConnection) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{ connection }
     }
 
@@ -676,7 +677,7 @@
         <span class="kw">let </span>epoch_setting_id: i64 = epoch.try_into().unwrap();
 
         WhereCondition::new(
-            <span class="string">&quot;(epoch_setting_id, protocol_parameters) values (?1, ?2)&quot;</span>,
+            <span class="string">"(epoch_setting_id, protocol_parameters) values (?1, ?2)"</span>,
             <span class="macro">vec!</span>[
                 Value::Integer(epoch_setting_id),
                 Value::String(serde_json::to_string(<span class="kw-2">&amp;</span>protocol_parameters).unwrap()),
@@ -694,16 +695,16 @@
         <span class="kw">let </span>entity = <span class="self">self
             </span>.find(filters)<span class="question-mark">?
             </span>.next()
-            .unwrap_or_else(|| <span class="macro">panic!</span>(<span class="string">&quot;No entity returned by the persister, epoch = {epoch:?}&quot;</span>));
+            .unwrap_or_else(|| <span class="macro">panic!</span>(<span class="string">"No entity returned by the persister, epoch = {epoch:?}"</span>));
 
         <span class="prelude-val">Ok</span>(entity)
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;conn</span>&gt; Provider&lt;<span class="lifetime">&#39;conn</span>&gt; <span class="kw">for </span>UpdateEpochSettingProvider&lt;<span class="lifetime">&#39;conn</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'conn</span>&gt; Provider&lt;<span class="lifetime">'conn</span>&gt; <span class="kw">for </span>UpdateEpochSettingProvider&lt;<span class="lifetime">'conn</span>&gt; {
     <span class="kw">type </span>Entity = EpochSettingRecord;
 
-    <span class="kw">fn </span>get_connection(<span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span>SqliteConnection {
+    <span class="kw">fn </span>get_connection(<span class="kw-2">&amp;</span><span class="lifetime">'conn </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'conn </span>SqliteConnection {
         <span class="self">self</span>.connection
     }
 
@@ -711,21 +712,21 @@
         <span class="comment">// it is important to alias the fields with the same name as the table
         // since the table cannot be aliased in a RETURNING statement in SQLite.
         </span><span class="kw">let </span>projection = <span class="self">Self</span>::Entity::get_projection()
-            .expand(SourceAlias::new(<span class="kw-2">&amp;</span>[(<span class="string">&quot;{:epoch_setting:}&quot;</span>, <span class="string">&quot;epoch_setting&quot;</span>)]));
+            .expand(SourceAlias::new(<span class="kw-2">&amp;</span>[(<span class="string">"{:epoch_setting:}"</span>, <span class="string">"epoch_setting"</span>)]));
 
-        <span class="macro">format!</span>(<span class="string">&quot;insert or replace into epoch_setting {condition} returning {projection}&quot;</span>)
+        <span class="macro">format!</span>(<span class="string">"insert or replace into epoch_setting {condition} returning {projection}"</span>)
     }
 }
 
 <span class="doccomment">/// Provider to remove old data from the epoch_setting table
-</span><span class="kw">pub struct </span>DeleteEpochSettingProvider&lt;<span class="lifetime">&#39;conn</span>&gt; {
-    connection: <span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span>SqliteConnection,
+</span><span class="kw">pub struct </span>DeleteEpochSettingProvider&lt;<span class="lifetime">'conn</span>&gt; {
+    connection: <span class="kw-2">&amp;</span><span class="lifetime">'conn </span>SqliteConnection,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;conn</span>&gt; Provider&lt;<span class="lifetime">&#39;conn</span>&gt; <span class="kw">for </span>DeleteEpochSettingProvider&lt;<span class="lifetime">&#39;conn</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'conn</span>&gt; Provider&lt;<span class="lifetime">'conn</span>&gt; <span class="kw">for </span>DeleteEpochSettingProvider&lt;<span class="lifetime">'conn</span>&gt; {
     <span class="kw">type </span>Entity = EpochSettingRecord;
 
-    <span class="kw">fn </span>get_connection(<span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span>SqliteConnection {
+    <span class="kw">fn </span>get_connection(<span class="kw-2">&amp;</span><span class="lifetime">'conn </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'conn </span>SqliteConnection {
         <span class="self">self</span>.connection
     }
 
@@ -733,15 +734,15 @@
         <span class="comment">// it is important to alias the fields with the same name as the table
         // since the table cannot be aliased in a RETURNING statement in SQLite.
         </span><span class="kw">let </span>projection = <span class="self">Self</span>::Entity::get_projection()
-            .expand(SourceAlias::new(<span class="kw-2">&amp;</span>[(<span class="string">&quot;{:epoch_setting:}&quot;</span>, <span class="string">&quot;epoch_setting&quot;</span>)]));
+            .expand(SourceAlias::new(<span class="kw-2">&amp;</span>[(<span class="string">"{:epoch_setting:}"</span>, <span class="string">"epoch_setting"</span>)]));
 
-        <span class="macro">format!</span>(<span class="string">&quot;delete from epoch_setting where {condition} returning {projection}&quot;</span>)
+        <span class="macro">format!</span>(<span class="string">"delete from epoch_setting where {condition} returning {projection}"</span>)
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;conn</span>&gt; DeleteEpochSettingProvider&lt;<span class="lifetime">&#39;conn</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'conn</span>&gt; DeleteEpochSettingProvider&lt;<span class="lifetime">'conn</span>&gt; {
     <span class="doccomment">/// Create a new instance
-    </span><span class="kw">pub fn </span>new(connection: <span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span>SqliteConnection) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>new(connection: <span class="kw-2">&amp;</span><span class="lifetime">'conn </span>SqliteConnection) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{ connection }
     }
 
@@ -749,7 +750,7 @@
     </span><span class="kw">fn </span>get_delete_condition_by_epoch(<span class="kw-2">&amp;</span><span class="self">self</span>, epoch: Epoch) -&gt; WhereCondition {
         <span class="kw">let </span>epoch_setting_id_value = Value::Integer(epoch.try_into().unwrap());
 
-        WhereCondition::new(<span class="string">&quot;epoch_setting_id = ?*&quot;</span>, <span class="macro">vec!</span>[epoch_setting_id_value])
+        WhereCondition::new(<span class="string">"epoch_setting_id = ?*"</span>, <span class="macro">vec!</span>[epoch_setting_id_value])
     }
 
     <span class="doccomment">/// Delete the epoch setting data given the Epoch
@@ -763,7 +764,7 @@
     </span><span class="kw">fn </span>get_prune_condition(<span class="kw-2">&amp;</span><span class="self">self</span>, epoch_threshold: Epoch) -&gt; WhereCondition {
         <span class="kw">let </span>epoch_setting_id_value = Value::Integer(epoch_threshold.try_into().unwrap());
 
-        WhereCondition::new(<span class="string">&quot;epoch_setting_id &lt; ?*&quot;</span>, <span class="macro">vec!</span>[epoch_setting_id_value])
+        WhereCondition::new(<span class="string">"epoch_setting_id &lt; ?*"</span>, <span class="macro">vec!</span>[epoch_setting_id_value])
     }
 
     <span class="doccomment">/// Prune the epoch setting data older than the given epoch.
@@ -802,7 +803,7 @@
     ) -&gt; StdResult&lt;<span class="prelude-ty">Option</span>&lt;ProtocolParameters&gt;&gt; {
         <span class="kw">let </span>provider = UpdateEpochSettingProvider::new(<span class="kw-2">&amp;</span><span class="self">self</span>.connection);
         <span class="kw">let </span>epoch_setting_record = provider.persist(epoch, protocol_parameters).map_err(|e| {
-            AdapterError::GeneralError(e.context(<span class="string">&quot;persist protocol parameters failure&quot;</span>))
+            AdapterError::GeneralError(e.context(<span class="string">"persist protocol parameters failure"</span>))
         })<span class="question-mark">?</span>;
 
         <span class="comment">// Prune useless old epoch settings.
@@ -820,7 +821,7 @@
         <span class="kw">let </span>provider = EpochSettingProvider::new(<span class="kw-2">&amp;</span><span class="self">self</span>.connection);
         <span class="kw">let </span><span class="kw-2">mut </span>cursor = provider
             .get_by_epoch(<span class="kw-2">&amp;</span>epoch)
-            .map_err(|e| AdapterError::GeneralError(e.context(<span class="string">&quot;Could not get epoch setting&quot;</span>)))<span class="question-mark">?</span>;
+            .map_err(|e| AdapterError::GeneralError(e.context(<span class="string">"Could not get epoch setting"</span>)))<span class="question-mark">?</span>;
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(epoch_setting_record) = cursor.next() {
             <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(epoch_setting_record.protocol_parameters));
@@ -851,7 +852,7 @@
                 .get_update_condition(Epoch(<span class="number">1</span>), ProtocolParameters::new(<span class="number">1</span>, <span class="number">2</span>, <span class="number">1.0</span>))
                 .expand();
 
-            <span class="macro">format!</span>(<span class="string">&quot;insert into epoch_setting {sql_values}&quot;</span>)
+            <span class="macro">format!</span>(<span class="string">"insert into epoch_setting {sql_values}"</span>)
         };
 
         <span class="kw">for </span>(epoch, protocol_parameters) <span class="kw">in </span>epoch_to_insert_settings
@@ -878,34 +879,34 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>projection() {
         <span class="kw">let </span>projection = EpochSettingRecord::get_projection();
-        <span class="kw">let </span>aliases = SourceAlias::new(<span class="kw-2">&amp;</span>[(<span class="string">&quot;{:epoch_setting:}&quot;</span>, <span class="string">&quot;es&quot;</span>)]);
+        <span class="kw">let </span>aliases = SourceAlias::new(<span class="kw-2">&amp;</span>[(<span class="string">"{:epoch_setting:}"</span>, <span class="string">"es"</span>)]);
 
         <span class="macro">assert_eq!</span>(
-            <span class="string">&quot;es.epoch_setting_id as epoch_setting_id, es.protocol_parameters as protocol_parameters&quot;</span>.to_string(),
+            <span class="string">"es.epoch_setting_id as epoch_setting_id, es.protocol_parameters as protocol_parameters"</span>.to_string(),
             projection.expand(aliases)
         );
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>get_epoch_setting_by_epoch() {
-        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">&quot;:memory:&quot;</span>).unwrap();
+        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">":memory:"</span>).unwrap();
         <span class="kw">let </span>provider = EpochSettingProvider::new(<span class="kw-2">&amp;</span>connection);
         <span class="kw">let </span>condition = provider.condition_by_epoch(<span class="kw-2">&amp;</span>Epoch(<span class="number">17</span>)).unwrap();
         <span class="kw">let </span>(filter, values) = condition.expand();
 
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;epoch_setting_id = ?1&quot;</span>.to_string(), filter);
+        <span class="macro">assert_eq!</span>(<span class="string">"epoch_setting_id = ?1"</span>.to_string(), filter);
         <span class="macro">assert_eq!</span>(<span class="macro">vec!</span>[Value::Integer(<span class="number">17</span>)], values);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>update_epoch_setting() {
-        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">&quot;:memory:&quot;</span>).unwrap();
+        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">":memory:"</span>).unwrap();
         <span class="kw">let </span>provider = UpdateEpochSettingProvider::new(<span class="kw-2">&amp;</span>connection);
         <span class="kw">let </span>condition = provider.get_update_condition(Epoch(<span class="number">1</span>), ProtocolParameters::new(<span class="number">1</span>, <span class="number">2</span>, <span class="number">1.0</span>));
         <span class="kw">let </span>(values, params) = condition.expand();
 
         <span class="macro">assert_eq!</span>(
-            <span class="string">&quot;(epoch_setting_id, protocol_parameters) values (?1, ?2)&quot;</span>.to_string(),
+            <span class="string">"(epoch_setting_id, protocol_parameters) values (?1, ?2)"</span>.to_string(),
             values
         );
         <span class="macro">assert_eq!</span>(
@@ -919,29 +920,29 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>delete() {
-        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">&quot;:memory:&quot;</span>).unwrap();
+        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">":memory:"</span>).unwrap();
         <span class="kw">let </span>provider = DeleteEpochSettingProvider::new(<span class="kw-2">&amp;</span>connection);
         <span class="kw">let </span>condition = provider.get_delete_condition_by_epoch(Epoch(<span class="number">5</span>));
         <span class="kw">let </span>(condition, params) = condition.expand();
 
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;epoch_setting_id = ?1&quot;</span>.to_string(), condition);
+        <span class="macro">assert_eq!</span>(<span class="string">"epoch_setting_id = ?1"</span>.to_string(), condition);
         <span class="macro">assert_eq!</span>(<span class="macro">vec!</span>[Value::Integer(<span class="number">5</span>)], params);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>prune() {
-        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">&quot;:memory:&quot;</span>).unwrap();
+        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">":memory:"</span>).unwrap();
         <span class="kw">let </span>provider = DeleteEpochSettingProvider::new(<span class="kw-2">&amp;</span>connection);
         <span class="kw">let </span>condition = provider.get_prune_condition(Epoch(<span class="number">5</span>));
         <span class="kw">let </span>(condition, params) = condition.expand();
 
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;epoch_setting_id &lt; ?1&quot;</span>.to_string(), condition);
+        <span class="macro">assert_eq!</span>(<span class="string">"epoch_setting_id &lt; ?1"</span>.to_string(), condition);
         <span class="macro">assert_eq!</span>(<span class="macro">vec!</span>[Value::Integer(<span class="number">5</span>)], params);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_get_epoch_settings() {
-        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">&quot;:memory:&quot;</span>).unwrap();
+        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">":memory:"</span>).unwrap();
         setup_epoch_setting_db(<span class="kw-2">&amp;</span>connection, <span class="kw-2">&amp;</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]).unwrap();
 
         <span class="kw">let </span>provider = EpochSettingProvider::new(<span class="kw-2">&amp;</span>connection);
@@ -949,7 +950,7 @@
         <span class="kw">let </span><span class="kw-2">mut </span>cursor = provider.get_by_epoch(<span class="kw-2">&amp;</span>Epoch(<span class="number">1</span>)).unwrap();
         <span class="kw">let </span>epoch_setting_record = cursor
             .next()
-            .expect(<span class="string">&quot;Should have an epoch setting for epoch 1.&quot;</span>);
+            .expect(<span class="string">"Should have an epoch setting for epoch 1."</span>);
         <span class="macro">assert_eq!</span>(Epoch(<span class="number">1</span>), epoch_setting_record.epoch_setting_id);
         <span class="macro">assert_eq!</span>(
             ProtocolParameters::new(<span class="number">1</span>, <span class="number">2</span>, <span class="number">1.0</span>),
@@ -959,7 +960,7 @@
         <span class="kw">let </span><span class="kw-2">mut </span>cursor = provider.get_by_epoch(<span class="kw-2">&amp;</span>Epoch(<span class="number">3</span>)).unwrap();
         <span class="kw">let </span>epoch_setting_record = cursor
             .next()
-            .expect(<span class="string">&quot;Should have an epoch setting for epoch 3.&quot;</span>);
+            .expect(<span class="string">"Should have an epoch setting for epoch 3."</span>);
         <span class="macro">assert_eq!</span>(Epoch(<span class="number">3</span>), epoch_setting_record.epoch_setting_id);
         <span class="macro">assert_eq!</span>(
             ProtocolParameters::new(<span class="number">3</span>, <span class="number">4</span>, <span class="number">1.0</span>),
@@ -972,7 +973,7 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_update_epoch_setting() {
-        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">&quot;:memory:&quot;</span>).unwrap();
+        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">":memory:"</span>).unwrap();
         setup_epoch_setting_db(<span class="kw-2">&amp;</span>connection, <span class="kw-2">&amp;</span>[<span class="number">3</span>]).unwrap();
 
         <span class="kw">let </span>provider = UpdateEpochSettingProvider::new(<span class="kw-2">&amp;</span>connection);
@@ -990,7 +991,7 @@
         <span class="kw">let </span><span class="kw-2">mut </span>cursor = provider.get_by_epoch(<span class="kw-2">&amp;</span>Epoch(<span class="number">3</span>)).unwrap();
         <span class="kw">let </span>epoch_setting_record = cursor
             .next()
-            .expect(<span class="string">&quot;Should have an epoch setting for epoch 3.&quot;</span>);
+            .expect(<span class="string">"Should have an epoch setting for epoch 3."</span>);
 
         <span class="macro">assert_eq!</span>(Epoch(<span class="number">3</span>), epoch_setting_record.epoch_setting_id);
         <span class="macro">assert_eq!</span>(
@@ -1002,7 +1003,7 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_delete() {
-        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">&quot;:memory:&quot;</span>).unwrap();
+        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">":memory:"</span>).unwrap();
         setup_epoch_setting_db(<span class="kw-2">&amp;</span>connection, <span class="kw-2">&amp;</span>[<span class="number">1</span>, <span class="number">2</span>]).unwrap();
 
         <span class="kw">let </span>provider = DeleteEpochSettingProvider::new(<span class="kw-2">&amp;</span>connection);
@@ -1022,7 +1023,7 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_prune() {
-        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">&quot;:memory:&quot;</span>).unwrap();
+        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">":memory:"</span>).unwrap();
         setup_epoch_setting_db(<span class="kw-2">&amp;</span>connection, <span class="kw-2">&amp;</span>[<span class="number">1</span>, <span class="number">2</span>]).unwrap();
 
         <span class="kw">let </span>provider = DeleteEpochSettingProvider::new(<span class="kw-2">&amp;</span>connection);
@@ -1042,7 +1043,7 @@
 
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>save_protocol_parameters_prune_older_epoch_settings() {
-        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">&quot;:memory:&quot;</span>).unwrap();
+        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">":memory:"</span>).unwrap();
         <span class="kw">const </span>EPOCH_SETTING_PRUNE_EPOCH_THRESHOLD: u64 = <span class="number">5</span>;
         setup_epoch_setting_db(<span class="kw-2">&amp;</span>connection, <span class="kw-2">&amp;</span>[<span class="number">1</span>, <span class="number">2</span>]).unwrap();
         <span class="kw">let </span>store = EpochSettingStore::new(
@@ -1056,17 +1057,17 @@
                 fake_data::protocol_parameters(),
             )
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;saving protocol parameters should not fails&quot;</span>);
+            </span>.expect(<span class="string">"saving protocol parameters should not fails"</span>);
         <span class="kw">let </span>epoch1_params = store.get_protocol_parameters(Epoch(<span class="number">1</span>)).<span class="kw">await</span>.unwrap();
         <span class="kw">let </span>epoch2_params = store.get_protocol_parameters(Epoch(<span class="number">2</span>)).<span class="kw">await</span>.unwrap();
 
         <span class="macro">assert!</span>(
             epoch1_params.is_none(),
-            <span class="string">&quot;Protocol parameters at epoch 1 should have been pruned&quot;</span>,
+            <span class="string">"Protocol parameters at epoch 1 should have been pruned"</span>,
         );
         <span class="macro">assert!</span>(
             epoch2_params.is_some(),
-            <span class="string">&quot;Protocol parameters at epoch 2 should still exist&quot;</span>,
+            <span class="string">"Protocol parameters at epoch 2 should still exist"</span>,
         );
     }
 }

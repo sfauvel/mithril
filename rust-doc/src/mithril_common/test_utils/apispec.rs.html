@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-common/src/test_utils/apispec.rs`."><title>apispec.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-common/src/test_utils/apispec.rs`."><title>apispec.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -293,23 +294,23 @@
 </pre></div><pre class="rust"><code><span class="doccomment">//! Tools to helps validate conformity to an OpenAPI specification
 
 </span><span class="kw">use </span>glob::glob;
-<span class="kw">use </span>http::response::Response;
 <span class="kw">use </span>jsonschema::JSONSchema;
 <span class="kw">use </span>serde::Serialize;
 <span class="kw">use </span>serde_json::{json, Value, Value::Null};
+<span class="kw">use </span>warp::http::Response;
 <span class="kw">use </span>warp::hyper::body::Bytes;
 
 <span class="kw">use </span><span class="kw">crate</span>::era::SupportedEra;
 
 <span class="doccomment">/// APISpec helps validate conformity to an OpenAPI specification
-</span><span class="kw">pub struct </span>APISpec&lt;<span class="lifetime">&#39;a</span>&gt; {
+</span><span class="kw">pub struct </span>APISpec&lt;<span class="lifetime">'a</span>&gt; {
     openapi: Value,
-    path: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt;,
-    method: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt;,
-    content_type: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str&gt;,
+    path: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>str&gt;,
+    method: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>str&gt;,
+    content_type: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>str&gt;,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; APISpec&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; APISpec&lt;<span class="lifetime">'a</span>&gt; {
     <span class="doccomment">/// Verify conformity helper of API Specs
     </span><span class="kw">pub fn </span>verify_conformity(
         spec_files: Vec&lt;String&gt;,
@@ -325,62 +326,62 @@
                 .path(path)
                 .content_type(content_type)
                 .validate_request(request_body)
-                .map_err(|e| <span class="macro">panic!</span>(<span class="string">&quot;OpenAPI invalid request in {spec_file}, reason: {e}\nresponse: {response:#?}&quot;</span>))
+                .map_err(|e| <span class="macro">panic!</span>(<span class="string">"OpenAPI invalid request in {spec_file}, reason: {e}\nresponse: {response:#?}"</span>))
                 .unwrap()
                 .validate_response(response)
-                .map_err(|e| <span class="macro">panic!</span>(<span class="string">&quot;OpenAPI invalid response in {spec_file}, reason: {e}\nresponse: {response:#?}&quot;</span>))
+                .map_err(|e| <span class="macro">panic!</span>(<span class="string">"OpenAPI invalid response in {spec_file}, reason: {e}\nresponse: {response:#?}"</span>))
                 .unwrap();
         }
     }
 
     <span class="doccomment">/// APISpec factory from spec
-    </span><span class="kw">pub fn </span>from_file(path: <span class="kw-2">&amp;</span>str) -&gt; APISpec&lt;<span class="lifetime">&#39;a</span>&gt; {
+    </span><span class="kw">pub fn </span>from_file(path: <span class="kw-2">&amp;</span>str) -&gt; APISpec&lt;<span class="lifetime">'a</span>&gt; {
         <span class="kw">let </span>yaml_spec = std::fs::read_to_string(path).unwrap();
         <span class="kw">let </span>openapi: serde_json::Value = serde_yaml::from_str(<span class="kw-2">&amp;</span>yaml_spec).unwrap();
         APISpec {
             openapi,
             path: <span class="prelude-val">None</span>,
             method: <span class="prelude-val">None</span>,
-            content_type: <span class="prelude-val">Some</span>(<span class="string">&quot;application/json&quot;</span>),
+            content_type: <span class="prelude-val">Some</span>(<span class="string">"application/json"</span>),
         }
     }
 
     <span class="doccomment">/// Sets the path to specify/check.
-    </span><span class="kw">pub fn </span>path(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span><span class="self">self</span>, path: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str) -&gt; <span class="kw-2">&amp;mut </span>APISpec {
+    </span><span class="kw">pub fn </span>path(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span><span class="self">self</span>, path: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>str) -&gt; <span class="kw-2">&amp;mut </span>APISpec {
         <span class="self">self</span>.path = <span class="prelude-val">Some</span>(path);
         <span class="self">self
     </span>}
 
     <span class="doccomment">/// Sets the method to specify/check.
-    </span><span class="kw">pub fn </span>method(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span><span class="self">self</span>, method: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str) -&gt; <span class="kw-2">&amp;mut </span>APISpec {
+    </span><span class="kw">pub fn </span>method(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span><span class="self">self</span>, method: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>str) -&gt; <span class="kw-2">&amp;mut </span>APISpec {
         <span class="self">self</span>.method = <span class="prelude-val">Some</span>(method);
         <span class="self">self
     </span>}
 
-    <span class="doccomment">/// Sets the content type to specify/check, note that it defaults to &quot;application/json&quot;.
-    </span><span class="kw">pub fn </span>content_type(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span><span class="self">self</span>, content_type: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str) -&gt; <span class="kw-2">&amp;mut </span>APISpec {
+    <span class="doccomment">/// Sets the content type to specify/check, note that it defaults to "application/json".
+    </span><span class="kw">pub fn </span>content_type(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span><span class="self">self</span>, content_type: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>str) -&gt; <span class="kw-2">&amp;mut </span>APISpec {
         <span class="self">self</span>.content_type = <span class="prelude-val">Some</span>(content_type);
         <span class="self">self
     </span>}
 
     <span class="doccomment">/// Validates if a request is valid
     </span><span class="kw">pub fn </span>validate_request(
-        <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span><span class="self">self</span>,
+        <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span><span class="self">self</span>,
         request_body: <span class="kw-2">&amp;</span><span class="kw">impl </span>Serialize,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw-2">&amp;mut </span>APISpec, String&gt; {
         <span class="kw">let </span>path = <span class="self">self</span>.path.unwrap();
         <span class="kw">let </span>method = <span class="self">self</span>.method.unwrap().to_lowercase();
         <span class="kw">let </span>content_type = <span class="self">self</span>.content_type.unwrap();
 
-        <span class="kw">let </span>request_schema = <span class="kw-2">&amp;mut </span><span class="self">self</span>.openapi.clone()[<span class="string">&quot;paths&quot;</span>][path][method][<span class="string">&quot;requestBody&quot;</span>]
-            [<span class="string">&quot;content&quot;</span>][content_type][<span class="string">&quot;schema&quot;</span>];
+        <span class="kw">let </span>request_schema = <span class="kw-2">&amp;mut </span><span class="self">self</span>.openapi.clone()[<span class="string">"paths"</span>][path][method][<span class="string">"requestBody"</span>]
+            [<span class="string">"content"</span>][content_type][<span class="string">"schema"</span>];
         <span class="kw">let </span>value = <span class="kw-2">&amp;</span><span class="macro">json!</span>(<span class="kw-2">&amp;</span>request_body);
         <span class="self">self</span>.validate_conformity(value, request_schema)
     }
 
     <span class="doccomment">/// Validates if a response is valid
     </span><span class="kw">pub fn </span>validate_response(
-        <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span><span class="self">self</span>,
+        <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span><span class="self">self</span>,
         response: <span class="kw-2">&amp;</span>Response&lt;Bytes&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw-2">&amp;mut </span>APISpec, String&gt; {
         <span class="kw">let </span>body = response.body();
@@ -392,14 +393,14 @@
         <span class="kw">let </span><span class="kw-2">mut </span>openapi = <span class="self">self</span>.openapi.clone();
 
         <span class="kw">let </span>response_spec = {
-            <span class="kw">match </span><span class="kw-2">&amp;mut </span>openapi[<span class="string">&quot;paths&quot;</span>][path][<span class="kw-2">&amp;</span>method][<span class="string">&quot;responses&quot;</span>] {
+            <span class="kw">match </span><span class="kw-2">&amp;mut </span>openapi[<span class="string">"paths"</span>][path][<span class="kw-2">&amp;</span>method][<span class="string">"responses"</span>] {
                 Null =&gt; <span class="prelude-val">None</span>,
                 response_spec =&gt; {
                     <span class="kw">let </span>status_code = status.as_str();
                     <span class="kw">if </span>response_spec.as_object().unwrap().contains_key(status_code) {
                         <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>response_spec[status_code])
                     } <span class="kw">else </span>{
-                        <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>response_spec[<span class="string">&quot;default&quot;</span>])
+                        <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>response_spec[<span class="string">"default"</span>])
                     }
                 }
             }
@@ -407,48 +408,48 @@
 
         <span class="kw">match </span>response_spec {
             <span class="prelude-val">Some</span>(response_spec) =&gt; {
-                <span class="kw">let </span>response_schema = <span class="kw-2">&amp;mut </span>response_spec.clone()[<span class="string">&quot;content&quot;</span>][content_type][<span class="string">&quot;schema&quot;</span>];
+                <span class="kw">let </span>response_schema = <span class="kw-2">&amp;mut </span>response_spec.clone()[<span class="string">"content"</span>][content_type][<span class="string">"schema"</span>];
                 <span class="kw">if </span>body.is_empty() {
                     <span class="kw">match </span>response_spec.as_object() {
                         <span class="prelude-val">Some</span>(<span class="kw">_</span>) =&gt; <span class="kw">match </span>response_schema.as_object() {
-                            <span class="prelude-val">Some</span>(<span class="kw">_</span>) =&gt; <span class="prelude-val">Err</span>(<span class="string">&quot;non empty body expected&quot;</span>.to_string()),
+                            <span class="prelude-val">Some</span>(<span class="kw">_</span>) =&gt; <span class="prelude-val">Err</span>(<span class="string">"non empty body expected"</span>.to_string()),
                             <span class="prelude-val">None </span>=&gt; <span class="prelude-val">Ok</span>(<span class="self">self</span>),
                         },
-                        <span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(<span class="string">&quot;empty body expected&quot;</span>.to_string()),
+                        <span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(<span class="string">"empty body expected"</span>.to_string()),
                     }
                 } <span class="kw">else </span>{
                     <span class="kw">match </span><span class="kw-2">&amp;</span>serde_json::from_slice(body) {
                         <span class="prelude-val">Ok</span>(value) =&gt; <span class="self">self</span>.validate_conformity(value, response_schema),
-                        <span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <span class="prelude-val">Err</span>(<span class="string">&quot;non empty body expected&quot;</span>.to_string()),
+                        <span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <span class="prelude-val">Err</span>(<span class="string">"non empty body expected"</span>.to_string()),
                     }
                 }
             }
-            <span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(<span class="macro">format!</span>(<span class="string">&quot;unmatched path and method: {path} {method}&quot;</span>)),
+            <span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(<span class="macro">format!</span>(<span class="string">"unmatched path and method: {path} {method}"</span>)),
         }
     }
 
     <span class="doccomment">/// Validates conformity of a value against a schema
     </span><span class="kw">pub fn </span>validate_conformity(
-        <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span><span class="self">self</span>,
+        <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span><span class="self">self</span>,
         value: <span class="kw-2">&amp;</span>Value,
         schema: <span class="kw-2">&amp;mut </span>Value,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw-2">&amp;mut </span>APISpec, String&gt; {
         <span class="kw">match </span>schema {
             Null =&gt; <span class="kw">match </span>value {
                 Null =&gt; <span class="prelude-val">Ok</span>(<span class="self">self</span>),
-                <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<span class="macro">format!</span>(<span class="string">&quot;Expected nothing but got: {value:?}&quot;</span>)),
+                <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<span class="macro">format!</span>(<span class="string">"Expected nothing but got: {value:?}"</span>)),
             },
             <span class="kw">_ </span>=&gt; {
                 <span class="kw">let </span>schema = <span class="kw-2">&amp;mut </span>schema.as_object_mut().unwrap().clone();
-                <span class="kw">let </span>components = <span class="self">self</span>.openapi[<span class="string">&quot;components&quot;</span>].clone();
-                schema.insert(String::from(<span class="string">&quot;components&quot;</span>), components);
+                <span class="kw">let </span>components = <span class="self">self</span>.openapi[<span class="string">"components"</span>].clone();
+                schema.insert(String::from(<span class="string">"components"</span>), components);
 
                 <span class="kw">let </span>validator = JSONSchema::compile(<span class="kw-2">&amp;</span><span class="macro">json!</span>(schema)).unwrap();
                 <span class="kw">match </span>validator.validate(value).map_err(|errs| {
                     errs.into_iter()
                         .map(|e| e.to_string())
                         .collect::&lt;Vec&lt;String&gt;&gt;()
-                        .join(<span class="string">&quot;, &quot;</span>)
+                        .join(<span class="string">", "</span>)
                 }) {
                     <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="prelude-val">Ok</span>(<span class="self">self</span>),
                     <span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Err</span>(e),
@@ -459,18 +460,18 @@
 
     <span class="doccomment">/// Get default spec file
     </span><span class="kw">pub fn </span>get_defaut_spec_file() -&gt; String {
-        <span class="string">&quot;../openapi.yaml&quot;</span>.to_string()
+        <span class="string">"../openapi.yaml"</span>.to_string()
     }
 
     <span class="doccomment">/// Get spec file for era
     </span><span class="kw">pub fn </span>get_era_spec_file(era: SupportedEra) -&gt; String {
-        <span class="macro">format!</span>(<span class="string">&quot;../openapi-{}&quot;</span>, era)
+        <span class="macro">format!</span>(<span class="string">"../openapi-{}"</span>, era)
     }
 
     <span class="doccomment">/// Get all spec files
     </span><span class="kw">pub fn </span>get_all_spec_files() -&gt; Vec&lt;String&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>open_api_spec_files = Vec::new();
-        <span class="kw">for </span>entry <span class="kw">in </span>glob(<span class="string">&quot;../openapi*.yaml&quot;</span>).unwrap() {
+        <span class="kw">for </span>entry <span class="kw">in </span>glob(<span class="string">"../openapi*.yaml"</span>).unwrap() {
             <span class="kw">let </span>entry_path = entry.unwrap().to_str().unwrap().to_string();
             open_api_spec_files.push(entry_path.clone());
             open_api_spec_files.push(entry_path);
@@ -482,8 +483,8 @@
 
 <span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
-    <span class="kw">use </span>http::StatusCode;
     <span class="kw">use </span>warp::http::Method;
+    <span class="kw">use </span>warp::http::StatusCode;
 
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
     <span class="kw">use </span><span class="kw">crate</span>::entities;
@@ -495,7 +496,7 @@
         <span class="comment">// Route exists and does not expect request body, but expects response
         </span><span class="macro">assert!</span>(APISpec::from_file(<span class="kw-2">&amp;</span>APISpec::get_defaut_spec_file())
             .method(Method::GET.as_str())
-            .path(<span class="string">&quot;/certificate-pending&quot;</span>)
+            .path(<span class="string">"/certificate-pending"</span>)
             .validate_request(<span class="kw-2">&amp;</span>Null)
             .unwrap()
             .validate_response(<span class="kw-2">&amp;</span>Response::&lt;Bytes&gt;::new(Bytes::from(
@@ -508,7 +509,7 @@
         <span class="comment">// Route exists and expects request body, but does not expect response
         </span><span class="macro">assert!</span>(APISpec::from_file(<span class="kw-2">&amp;</span>APISpec::get_defaut_spec_file())
             .method(Method::POST.as_str())
-            .path(<span class="string">&quot;/register-signer&quot;</span>)
+            .path(<span class="string">"/register-signer"</span>)
             .validate_request(<span class="kw-2">&amp;</span>SignerMessagePart::dummy())
             .unwrap()
             .validate_response(<span class="kw-2">&amp;</span>Response::&lt;Bytes&gt;::new(Bytes::new()))
@@ -517,7 +518,7 @@
         <span class="comment">// Route exists and matches default status code
         </span><span class="kw">let </span><span class="kw-2">mut </span>response = Response::&lt;Bytes&gt;::new(Bytes::from(
             <span class="macro">json!</span>(<span class="kw-2">&amp;</span>entities::InternalServerError::new(
-                <span class="string">&quot;an error occurred&quot;</span>.to_string(),
+                <span class="string">"an error occurred"</span>.to_string(),
             ))
             .to_string()
             .into_bytes(),
@@ -525,7 +526,7 @@
         <span class="kw-2">*</span>response.status_mut() = StatusCode::INTERNAL_SERVER_ERROR;
         <span class="macro">assert!</span>(APISpec::from_file(<span class="kw-2">&amp;</span>APISpec::get_defaut_spec_file())
             .method(Method::POST.as_str())
-            .path(<span class="string">&quot;/register-signer&quot;</span>)
+            .path(<span class="string">"/register-signer"</span>)
             .validate_response(<span class="kw-2">&amp;</span>response)
             .is_ok());
     }
@@ -535,42 +536,42 @@
         <span class="comment">// Route does not exist
         </span><span class="macro">assert!</span>(APISpec::from_file(<span class="kw-2">&amp;</span>APISpec::get_defaut_spec_file())
             .method(Method::GET.as_str())
-            .path(<span class="string">&quot;/route-not-existing-in-openapi-spec&quot;</span>)
-            .validate_response(<span class="kw-2">&amp;</span>Response::&lt;Bytes&gt;::new(Bytes::from_static(<span class="string">b&quot;abcdefgh&quot;</span>)))
+            .path(<span class="string">"/route-not-existing-in-openapi-spec"</span>)
+            .validate_response(<span class="kw-2">&amp;</span>Response::&lt;Bytes&gt;::new(Bytes::from_static(<span class="string">b"abcdefgh"</span>)))
             .is_err());
 
         <span class="comment">// Route exists, but method does not
         </span><span class="macro">assert!</span>(APISpec::from_file(<span class="kw-2">&amp;</span>APISpec::get_defaut_spec_file())
             .method(Method::OPTIONS.as_str())
-            .path(<span class="string">&quot;/certificate-pending&quot;</span>)
-            .validate_response(<span class="kw-2">&amp;</span>Response::&lt;Bytes&gt;::new(Bytes::from_static(<span class="string">b&quot;abcdefgh&quot;</span>)))
+            .path(<span class="string">"/certificate-pending"</span>)
+            .validate_response(<span class="kw-2">&amp;</span>Response::&lt;Bytes&gt;::new(Bytes::from_static(<span class="string">b"abcdefgh"</span>)))
             .is_err());
 
         <span class="comment">// Route exists, but expects non empty reponse
         </span><span class="macro">assert!</span>(APISpec::from_file(<span class="kw-2">&amp;</span>APISpec::get_defaut_spec_file())
             .method(Method::GET.as_str())
-            .path(<span class="string">&quot;/certificate-pending&quot;</span>)
+            .path(<span class="string">"/certificate-pending"</span>)
             .validate_response(<span class="kw-2">&amp;</span>Response::&lt;Bytes&gt;::new(Bytes::new()))
             .is_err());
 
         <span class="comment">// Route exists, but expects empty reponse
         </span><span class="macro">assert!</span>(APISpec::from_file(<span class="kw-2">&amp;</span>APISpec::get_defaut_spec_file())
             .method(Method::POST.as_str())
-            .path(<span class="string">&quot;/register-signer&quot;</span>)
-            .validate_response(<span class="kw-2">&amp;</span>Response::&lt;Bytes&gt;::new(Bytes::from_static(<span class="string">b&quot;abcdefgh&quot;</span>)))
+            .path(<span class="string">"/register-signer"</span>)
+            .validate_response(<span class="kw-2">&amp;</span>Response::&lt;Bytes&gt;::new(Bytes::from_static(<span class="string">b"abcdefgh"</span>)))
             .is_err());
 
         <span class="comment">// Route exists, but does not expect request body
         </span><span class="macro">assert!</span>(APISpec::from_file(<span class="kw-2">&amp;</span>APISpec::get_defaut_spec_file())
             .method(Method::GET.as_str())
-            .path(<span class="string">&quot;/certificate-pending&quot;</span>)
+            .path(<span class="string">"/certificate-pending"</span>)
             .validate_request(<span class="kw-2">&amp;</span>fake_data::beacon())
             .is_err());
 
         <span class="comment">// Route exists, but expects non empty request body
         </span><span class="macro">assert!</span>(APISpec::from_file(<span class="kw-2">&amp;</span>APISpec::get_defaut_spec_file())
             .method(Method::POST.as_str())
-            .path(<span class="string">&quot;/register-signer&quot;</span>)
+            .path(<span class="string">"/register-signer"</span>)
             .validate_request(<span class="kw-2">&amp;</span>Null)
             .is_err());
     }

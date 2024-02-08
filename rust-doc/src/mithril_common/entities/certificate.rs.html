@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-common/src/entities/certificate.rs`."><title>certificate.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-common/src/entities/certificate.rs`."><title>certificate.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -427,7 +428,7 @@
     ) -&gt; Certificate {
         <span class="kw">let </span>signed_message = protocol_message.compute_hash();
         <span class="kw">let </span><span class="kw-2">mut </span>certificate = Certificate {
-            hash: <span class="string">&quot;&quot;</span>.to_string(),
+            hash: <span class="string">""</span>.to_string(),
             previous_hash,
             beacon,
             metadata,
@@ -494,7 +495,7 @@
         </span><span class="kw">match </span><span class="self">self</span>.beacon.partial_cmp(<span class="kw-2">&amp;</span>other.beacon) {
             <span class="prelude-val">Some</span>(Ordering::Equal) =&gt; <span class="self">self</span>.hash.partial_cmp(<span class="kw-2">&amp;</span>other.hash),
             <span class="prelude-val">Some</span>(other) =&gt; <span class="prelude-val">Some</span>(other),
-            <span class="comment">// Beacons may be not comparable (most likely because the network isn&#39;t the same) in
+            <span class="comment">// Beacons may be not comparable (most likely because the network isn't the same) in
             // that case we can still order per hash
             </span><span class="prelude-val">None </span>=&gt; <span class="self">self</span>.hash.partial_cmp(<span class="kw-2">&amp;</span>other.hash),
         }
@@ -502,27 +503,27 @@
 }
 
 <span class="kw">impl </span>Debug <span class="kw">for </span>Certificate {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
         <span class="kw">let </span>should_be_exhaustive = f.alternate();
-        <span class="kw">let </span><span class="kw-2">mut </span>debug = f.debug_struct(<span class="string">&quot;Certificate&quot;</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>debug = f.debug_struct(<span class="string">"Certificate"</span>);
         debug
-            .field(<span class="string">&quot;hash&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.hash)
-            .field(<span class="string">&quot;previous_hash&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.previous_hash)
-            .field(<span class="string">&quot;beacon&quot;</span>, <span class="kw-2">&amp;</span><span class="macro">format_args!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="self">self</span>.beacon))
-            .field(<span class="string">&quot;metadata&quot;</span>, <span class="kw-2">&amp;</span><span class="macro">format_args!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="self">self</span>.metadata))
+            .field(<span class="string">"hash"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.hash)
+            .field(<span class="string">"previous_hash"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.previous_hash)
+            .field(<span class="string">"beacon"</span>, <span class="kw-2">&amp;</span><span class="macro">format_args!</span>(<span class="string">"{:?}"</span>, <span class="self">self</span>.beacon))
+            .field(<span class="string">"metadata"</span>, <span class="kw-2">&amp;</span><span class="macro">format_args!</span>(<span class="string">"{:?}"</span>, <span class="self">self</span>.metadata))
             .field(
-                <span class="string">&quot;protocol_message&quot;</span>,
-                <span class="kw-2">&amp;</span><span class="macro">format_args!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="self">self</span>.protocol_message),
+                <span class="string">"protocol_message"</span>,
+                <span class="kw-2">&amp;</span><span class="macro">format_args!</span>(<span class="string">"{:?}"</span>, <span class="self">self</span>.protocol_message),
             )
-            .field(<span class="string">&quot;signed_message&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.signed_message);
+            .field(<span class="string">"signed_message"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.signed_message);
 
         <span class="kw">match </span>should_be_exhaustive {
             <span class="bool-val">true </span>=&gt; debug
                 .field(
-                    <span class="string">&quot;aggregate_verification_key&quot;</span>,
-                    <span class="kw-2">&amp;</span><span class="macro">format_args!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="self">self</span>.aggregate_verification_key),
+                    <span class="string">"aggregate_verification_key"</span>,
+                    <span class="kw-2">&amp;</span><span class="macro">format_args!</span>(<span class="string">"{:?}"</span>, <span class="self">self</span>.aggregate_verification_key),
                 )
-                .field(<span class="string">&quot;signature&quot;</span>, <span class="kw-2">&amp;</span><span class="macro">format_args!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="self">self</span>.signature))
+                .field(<span class="string">"signature"</span>, <span class="kw-2">&amp;</span><span class="macro">format_args!</span>(<span class="string">"{:?}"</span>, <span class="self">self</span>.signature))
                 .finish(),
             <span class="bool-val">false </span>=&gt; debug.finish_non_exhaustive(),
         }
@@ -544,11 +545,11 @@
     <span class="kw">fn </span>get_parties() -&gt; Vec&lt;StakeDistributionParty&gt; {
         <span class="macro">vec!</span>[
             StakeDistributionParty {
-                party_id: <span class="string">&quot;1&quot;</span>.to_string(),
+                party_id: <span class="string">"1"</span>.to_string(),
                 stake: <span class="number">10</span>,
             },
             StakeDistributionParty {
-                party_id: <span class="string">&quot;2&quot;</span>.to_string(),
+                party_id: <span class="string">"2"</span>.to_string(),
                 stake: <span class="number">20</span>,
             },
         ]
@@ -558,7 +559,7 @@
         <span class="kw">let </span><span class="kw-2">mut </span>protocol_message = ProtocolMessage::new();
         protocol_message.set_message_part(
             ProtocolMessagePartKey::SnapshotDigest,
-            <span class="string">&quot;snapshot-digest-123&quot;</span>.to_string(),
+            <span class="string">"snapshot-digest-123"</span>.to_string(),
         );
         protocol_message.set_message_part(
             ProtocolMessagePartKey::NextAggregateVerificationKey,
@@ -571,18 +572,18 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_certificate_compute_hash() {
         <span class="kw">const </span>HASH_EXPECTED: <span class="kw-2">&amp;</span>str =
-            <span class="string">&quot;5a2604a4feed7d304d1dd86858b8adbf450d8167f25d43c0858a9d93c5ca73f0&quot;</span>;
+            <span class="string">"5a2604a4feed7d304d1dd86858b8adbf450d8167f25d43c0858a9d93c5ca73f0"</span>;
 
-        <span class="kw">let </span>initiated_at = DateTime::parse_from_rfc3339(<span class="string">&quot;2024-02-12T13:11:47.0123043Z&quot;</span>)
+        <span class="kw">let </span>initiated_at = DateTime::parse_from_rfc3339(<span class="string">"2024-02-12T13:11:47.0123043Z"</span>)
             .unwrap()
             .with_timezone(<span class="kw-2">&amp;</span>Utc);
         <span class="kw">let </span>sealed_at = initiated_at + Duration::seconds(<span class="number">100</span>);
 
         <span class="kw">let </span>certificate = Certificate::new(
-            <span class="string">&quot;previous_hash&quot;</span>.to_string(),
-            Beacon::new(<span class="string">&quot;testnet&quot;</span>.to_string(), <span class="number">10</span>, <span class="number">100</span>),
+            <span class="string">"previous_hash"</span>.to_string(),
+            Beacon::new(<span class="string">"testnet"</span>.to_string(), <span class="number">10</span>, <span class="number">100</span>),
             CertificateMetadata::new(
-                <span class="string">&quot;0.1.0&quot;</span>.to_string(),
+                <span class="string">"0.1.0"</span>.to_string(),
                 ProtocolParameters::new(<span class="number">1000</span>, <span class="number">100</span>, <span class="number">0.123</span>),
                 initiated_at,
                 sealed_at,
@@ -602,7 +603,7 @@
         <span class="macro">assert_ne!</span>(
             HASH_EXPECTED,
             Certificate {
-                previous_hash: <span class="string">&quot;previous_hash-modified&quot;</span>.to_string(),
+                previous_hash: <span class="string">"previous_hash-modified"</span>.to_string(),
                 ..certificate.clone()
             }
             .compute_hash(),
@@ -611,7 +612,7 @@
         <span class="macro">assert_ne!</span>(
             HASH_EXPECTED,
             Certificate {
-                beacon: Beacon::new(<span class="string">&quot;testnet-modified&quot;</span>.to_string(), <span class="number">10</span>, <span class="number">100</span>),
+                beacon: Beacon::new(<span class="string">"testnet-modified"</span>.to_string(), <span class="number">10</span>, <span class="number">100</span>),
                 ..certificate.clone()
             }
             .compute_hash(),
@@ -621,7 +622,7 @@
             HASH_EXPECTED,
             Certificate {
                 metadata: CertificateMetadata {
-                    protocol_version: <span class="string">&quot;0.1.0-modified&quot;</span>.to_string(),
+                    protocol_version: <span class="string">"0.1.0-modified"</span>.to_string(),
                     ..certificate.metadata.clone()
                 },
                 ..certificate.clone()
@@ -672,18 +673,18 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_genesis_certificate_compute_hash() {
         <span class="kw">const </span>HASH_EXPECTED: <span class="kw-2">&amp;</span>str =
-            <span class="string">&quot;fd3efd4bf091db9115b11552067deb2a2798160f22726db805bef70b9e7a547b&quot;</span>;
+            <span class="string">"fd3efd4bf091db9115b11552067deb2a2798160f22726db805bef70b9e7a547b"</span>;
 
-        <span class="kw">let </span>initiated_at = DateTime::parse_from_rfc3339(<span class="string">&quot;2024-02-12T13:11:47.0123043Z&quot;</span>)
+        <span class="kw">let </span>initiated_at = DateTime::parse_from_rfc3339(<span class="string">"2024-02-12T13:11:47.0123043Z"</span>)
             .unwrap()
             .with_timezone(<span class="kw-2">&amp;</span>Utc);
         <span class="kw">let </span>sealed_at = initiated_at + Duration::seconds(<span class="number">100</span>);
 
         <span class="kw">let </span>genesis_certificate = Certificate::new(
-            <span class="string">&quot;previous_hash&quot;</span>.to_string(),
-            Beacon::new(<span class="string">&quot;testnet&quot;</span>.to_string(), <span class="number">10</span>, <span class="number">100</span>),
+            <span class="string">"previous_hash"</span>.to_string(),
+            Beacon::new(<span class="string">"testnet"</span>.to_string(), <span class="number">10</span>, <span class="number">100</span>),
             CertificateMetadata::new(
-                <span class="string">&quot;0.1.0&quot;</span>.to_string(),
+                <span class="string">"0.1.0"</span>.to_string(),
                 ProtocolParameters::new(<span class="number">1000</span>, <span class="number">100</span>, <span class="number">0.123</span>),
                 initiated_at,
                 sealed_at,

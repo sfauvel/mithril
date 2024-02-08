@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-stm/src/error.rs`."><title>error.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="mithril_stm" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-stm/src/error.rs`."><title>error.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="mithril_stm" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -281,23 +282,23 @@
 </span><span class="attr">#[derive(Debug, thiserror::Error, Eq, PartialEq)]
 </span><span class="kw">pub enum </span>MultiSignatureError {
     <span class="doccomment">/// Invalid Single signature
-    </span><span class="attr">#[error(<span class="string">&quot;Invalid single signature&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"Invalid single signature"</span>)]
     </span>SignatureInvalid(Signature),
 
     <span class="doccomment">/// Invalid aggregate signature
-    </span><span class="attr">#[error(<span class="string">&quot;Invalid aggregated signature&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"Invalid aggregated signature"</span>)]
     </span>AggregateSignatureInvalid,
 
     <span class="doccomment">/// This error occurs when the the serialization of the raw bytes failed
-    </span><span class="attr">#[error(<span class="string">&quot;Invalid bytes&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"Invalid bytes"</span>)]
     </span>SerializationError,
 
     <span class="doccomment">/// Incorrect proof of possession
-    </span><span class="attr">#[error(<span class="string">&quot;Key with invalid PoP&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"Key with invalid PoP"</span>)]
     </span>KeyInvalid(Box&lt;VerificationKeyPoP&gt;),
 
     <span class="doccomment">/// At least one signature in the batch is invalid
-    </span><span class="attr">#[error(<span class="string">&quot;One signature in the batch is invalid&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"One signature in the batch is invalid"</span>)]
     </span>BatchInvalid,
 }
 
@@ -305,27 +306,27 @@
 </span><span class="attr">#[derive(Debug, Clone, thiserror::Error)]
 </span><span class="kw">pub enum </span>StmSignatureError {
     <span class="doccomment">/// There is an index out of bounds
-    </span><span class="attr">#[error(<span class="string">&quot;Received index, {0}, is higher than what the security parameter allows, {1}.&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"Received index, {0}, is higher than what the security parameter allows, {1}."</span>)]
     </span>IndexBoundFailed(u64, u64),
 
     <span class="doccomment">/// MSP.Eval was computed incorrectly
-    </span><span class="attr">#[error(<span class="string">&quot;The claimed evaluation of function phi is incorrect.&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"The claimed evaluation of function phi is incorrect."</span>)]
     </span>EvalInvalid([u8; <span class="number">64</span>]),
 
     <span class="doccomment">/// The lottery was actually lost for the signature
-    </span><span class="attr">#[error(<span class="string">&quot;Lottery for this epoch was lost.&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"Lottery for this epoch was lost."</span>)]
     </span>LotteryLost,
 
     <span class="doccomment">/// A party submitted an invalid signature
-    </span><span class="attr">#[error(<span class="string">&quot;A provided signature is invalid&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"A provided signature is invalid"</span>)]
     </span>SignatureInvalid(Signature),
 
     <span class="doccomment">/// Batch verification of STM signatures failed
-    </span><span class="attr">#[error(<span class="string">&quot;Batch verification of STM signatures failed&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"Batch verification of STM signatures failed"</span>)]
     </span>BatchInvalid,
 
     <span class="doccomment">/// This error occurs when the the serialization of the raw bytes failed
-    </span><span class="attr">#[error(<span class="string">&quot;Invalid bytes&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"Invalid bytes"</span>)]
     </span>SerializationError,
 }
 
@@ -333,23 +334,23 @@
 </span><span class="attr">#[derive(Debug, Clone, thiserror::Error)]
 </span><span class="kw">pub enum </span>StmAggregateSignatureError&lt;D: Digest + FixedOutput&gt; {
     <span class="doccomment">/// The IVK is invalid after aggregating the keys
-    </span><span class="attr">#[error(<span class="string">&quot;Aggregated key does not correspond to the expected key.&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"Aggregated key does not correspond to the expected key."</span>)]
     </span>IvkInvalid(Box&lt;VerificationKey&gt;),
 
     <span class="doccomment">/// This error occurs when the the serialization of the raw bytes failed
-    </span><span class="attr">#[error(<span class="string">&quot;Invalid bytes&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"Invalid bytes"</span>)]
     </span>SerializationError,
 
     <span class="doccomment">/// Invalid merkle batch path
-    </span><span class="attr">#[error(<span class="string">&quot;Batch path does not verify against root&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"Batch path does not verify against root"</span>)]
     </span>PathInvalid(BatchPath&lt;D&gt;),
 
     <span class="doccomment">/// Batch verification of STM aggregate signatures failed
-    </span><span class="attr">#[error(<span class="string">&quot;Batch verification of STM aggregate signatures failed&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"Batch verification of STM aggregate signatures failed"</span>)]
     </span>BatchInvalid,
 
     <span class="doccomment">/// `CoreVerifier` check failed
-    </span><span class="attr">#[error(<span class="string">&quot;Core verification error: {0}&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"Core verification error: {0}"</span>)]
     </span>CoreVerificationError(<span class="attr">#[source] </span>CoreVerifierError),
 }
 
@@ -357,19 +358,19 @@
 </span><span class="attr">#[derive(Debug, Clone, thiserror::Error)]
 </span><span class="kw">pub enum </span>CoreVerifierError {
     <span class="doccomment">/// No quorum was found
-    </span><span class="attr">#[error(<span class="string">&quot;No Quorum was found. Expected {0} signatures but got {1}&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"No Quorum was found. Expected {0} signatures but got {1}"</span>)]
     </span>NoQuorum(u64, u64),
 
     <span class="doccomment">/// There is a duplicate index
-    </span><span class="attr">#[error(<span class="string">&quot;Indices are not unique.&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"Indices are not unique."</span>)]
     </span>IndexNotUnique,
 
     <span class="doccomment">/// The aggregated signature is invalid
-    </span><span class="attr">#[error(<span class="string">&quot;Aggregate signature is invalid&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"Aggregate signature is invalid"</span>)]
     </span>AggregateSignatureInvalid,
 
     <span class="doccomment">/// One of the aggregated signatures is invalid
-    </span><span class="attr">#[error(<span class="string">&quot;Individual signature is invalid: {0}&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"Individual signature is invalid: {0}"</span>)]
     </span>IndividualSignatureInvalid(<span class="attr">#[source] </span>StmSignatureError),
 }
 
@@ -377,11 +378,11 @@
 </span><span class="attr">#[derive(Debug, Clone, thiserror::Error)]
 </span><span class="kw">pub enum </span>AggregationError {
     <span class="doccomment">/// Not enough signatures were collected, got this many instead.
-    </span><span class="attr">#[error(<span class="string">&quot;Not enough signatures. Got only {0} out of {1}.&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"Not enough signatures. Got only {0} out of {1}."</span>)]
     </span>NotEnoughSignatures(u64, u64),
 
     <span class="doccomment">/// This error happens when we try to convert a u64 to a usize and it does not fit
-    </span><span class="attr">#[error(<span class="string">&quot;Invalid usize conversion&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"Invalid usize conversion"</span>)]
     </span>UsizeConversionInvalid,
 }
 
@@ -389,15 +390,15 @@
 </span><span class="attr">#[derive(Debug, Clone, thiserror::Error)]
 </span><span class="kw">pub enum </span>MerkleTreeError&lt;D: Digest + FixedOutput&gt; {
     <span class="doccomment">/// Serialization error
-    </span><span class="attr">#[error(<span class="string">&quot;Serialization of a merkle tree failed&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"Serialization of a merkle tree failed"</span>)]
     </span>SerializationError,
 
     <span class="doccomment">/// Invalid merkle path
-    </span><span class="attr">#[error(<span class="string">&quot;Path does not verify against root&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"Path does not verify against root"</span>)]
     </span>PathInvalid(Path&lt;D&gt;),
 
     <span class="doccomment">/// Invalid merkle batch path
-    </span><span class="attr">#[error(<span class="string">&quot;Batch path does not verify against root&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"Batch path does not verify against root"</span>)]
     </span>BatchPathInvalid(BatchPath&lt;D&gt;),
 }
 
@@ -405,19 +406,19 @@
 </span><span class="attr">#[derive(Debug, Clone, thiserror::Error, PartialEq, Eq)]
 </span><span class="kw">pub enum </span>RegisterError {
     <span class="doccomment">/// This key has already been registered by a participant
-    </span><span class="attr">#[error(<span class="string">&quot;This key has already been registered.&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"This key has already been registered."</span>)]
     </span>KeyRegistered(Box&lt;VerificationKey&gt;),
 
     <span class="doccomment">/// The supplied key is not valid
-    </span><span class="attr">#[error(<span class="string">&quot;The verification of correctness of the supplied key is invalid.&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"The verification of correctness of the supplied key is invalid."</span>)]
     </span>KeyInvalid(Box&lt;VerificationKeyPoP&gt;),
 
     <span class="doccomment">/// Serialization error
-    </span><span class="attr">#[error(<span class="string">&quot;Serialization error&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"Serialization error"</span>)]
     </span>SerializationError,
 
     <span class="doccomment">/// UnregisteredInitializer error
-    </span><span class="attr">#[error(<span class="string">&quot;Initializer not registered. Cannot participate as a signer.&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"Initializer not registered. Cannot participate as a signer."</span>)]
     </span>UnregisteredInitializer,
 }
 

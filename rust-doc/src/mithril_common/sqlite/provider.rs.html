@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-common/src/sqlite/provider.rs`."><title>provider.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-common/src/sqlite/provider.rs`."><title>provider.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -270,15 +271,15 @@
 
 <span class="doccomment">/// A Provider is able to performe queries on a database and return iterator of a defined entity.
 /// It aims at being easily testable and adaptable.
-</span><span class="kw">pub trait </span>Provider&lt;<span class="lifetime">&#39;conn</span>&gt; {
+</span><span class="kw">pub trait </span>Provider&lt;<span class="lifetime">'conn</span>&gt; {
     <span class="doccomment">/// Entity type returned by the result cursor.
     </span><span class="kw">type </span>Entity: SqLiteEntity;
 
     <span class="doccomment">/// Share the connection.
-    </span><span class="kw">fn </span>get_connection(<span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span>SqliteConnection;
+    </span><span class="kw">fn </span>get_connection(<span class="kw-2">&amp;</span><span class="lifetime">'conn </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'conn </span>SqliteConnection;
 
     <span class="doccomment">/// Perform the parametrized definition query.
-    </span><span class="kw">fn </span>find(<span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span><span class="self">self</span>, filters: WhereCondition) -&gt; StdResult&lt;EntityCursor&lt;<span class="lifetime">&#39;conn</span>, <span class="self">Self</span>::Entity&gt;&gt; {
+    </span><span class="kw">fn </span>find(<span class="kw-2">&amp;</span><span class="lifetime">'conn </span><span class="self">self</span>, filters: WhereCondition) -&gt; StdResult&lt;EntityCursor&lt;<span class="lifetime">'conn</span>, <span class="self">Self</span>::Entity&gt;&gt; {
         <span class="kw">let </span>(condition, params) = filters.expand();
         <span class="kw">let </span>sql = <span class="self">self</span>.get_definition(<span class="kw-2">&amp;</span>condition);
         <span class="kw">let </span>cursor = <span class="self">self
@@ -286,8 +287,8 @@
             .prepare(<span class="kw-2">&amp;</span>sql)
             .with_context(|| {
                 <span class="macro">format!</span>(
-                    <span class="string">&quot;Prepare query error: SQL=`{}`&quot;</span>,
-                    <span class="kw-2">&amp;</span>sql.replace(<span class="string">&#39;\n&#39;</span>, <span class="string">&quot; &quot;</span>).trim()
+                    <span class="string">"Prepare query error: SQL=`{}`"</span>,
+                    <span class="kw-2">&amp;</span>sql.replace(<span class="string">'\n'</span>, <span class="string">" "</span>).trim()
                 )
             })<span class="question-mark">?
             </span>.into_iter()
@@ -333,84 +334,84 @@
         <span class="kw">fn </span>get_projection() -&gt; Projection {
             <span class="kw">let </span><span class="kw-2">mut </span>projection = Projection::default();
 
-            projection.add_field(<span class="string">&quot;text_data&quot;</span>, <span class="string">&quot;{:test:}.text_data&quot;</span>, <span class="string">&quot;text&quot;</span>);
-            projection.add_field(<span class="string">&quot;real_data&quot;</span>, <span class="string">&quot;{:test:}.real_data&quot;</span>, <span class="string">&quot;real&quot;</span>);
-            projection.add_field(<span class="string">&quot;integer_data&quot;</span>, <span class="string">&quot;{:test:}.integer_data&quot;</span>, <span class="string">&quot;integer&quot;</span>);
-            projection.add_field(<span class="string">&quot;maybe_null&quot;</span>, <span class="string">&quot;{:test:}.maybe_null&quot;</span>, <span class="string">&quot;integer&quot;</span>);
+            projection.add_field(<span class="string">"text_data"</span>, <span class="string">"{:test:}.text_data"</span>, <span class="string">"text"</span>);
+            projection.add_field(<span class="string">"real_data"</span>, <span class="string">"{:test:}.real_data"</span>, <span class="string">"real"</span>);
+            projection.add_field(<span class="string">"integer_data"</span>, <span class="string">"{:test:}.integer_data"</span>, <span class="string">"integer"</span>);
+            projection.add_field(<span class="string">"maybe_null"</span>, <span class="string">"{:test:}.maybe_null"</span>, <span class="string">"integer"</span>);
 
             projection
         }
     }
 
-    <span class="kw">struct </span>TestEntityProvider&lt;<span class="lifetime">&#39;conn</span>&gt; {
-        connection: <span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span>SqliteConnection,
+    <span class="kw">struct </span>TestEntityProvider&lt;<span class="lifetime">'conn</span>&gt; {
+        connection: <span class="kw-2">&amp;</span><span class="lifetime">'conn </span>SqliteConnection,
     }
 
-    <span class="kw">impl</span>&lt;<span class="lifetime">&#39;conn</span>&gt; TestEntityProvider&lt;<span class="lifetime">&#39;conn</span>&gt; {
-        <span class="kw">pub fn </span>new(connection: <span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span>SqliteConnection) -&gt; <span class="self">Self </span>{
+    <span class="kw">impl</span>&lt;<span class="lifetime">'conn</span>&gt; TestEntityProvider&lt;<span class="lifetime">'conn</span>&gt; {
+        <span class="kw">pub fn </span>new(connection: <span class="kw-2">&amp;</span><span class="lifetime">'conn </span>SqliteConnection) -&gt; <span class="self">Self </span>{
             <span class="self">Self </span>{ connection }
         }
     }
 
-    <span class="kw">impl</span>&lt;<span class="lifetime">&#39;conn</span>&gt; Provider&lt;<span class="lifetime">&#39;conn</span>&gt; <span class="kw">for </span>TestEntityProvider&lt;<span class="lifetime">&#39;conn</span>&gt; {
+    <span class="kw">impl</span>&lt;<span class="lifetime">'conn</span>&gt; Provider&lt;<span class="lifetime">'conn</span>&gt; <span class="kw">for </span>TestEntityProvider&lt;<span class="lifetime">'conn</span>&gt; {
         <span class="kw">type </span>Entity = TestEntity;
 
-        <span class="kw">fn </span>get_connection(<span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span>SqliteConnection {
+        <span class="kw">fn </span>get_connection(<span class="kw-2">&amp;</span><span class="lifetime">'conn </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'conn </span>SqliteConnection {
             <span class="self">self</span>.connection
         }
 
         <span class="kw">fn </span>get_definition(<span class="kw-2">&amp;</span><span class="self">self</span>, condition: <span class="kw-2">&amp;</span>str) -&gt; String {
-            <span class="kw">let </span>aliases = SourceAlias::new(<span class="kw-2">&amp;</span>[(<span class="string">&quot;{:test:}&quot;</span>, <span class="string">&quot;test&quot;</span>)]);
+            <span class="kw">let </span>aliases = SourceAlias::new(<span class="kw-2">&amp;</span>[(<span class="string">"{:test:}"</span>, <span class="string">"test"</span>)]);
             <span class="kw">let </span>projection = <span class="self">Self</span>::Entity::get_projection().expand(aliases);
 
-            <span class="macro">format!</span>(<span class="string">&quot;select {projection} from provider_test as test where {condition}&quot;</span>)
+            <span class="macro">format!</span>(<span class="string">"select {projection} from provider_test as test where {condition}"</span>)
         }
     }
 
-    <span class="kw">struct </span>TestEntityUpdateProvider&lt;<span class="lifetime">&#39;conn</span>&gt; {
-        connection: <span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span>SqliteConnection,
+    <span class="kw">struct </span>TestEntityUpdateProvider&lt;<span class="lifetime">'conn</span>&gt; {
+        connection: <span class="kw-2">&amp;</span><span class="lifetime">'conn </span>SqliteConnection,
     }
 
-    <span class="kw">impl</span>&lt;<span class="lifetime">&#39;conn</span>&gt; TestEntityUpdateProvider&lt;<span class="lifetime">&#39;conn</span>&gt; {
-        <span class="kw">pub fn </span>new(connection: <span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span>SqliteConnection) -&gt; <span class="self">Self </span>{
+    <span class="kw">impl</span>&lt;<span class="lifetime">'conn</span>&gt; TestEntityUpdateProvider&lt;<span class="lifetime">'conn</span>&gt; {
+        <span class="kw">pub fn </span>new(connection: <span class="kw-2">&amp;</span><span class="lifetime">'conn </span>SqliteConnection) -&gt; <span class="self">Self </span>{
             <span class="self">Self </span>{ connection }
         }
     }
 
-    <span class="kw">impl</span>&lt;<span class="lifetime">&#39;conn</span>&gt; Provider&lt;<span class="lifetime">&#39;conn</span>&gt; <span class="kw">for </span>TestEntityUpdateProvider&lt;<span class="lifetime">&#39;conn</span>&gt; {
+    <span class="kw">impl</span>&lt;<span class="lifetime">'conn</span>&gt; Provider&lt;<span class="lifetime">'conn</span>&gt; <span class="kw">for </span>TestEntityUpdateProvider&lt;<span class="lifetime">'conn</span>&gt; {
         <span class="kw">type </span>Entity = TestEntity;
 
-        <span class="kw">fn </span>get_connection(<span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span>SqliteConnection {
+        <span class="kw">fn </span>get_connection(<span class="kw-2">&amp;</span><span class="lifetime">'conn </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'conn </span>SqliteConnection {
             <span class="self">self</span>.connection
         }
 
         <span class="kw">fn </span>get_definition(<span class="kw-2">&amp;</span><span class="self">self</span>, _condition: <span class="kw-2">&amp;</span>str) -&gt; String {
-            <span class="kw">let </span>aliases = SourceAlias::new(<span class="kw-2">&amp;</span>[(<span class="string">&quot;{:test:}&quot;</span>, <span class="string">&quot;provider_test&quot;</span>)]);
+            <span class="kw">let </span>aliases = SourceAlias::new(<span class="kw-2">&amp;</span>[(<span class="string">"{:test:}"</span>, <span class="string">"provider_test"</span>)]);
             <span class="kw">let </span>projection = <span class="self">Self</span>::Entity::get_projection().expand(aliases);
 
             <span class="macro">format!</span>(
-                <span class="string">r#&quot;
+                <span class="string">r#"
 insert into provider_test (text_data, real_data, integer_data, maybe_null) values (?1, ?2, ?3, ?4)
   on conflict (text_data) do update set
     real_data = excluded.real_data,
     integer_data = excluded.integer_data,
     maybe_null = excluded.maybe_null 
 returning {projection}
-&quot;#
+"#
             </span>)
         }
     }
 
     <span class="kw">fn </span>init_database() -&gt; SqliteConnection {
-        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">&quot;:memory:&quot;</span>).unwrap();
+        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">":memory:"</span>).unwrap();
         connection
             .execute(
-                <span class="string">&quot;
+                <span class="string">"
             drop table if exists provider_test;
             create table provider_test(text_data text not null primary key, real_data real not null, integer_data integer not null, maybe_null integer);
-            insert into provider_test(text_data, real_data, integer_data, maybe_null) values (&#39;row 1&#39;, 1.23, -52, null);
-            insert into provider_test(text_data, real_data, integer_data, maybe_null) values (&#39;row 2&#39;, 2.34, 1789, 0);
-            &quot;</span>,
+            insert into provider_test(text_data, real_data, integer_data, maybe_null) values ('row 1', 1.23, -52, null);
+            insert into provider_test(text_data, real_data, integer_data, maybe_null) values ('row 2', 2.34, 1789, 0);
+            "</span>,
             )
             .unwrap();
 
@@ -424,10 +425,10 @@ returning {projection}
         <span class="kw">let </span><span class="kw-2">mut </span>cursor = provider.find(WhereCondition::default()).unwrap();
         <span class="kw">let </span>entity = cursor
             .next()
-            .expect(<span class="string">&quot;there shoud be two results, none returned&quot;</span>);
+            .expect(<span class="string">"there shoud be two results, none returned"</span>);
         <span class="macro">assert_eq!</span>(
             TestEntity {
-                text_data: <span class="string">&quot;row 1&quot;</span>.to_string(),
+                text_data: <span class="string">"row 1"</span>.to_string(),
                 real_data: <span class="number">1.23</span>,
                 integer_data: -<span class="number">52</span>,
                 maybe_null: <span class="prelude-val">None
@@ -436,10 +437,10 @@ returning {projection}
         );
         <span class="kw">let </span>entity = cursor
             .next()
-            .expect(<span class="string">&quot;there shoud be two results, only one returned&quot;</span>);
+            .expect(<span class="string">"there shoud be two results, only one returned"</span>);
         <span class="macro">assert_eq!</span>(
             TestEntity {
-                text_data: <span class="string">&quot;row 2&quot;</span>.to_string(),
+                text_data: <span class="string">"row 2"</span>.to_string(),
                 real_data: <span class="number">2.34</span>,
                 integer_data: <span class="number">1789</span>,
                 maybe_null: <span class="prelude-val">Some</span>(<span class="number">0</span>)
@@ -447,7 +448,7 @@ returning {projection}
             entity
         );
 
-        <span class="macro">assert!</span>(cursor.next().is_none(), <span class="string">&quot;there should be no result&quot;</span>);
+        <span class="macro">assert!</span>(cursor.next().is_none(), <span class="string">"there should be no result"</span>);
     }
 
     <span class="attr">#[test]
@@ -455,14 +456,14 @@ returning {projection}
         <span class="kw">let </span>connection = init_database();
         <span class="kw">let </span>provider = TestEntityProvider::new(<span class="kw-2">&amp;</span>connection);
         <span class="kw">let </span><span class="kw-2">mut </span>cursor = provider
-            .find(WhereCondition::new(<span class="string">&quot;maybe_null is not null&quot;</span>, Vec::new()))
+            .find(WhereCondition::new(<span class="string">"maybe_null is not null"</span>, Vec::new()))
             .unwrap();
         <span class="kw">let </span>entity = cursor
             .next()
-            .expect(<span class="string">&quot;there shoud be one result, none returned&quot;</span>);
+            .expect(<span class="string">"there shoud be one result, none returned"</span>);
         <span class="macro">assert_eq!</span>(
             TestEntity {
-                text_data: <span class="string">&quot;row 2&quot;</span>.to_string(),
+                text_data: <span class="string">"row 2"</span>.to_string(),
                 real_data: <span class="number">2.34</span>,
                 integer_data: <span class="number">1789</span>,
                 maybe_null: <span class="prelude-val">Some</span>(<span class="number">0</span>)
@@ -478,16 +479,16 @@ returning {projection}
         <span class="kw">let </span>provider = TestEntityProvider::new(<span class="kw-2">&amp;</span>connection);
         <span class="kw">let </span><span class="kw-2">mut </span>cursor = provider
             .find(WhereCondition::new(
-                <span class="string">&quot;text_data like ?&quot;</span>,
-                <span class="macro">vec!</span>[Value::String(<span class="string">&quot;%1&quot;</span>.to_string())],
+                <span class="string">"text_data like ?"</span>,
+                <span class="macro">vec!</span>[Value::String(<span class="string">"%1"</span>.to_string())],
             ))
             .unwrap();
         <span class="kw">let </span>entity = cursor
             .next()
-            .expect(<span class="string">&quot;there shoud be one result, none returned&quot;</span>);
+            .expect(<span class="string">"there shoud be one result, none returned"</span>);
         <span class="macro">assert_eq!</span>(
             TestEntity {
-                text_data: <span class="string">&quot;row 1&quot;</span>.to_string(),
+                text_data: <span class="string">"row 1"</span>.to_string(),
                 real_data: <span class="number">1.23</span>,
                 integer_data: -<span class="number">52</span>,
                 maybe_null: <span class="prelude-val">None
@@ -501,20 +502,20 @@ returning {projection}
         <span class="kw">let </span>connection = init_database();
         <span class="kw">let </span>provider = TestEntityUpdateProvider::new(<span class="kw-2">&amp;</span>connection);
         <span class="kw">let </span>params = [
-            Value::String(<span class="string">&quot;row 1&quot;</span>.to_string()),
+            Value::String(<span class="string">"row 1"</span>.to_string()),
             Value::Float(<span class="number">1.234</span>),
             Value::Integer(<span class="number">0</span>),
             Value::Null,
         ]
         .to_vec();
-        <span class="kw">let </span><span class="kw-2">mut </span>cursor = provider.find(WhereCondition::new(<span class="string">&quot;&quot;</span>, params)).unwrap();
+        <span class="kw">let </span><span class="kw-2">mut </span>cursor = provider.find(WhereCondition::new(<span class="string">""</span>, params)).unwrap();
 
         <span class="kw">let </span>entity = cursor
             .next()
-            .expect(<span class="string">&quot;there shoud be one result, none returned&quot;</span>);
+            .expect(<span class="string">"there shoud be one result, none returned"</span>);
         <span class="macro">assert_eq!</span>(
             TestEntity {
-                text_data: <span class="string">&quot;row 1&quot;</span>.to_string(),
+                text_data: <span class="string">"row 1"</span>.to_string(),
                 real_data: <span class="number">1.234</span>,
                 integer_data: <span class="number">0</span>,
                 maybe_null: <span class="prelude-val">None

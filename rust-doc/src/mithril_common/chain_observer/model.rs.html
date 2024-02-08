@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-common/src/chain_observer/model.rs`."><title>model.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-common/src/chain_observer/model.rs`."><title>model.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -249,11 +250,11 @@
 </span><span class="attr">#[derive(Debug, Error)]
 </span><span class="kw">pub enum </span>TxDatumError {
     <span class="doccomment">/// Error raised when the content could not be parsed.
-    </span><span class="attr">#[error(<span class="string">&quot;could not parse tx datum&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"could not parse tx datum"</span>)]
     </span>InvalidContent(<span class="attr">#[source] </span>StdError),
 
     <span class="doccomment">/// Error raised when building the tx datum failed.
-    </span><span class="attr">#[error(<span class="string">&quot;could not build tx datum&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"could not build tx datum"</span>)]
     </span>Build(<span class="attr">#[source] </span>serde_json::Error),
 }
 
@@ -267,16 +268,16 @@
         <span class="kw">let </span>tx_datum_raw = <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>;
         <span class="comment">// 1- Parse the Utxo raw data to a hashmap
         </span><span class="kw">let </span>v: HashMap&lt;String, Value&gt; = serde_json::from_str(tx_datum_raw).map_err(|e| {
-            TxDatumError::InvalidContent(<span class="macro">anyhow!</span>(e).context(<span class="string">&quot;tx datum was = &#39;{tx_datum_raw}&#39;&quot;</span>))
+            TxDatumError::InvalidContent(<span class="macro">anyhow!</span>(e).context(<span class="string">"tx datum was = '{tx_datum_raw}'"</span>))
         })<span class="question-mark">?</span>;
-        <span class="comment">// 2- Convert the &#39;fields&#39; entry to a vec of json objects
-        </span><span class="kw">let </span>fields = v.get(<span class="string">&quot;fields&quot;</span>).ok_or_else(|| {
+        <span class="comment">// 2- Convert the 'fields' entry to a vec of json objects
+        </span><span class="kw">let </span>fields = v.get(<span class="string">"fields"</span>).ok_or_else(|| {
             TxDatumError::InvalidContent(
-                <span class="macro">anyhow!</span>(<span class="string">&quot;Error: missing &#39;fields&#39; entry, tx datum was = &#39;{tx_datum_raw}&#39;&quot;</span>),
+                <span class="macro">anyhow!</span>(<span class="string">"Error: missing 'fields' entry, tx datum was = '{tx_datum_raw}'"</span>),
             )
         })<span class="question-mark">?</span>.as_array().ok_or_else(|| {
             TxDatumError::InvalidContent(
-                <span class="macro">anyhow!</span>(<span class="string">&quot;Error: &#39;fields&#39; entry is not correctly structured, tx datum was = &#39;{tx_datum_raw}&#39;&quot;</span>),
+                <span class="macro">anyhow!</span>(<span class="string">"Error: 'fields' entry is not correctly structured, tx datum was = '{tx_datum_raw}'"</span>),
             )
         })<span class="question-mark">?</span>;
         <span class="comment">// 3- Filter the vec (keep the ones that match the given type), and retrieve the nth entry of this filtered vec
@@ -297,7 +298,7 @@
             </span>.get_fields_by_type(type_name)<span class="question-mark">?
             </span>.get(index)
             .ok_or_else(|| {
-                TxDatumError::InvalidContent(<span class="macro">anyhow!</span>(<span class="string">&quot;Error: missing field at index {index}&quot;</span>))
+                TxDatumError::InvalidContent(<span class="macro">anyhow!</span>(<span class="string">"Error: missing field at index {index}"</span>))
             })<span class="question-mark">?
             </span>.to_owned())
     }
@@ -305,12 +306,12 @@
 
 <span class="doccomment">/// [TxDatumFieldValue] represents a field value of TxDatum.
 </span><span class="attr">#[derive(Debug, EnumDiscriminants, Serialize, Display)]
-#[serde(untagged, rename_all = <span class="string">&quot;lowercase&quot;</span>)]
-#[strum(serialize_all = <span class="string">&quot;lowercase&quot;</span>)]
+#[serde(untagged, rename_all = <span class="string">"lowercase"</span>)]
+#[strum(serialize_all = <span class="string">"lowercase"</span>)]
 #[strum_discriminants(derive(Serialize, Hash, Display))]
 #[strum_discriminants(name(TxDatumFieldTypeName))]
-#[strum_discriminants(strum(serialize_all = <span class="string">&quot;lowercase&quot;</span>))]
-#[strum_discriminants(serde(rename_all = <span class="string">&quot;lowercase&quot;</span>))]
+#[strum_discriminants(strum(serialize_all = <span class="string">"lowercase"</span>))]
+#[strum_discriminants(serde(rename_all = <span class="string">"lowercase"</span>))]
 </span><span class="kw">pub enum </span>TxDatumFieldValue {
     <span class="doccomment">/// Bytes datum field value.
     </span>Bytes(String),
@@ -385,22 +386,22 @@
     <span class="kw">fn </span>dummy_tx_datum() -&gt; TxDatum {
         <span class="kw">let </span><span class="kw-2">mut </span>tx_datum_builder = TxDatumBuilder::new();
         <span class="kw">let </span>tx_datum = tx_datum_builder
-            .add_field(TxDatumFieldValue::Bytes(<span class="string">&quot;bytes0&quot;</span>.to_string()))
+            .add_field(TxDatumFieldValue::Bytes(<span class="string">"bytes0"</span>.to_string()))
             .add_field(TxDatumFieldValue::Int(<span class="number">0</span>))
             .add_field(TxDatumFieldValue::Int(<span class="number">1</span>))
-            .add_field(TxDatumFieldValue::Bytes(<span class="string">&quot;bytes1&quot;</span>.to_string()))
-            .add_field(TxDatumFieldValue::Bytes(<span class="string">&quot;bytes2&quot;</span>.to_string()))
+            .add_field(TxDatumFieldValue::Bytes(<span class="string">"bytes1"</span>.to_string()))
+            .add_field(TxDatumFieldValue::Bytes(<span class="string">"bytes2"</span>.to_string()))
             .add_field(TxDatumFieldValue::Int(<span class="number">2</span>))
-            .add_field(TxDatumFieldValue::Bytes(<span class="string">&quot;012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789&quot;</span>.to_string()))
+            .add_field(TxDatumFieldValue::Bytes(<span class="string">"012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"</span>.to_string()))
             .build()
-            .expect(<span class="string">&quot;tx_datum build should not fail&quot;</span>);
+            .expect(<span class="string">"tx_datum build should not fail"</span>);
         tx_datum
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_build_tx_datum() {
         <span class="kw">let </span>tx_datum = dummy_tx_datum();
-        <span class="kw">let </span>tx_datum_expected = TxDatum(<span class="string">r#&quot;{&quot;constructor&quot;:0,&quot;fields&quot;:[{&quot;bytes&quot;:&quot;bytes0&quot;},{&quot;int&quot;:0},{&quot;int&quot;:1},{&quot;bytes&quot;:&quot;bytes1&quot;},{&quot;bytes&quot;:&quot;bytes2&quot;},{&quot;int&quot;:2},{&quot;bytes&quot;:&quot;01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567&quot;},{&quot;bytes&quot;:&quot;8901234567890123456789&quot;}]}&quot;#</span>.to_string());
+        <span class="kw">let </span>tx_datum_expected = TxDatum(<span class="string">r#"{"constructor":0,"fields":[{"bytes":"bytes0"},{"int":0},{"int":1},{"bytes":"bytes1"},{"bytes":"bytes2"},{"int":2},{"bytes":"01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567"},{"bytes":"8901234567890123456789"}]}"#</span>.to_string());
         <span class="macro">assert_eq!</span>(tx_datum_expected, tx_datum);
     }
 
@@ -408,7 +409,7 @@
     </span><span class="kw">fn </span>test_can_retrieve_field_raw_value_bytes() {
         <span class="kw">let </span>tx_datum = dummy_tx_datum();
         <span class="macro">assert_eq!</span>(
-            <span class="string">&quot;bytes0&quot;</span>,
+            <span class="string">"bytes0"</span>,
             tx_datum
                 .get_nth_field_by_type(<span class="kw-2">&amp;</span>TxDatumFieldTypeName::Bytes, <span class="number">0</span>)
                 .unwrap()
@@ -416,7 +417,7 @@
                 .unwrap()
         );
         <span class="macro">assert_eq!</span>(
-            <span class="string">&quot;bytes1&quot;</span>,
+            <span class="string">"bytes1"</span>,
             tx_datum
                 .get_nth_field_by_type(<span class="kw-2">&amp;</span>TxDatumFieldTypeName::Bytes, <span class="number">1</span>)
                 .unwrap()
@@ -424,7 +425,7 @@
                 .unwrap()
         );
         <span class="macro">assert_eq!</span>(
-            <span class="string">&quot;bytes2&quot;</span>,
+            <span class="string">"bytes2"</span>,
             tx_datum
                 .get_nth_field_by_type(<span class="kw-2">&amp;</span>TxDatumFieldTypeName::Bytes, <span class="number">2</span>)
                 .unwrap()
@@ -433,7 +434,7 @@
         );
         tx_datum
             .get_nth_field_by_type(<span class="kw-2">&amp;</span>TxDatumFieldTypeName::Bytes, <span class="number">100</span>)
-            .expect_err(<span class="string">&quot;should have returned an error&quot;</span>);
+            .expect_err(<span class="string">"should have returned an error"</span>);
     }
 
     <span class="attr">#[test]
@@ -465,7 +466,7 @@
         );
         tx_datum
             .get_nth_field_by_type(<span class="kw-2">&amp;</span>TxDatumFieldTypeName::Int, <span class="number">100</span>)
-            .expect_err(<span class="string">&quot;should have returned an error&quot;</span>);
+            .expect_err(<span class="string">"should have returned an error"</span>);
     }
 }
 </code></pre></div></section></main></body></html>

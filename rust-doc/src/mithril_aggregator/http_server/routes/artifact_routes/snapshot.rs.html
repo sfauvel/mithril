@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-aggregator/src/http_server/routes/artifact_routes/snapshot.rs`."><title>snapshot.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../../../" data-static-root-path="../../../../../static.files/" data-current-crate="mithril_aggregator" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../../../src-files.js"></script><script defer src="../../../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-aggregator/src/http_server/routes/artifact_routes/snapshot.rs`."><title>snapshot.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../../../" data-static-root-path="../../../../../static.files/" data-current-crate="mithril_aggregator" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../../../src-files.js"></script><script defer src="../../../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -527,7 +528,7 @@
 </span><span class="kw">fn </span>artifact_cardano_full_immutable_snapshots(
     dependency_manager: Arc&lt;DependencyContainer&gt;,
 ) -&gt; <span class="kw">impl </span>Filter&lt;Extract = (<span class="kw">impl </span>warp::Reply,), Error = warp::Rejection&gt; + Clone {
-    <span class="macro">warp::path!</span>(<span class="string">&quot;artifact&quot; </span>/ <span class="string">&quot;snapshots&quot;</span>)
+    <span class="macro">warp::path!</span>(<span class="string">"artifact" </span>/ <span class="string">"snapshots"</span>)
         .and(warp::get())
         .and(middlewares::with_http_message_service(dependency_manager))
         .and_then(handlers::list_artifacts)
@@ -537,7 +538,7 @@
 </span><span class="kw">fn </span>artifact_cardano_full_immutable_snapshot_by_id(
     dependency_manager: Arc&lt;DependencyContainer&gt;,
 ) -&gt; <span class="kw">impl </span>Filter&lt;Extract = (<span class="kw">impl </span>warp::Reply,), Error = warp::Rejection&gt; + Clone {
-    <span class="macro">warp::path!</span>(<span class="string">&quot;artifact&quot; </span>/ <span class="string">&quot;snapshot&quot; </span>/ String)
+    <span class="macro">warp::path!</span>(<span class="string">"artifact" </span>/ <span class="string">"snapshot" </span>/ String)
         .and(warp::get())
         .and(middlewares::with_http_message_service(dependency_manager))
         .and_then(handlers::get_artifact_by_signed_entity_id)
@@ -547,7 +548,7 @@
 </span><span class="kw">fn </span>snapshot_download(
     dependency_manager: Arc&lt;DependencyContainer&gt;,
 ) -&gt; <span class="kw">impl </span>Filter&lt;Extract = (<span class="kw">impl </span>warp::Reply,), Error = warp::Rejection&gt; + Clone {
-    <span class="macro">warp::path!</span>(<span class="string">&quot;artifact&quot; </span>/ <span class="string">&quot;snapshot&quot; </span>/ String / <span class="string">&quot;download&quot;</span>)
+    <span class="macro">warp::path!</span>(<span class="string">"artifact" </span>/ <span class="string">"snapshot" </span>/ String / <span class="string">"download"</span>)
         .and(warp::get().or(warp::head()).unify())
         .and(middlewares::with_config(dependency_manager.clone()))
         .and(middlewares::with_signed_entity_service(dependency_manager))
@@ -559,7 +560,7 @@
 ) -&gt; <span class="kw">impl </span>Filter&lt;Extract = (<span class="kw">impl </span>warp::Reply,), Error = warp::Rejection&gt; + Clone {
     <span class="kw">let </span>config = dependency_manager.config.clone();
 
-    warp::path(<span class="string">&quot;snapshot_download&quot;</span>)
+    warp::path(<span class="string">"snapshot_download"</span>)
         .and(warp::fs::dir(config.snapshot_directory))
         .and(middlewares::with_signed_entity_service(dependency_manager))
         .and_then(handlers::ensure_downloaded_file_is_a_snapshot)
@@ -569,9 +570,9 @@
 </span><span class="comment">// TODO: This legacy route should be removed when this code is released with a new distribution
 </span><span class="kw">fn </span>artifact_cardano_full_immutable_snapshots_legacy(
 ) -&gt; <span class="kw">impl </span>Filter&lt;Extract = (<span class="kw">impl </span>warp::Reply,), Error = warp::Rejection&gt; + Clone {
-    <span class="macro">warp::path!</span>(<span class="string">&quot;snapshots&quot;</span>).map(|| {
+    <span class="macro">warp::path!</span>(<span class="string">"snapshots"</span>).map(|| {
         warp::redirect(
-            <span class="macro">format!</span>(<span class="string">&quot;/{SERVER_BASE_PATH}/artifact/snapshots&quot;</span>)
+            <span class="macro">format!</span>(<span class="string">"/{SERVER_BASE_PATH}/artifact/snapshots"</span>)
                 .as_str()
                 .parse::&lt;Uri&gt;()
                 .unwrap(),
@@ -583,9 +584,9 @@
 </span><span class="comment">// TODO: This legacy route should be removed when this code is released with a new distribution
 </span><span class="kw">fn </span>artifact_cardano_full_immutable_snapshot_by_id_legacy(
 ) -&gt; <span class="kw">impl </span>Filter&lt;Extract = (<span class="kw">impl </span>warp::Reply,), Error = warp::Rejection&gt; + Clone {
-    <span class="macro">warp::path!</span>(<span class="string">&quot;snapshot&quot; </span>/ String).map(|digest| {
+    <span class="macro">warp::path!</span>(<span class="string">"snapshot" </span>/ String).map(|digest| {
         warp::redirect(
-            <span class="macro">format!</span>(<span class="string">&quot;/{SERVER_BASE_PATH}/artifact/snapshot/{digest}&quot;</span>)
+            <span class="macro">format!</span>(<span class="string">"/{SERVER_BASE_PATH}/artifact/snapshot/{digest}"</span>)
                 .as_str()
                 .parse::&lt;Uri&gt;()
                 .unwrap(),
@@ -610,7 +611,7 @@
     </span><span class="kw">pub async fn </span>list_artifacts(
         http_message_service: Arc&lt;<span class="kw">dyn </span>MessageService&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw">impl </span>warp::Reply, Infallible&gt; {
-        <span class="macro">debug!</span>(<span class="string">&quot;⇄ HTTP SERVER: artifacts&quot;</span>);
+        <span class="macro">debug!</span>(<span class="string">"⇄ HTTP SERVER: artifacts"</span>);
 
         <span class="kw">match </span>http_message_service
             .get_snapshot_list_message(LIST_MAX_ITEMS)
@@ -618,7 +619,7 @@
         </span>{
             <span class="prelude-val">Ok</span>(message) =&gt; <span class="prelude-val">Ok</span>(reply::json(<span class="kw-2">&amp;</span>message, StatusCode::OK)),
             <span class="prelude-val">Err</span>(err) =&gt; {
-                <span class="macro">warn!</span>(<span class="string">&quot;list_artifacts_snapshot&quot;</span>; <span class="string">&quot;error&quot; </span>=&gt; <span class="question-mark">?</span>err);
+                <span class="macro">warn!</span>(<span class="string">"list_artifacts_snapshot"</span>; <span class="string">"error" </span>=&gt; <span class="question-mark">?</span>err);
                 <span class="prelude-val">Ok</span>(reply::internal_server_error(err))
             }
         }
@@ -629,31 +630,31 @@
         signed_entity_id: String,
         http_message_service: Arc&lt;<span class="kw">dyn </span>MessageService&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw">impl </span>warp::Reply, Infallible&gt; {
-        <span class="macro">debug!</span>(<span class="string">&quot;⇄ HTTP SERVER: artifact/{signed_entity_id}&quot;</span>);
+        <span class="macro">debug!</span>(<span class="string">"⇄ HTTP SERVER: artifact/{signed_entity_id}"</span>);
         <span class="kw">match </span>http_message_service
             .get_snapshot_message(<span class="kw-2">&amp;</span>signed_entity_id)
             .<span class="kw">await
         </span>{
             <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(signed_entity)) =&gt; <span class="prelude-val">Ok</span>(reply::json(<span class="kw-2">&amp;</span>signed_entity, StatusCode::OK)),
             <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>) =&gt; {
-                <span class="macro">warn!</span>(<span class="string">&quot;snapshot_details::not_found&quot;</span>);
+                <span class="macro">warn!</span>(<span class="string">"snapshot_details::not_found"</span>);
                 <span class="prelude-val">Ok</span>(reply::empty(StatusCode::NOT_FOUND))
             }
             <span class="prelude-val">Err</span>(err) =&gt; {
-                <span class="macro">warn!</span>(<span class="string">&quot;snapshot_details::error&quot;</span>; <span class="string">&quot;error&quot; </span>=&gt; <span class="question-mark">?</span>err);
+                <span class="macro">warn!</span>(<span class="string">"snapshot_details::error"</span>; <span class="string">"error" </span>=&gt; <span class="question-mark">?</span>err);
                 <span class="prelude-val">Ok</span>(reply::internal_server_error(err))
             }
         }
     }
 
-    <span class="doccomment">/// Download a file if and only if it&#39;s a snapshot archive
+    <span class="doccomment">/// Download a file if and only if it's a snapshot archive
     </span><span class="kw">pub async fn </span>ensure_downloaded_file_is_a_snapshot(
         reply: warp::fs::File,
         signed_entity_service: Arc&lt;<span class="kw">dyn </span>SignedEntityService&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw">impl </span>warp::Reply, Infallible&gt; {
         <span class="kw">let </span>filepath = reply.path().to_path_buf();
         <span class="macro">debug!</span>(
-            <span class="string">&quot;⇄ HTTP SERVER: ensure_downloaded_file_is_a_snapshot / file: `{}`&quot;</span>,
+            <span class="string">"⇄ HTTP SERVER: ensure_downloaded_file_is_a_snapshot / file: `{}`"</span>,
             filepath.display()
         );
 
@@ -664,16 +665,16 @@
             </span>{
                 <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="kw">_</span>)) =&gt; <span class="prelude-val">Ok</span>(Box::new(warp::reply::with_header(
                     reply,
-                    <span class="string">&quot;Content-Disposition&quot;</span>,
+                    <span class="string">"Content-Disposition"</span>,
                     <span class="macro">format!</span>(
-                        <span class="string">&quot;attachment; filename=\&quot;{}\&quot;&quot;</span>,
+                        <span class="string">"attachment; filename=\"{}\""</span>,
                         filepath.file_name().unwrap().to_str().unwrap()
                     ),
                 )) <span class="kw">as </span>Box&lt;<span class="kw">dyn </span>warp::Reply&gt;),
                 <span class="kw">_ </span>=&gt; <span class="prelude-val">Ok</span>(reply::empty(StatusCode::NOT_FOUND)),
             },
             <span class="prelude-val">Err</span>(err) =&gt; {
-                <span class="macro">warn!</span>(<span class="string">&quot;ensure_downloaded_file_is_a_snapshot::error&quot;</span>; <span class="string">&quot;error&quot; </span>=&gt; <span class="question-mark">?</span>err);
+                <span class="macro">warn!</span>(<span class="string">"ensure_downloaded_file_is_a_snapshot::error"</span>; <span class="string">"error" </span>=&gt; <span class="question-mark">?</span>err);
                 <span class="prelude-val">Ok</span>(reply::empty(StatusCode::NOT_FOUND))
             }
         }
@@ -685,7 +686,7 @@
         config: Configuration,
         signed_entity_service: Arc&lt;<span class="kw">dyn </span>SignedEntityService&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw">impl </span>warp::Reply, Infallible&gt; {
-        <span class="macro">debug!</span>(<span class="string">&quot;⇄ HTTP SERVER: snapshot_download/{}&quot;</span>, digest);
+        <span class="macro">debug!</span>(<span class="string">"⇄ HTTP SERVER: snapshot_download/{}"</span>, digest);
 
         <span class="kw">match </span>signed_entity_service
             .get_signed_snapshot_by_id(<span class="kw-2">&amp;</span>digest)
@@ -694,7 +695,7 @@
             <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(signed_entity)) =&gt; {
                 <span class="kw">let </span>snapshot = signed_entity.artifact;
                 <span class="kw">let </span>filename = <span class="macro">format!</span>(
-                    <span class="string">&quot;{}-e{}-i{}.{}.{}&quot;</span>,
+                    <span class="string">"{}-e{}-i{}.{}.{}"</span>,
                     snapshot.beacon.network,
                     snapshot.beacon.epoch,
                     snapshot.beacon.immutable_file_number,
@@ -702,7 +703,7 @@
                     snapshot.compression_algorithm.tar_file_extension()
                 );
                 <span class="kw">let </span>snapshot_uri = <span class="macro">format!</span>(
-                    <span class="string">&quot;{}{}/snapshot_download/{}&quot;</span>,
+                    <span class="string">"{}{}/snapshot_download/{}"</span>,
                     config.get_server_url(),
                     SERVER_BASE_PATH,
                     filename
@@ -712,11 +713,11 @@
                 <span class="prelude-val">Ok</span>(Box::new(warp::redirect::found(snapshot_uri)) <span class="kw">as </span>Box&lt;<span class="kw">dyn </span>warp::Reply&gt;)
             }
             <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>) =&gt; {
-                <span class="macro">warn!</span>(<span class="string">&quot;snapshot_download::not_found&quot;</span>);
+                <span class="macro">warn!</span>(<span class="string">"snapshot_download::not_found"</span>);
                 <span class="prelude-val">Ok</span>(reply::empty(StatusCode::NOT_FOUND))
             }
             <span class="prelude-val">Err</span>(err) =&gt; {
-                <span class="macro">warn!</span>(<span class="string">&quot;snapshot_download::error&quot;</span>; <span class="string">&quot;error&quot; </span>=&gt; <span class="question-mark">?</span>err);
+                <span class="macro">warn!</span>(<span class="string">"snapshot_download::error"</span>; <span class="string">"error" </span>=&gt; <span class="question-mark">?</span>err);
                 <span class="prelude-val">Ok</span>(reply::internal_server_error(err))
             }
         }
@@ -748,7 +749,7 @@
     ) -&gt; <span class="kw">impl </span>Filter&lt;Extract = (<span class="kw">impl </span>warp::Reply,), Error = warp::Rejection&gt; + Clone {
         <span class="kw">let </span>cors = warp::cors()
             .allow_any_origin()
-            .allow_headers(<span class="macro">vec!</span>[<span class="string">&quot;content-type&quot;</span>])
+            .allow_headers(<span class="macro">vec!</span>[<span class="string">"content-type"</span>])
             .allow_methods(<span class="macro">vec!</span>[Method::GET, Method::POST, Method::OPTIONS]);
 
         warp::any()
@@ -772,11 +773,11 @@
         dependency_manager.message_service = Arc::new(mock_http_message_service);
 
         <span class="kw">let </span>method = Method::GET.as_str();
-        <span class="kw">let </span>path = <span class="string">&quot;/artifact/snapshots&quot;</span>;
+        <span class="kw">let </span>path = <span class="string">"/artifact/snapshots"</span>;
 
         <span class="kw">let </span>response = request()
             .method(method)
-            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;/{SERVER_BASE_PATH}{path}&quot;</span>))
+            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"/{SERVER_BASE_PATH}{path}"</span>))
             .reply(<span class="kw-2">&amp;</span>setup_router(Arc::new(dependency_manager)))
             .<span class="kw">await</span>;
 
@@ -784,7 +785,7 @@
             APISpec::get_all_spec_files(),
             method,
             path,
-            <span class="string">&quot;application/json&quot;</span>,
+            <span class="string">"application/json"</span>,
             <span class="kw-2">&amp;</span>Null,
             <span class="kw-2">&amp;</span>response,
         );
@@ -795,17 +796,17 @@
         <span class="kw">let </span><span class="kw-2">mut </span>mock_http_message_service = MockMessageService::new();
         mock_http_message_service
             .expect_get_snapshot_list_message()
-            .return_once(|<span class="kw">_</span>| <span class="prelude-val">Err</span>(HydrationError::InvalidData(<span class="string">&quot;invalid data&quot;</span>.to_string()).into()))
+            .return_once(|<span class="kw">_</span>| <span class="prelude-val">Err</span>(HydrationError::InvalidData(<span class="string">"invalid data"</span>.to_string()).into()))
             .once();
         <span class="kw">let </span><span class="kw-2">mut </span>dependency_manager = initialize_dependencies().<span class="kw">await</span>;
         dependency_manager.message_service = Arc::new(mock_http_message_service);
 
         <span class="kw">let </span>method = Method::GET.as_str();
-        <span class="kw">let </span>path = <span class="string">&quot;/artifact/snapshots&quot;</span>;
+        <span class="kw">let </span>path = <span class="string">"/artifact/snapshots"</span>;
 
         <span class="kw">let </span>response = request()
             .method(method)
-            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;/{SERVER_BASE_PATH}{path}&quot;</span>))
+            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"/{SERVER_BASE_PATH}{path}"</span>))
             .reply(<span class="kw-2">&amp;</span>setup_router(Arc::new(dependency_manager)))
             .<span class="kw">await</span>;
 
@@ -813,7 +814,7 @@
             APISpec::get_all_spec_files(),
             method,
             path,
-            <span class="string">&quot;application/json&quot;</span>,
+            <span class="string">"application/json"</span>,
             <span class="kw-2">&amp;</span>Null,
             <span class="kw-2">&amp;</span>response,
         );
@@ -838,11 +839,11 @@
         dependency_manager.message_service = Arc::new(mock_http_message_service);
 
         <span class="kw">let </span>method = Method::GET.as_str();
-        <span class="kw">let </span>path = <span class="string">&quot;/artifact/snapshot/{digest}&quot;</span>;
+        <span class="kw">let </span>path = <span class="string">"/artifact/snapshot/{digest}"</span>;
 
         <span class="kw">let </span>response = request()
             .method(method)
-            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;/{SERVER_BASE_PATH}{path}&quot;</span>))
+            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"/{SERVER_BASE_PATH}{path}"</span>))
             .reply(<span class="kw-2">&amp;</span>setup_router(Arc::new(dependency_manager)))
             .<span class="kw">await</span>;
 
@@ -850,7 +851,7 @@
             APISpec::get_all_spec_files(),
             method,
             path,
-            <span class="string">&quot;application/json&quot;</span>,
+            <span class="string">"application/json"</span>,
             <span class="kw-2">&amp;</span>Null,
             <span class="kw-2">&amp;</span>response,
         );
@@ -867,11 +868,11 @@
         dependency_manager.message_service = Arc::new(mock_http_message_service);
 
         <span class="kw">let </span>method = Method::GET.as_str();
-        <span class="kw">let </span>path = <span class="string">&quot;/artifact/snapshot/{digest}&quot;</span>;
+        <span class="kw">let </span>path = <span class="string">"/artifact/snapshot/{digest}"</span>;
 
         <span class="kw">let </span>response = request()
             .method(method)
-            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;/{SERVER_BASE_PATH}{path}&quot;</span>))
+            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"/{SERVER_BASE_PATH}{path}"</span>))
             .reply(<span class="kw-2">&amp;</span>setup_router(Arc::new(dependency_manager)))
             .<span class="kw">await</span>;
 
@@ -879,7 +880,7 @@
             APISpec::get_all_spec_files(),
             method,
             path,
-            <span class="string">&quot;application/json&quot;</span>,
+            <span class="string">"application/json"</span>,
             <span class="kw-2">&amp;</span>Null,
             <span class="kw-2">&amp;</span>response,
         );
@@ -890,17 +891,17 @@
         <span class="kw">let </span><span class="kw-2">mut </span>mock_http_message_service = MockMessageService::new();
         mock_http_message_service
             .expect_get_snapshot_message()
-            .return_once(|<span class="kw">_</span>| <span class="prelude-val">Err</span>(HydrationError::InvalidData(<span class="string">&quot;invalid data&quot;</span>.to_string()).into()))
+            .return_once(|<span class="kw">_</span>| <span class="prelude-val">Err</span>(HydrationError::InvalidData(<span class="string">"invalid data"</span>.to_string()).into()))
             .once();
         <span class="kw">let </span><span class="kw-2">mut </span>dependency_manager = initialize_dependencies().<span class="kw">await</span>;
         dependency_manager.message_service = Arc::new(mock_http_message_service);
 
         <span class="kw">let </span>method = Method::GET.as_str();
-        <span class="kw">let </span>path = <span class="string">&quot;/artifact/snapshot/{digest}&quot;</span>;
+        <span class="kw">let </span>path = <span class="string">"/artifact/snapshot/{digest}"</span>;
 
         <span class="kw">let </span>response = request()
             .method(method)
-            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;/{SERVER_BASE_PATH}{path}&quot;</span>))
+            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"/{SERVER_BASE_PATH}{path}"</span>))
             .reply(<span class="kw-2">&amp;</span>setup_router(Arc::new(dependency_manager)))
             .<span class="kw">await</span>;
 
@@ -908,7 +909,7 @@
             APISpec::get_all_spec_files(),
             method,
             path,
-            <span class="string">&quot;application/json&quot;</span>,
+            <span class="string">"application/json"</span>,
             <span class="kw-2">&amp;</span>Null,
             <span class="kw-2">&amp;</span>response,
         );
@@ -932,11 +933,11 @@
         dependency_manager.signed_entity_service = Arc::new(mock_signed_entity_service);
 
         <span class="kw">let </span>method = Method::GET.as_str();
-        <span class="kw">let </span>path = <span class="string">&quot;/artifact/snapshot/{digest}/download&quot;</span>;
+        <span class="kw">let </span>path = <span class="string">"/artifact/snapshot/{digest}/download"</span>;
 
         <span class="kw">let </span>response = request()
             .method(method)
-            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;/{SERVER_BASE_PATH}{path}&quot;</span>))
+            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"/{SERVER_BASE_PATH}{path}"</span>))
             .reply(<span class="kw-2">&amp;</span>setup_router(Arc::new(dependency_manager)))
             .<span class="kw">await</span>;
 
@@ -944,7 +945,7 @@
             APISpec::get_all_spec_files(),
             method,
             path,
-            <span class="string">&quot;application/gzip&quot;</span>,
+            <span class="string">"application/gzip"</span>,
             <span class="kw-2">&amp;</span>Null,
             <span class="kw-2">&amp;</span>response,
         );
@@ -961,11 +962,11 @@
         dependency_manager.signed_entity_service = Arc::new(mock_signed_entity_service);
 
         <span class="kw">let </span>method = Method::GET.as_str();
-        <span class="kw">let </span>path = <span class="string">&quot;/artifact/snapshot/{digest}/download&quot;</span>;
+        <span class="kw">let </span>path = <span class="string">"/artifact/snapshot/{digest}/download"</span>;
 
         <span class="kw">let </span>response = request()
             .method(method)
-            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;/{SERVER_BASE_PATH}{path}&quot;</span>))
+            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"/{SERVER_BASE_PATH}{path}"</span>))
             .reply(<span class="kw-2">&amp;</span>setup_router(Arc::new(dependency_manager)))
             .<span class="kw">await</span>;
 
@@ -973,7 +974,7 @@
             APISpec::get_all_spec_files(),
             method,
             path,
-            <span class="string">&quot;application/gzip&quot;</span>,
+            <span class="string">"application/gzip"</span>,
             <span class="kw-2">&amp;</span>Null,
             <span class="kw-2">&amp;</span>response,
         );
@@ -984,17 +985,17 @@
         <span class="kw">let </span><span class="kw-2">mut </span>mock_signed_entity_service = MockSignedEntityService::new();
         mock_signed_entity_service
             .expect_get_signed_snapshot_by_id()
-            .return_once(|<span class="kw">_</span>| <span class="prelude-val">Err</span>(HydrationError::InvalidData(<span class="string">&quot;invalid data&quot;</span>.to_string()).into()))
+            .return_once(|<span class="kw">_</span>| <span class="prelude-val">Err</span>(HydrationError::InvalidData(<span class="string">"invalid data"</span>.to_string()).into()))
             .once();
         <span class="kw">let </span><span class="kw-2">mut </span>dependency_manager = initialize_dependencies().<span class="kw">await</span>;
         dependency_manager.signed_entity_service = Arc::new(mock_signed_entity_service);
 
         <span class="kw">let </span>method = Method::GET.as_str();
-        <span class="kw">let </span>path = <span class="string">&quot;/artifact/snapshot/{digest}/download&quot;</span>;
+        <span class="kw">let </span>path = <span class="string">"/artifact/snapshot/{digest}/download"</span>;
 
         <span class="kw">let </span>response = request()
             .method(method)
-            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;/{SERVER_BASE_PATH}{path}&quot;</span>))
+            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"/{SERVER_BASE_PATH}{path}"</span>))
             .reply(<span class="kw-2">&amp;</span>setup_router(Arc::new(dependency_manager)))
             .<span class="kw">await</span>;
 
@@ -1002,7 +1003,7 @@
             APISpec::get_all_spec_files(),
             method,
             path,
-            <span class="string">&quot;application/json&quot;</span>,
+            <span class="string">"application/json"</span>,
             <span class="kw-2">&amp;</span>Null,
             <span class="kw-2">&amp;</span>response,
         );

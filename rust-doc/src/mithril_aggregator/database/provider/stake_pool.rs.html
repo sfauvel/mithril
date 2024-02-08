@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-aggregator/src/database/provider/stake_pool.rs`."><title>stake_pool.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="mithril_aggregator" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-aggregator/src/database/provider/stake_pool.rs`."><title>stake_pool.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="mithril_aggregator" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -550,18 +551,18 @@
             stake_pool_id: row.read::&lt;<span class="kw-2">&amp;</span>str, <span class="kw">_</span>&gt;(<span class="number">0</span>).to_string(),
             stake: u64::try_from(stake).map_err(|e| {
                 HydrationError::InvalidData(<span class="macro">format!</span>(
-                    <span class="string">&quot;Could not cast the StakePool.stake from internal db I64 → U64. Error: &#39;{e}&#39;.&quot;</span>,
+                    <span class="string">"Could not cast the StakePool.stake from internal db I64 → U64. Error: '{e}'."</span>,
                 ))
             })<span class="question-mark">?</span>,
             epoch: Epoch(epoch_int.try_into().map_err(|e| {
                 HydrationError::InvalidData(<span class="macro">format!</span>(
-                    <span class="string">&quot;Could not cast i64 ({epoch_int}) to u64. Error: &#39;{e}&#39;&quot;
+                    <span class="string">"Could not cast i64 ({epoch_int}) to u64. Error: '{e}'"
                 </span>))
             })<span class="question-mark">?</span>),
             created_at: DateTime::parse_from_rfc3339(datetime)
                 .map_err(|e| {
                     HydrationError::InvalidData(<span class="macro">format!</span>(
-                        <span class="string">&quot;Could not turn string &#39;{datetime}&#39; to rfc3339 Datetime. Error: {e}&quot;
+                        <span class="string">"Could not turn string '{datetime}' to rfc3339 Datetime. Error: {e}"
                     </span>))
                 })<span class="question-mark">?
                 </span>.with_timezone(<span class="kw-2">&amp;</span>Utc),
@@ -572,29 +573,29 @@
 
     <span class="kw">fn </span>get_projection() -&gt; Projection {
         <span class="kw">let </span><span class="kw-2">mut </span>projection = Projection::default();
-        projection.add_field(<span class="string">&quot;stake_pool_id&quot;</span>, <span class="string">&quot;{:stake_pool:}.stake_pool_id&quot;</span>, <span class="string">&quot;text&quot;</span>);
-        projection.add_field(<span class="string">&quot;stake&quot;</span>, <span class="string">&quot;{:stake_pool:}.stake&quot;</span>, <span class="string">&quot;integer&quot;</span>);
-        projection.add_field(<span class="string">&quot;epoch&quot;</span>, <span class="string">&quot;{:stake_pool:}.epoch&quot;</span>, <span class="string">&quot;integer&quot;</span>);
-        projection.add_field(<span class="string">&quot;created_at&quot;</span>, <span class="string">&quot;{:stake_pool:}.created_at&quot;</span>, <span class="string">&quot;text&quot;</span>);
+        projection.add_field(<span class="string">"stake_pool_id"</span>, <span class="string">"{:stake_pool:}.stake_pool_id"</span>, <span class="string">"text"</span>);
+        projection.add_field(<span class="string">"stake"</span>, <span class="string">"{:stake_pool:}.stake"</span>, <span class="string">"integer"</span>);
+        projection.add_field(<span class="string">"epoch"</span>, <span class="string">"{:stake_pool:}.epoch"</span>, <span class="string">"integer"</span>);
+        projection.add_field(<span class="string">"created_at"</span>, <span class="string">"{:stake_pool:}.created_at"</span>, <span class="string">"text"</span>);
 
         projection
     }
 }
 
 <span class="doccomment">/// Simple [StakePool] provider.
-</span><span class="kw">pub struct </span>StakePoolProvider&lt;<span class="lifetime">&#39;client</span>&gt; {
-    client: <span class="kw-2">&amp;</span><span class="lifetime">&#39;client </span>SqliteConnection,
+</span><span class="kw">pub struct </span>StakePoolProvider&lt;<span class="lifetime">'client</span>&gt; {
+    client: <span class="kw-2">&amp;</span><span class="lifetime">'client </span>SqliteConnection,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;client</span>&gt; StakePoolProvider&lt;<span class="lifetime">&#39;client</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'client</span>&gt; StakePoolProvider&lt;<span class="lifetime">'client</span>&gt; {
     <span class="doccomment">/// Create a new provider
-    </span><span class="kw">pub fn </span>new(client: <span class="kw-2">&amp;</span><span class="lifetime">&#39;client </span>SqliteConnection) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>new(client: <span class="kw-2">&amp;</span><span class="lifetime">'client </span>SqliteConnection) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{ client }
     }
 
     <span class="kw">fn </span>condition_by_epoch(<span class="kw-2">&amp;</span><span class="self">self</span>, epoch: <span class="kw-2">&amp;</span>Epoch) -&gt; StdResult&lt;WhereCondition&gt; {
         <span class="prelude-val">Ok</span>(WhereCondition::new(
-            <span class="string">&quot;epoch = ?*&quot;</span>,
+            <span class="string">"epoch = ?*"</span>,
             <span class="macro">vec!</span>[Value::Integer(epoch.try_into()<span class="question-mark">?</span>)],
         ))
     }
@@ -608,29 +609,29 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;client</span>&gt; Provider&lt;<span class="lifetime">&#39;client</span>&gt; <span class="kw">for </span>StakePoolProvider&lt;<span class="lifetime">&#39;client</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'client</span>&gt; Provider&lt;<span class="lifetime">'client</span>&gt; <span class="kw">for </span>StakePoolProvider&lt;<span class="lifetime">'client</span>&gt; {
     <span class="kw">type </span>Entity = StakePool;
 
-    <span class="kw">fn </span>get_connection(<span class="kw-2">&amp;</span><span class="lifetime">&#39;client </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;client </span>SqliteConnection {
+    <span class="kw">fn </span>get_connection(<span class="kw-2">&amp;</span><span class="lifetime">'client </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'client </span>SqliteConnection {
         <span class="self">self</span>.client
     }
 
     <span class="kw">fn </span>get_definition(<span class="kw-2">&amp;</span><span class="self">self</span>, condition: <span class="kw-2">&amp;</span>str) -&gt; String {
-        <span class="kw">let </span>aliases = SourceAlias::new(<span class="kw-2">&amp;</span>[(<span class="string">&quot;{:stake_pool:}&quot;</span>, <span class="string">&quot;sp&quot;</span>)]);
+        <span class="kw">let </span>aliases = SourceAlias::new(<span class="kw-2">&amp;</span>[(<span class="string">"{:stake_pool:}"</span>, <span class="string">"sp"</span>)]);
         <span class="kw">let </span>projection = <span class="self">Self</span>::Entity::get_projection().expand(aliases);
 
-        <span class="macro">format!</span>(<span class="string">&quot;select {projection} from stake_pool as sp where {condition} order by epoch asc, stake desc, stake_pool_id asc&quot;</span>)
+        <span class="macro">format!</span>(<span class="string">"select {projection} from stake_pool as sp where {condition} order by epoch asc, stake desc, stake_pool_id asc"</span>)
     }
 }
 
 <span class="doccomment">/// Query to update the stake distribution
-</span><span class="kw">pub struct </span>InsertOrReplaceStakePoolProvider&lt;<span class="lifetime">&#39;conn</span>&gt; {
-    connection: <span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span>SqliteConnection,
+</span><span class="kw">pub struct </span>InsertOrReplaceStakePoolProvider&lt;<span class="lifetime">'conn</span>&gt; {
+    connection: <span class="kw-2">&amp;</span><span class="lifetime">'conn </span>SqliteConnection,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;conn</span>&gt; InsertOrReplaceStakePoolProvider&lt;<span class="lifetime">&#39;conn</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'conn</span>&gt; InsertOrReplaceStakePoolProvider&lt;<span class="lifetime">'conn</span>&gt; {
     <span class="doccomment">/// Create a new instance
-    </span><span class="kw">pub fn </span>new(connection: <span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span>SqliteConnection) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>new(connection: <span class="kw-2">&amp;</span><span class="lifetime">'conn </span>SqliteConnection) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{ connection }
     }
 
@@ -638,8 +639,8 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         records: Vec&lt;(PartyId, Epoch, Stake)&gt;,
     ) -&gt; WhereCondition {
-        <span class="kw">let </span>columns = <span class="string">&quot;(stake_pool_id, epoch, stake, created_at)&quot;</span>;
-        <span class="kw">let </span>values_columns: Vec&lt;<span class="kw-2">&amp;</span>str&gt; = repeat(<span class="string">&quot;(?*, ?*, ?*, ?*)&quot;</span>).take(records.len()).collect();
+        <span class="kw">let </span>columns = <span class="string">"(stake_pool_id, epoch, stake, created_at)"</span>;
+        <span class="kw">let </span>values_columns: Vec&lt;<span class="kw-2">&amp;</span>str&gt; = repeat(<span class="string">"(?*, ?*, ?*, ?*)"</span>).take(records.len()).collect();
         <span class="kw">let </span>values = records
             .into_iter()
             .flat_map(|(stake_pool_id, epoch, stake)| {
@@ -653,7 +654,7 @@
             .collect();
 
         WhereCondition::new(
-            <span class="macro">format!</span>(<span class="string">&quot;{columns} values {}&quot;</span>, values_columns.join(<span class="string">&quot;, &quot;</span>)).as_str(),
+            <span class="macro">format!</span>(<span class="string">"{columns} values {}"</span>, values_columns.join(<span class="string">", "</span>)).as_str(),
             values,
         )
     }
@@ -665,10 +666,10 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;conn</span>&gt; Provider&lt;<span class="lifetime">&#39;conn</span>&gt; <span class="kw">for </span>InsertOrReplaceStakePoolProvider&lt;<span class="lifetime">&#39;conn</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'conn</span>&gt; Provider&lt;<span class="lifetime">'conn</span>&gt; <span class="kw">for </span>InsertOrReplaceStakePoolProvider&lt;<span class="lifetime">'conn</span>&gt; {
     <span class="kw">type </span>Entity = StakePool;
 
-    <span class="kw">fn </span>get_connection(<span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span>SqliteConnection {
+    <span class="kw">fn </span>get_connection(<span class="kw-2">&amp;</span><span class="lifetime">'conn </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'conn </span>SqliteConnection {
         <span class="self">self</span>.connection
     }
 
@@ -676,21 +677,21 @@
         <span class="comment">// it is important to alias the fields with the same name as the table
         // since the table cannot be aliased in a RETURNING statement in SQLite.
         </span><span class="kw">let </span>projection = <span class="self">Self</span>::Entity::get_projection()
-            .expand(SourceAlias::new(<span class="kw-2">&amp;</span>[(<span class="string">&quot;{:stake_pool:}&quot;</span>, <span class="string">&quot;stake_pool&quot;</span>)]));
+            .expand(SourceAlias::new(<span class="kw-2">&amp;</span>[(<span class="string">"{:stake_pool:}"</span>, <span class="string">"stake_pool"</span>)]));
 
-        <span class="macro">format!</span>(<span class="string">&quot;insert or replace into stake_pool {condition} returning {projection}&quot;</span>)
+        <span class="macro">format!</span>(<span class="string">"insert or replace into stake_pool {condition} returning {projection}"</span>)
     }
 }
 
 <span class="doccomment">/// Provider to remove old data from the stake_pool table
-</span><span class="kw">pub struct </span>DeleteStakePoolProvider&lt;<span class="lifetime">&#39;conn</span>&gt; {
-    connection: <span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span>SqliteConnection,
+</span><span class="kw">pub struct </span>DeleteStakePoolProvider&lt;<span class="lifetime">'conn</span>&gt; {
+    connection: <span class="kw-2">&amp;</span><span class="lifetime">'conn </span>SqliteConnection,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;conn</span>&gt; Provider&lt;<span class="lifetime">&#39;conn</span>&gt; <span class="kw">for </span>DeleteStakePoolProvider&lt;<span class="lifetime">&#39;conn</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'conn</span>&gt; Provider&lt;<span class="lifetime">'conn</span>&gt; <span class="kw">for </span>DeleteStakePoolProvider&lt;<span class="lifetime">'conn</span>&gt; {
     <span class="kw">type </span>Entity = StakePool;
 
-    <span class="kw">fn </span>get_connection(<span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span>SqliteConnection {
+    <span class="kw">fn </span>get_connection(<span class="kw-2">&amp;</span><span class="lifetime">'conn </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'conn </span>SqliteConnection {
         <span class="self">self</span>.connection
     }
 
@@ -698,22 +699,22 @@
         <span class="comment">// it is important to alias the fields with the same name as the table
         // since the table cannot be aliased in a RETURNING statement in SQLite.
         </span><span class="kw">let </span>projection = <span class="self">Self</span>::Entity::get_projection()
-            .expand(SourceAlias::new(<span class="kw-2">&amp;</span>[(<span class="string">&quot;{:stake_pool:}&quot;</span>, <span class="string">&quot;stake_pool&quot;</span>)]));
+            .expand(SourceAlias::new(<span class="kw-2">&amp;</span>[(<span class="string">"{:stake_pool:}"</span>, <span class="string">"stake_pool"</span>)]));
 
-        <span class="macro">format!</span>(<span class="string">&quot;delete from stake_pool where {condition} returning {projection}&quot;</span>)
+        <span class="macro">format!</span>(<span class="string">"delete from stake_pool where {condition} returning {projection}"</span>)
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;conn</span>&gt; DeleteStakePoolProvider&lt;<span class="lifetime">&#39;conn</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'conn</span>&gt; DeleteStakePoolProvider&lt;<span class="lifetime">'conn</span>&gt; {
     <span class="doccomment">/// Create a new instance
-    </span><span class="kw">pub fn </span>new(connection: <span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span>SqliteConnection) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>new(connection: <span class="kw-2">&amp;</span><span class="lifetime">'conn </span>SqliteConnection) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{ connection }
     }
 
     <span class="doccomment">/// Create the SQL condition to prune data older than the given Epoch.
     </span><span class="kw">fn </span>get_prune_condition(<span class="kw-2">&amp;</span><span class="self">self</span>, epoch_threshold: Epoch) -&gt; WhereCondition {
         WhereCondition::new(
-            <span class="string">&quot;epoch &lt; ?*&quot;</span>,
+            <span class="string">"epoch &lt; ?*"</span>,
             <span class="macro">vec!</span>[Value::Integer(epoch_threshold.try_into().unwrap())],
         )
     }
@@ -760,7 +761,7 @@
                     .map(|(pool_id, stake)| (pool_id, epoch, stake))
                     .collect(),
             )
-            .with_context(|| <span class="macro">format!</span>(<span class="string">&quot;persist stakes failure, epoch: {epoch}&quot;</span>))
+            .with_context(|| <span class="macro">format!</span>(<span class="string">"persist stakes failure, epoch: {epoch}"</span>))
             .map_err(AdapterError::GeneralError)<span class="question-mark">?</span>;
 
         <span class="comment">// Prune useless old stake distributions.
@@ -780,7 +781,7 @@
         <span class="kw">let </span>provider = StakePoolProvider::new(<span class="kw-2">&amp;</span><span class="self">self</span>.connection);
         <span class="kw">let </span>cursor = provider
             .get_by_epoch(<span class="kw-2">&amp;</span>epoch)
-            .with_context(|| <span class="macro">format!</span>(<span class="string">&quot;get stakes failure, epoch: {epoch}&quot;</span>))
+            .with_context(|| <span class="macro">format!</span>(<span class="string">"get stakes failure, epoch: {epoch}"</span>))
             .map_err(AdapterError::GeneralError)<span class="question-mark">?</span>;
         <span class="kw">let </span><span class="kw-2">mut </span>stake_distribution = StakeDistribution::new();
 
@@ -813,18 +814,18 @@
             // tested on its own above.
             </span><span class="kw">let </span>update_provider = InsertOrReplaceStakePoolProvider::new(connection);
             <span class="kw">let </span>(sql_values, <span class="kw">_</span>) = update_provider
-                .get_insert_or_replace_condition(<span class="macro">vec!</span>[(<span class="string">&quot;pool_id&quot;</span>.to_string(), Epoch(<span class="number">1</span>), <span class="number">1000</span>)])
+                .get_insert_or_replace_condition(<span class="macro">vec!</span>[(<span class="string">"pool_id"</span>.to_string(), Epoch(<span class="number">1</span>), <span class="number">1000</span>)])
                 .expand();
 
-            <span class="macro">format!</span>(<span class="string">&quot;insert into stake_pool {sql_values}&quot;</span>)
+            <span class="macro">format!</span>(<span class="string">"insert into stake_pool {sql_values}"</span>)
         };
 
         <span class="comment">// Note: decreasing stakes for pool3 so we can test that the order has changed
         </span><span class="kw">for </span>(pool_id, epoch, stake) <span class="kw">in </span>epoch_to_insert_settings.iter().flat_map(|epoch| {
             [
-                (<span class="string">&quot;pool1&quot;</span>, <span class="kw-2">*</span>epoch, <span class="number">1000 </span>+ (epoch - <span class="number">1</span>) * <span class="number">40</span>),
-                (<span class="string">&quot;pool2&quot;</span>, <span class="kw-2">*</span>epoch, <span class="number">1100 </span>+ (epoch - <span class="number">1</span>) * <span class="number">45</span>),
-                (<span class="string">&quot;pool3&quot;</span>, <span class="kw-2">*</span>epoch, <span class="number">1200 </span>- (epoch - <span class="number">1</span>) * <span class="number">50</span>),
+                (<span class="string">"pool1"</span>, <span class="kw-2">*</span>epoch, <span class="number">1000 </span>+ (epoch - <span class="number">1</span>) * <span class="number">40</span>),
+                (<span class="string">"pool2"</span>, <span class="kw-2">*</span>epoch, <span class="number">1100 </span>+ (epoch - <span class="number">1</span>) * <span class="number">45</span>),
+                (<span class="string">"pool3"</span>, <span class="kw-2">*</span>epoch, <span class="number">1200 </span>- (epoch - <span class="number">1</span>) * <span class="number">50</span>),
             ]
         }) {
             <span class="kw">let </span><span class="kw-2">mut </span>statement = connection.prepare(<span class="kw-2">&amp;</span>query)<span class="question-mark">?</span>;
@@ -845,51 +846,51 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>projection() {
         <span class="kw">let </span>projection = StakePool::get_projection();
-        <span class="kw">let </span>aliases = SourceAlias::new(<span class="kw-2">&amp;</span>[(<span class="string">&quot;{:stake_pool:}&quot;</span>, <span class="string">&quot;sp&quot;</span>)]);
+        <span class="kw">let </span>aliases = SourceAlias::new(<span class="kw-2">&amp;</span>[(<span class="string">"{:stake_pool:}"</span>, <span class="string">"sp"</span>)]);
 
         <span class="macro">assert_eq!</span>(
-            <span class="string">&quot;sp.stake_pool_id as stake_pool_id, sp.stake as stake, sp.epoch as epoch, sp.created_at as created_at&quot;</span>.to_string(),
+            <span class="string">"sp.stake_pool_id as stake_pool_id, sp.stake as stake, sp.epoch as epoch, sp.created_at as created_at"</span>.to_string(),
             projection.expand(aliases)
         );
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>get_pool_by_epoch() {
-        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">&quot;:memory:&quot;</span>).unwrap();
+        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">":memory:"</span>).unwrap();
         <span class="kw">let </span>provider = StakePoolProvider::new(<span class="kw-2">&amp;</span>connection);
         <span class="kw">let </span>condition = provider.condition_by_epoch(<span class="kw-2">&amp;</span>Epoch(<span class="number">17</span>)).unwrap();
         <span class="kw">let </span>(filter, values) = condition.expand();
 
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;epoch = ?1&quot;</span>.to_string(), filter);
+        <span class="macro">assert_eq!</span>(<span class="string">"epoch = ?1"</span>.to_string(), filter);
         <span class="macro">assert_eq!</span>(<span class="macro">vec!</span>[Value::Integer(<span class="number">17</span>)], values);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>insert_or_replace_stake_pool() {
-        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">&quot;:memory:&quot;</span>).unwrap();
+        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">":memory:"</span>).unwrap();
         <span class="kw">let </span>provider = InsertOrReplaceStakePoolProvider::new(<span class="kw-2">&amp;</span>connection);
         <span class="kw">let </span>condition = provider.get_insert_or_replace_condition(<span class="macro">vec!</span>[
-            (<span class="string">&quot;pool_id&quot;</span>.to_string(), Epoch(<span class="number">1</span>), <span class="number">1000</span>),
-            (<span class="string">&quot;pool2_id&quot;</span>.to_string(), Epoch(<span class="number">2</span>), <span class="number">2000</span>),
+            (<span class="string">"pool_id"</span>.to_string(), Epoch(<span class="number">1</span>), <span class="number">1000</span>),
+            (<span class="string">"pool2_id"</span>.to_string(), Epoch(<span class="number">2</span>), <span class="number">2000</span>),
         ]);
         <span class="kw">let </span>(values, params) = condition.expand();
 
         <span class="macro">assert_eq!</span>(
-            <span class="string">&quot;(stake_pool_id, epoch, stake, created_at) values (?1, ?2, ?3, ?4), (?5, ?6, ?7, ?8)&quot;
+            <span class="string">"(stake_pool_id, epoch, stake, created_at) values (?1, ?2, ?3, ?4), (?5, ?6, ?7, ?8)"
                 </span>.to_string(),
             values
         );
         <span class="macro">assert_eq!</span>(
             <span class="macro">vec!</span>[
-                Value::String(<span class="string">&quot;pool_id&quot;</span>.to_string()),
+                Value::String(<span class="string">"pool_id"</span>.to_string()),
                 Value::Integer(<span class="number">1</span>),
                 Value::Integer(<span class="number">1000</span>),
-                <span class="comment">// the created_at date is created by the condition itself so we don&#39;t need to test it
+                <span class="comment">// the created_at date is created by the condition itself so we don't need to test it
                 </span>params[<span class="number">3</span>].clone(),
-                Value::String(<span class="string">&quot;pool2_id&quot;</span>.to_string()),
+                Value::String(<span class="string">"pool2_id"</span>.to_string()),
                 Value::Integer(<span class="number">2</span>),
                 Value::Integer(<span class="number">2000</span>),
-                <span class="comment">// the created_at date is created by the condition itself so we don&#39;t need to test it
+                <span class="comment">// the created_at date is created by the condition itself so we don't need to test it
                 </span>params[<span class="number">7</span>].clone(),
             ],
             params
@@ -898,35 +899,35 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>prune() {
-        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">&quot;:memory:&quot;</span>).unwrap();
+        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">":memory:"</span>).unwrap();
         <span class="kw">let </span>provider = DeleteStakePoolProvider::new(<span class="kw-2">&amp;</span>connection);
         <span class="kw">let </span>condition = provider.get_prune_condition(Epoch(<span class="number">5</span>));
         <span class="kw">let </span>(condition, params) = condition.expand();
 
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;epoch &lt; ?1&quot;</span>.to_string(), condition);
+        <span class="macro">assert_eq!</span>(<span class="string">"epoch &lt; ?1"</span>.to_string(), condition);
         <span class="macro">assert_eq!</span>(<span class="macro">vec!</span>[Value::Integer(<span class="number">5</span>)], params);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_get_stake_pools() {
-        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">&quot;:memory:&quot;</span>).unwrap();
+        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">":memory:"</span>).unwrap();
         setup_stake_db(<span class="kw-2">&amp;</span>connection, <span class="kw-2">&amp;</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]).unwrap();
 
         <span class="kw">let </span>provider = StakePoolProvider::new(<span class="kw-2">&amp;</span>connection);
         <span class="kw">let </span><span class="kw-2">mut </span>cursor = provider.get_by_epoch(<span class="kw-2">&amp;</span>Epoch(<span class="number">1</span>)).unwrap();
 
-        <span class="kw">let </span>stake_pool = cursor.next().expect(<span class="string">&quot;Should have a stake pool &#39;pool3&#39;.&quot;</span>);
+        <span class="kw">let </span>stake_pool = cursor.next().expect(<span class="string">"Should have a stake pool 'pool3'."</span>);
         <span class="macro">assert_eq!</span>(
-            (<span class="string">&quot;pool3&quot;</span>.to_string(), Epoch(<span class="number">1</span>), <span class="number">1200</span>),
+            (<span class="string">"pool3"</span>.to_string(), Epoch(<span class="number">1</span>), <span class="number">1200</span>),
             (stake_pool.stake_pool_id, stake_pool.epoch, stake_pool.stake)
         );
         <span class="macro">assert_eq!</span>(<span class="number">2</span>, cursor.count());
 
         <span class="kw">let </span><span class="kw-2">mut </span>cursor = provider.get_by_epoch(<span class="kw-2">&amp;</span>Epoch(<span class="number">3</span>)).unwrap();
 
-        <span class="kw">let </span>stake_pool = cursor.next().expect(<span class="string">&quot;Should have a stake pool &#39;pool2&#39;.&quot;</span>);
+        <span class="kw">let </span>stake_pool = cursor.next().expect(<span class="string">"Should have a stake pool 'pool2'."</span>);
         <span class="macro">assert_eq!</span>(
-            (<span class="string">&quot;pool2&quot;</span>.to_string(), Epoch(<span class="number">3</span>), <span class="number">1190</span>),
+            (<span class="string">"pool2"</span>.to_string(), Epoch(<span class="number">3</span>), <span class="number">1190</span>),
             (stake_pool.stake_pool_id, stake_pool.epoch, stake_pool.stake)
         );
         <span class="macro">assert_eq!</span>(<span class="number">2</span>, cursor.count());
@@ -937,24 +938,24 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_update_stakes() {
-        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">&quot;:memory:&quot;</span>).unwrap();
+        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">":memory:"</span>).unwrap();
         setup_stake_db(<span class="kw-2">&amp;</span>connection, <span class="kw-2">&amp;</span>[<span class="number">3</span>]).unwrap();
 
         <span class="kw">let </span>provider = InsertOrReplaceStakePoolProvider::new(<span class="kw-2">&amp;</span>connection);
         <span class="kw">let </span>pools = provider
-            .persist_many(<span class="macro">vec!</span>[(<span class="string">&quot;pool4&quot;</span>.to_string(), Epoch(<span class="number">3</span>), <span class="number">9999</span>)])
+            .persist_many(<span class="macro">vec!</span>[(<span class="string">"pool4"</span>.to_string(), Epoch(<span class="number">3</span>), <span class="number">9999</span>)])
             .unwrap();
         <span class="kw">let </span>stake_pool = pools.first().unwrap();
 
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;pool4&quot;</span>.to_string(), stake_pool.stake_pool_id);
+        <span class="macro">assert_eq!</span>(<span class="string">"pool4"</span>.to_string(), stake_pool.stake_pool_id);
         <span class="macro">assert_eq!</span>(Epoch(<span class="number">3</span>), stake_pool.epoch);
         <span class="macro">assert_eq!</span>(<span class="number">9999</span>, stake_pool.stake);
 
         <span class="kw">let </span>provider = StakePoolProvider::new(<span class="kw-2">&amp;</span>connection);
         <span class="kw">let </span><span class="kw-2">mut </span>cursor = provider.get_by_epoch(<span class="kw-2">&amp;</span>Epoch(<span class="number">3</span>)).unwrap();
-        <span class="kw">let </span>stake_pool = cursor.next().expect(<span class="string">&quot;Should have a stake pool &#39;pool4&#39;.&quot;</span>);
+        <span class="kw">let </span>stake_pool = cursor.next().expect(<span class="string">"Should have a stake pool 'pool4'."</span>);
 
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;pool4&quot;</span>.to_string(), stake_pool.stake_pool_id);
+        <span class="macro">assert_eq!</span>(<span class="string">"pool4"</span>.to_string(), stake_pool.stake_pool_id);
         <span class="macro">assert_eq!</span>(Epoch(<span class="number">3</span>), stake_pool.epoch);
         <span class="macro">assert_eq!</span>(<span class="number">9999</span>, stake_pool.stake);
         <span class="macro">assert_eq!</span>(<span class="number">3</span>, cursor.count());
@@ -962,7 +963,7 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_prune() {
-        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">&quot;:memory:&quot;</span>).unwrap();
+        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">":memory:"</span>).unwrap();
         setup_stake_db(<span class="kw-2">&amp;</span>connection, <span class="kw-2">&amp;</span>[<span class="number">1</span>, <span class="number">2</span>]).unwrap();
 
         <span class="kw">let </span>provider = DeleteStakePoolProvider::new(<span class="kw-2">&amp;</span>connection);
@@ -982,7 +983,7 @@
 
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>save_protocol_parameters_prune_older_epoch_settings() {
-        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">&quot;:memory:&quot;</span>).unwrap();
+        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">":memory:"</span>).unwrap();
         <span class="kw">const </span>STAKE_POOL_PRUNE_EPOCH_THRESHOLD: u64 = <span class="number">10</span>;
         setup_stake_db(<span class="kw-2">&amp;</span>connection, <span class="kw-2">&amp;</span>[<span class="number">1</span>, <span class="number">2</span>]).unwrap();
         <span class="kw">let </span>store =
@@ -991,20 +992,20 @@
         store
             .save_stakes(
                 Epoch(<span class="number">2</span>) + STAKE_POOL_PRUNE_EPOCH_THRESHOLD,
-                StakeDistribution::from_iter([(<span class="string">&quot;pool1&quot;</span>.to_string(), <span class="number">100</span>)]),
+                StakeDistribution::from_iter([(<span class="string">"pool1"</span>.to_string(), <span class="number">100</span>)]),
             )
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;saving stakes should not fails&quot;</span>);
+            </span>.expect(<span class="string">"saving stakes should not fails"</span>);
         <span class="kw">let </span>epoch1_stakes = store.get_stakes(Epoch(<span class="number">1</span>)).<span class="kw">await</span>.unwrap();
         <span class="kw">let </span>epoch2_stakes = store.get_stakes(Epoch(<span class="number">2</span>)).<span class="kw">await</span>.unwrap();
 
         <span class="macro">assert_eq!</span>(
             <span class="prelude-val">None</span>, epoch1_stakes,
-            <span class="string">&quot;Stakes at epoch 1 should have been pruned&quot;</span>,
+            <span class="string">"Stakes at epoch 1 should have been pruned"</span>,
         );
         <span class="macro">assert!</span>(
             epoch2_stakes.is_some(),
-            <span class="string">&quot;Stakes at epoch 2 should still exist&quot;</span>,
+            <span class="string">"Stakes at epoch 2 should still exist"</span>,
         );
     }
 }

@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-common/src/crypto_helper/cardano/codec.rs`."><title>codec.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="mithril_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-common/src/crypto_helper/cardano/codec.rs`."><title>codec.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="mithril_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -181,9 +182,9 @@
 //! which have the following format:
 //! ```json
 //! {
-//!      &quot;type&quot;: &lt;NAME OF SERIALISED STRUCTURE&gt;,
-//!      &quot;description&quot;: &lt;DESCRIPTION OF SERIALISED STRUCTURE&gt;,
-//!      &quot;cborHex&quot;: &lt;CBOR HEX REPRESENTATION OF SERIALISED STRUCTURE&gt;
+//!      "type": &lt;NAME OF SERIALISED STRUCTURE&gt;,
+//!      "description": &lt;DESCRIPTION OF SERIALISED STRUCTURE&gt;,
+//!      "cborHex": &lt;CBOR HEX REPRESENTATION OF SERIALISED STRUCTURE&gt;
 //!  }
 //! ```
 //!
@@ -211,20 +212,20 @@
 // from a file, instead of directly consuming a buffer.
 // todo: create the KES key directly from a buffer instead of deserialising from disk
 </span><span class="attr">#[derive(Clone, Serialize, Deserialize)]
-</span><span class="kw">pub struct </span>Sum6KesBytes(<span class="attr">#[serde(with = <span class="string">&quot;As::&lt;Bytes&gt;&quot;</span>)] </span><span class="kw">pub </span>[u8; <span class="number">612</span>]);
+</span><span class="kw">pub struct </span>Sum6KesBytes(<span class="attr">#[serde(with = <span class="string">"As::&lt;Bytes&gt;"</span>)] </span><span class="kw">pub </span>[u8; <span class="number">612</span>]);
 
 <span class="doccomment">/// Parse error
 </span><span class="attr">#[derive(Error, Debug)]
-#[error(<span class="string">&quot;Codec parse error&quot;</span>)]
+#[error(<span class="string">"Codec parse error"</span>)]
 </span><span class="kw">pub struct </span>CodecParseError(<span class="attr">#[source] </span>StdError);
 
 <span class="doccomment">/// Fields for a shelley formatted file (holds for vkeys, skeys or certs)
 </span><span class="attr">#[derive(Clone, Debug, Default, Serialize, Deserialize)]
 </span><span class="kw">struct </span>ShelleyFileFormat {
-    <span class="attr">#[serde(rename = <span class="string">&quot;type&quot;</span>)]
+    <span class="attr">#[serde(rename = <span class="string">"type"</span>)]
     </span>file_type: String,
     description: String,
-    <span class="attr">#[serde(rename = <span class="string">&quot;cborHex&quot;</span>)]
+    <span class="attr">#[serde(rename = <span class="string">"cborHex"</span>)]
     </span>cbor_hex: String,
 }
 
@@ -232,25 +233,25 @@
 /// be serialized and deserialized following the Shelly json format.
 </span><span class="kw">pub trait </span>SerDeShelleyFileFormat: Serialize + DeserializeOwned {
     <span class="doccomment">/// The type of Cardano key
-    </span><span class="kw">const </span>TYPE: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str;
+    </span><span class="kw">const </span>TYPE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str;
 
     <span class="doccomment">/// The description of the Cardano key
-    </span><span class="kw">const </span>DESCRIPTION: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str;
+    </span><span class="kw">const </span>DESCRIPTION: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str;
 
     <span class="doccomment">/// Deserialize a type `T: Serialize + DeserializeOwned` from file following Cardano
     /// Shelley file format.
     </span><span class="kw">fn </span>from_file&lt;P: AsRef&lt;Path&gt;&gt;(path: P) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, CodecParseError&gt; {
         <span class="kw">let </span>data = fs::read_to_string(path)
-            .with_context(|| <span class="string">&quot;SerDeShelleyFileFormat can not read data from file {}&quot;</span>)
+            .with_context(|| <span class="string">"SerDeShelleyFileFormat can not read data from file {}"</span>)
             .map_err(|e| CodecParseError(<span class="macro">anyhow!</span>(e)))<span class="question-mark">?</span>;
         <span class="kw">let </span>file: ShelleyFileFormat = serde_json::from_str(<span class="kw-2">&amp;</span>data)
-            .with_context(|| <span class="string">&quot;SerDeShelleyFileFormat can not unserialize json data&quot;</span>)
+            .with_context(|| <span class="string">"SerDeShelleyFileFormat can not unserialize json data"</span>)
             .map_err(|e| CodecParseError(<span class="macro">anyhow!</span>(e)))<span class="question-mark">?</span>;
         <span class="kw">let </span>hex_vector = Vec::from_hex(file.cbor_hex)
-            .with_context(|| <span class="string">&quot;SerDeShelleyFileFormat can not unserialize hex data&quot;</span>)
+            .with_context(|| <span class="string">"SerDeShelleyFileFormat can not unserialize hex data"</span>)
             .map_err(|e| CodecParseError(<span class="macro">anyhow!</span>(e)))<span class="question-mark">?</span>;
         <span class="kw">let </span>a: <span class="self">Self </span>= serde_cbor::from_slice(<span class="kw-2">&amp;</span>hex_vector)
-            .with_context(|| <span class="string">&quot;SerDeShelleyFileFormat can not unserialize cbor data&quot;</span>)
+            .with_context(|| <span class="string">"SerDeShelleyFileFormat can not unserialize cbor data"</span>)
             .map_err(|e| CodecParseError(<span class="macro">anyhow!</span>(e)))<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(a)
@@ -261,7 +262,7 @@
     </span><span class="kw">fn </span>to_file&lt;P: AsRef&lt;Path&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, path: P) -&gt; <span class="prelude-ty">Result</span>&lt;(), CodecParseError&gt; {
         <span class="kw">let </span>cbor_string = hex::encode(
             serde_cbor::to_vec(<span class="kw-2">&amp;</span><span class="self">self</span>)
-                .with_context(|| <span class="string">&quot;SerDeShelleyFileFormat can not serialize data to cbor&quot;</span>)
+                .with_context(|| <span class="string">"SerDeShelleyFileFormat can not serialize data to cbor"</span>)
                 .map_err(|e| CodecParseError(<span class="macro">anyhow!</span>(e)))<span class="question-mark">?</span>,
         );
 
@@ -272,35 +273,35 @@
         };
 
         <span class="kw">let </span><span class="kw-2">mut </span>file = fs::File::create(path)
-            .with_context(|| <span class="string">&quot;SerDeShelleyFileFormat can not create file&quot;</span>)
+            .with_context(|| <span class="string">"SerDeShelleyFileFormat can not create file"</span>)
             .map_err(|e| CodecParseError(<span class="macro">anyhow!</span>(e)))<span class="question-mark">?</span>;
         <span class="kw">let </span>json_str = serde_json::to_string(<span class="kw-2">&amp;</span>file_format)
-            .with_context(|| <span class="string">&quot;SerDeShelleyFileFormat can not serialize data to json&quot;</span>)
+            .with_context(|| <span class="string">"SerDeShelleyFileFormat can not serialize data to json"</span>)
             .map_err(|e| CodecParseError(<span class="macro">anyhow!</span>(e)))<span class="question-mark">?</span>;
 
-        <span class="macro">write!</span>(file, <span class="string">&quot;{json_str}&quot;</span>)
-            .with_context(|| <span class="string">&quot;SerDeShelleyFileFormat can not write data to file&quot;</span>)
+        <span class="macro">write!</span>(file, <span class="string">"{json_str}"</span>)
+            .with_context(|| <span class="string">"SerDeShelleyFileFormat can not write data to file"</span>)
             .map_err(|e| CodecParseError(<span class="macro">anyhow!</span>(e)))<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())
     }
 }
 
 <span class="kw">impl </span>SerDeShelleyFileFormat <span class="kw">for </span>Sum6KesBytes {
-    <span class="kw">const </span>TYPE: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;KesSigningKey_ed25519_kes_2^6&quot;</span>;
-    <span class="kw">const </span>DESCRIPTION: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;KES Signing Key&quot;</span>;
+    <span class="kw">const </span>TYPE: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"KesSigningKey_ed25519_kes_2^6"</span>;
+    <span class="kw">const </span>DESCRIPTION: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"KES Signing Key"</span>;
 
     <span class="doccomment">/// Deserialize a Cardano key from file. Cardano KES key Shelley format does not
     /// contain the period (it is always zero). Therefore we need to include it in the
     /// deserialisation.
     </span><span class="kw">fn </span>from_file&lt;P: AsRef&lt;Path&gt;&gt;(path: P) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, CodecParseError&gt; {
         <span class="kw">let </span>data = fs::read_to_string(path)
-            .with_context(|| <span class="string">&quot;Sum6KesBytes can not read data from file&quot;</span>)
+            .with_context(|| <span class="string">"Sum6KesBytes can not read data from file"</span>)
             .map_err(|e| CodecParseError(<span class="macro">anyhow!</span>(e)))<span class="question-mark">?</span>;
         <span class="kw">let </span>file: ShelleyFileFormat = serde_json::from_str(<span class="kw-2">&amp;</span>data)
-            .with_context(|| <span class="string">&quot;Sum6KesBytes can not unserialize json data&quot;</span>)
+            .with_context(|| <span class="string">"Sum6KesBytes can not unserialize json data"</span>)
             .map_err(|e| CodecParseError(<span class="macro">anyhow!</span>(e)))<span class="question-mark">?</span>;
         <span class="kw">let </span><span class="kw-2">mut </span>hex_vector = Vec::from_hex(file.cbor_hex)
-            .with_context(|| <span class="string">&quot;Sum6KesBytes can not unserialize hex data&quot;</span>)
+            .with_context(|| <span class="string">"Sum6KesBytes can not unserialize hex data"</span>)
             .map_err(|e| CodecParseError(<span class="macro">anyhow!</span>(e)))<span class="question-mark">?</span>;
 
         <span class="comment">// We check whether the serialisation was performed by the haskell library or the rust library
@@ -312,17 +313,17 @@
         }
 
         <span class="kw">let </span>a: <span class="self">Self </span>= serde_cbor::from_slice(<span class="kw-2">&amp;</span>hex_vector)
-            .with_context(|| <span class="string">&quot;Sum6KesBytes can not unserialize cbor data&quot;</span>)
+            .with_context(|| <span class="string">"Sum6KesBytes can not unserialize cbor data"</span>)
             .map_err(|e| CodecParseError(<span class="macro">anyhow!</span>(e)))<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(a)
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Sum6KesBytes&gt; <span class="kw">for </span>Sum6Kes&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; TryFrom&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Sum6KesBytes&gt; <span class="kw">for </span>Sum6Kes&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">type </span>Error = CodecParseError;
 
-    <span class="kw">fn </span>try_from(value: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Sum6KesBytes) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
-        <span class="self">Self</span>::from_bytes(<span class="kw-2">&amp;mut </span>value.<span class="number">0</span>).map_err(|e| CodecParseError(<span class="macro">anyhow!</span>(<span class="macro">format!</span>(<span class="string">&quot;{e:?}&quot;</span>))))
+    <span class="kw">fn </span>try_from(value: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Sum6KesBytes) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+        <span class="self">Self</span>::from_bytes(<span class="kw-2">&amp;mut </span>value.<span class="number">0</span>).map_err(|e| CodecParseError(<span class="macro">anyhow!</span>(<span class="macro">format!</span>(<span class="string">"{e:?}"</span>))))
     }
 }
 
@@ -332,10 +333,10 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>compat_with_shelly_format() {
-        <span class="kw">let </span>temp_dir = std::env::temp_dir().join(<span class="string">&quot;testing&quot;</span>);
-        fs::create_dir_all(<span class="kw-2">&amp;</span>temp_dir).expect(<span class="string">&quot;temp dir creation should not fail&quot;</span>);
-        <span class="kw">let </span>sk_dir = temp_dir.join(<span class="string">&quot;dummy.skey&quot;</span>);
-        <span class="kw">let </span>cbor_string = <span class="string">&quot;590260fe77acdfa56281e4b05198f5136018057a65f425411f0990cac4aca0f2917aa00a3d51e191f6f425d870aca3c6a2a41833621f5729d7bc0e3dfc3ae77d057e5e1253b71def7a54157b9f98973ca3c49edd9f311e5f4b23ac268b56a6ac040c14c6d2217925492e42f00dc89a2a01ff363571df0ca0db5ba37001cee56790cc01cd69c6aa760fca55a65a110305ea3c11da0a27be345a589329a584ebfc499c43c55e8c6db5d9c0b014692533ee78abd7ac1e79f7ec9335c7551d31668369b4d5111db78072f010043e35e5ca7f11acc3c05b26b9c7fe56f02aa41544f00cb7685e87f34c73b617260ade3c7b8d8c4df46693694998f85ad80d2cbab0b575b6ccd65d90574e84368169578bff57f751bc94f7eec5c0d7055ec88891a69545eedbfbd3c5f1b1c1fe09c14099f6b052aa215efdc5cb6cdc84aa810db41dbe8cb7d28f7c4beb75cc53915d3ac75fc9d0bf1c734a46e401e15150c147d013a938b7e07cc4f25a582b914e94783d15896530409b8acbe31ef471de8a1988ac78dfb7510729eff008084885f07df870b65e4f382ca15908e1dcda77384b5c724350de90cec22b1dcbb1cdaed88da08bb4772a82266ec154f5887f89860d0920dba705c45957ef6d93e42f6c9509c966277d368dd0eefa67c8147aa15d40a222f7953a4f34616500b310d00aa1b5b73eb237dc4f76c0c16813d321b2fc5ac97039be25b22509d1201d61f4ccc11cd4ff40fffe39f0e937b4722074d8e073a775d7283b715d46f79ce128e3f1362f35615fa72364d20b6db841193d96e58d9d8e86b516bbd1f05e45b39823a93f6e9f29d9e01acf2c12c072d1c64e0afbbabf6903ef542e&quot;</span>.to_string();
+        <span class="kw">let </span>temp_dir = std::env::temp_dir().join(<span class="string">"testing"</span>);
+        fs::create_dir_all(<span class="kw-2">&amp;</span>temp_dir).expect(<span class="string">"temp dir creation should not fail"</span>);
+        <span class="kw">let </span>sk_dir = temp_dir.join(<span class="string">"dummy.skey"</span>);
+        <span class="kw">let </span>cbor_string = <span class="string">"590260fe77acdfa56281e4b05198f5136018057a65f425411f0990cac4aca0f2917aa00a3d51e191f6f425d870aca3c6a2a41833621f5729d7bc0e3dfc3ae77d057e5e1253b71def7a54157b9f98973ca3c49edd9f311e5f4b23ac268b56a6ac040c14c6d2217925492e42f00dc89a2a01ff363571df0ca0db5ba37001cee56790cc01cd69c6aa760fca55a65a110305ea3c11da0a27be345a589329a584ebfc499c43c55e8c6db5d9c0b014692533ee78abd7ac1e79f7ec9335c7551d31668369b4d5111db78072f010043e35e5ca7f11acc3c05b26b9c7fe56f02aa41544f00cb7685e87f34c73b617260ade3c7b8d8c4df46693694998f85ad80d2cbab0b575b6ccd65d90574e84368169578bff57f751bc94f7eec5c0d7055ec88891a69545eedbfbd3c5f1b1c1fe09c14099f6b052aa215efdc5cb6cdc84aa810db41dbe8cb7d28f7c4beb75cc53915d3ac75fc9d0bf1c734a46e401e15150c147d013a938b7e07cc4f25a582b914e94783d15896530409b8acbe31ef471de8a1988ac78dfb7510729eff008084885f07df870b65e4f382ca15908e1dcda77384b5c724350de90cec22b1dcbb1cdaed88da08bb4772a82266ec154f5887f89860d0920dba705c45957ef6d93e42f6c9509c966277d368dd0eefa67c8147aa15d40a222f7953a4f34616500b310d00aa1b5b73eb237dc4f76c0c16813d321b2fc5ac97039be25b22509d1201d61f4ccc11cd4ff40fffe39f0e937b4722074d8e073a775d7283b715d46f79ce128e3f1362f35615fa72364d20b6db841193d96e58d9d8e86b516bbd1f05e45b39823a93f6e9f29d9e01acf2c12c072d1c64e0afbbabf6903ef542e"</span>.to_string();
 
         <span class="kw">let </span>file_format = ShelleyFileFormat {
             file_type: Sum6KesBytes::TYPE.to_string(),
@@ -344,14 +345,14 @@
         };
 
         <span class="kw">let </span><span class="kw-2">mut </span>file =
-            fs::File::create(sk_dir.clone()).expect(<span class="string">&quot;Unexpected error with file creation.&quot;</span>);
+            fs::File::create(sk_dir.clone()).expect(<span class="string">"Unexpected error with file creation."</span>);
         <span class="kw">let </span>json_str =
-            serde_json::to_string(<span class="kw-2">&amp;</span>file_format).expect(<span class="string">&quot;Unexpected error with serialisation.&quot;</span>);
+            serde_json::to_string(<span class="kw-2">&amp;</span>file_format).expect(<span class="string">"Unexpected error with serialisation."</span>);
 
-        <span class="macro">write!</span>(file, <span class="string">&quot;{json_str}&quot;</span>).expect(<span class="string">&quot;Unexpected error writing to file.&quot;</span>);
+        <span class="macro">write!</span>(file, <span class="string">"{json_str}"</span>).expect(<span class="string">"Unexpected error writing to file."</span>);
 
         <span class="kw">let </span><span class="kw-2">mut </span>kes_sk_bytes =
-            Sum6KesBytes::from_file(<span class="kw-2">&amp;</span>sk_dir).expect(<span class="string">&quot;Failure parsing Shelley file format.&quot;</span>);
+            Sum6KesBytes::from_file(<span class="kw-2">&amp;</span>sk_dir).expect(<span class="string">"Failure parsing Shelley file format."</span>);
 
         <span class="macro">assert!</span>(Sum6Kes::try_from(<span class="kw-2">&amp;mut </span>kes_sk_bytes).is_ok());
     }

@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-common/src/messages/snapshot.rs`."><title>snapshot.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-common/src/messages/snapshot.rs`."><title>snapshot.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -176,11 +177,11 @@
     </span><span class="kw">pub </span>locations: Vec&lt;String&gt;,
 
     <span class="doccomment">/// Compression algorithm of the snapshot archive
-    </span><span class="attr">#[serde(skip_serializing_if = <span class="string">&quot;Option::is_none&quot;</span>)]
+    </span><span class="attr">#[serde(skip_serializing_if = <span class="string">"Option::is_none"</span>)]
     </span><span class="kw">pub </span>compression_algorithm: <span class="prelude-ty">Option</span>&lt;CompressionAlgorithm&gt;,
 
     <span class="doccomment">/// Cardano node version
-    </span><span class="attr">#[serde(skip_serializing_if = <span class="string">&quot;Option::is_none&quot;</span>)]
+    </span><span class="attr">#[serde(skip_serializing_if = <span class="string">"Option::is_none"</span>)]
     </span><span class="kw">pub </span>cardano_node_version: <span class="prelude-ty">Option</span>&lt;String&gt;,
 }
 
@@ -188,21 +189,21 @@
     <span class="doccomment">/// Return a dummy test entity (test-only).
     </span><span class="kw">pub fn </span>dummy() -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
-            digest: <span class="string">&quot;0b9f5ad7f33cc523775c82249294eb8a1541d54f08eb3107cafc5638403ec7c6&quot;</span>.to_string(),
+            digest: <span class="string">"0b9f5ad7f33cc523775c82249294eb8a1541d54f08eb3107cafc5638403ec7c6"</span>.to_string(),
             beacon: Beacon {
-                network: <span class="string">&quot;preview&quot;</span>.to_string(),
+                network: <span class="string">"preview"</span>.to_string(),
                 epoch: Epoch(<span class="number">86</span>),
                 immutable_file_number: <span class="number">1728</span>,
             },
-            certificate_hash: <span class="string">&quot;d5daf6c03ace4a9c074e951844075b9b373bafc4e039160e3e2af01823e9abfb&quot;
+            certificate_hash: <span class="string">"d5daf6c03ace4a9c074e951844075b9b373bafc4e039160e3e2af01823e9abfb"
                 </span>.to_string(),
             size: <span class="number">807803196</span>,
-            created_at: DateTime::parse_from_rfc3339(<span class="string">&quot;2023-01-19T13:43:05.618857482Z&quot;</span>)
+            created_at: DateTime::parse_from_rfc3339(<span class="string">"2023-01-19T13:43:05.618857482Z"</span>)
                 .unwrap()
                 .with_timezone(<span class="kw-2">&amp;</span>Utc),
-            locations: <span class="macro">vec!</span>[<span class="string">&quot;https://host/certificate.tar.gz&quot;</span>.to_string()],
+            locations: <span class="macro">vec!</span>[<span class="string">"https://host/certificate.tar.gz"</span>.to_string()],
             compression_algorithm: <span class="prelude-val">Some</span>(CompressionAlgorithm::Gzip),
-            cardano_node_version: <span class="prelude-val">Some</span>(<span class="string">&quot;0.0.1&quot;</span>.to_string()),
+            cardano_node_version: <span class="prelude-val">Some</span>(<span class="string">"0.0.1"</span>.to_string()),
         }
     }
 }
@@ -213,19 +214,19 @@
 
     <span class="kw">fn </span>golden_message_v1() -&gt; SnapshotMessage {
         SnapshotMessage {
-            digest: <span class="string">&quot;0b9f5ad7f33cc523775c82249294eb8a1541d54f08eb3107cafc5638403ec7c6&quot;</span>.to_string(),
+            digest: <span class="string">"0b9f5ad7f33cc523775c82249294eb8a1541d54f08eb3107cafc5638403ec7c6"</span>.to_string(),
             beacon: Beacon {
-                network: <span class="string">&quot;preview&quot;</span>.to_string(),
+                network: <span class="string">"preview"</span>.to_string(),
                 epoch: Epoch(<span class="number">86</span>),
                 immutable_file_number: <span class="number">1728</span>,
             },
-            certificate_hash: <span class="string">&quot;d5daf6c03ace4a9c074e951844075b9b373bafc4e039160e3e2af01823e9abfb&quot;
+            certificate_hash: <span class="string">"d5daf6c03ace4a9c074e951844075b9b373bafc4e039160e3e2af01823e9abfb"
                 </span>.to_string(),
             size: <span class="number">807803196</span>,
-            created_at: DateTime::parse_from_rfc3339(<span class="string">&quot;2023-01-19T13:43:05.618857482Z&quot;</span>)
+            created_at: DateTime::parse_from_rfc3339(<span class="string">"2023-01-19T13:43:05.618857482Z"</span>)
                 .unwrap()
                 .with_timezone(<span class="kw-2">&amp;</span>Utc),
-            locations: <span class="macro">vec!</span>[<span class="string">&quot;https://host/certificate.tar.gz&quot;</span>.to_string()],
+            locations: <span class="macro">vec!</span>[<span class="string">"https://host/certificate.tar.gz"</span>.to_string()],
             compression_algorithm: <span class="prelude-val">None</span>,
             cardano_node_version: <span class="prelude-val">None</span>,
         }
@@ -233,43 +234,43 @@
 
     <span class="kw">fn </span>golden_message_v2() -&gt; SnapshotMessage {
         SnapshotMessage {
-            digest: <span class="string">&quot;0b9f5ad7f33cc523775c82249294eb8a1541d54f08eb3107cafc5638403ec7c6&quot;</span>.to_string(),
+            digest: <span class="string">"0b9f5ad7f33cc523775c82249294eb8a1541d54f08eb3107cafc5638403ec7c6"</span>.to_string(),
             beacon: Beacon {
-                network: <span class="string">&quot;preview&quot;</span>.to_string(),
+                network: <span class="string">"preview"</span>.to_string(),
                 epoch: Epoch(<span class="number">86</span>),
                 immutable_file_number: <span class="number">1728</span>,
             },
-            certificate_hash: <span class="string">&quot;d5daf6c03ace4a9c074e951844075b9b373bafc4e039160e3e2af01823e9abfb&quot;
+            certificate_hash: <span class="string">"d5daf6c03ace4a9c074e951844075b9b373bafc4e039160e3e2af01823e9abfb"
                 </span>.to_string(),
             size: <span class="number">807803196</span>,
-            created_at: DateTime::parse_from_rfc3339(<span class="string">&quot;2023-01-19T13:43:05.618857482Z&quot;</span>)
+            created_at: DateTime::parse_from_rfc3339(<span class="string">"2023-01-19T13:43:05.618857482Z"</span>)
                 .unwrap()
                 .with_timezone(<span class="kw-2">&amp;</span>Utc),
-            locations: <span class="macro">vec!</span>[<span class="string">&quot;https://host/certificate.tar.gz&quot;</span>.to_string()],
+            locations: <span class="macro">vec!</span>[<span class="string">"https://host/certificate.tar.gz"</span>.to_string()],
             compression_algorithm: <span class="prelude-val">Some</span>(CompressionAlgorithm::Gzip),
-            cardano_node_version: <span class="prelude-val">Some</span>(<span class="string">&quot;0.0.1&quot;</span>.to_string()),
+            cardano_node_version: <span class="prelude-val">Some</span>(<span class="string">"0.0.1"</span>.to_string()),
         }
     }
 
     <span class="comment">// Test the retro compatibility with possible future upgrades.
     </span><span class="attr">#[test]
     </span><span class="kw">fn </span>test_v1() {
-        <span class="kw">let </span>json = <span class="string">r#&quot;{
-&quot;digest&quot;: &quot;0b9f5ad7f33cc523775c82249294eb8a1541d54f08eb3107cafc5638403ec7c6&quot;,
-&quot;beacon&quot;: {
-  &quot;network&quot;: &quot;preview&quot;,
-  &quot;epoch&quot;: 86,
-  &quot;immutable_file_number&quot;: 1728
+        <span class="kw">let </span>json = <span class="string">r#"{
+"digest": "0b9f5ad7f33cc523775c82249294eb8a1541d54f08eb3107cafc5638403ec7c6",
+"beacon": {
+  "network": "preview",
+  "epoch": 86,
+  "immutable_file_number": 1728
 },
-&quot;certificate_hash&quot;: &quot;d5daf6c03ace4a9c074e951844075b9b373bafc4e039160e3e2af01823e9abfb&quot;,
-&quot;size&quot;: 807803196,
-&quot;created_at&quot;: &quot;2023-01-19T13:43:05.618857482Z&quot;,
-&quot;locations&quot;: [
-  &quot;https://host/certificate.tar.gz&quot;
+"certificate_hash": "d5daf6c03ace4a9c074e951844075b9b373bafc4e039160e3e2af01823e9abfb",
+"size": 807803196,
+"created_at": "2023-01-19T13:43:05.618857482Z",
+"locations": [
+  "https://host/certificate.tar.gz"
 ]
-}&quot;#</span>;
+}"#</span>;
         <span class="kw">let </span>message: SnapshotMessage = serde_json::from_str(json).expect(
-            <span class="string">&quot;This JSON is expected to be succesfully parsed into a SnapshotMessage instance.&quot;</span>,
+            <span class="string">"This JSON is expected to be succesfully parsed into a SnapshotMessage instance."</span>,
         );
 
         <span class="macro">assert_eq!</span>(golden_message_v1(), message);
@@ -277,24 +278,24 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_v2() {
-        <span class="kw">let </span>json = <span class="string">r#&quot;{
-&quot;digest&quot;: &quot;0b9f5ad7f33cc523775c82249294eb8a1541d54f08eb3107cafc5638403ec7c6&quot;,
-&quot;beacon&quot;: {
-  &quot;network&quot;: &quot;preview&quot;,
-  &quot;epoch&quot;: 86,
-  &quot;immutable_file_number&quot;: 1728
+        <span class="kw">let </span>json = <span class="string">r#"{
+"digest": "0b9f5ad7f33cc523775c82249294eb8a1541d54f08eb3107cafc5638403ec7c6",
+"beacon": {
+  "network": "preview",
+  "epoch": 86,
+  "immutable_file_number": 1728
 },
-&quot;certificate_hash&quot;: &quot;d5daf6c03ace4a9c074e951844075b9b373bafc4e039160e3e2af01823e9abfb&quot;,
-&quot;size&quot;: 807803196,
-&quot;created_at&quot;: &quot;2023-01-19T13:43:05.618857482Z&quot;,
-&quot;locations&quot;: [
-  &quot;https://host/certificate.tar.gz&quot;
+"certificate_hash": "d5daf6c03ace4a9c074e951844075b9b373bafc4e039160e3e2af01823e9abfb",
+"size": 807803196,
+"created_at": "2023-01-19T13:43:05.618857482Z",
+"locations": [
+  "https://host/certificate.tar.gz"
 ],
-&quot;compression_algorithm&quot;: &quot;gzip&quot;,
-&quot;cardano_node_version&quot;: &quot;0.0.1&quot;
-}&quot;#</span>;
+"compression_algorithm": "gzip",
+"cardano_node_version": "0.0.1"
+}"#</span>;
         <span class="kw">let </span>message: SnapshotMessage = serde_json::from_str(json).expect(
-            <span class="string">&quot;This JSON is expected to be succesfully parsed into a SnapshotMessage instance.&quot;</span>,
+            <span class="string">"This JSON is expected to be succesfully parsed into a SnapshotMessage instance."</span>,
         );
 
         <span class="macro">assert_eq!</span>(golden_message_v2(), message);

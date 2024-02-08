@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-common/src/crypto_helper/tests_setup.rs`."><title>tests_setup.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-common/src/crypto_helper/tests_setup.rs`."><title>tests_setup.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -307,10 +308,10 @@
     auto_create: bool,
 ) -&gt; <span class="prelude-ty">Option</span>&lt;PathBuf&gt; {
     <span class="kw">let </span>temp_dir = std::env::temp_dir()
-        .join(<span class="string">&quot;mithril_crypto_helper_material&quot;</span>)
+        .join(<span class="string">"mithril_crypto_helper_material"</span>)
         .join(party_id);
     <span class="kw">if </span>auto_create {
-        fs::create_dir_all(<span class="kw-2">&amp;</span>temp_dir).expect(<span class="string">&quot;temp dir creation should not fail&quot;</span>);
+        fs::create_dir_all(<span class="kw-2">&amp;</span>temp_dir).expect(<span class="string">"temp dir creation should not fail"</span>);
     }
     temp_dir.exists().then_some(temp_dir)
 }
@@ -320,11 +321,11 @@
     <span class="kw">let </span><span class="kw-2">mut </span>protocol_message = ProtocolMessage::new();
     protocol_message.set_message_part(
         ProtocolMessagePartKey::SnapshotDigest,
-        <span class="string">&quot;message_to_sign_123&quot;</span>.to_string(),
+        <span class="string">"message_to_sign_123"</span>.to_string(),
     );
     protocol_message.set_message_part(
         ProtocolMessagePartKey::NextAggregateVerificationKey,
-        <span class="string">&quot;next-avk-123&quot;</span>.to_string(),
+        <span class="string">"next-avk-123"</span>.to_string(),
     );
     protocol_message
 }
@@ -354,7 +355,7 @@
         stake,
         <span class="kw-2">&amp;mut </span>protocol_initializer_rng,
     )
-    .expect(<span class="string">&quot;protocol initializer setup should not fail&quot;</span>);
+    .expect(<span class="string">"protocol initializer setup should not fail"</span>);
 
     protocol_initializer
 }
@@ -380,8 +381,8 @@
 
 <span class="kw">fn </span>decode_op_cert_in_dir(dir: <span class="prelude-ty">Option</span>&lt;PathBuf&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;ProtocolOpCert&gt; {
     dir.as_ref().map(|dir| {
-        OpCert::from_file(dir.join(<span class="string">&quot;opcert.cert&quot;</span>))
-            .expect(<span class="string">&quot;operational certificate decoding should not fail&quot;</span>)
+        OpCert::from_file(dir.join(<span class="string">"opcert.cert"</span>))
+            .expect(<span class="string">"operational certificate decoding should not fail"</span>)
             .into()
     })
 }
@@ -397,7 +398,7 @@
     <span class="kw">for </span>(party_id, stake) <span class="kw">in </span>stake_distribution {
         <span class="kw">let </span>kes_period = <span class="number">0</span>;
         <span class="kw">let </span>temp_dir = setup_temp_directory_for_signer(party_id, <span class="bool-val">false</span>);
-        <span class="kw">let </span>kes_secret_key_path: <span class="prelude-ty">Option</span>&lt;PathBuf&gt; = temp_dir.as_ref().map(|dir| dir.join(<span class="string">&quot;kes.sk&quot;</span>));
+        <span class="kw">let </span>kes_secret_key_path: <span class="prelude-ty">Option</span>&lt;PathBuf&gt; = temp_dir.as_ref().map(|dir| dir.join(<span class="string">"kes.sk"</span>));
         <span class="kw">let </span>protocol_initializer = setup_protocol_initializer(
             party_id,
             kes_secret_key_path.clone(),
@@ -421,7 +422,7 @@
                 <span class="prelude-val">Some</span>(kes_period),
                 protocol_initializer.verification_key().into(),
             )
-            .expect(<span class="string">&quot;key registration should have succeeded&quot;</span>);
+            .expect(<span class="string">"key registration should have succeeded"</span>);
 
         signers.push((signer_with_stake, protocol_initializer, kes_secret_key_path));
     }
@@ -435,7 +436,7 @@
                 <span class="kw">let </span>protocol_signer = protocol_initializer
                     .clone()
                     .new_signer(closed_key_registration.clone())
-                    .expect(<span class="string">&quot;creating a new protocol signer should not fail&quot;</span>);
+                    .expect(<span class="string">"creating a new protocol signer should not fail"</span>);
 
                 SignerFixture {
                     signer_with_stake,
@@ -466,7 +467,7 @@
     <span class="kw">let </span>protocol_parameters = setup_protocol_parameters();
     <span class="kw">let </span><span class="kw-2">mut </span>epochs = (<span class="number">1</span>..total_certificates + <span class="number">2</span>)
         .map(|i| <span class="kw">match </span>certificates_per_epoch {
-            <span class="number">0 </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;expected at least 1 certificate per epoch&quot;</span>),
+            <span class="number">0 </span>=&gt; <span class="macro">panic!</span>(<span class="string">"expected at least 1 certificate per epoch"</span>),
             <span class="number">1 </span>=&gt; Epoch(i),
             <span class="kw">_ </span>=&gt; Epoch(i / certificates_per_epoch + <span class="number">1</span>),
         })
@@ -498,8 +499,8 @@
         .enumerate()
         .map(|(i, epoch)| {
             <span class="kw">let </span>immutable_file_number = i <span class="kw">as </span>u64 * <span class="number">10</span>;
-            <span class="kw">let </span>digest = <span class="macro">format!</span>(<span class="string">&quot;digest{i}&quot;</span>);
-            <span class="kw">let </span>certificate_hash = <span class="macro">format!</span>(<span class="string">&quot;certificate_hash-{i}&quot;</span>);
+            <span class="kw">let </span>digest = <span class="macro">format!</span>(<span class="string">"digest{i}"</span>);
+            <span class="kw">let </span>certificate_hash = <span class="macro">format!</span>(<span class="string">"certificate_hash-{i}"</span>);
             <span class="kw">let </span>fixture = fixture_per_epoch.get(<span class="kw-2">&amp;</span>epoch).unwrap();
             <span class="kw">let </span>next_fixture = fixture_per_epoch.get(<span class="kw-2">&amp;</span>(epoch + <span class="number">1</span>)).unwrap();
             <span class="kw">let </span>avk = avk_for_signers(<span class="kw-2">&amp;</span>fixture.signers_fixture());
@@ -516,7 +517,7 @@
             );
             fake_certificate.aggregate_verification_key = avk;
             fake_certificate.signed_message = fake_certificate.protocol_message.compute_hash();
-            fake_certificate.previous_hash = <span class="string">&quot;&quot;</span>.to_string();
+            fake_certificate.previous_hash = <span class="string">""</span>.to_string();
             <span class="kw">match </span>i {
                 <span class="number">0 </span>=&gt; {
                     <span class="kw">let </span>genesis_protocol_message =

@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-common/src/chain_observer/cli_observer.rs`."><title>cli_observer.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-common/src/chain_observer/cli_observer.rs`."><title>cli_observer.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -749,21 +750,21 @@
 
     <span class="kw">fn </span>random_out_file() -&gt; StdResult&lt;PathBuf&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>rng = rand_core::OsRng;
-        <span class="kw">let </span>dir = std::env::temp_dir().join(<span class="string">&quot;cardano-cli-runner&quot;</span>);
+        <span class="kw">let </span>dir = std::env::temp_dir().join(<span class="string">"cardano-cli-runner"</span>);
         <span class="kw">if </span>!dir.exists() {
             fs::create_dir_all(<span class="kw-2">&amp;</span>dir)<span class="question-mark">?</span>;
         }
-        <span class="prelude-val">Ok</span>(dir.join(<span class="macro">format!</span>(<span class="string">&quot;{}.out&quot;</span>, rng.next_u64())))
+        <span class="prelude-val">Ok</span>(dir.join(<span class="macro">format!</span>(<span class="string">"{}.out"</span>, rng.next_u64())))
     }
 
     <span class="kw">fn </span>command_for_utxo(<span class="kw-2">&amp;</span><span class="self">self</span>, address: <span class="kw-2">&amp;</span>str, out_file: PathBuf) -&gt; Command {
         <span class="kw">let </span><span class="kw-2">mut </span>command = <span class="self">self</span>.get_command();
         command
-            .arg(<span class="string">&quot;query&quot;</span>)
-            .arg(<span class="string">&quot;utxo&quot;</span>)
-            .arg(<span class="string">&quot;--address&quot;</span>)
+            .arg(<span class="string">"query"</span>)
+            .arg(<span class="string">"utxo"</span>)
+            .arg(<span class="string">"--address"</span>)
             .arg(address)
-            .arg(<span class="string">&quot;--out-file&quot;</span>)
+            .arg(<span class="string">"--out-file"</span>)
             .arg(out_file);
         <span class="self">self</span>.post_config_command(<span class="kw-2">&amp;mut </span>command);
 
@@ -772,7 +773,7 @@
 
     <span class="kw">fn </span>command_for_stake_distribution(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Command {
         <span class="kw">let </span><span class="kw-2">mut </span>command = <span class="self">self</span>.get_command();
-        command.arg(<span class="string">&quot;query&quot;</span>).arg(<span class="string">&quot;stake-distribution&quot;</span>);
+        command.arg(<span class="string">"query"</span>).arg(<span class="string">"stake-distribution"</span>);
         <span class="self">self</span>.post_config_command(<span class="kw-2">&amp;mut </span>command);
 
         command
@@ -781,9 +782,9 @@
     <span class="kw">fn </span>command_for_stake_snapshot(<span class="kw-2">&amp;</span><span class="self">self</span>, stake_pool_id: <span class="kw-2">&amp;</span>str) -&gt; Command {
         <span class="kw">let </span><span class="kw-2">mut </span>command = <span class="self">self</span>.get_command();
         command
-            .arg(<span class="string">&quot;query&quot;</span>)
-            .arg(<span class="string">&quot;stake-snapshot&quot;</span>)
-            .arg(<span class="string">&quot;--stake-pool-id&quot;</span>)
+            .arg(<span class="string">"query"</span>)
+            .arg(<span class="string">"stake-snapshot"</span>)
+            .arg(<span class="string">"--stake-pool-id"</span>)
             .arg(stake_pool_id);
         <span class="self">self</span>.post_config_command(<span class="kw-2">&amp;mut </span>command);
 
@@ -793,9 +794,9 @@
     <span class="kw">fn </span>command_for_stake_snapshot_all_pools(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Command {
         <span class="kw">let </span><span class="kw-2">mut </span>command = <span class="self">self</span>.get_command();
         command
-            .arg(<span class="string">&quot;query&quot;</span>)
-            .arg(<span class="string">&quot;stake-snapshot&quot;</span>)
-            .arg(<span class="string">&quot;--all-stake-pools&quot;</span>);
+            .arg(<span class="string">"query"</span>)
+            .arg(<span class="string">"stake-snapshot"</span>)
+            .arg(<span class="string">"--all-stake-pools"</span>);
         <span class="self">self</span>.post_config_command(<span class="kw-2">&amp;mut </span>command);
 
         command
@@ -803,7 +804,7 @@
 
     <span class="kw">fn </span>command_for_epoch(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Command {
         <span class="kw">let </span><span class="kw-2">mut </span>command = <span class="self">self</span>.get_command();
-        command.arg(<span class="string">&quot;query&quot;</span>).arg(<span class="string">&quot;tip&quot;</span>);
+        command.arg(<span class="string">"query"</span>).arg(<span class="string">"tip"</span>);
         <span class="self">self</span>.post_config_command(<span class="kw-2">&amp;mut </span>command);
 
         command
@@ -812,9 +813,9 @@
     <span class="kw">fn </span>command_for_kes_period(<span class="kw-2">&amp;</span><span class="self">self</span>, opcert_file: <span class="kw-2">&amp;</span>str) -&gt; Command {
         <span class="kw">let </span><span class="kw-2">mut </span>command = <span class="self">self</span>.get_command();
         command
-            .arg(<span class="string">&quot;query&quot;</span>)
-            .arg(<span class="string">&quot;kes-period-info&quot;</span>)
-            .arg(<span class="string">&quot;--op-cert-file&quot;</span>)
+            .arg(<span class="string">"query"</span>)
+            .arg(<span class="string">"kes-period-info"</span>)
+            .arg(<span class="string">"--op-cert-file"</span>)
             .arg(opcert_file);
         <span class="self">self</span>.post_config_command(<span class="kw-2">&amp;mut </span>command);
 
@@ -824,23 +825,23 @@
     <span class="kw">fn </span>get_command(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Command {
         <span class="kw">let </span><span class="kw-2">mut </span>command = Command::new(<span class="kw-2">&amp;</span><span class="self">self</span>.cli_path);
         command.env(
-            <span class="string">&quot;CARDANO_NODE_SOCKET_PATH&quot;</span>,
+            <span class="string">"CARDANO_NODE_SOCKET_PATH"</span>,
             <span class="self">self</span>.socket_path.to_string_lossy().as_ref(),
         );
 
         command
     }
 
-    <span class="kw">fn </span>post_config_command&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>, command: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Command) -&gt; <span class="kw-2">&amp;mut </span>Command {
+    <span class="kw">fn </span>post_config_command&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">self</span>, command: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Command) -&gt; <span class="kw-2">&amp;mut </span>Command {
         <span class="kw">match </span><span class="self">self</span>.network {
-            CardanoNetwork::MainNet =&gt; command.arg(<span class="string">&quot;--mainnet&quot;</span>),
+            CardanoNetwork::MainNet =&gt; command.arg(<span class="string">"--mainnet"</span>),
             CardanoNetwork::DevNet(magic) =&gt; command.args(<span class="macro">vec!</span>[
-                <span class="string">&quot;--cardano-mode&quot;</span>,
-                <span class="string">&quot;--testnet-magic&quot;</span>,
+                <span class="string">"--cardano-mode"</span>,
+                <span class="string">"--testnet-magic"</span>,
                 <span class="kw-2">&amp;</span>magic.to_string(),
             ]),
             CardanoNetwork::TestNet(magic) =&gt; {
-                command.args(<span class="macro">vec!</span>[<span class="string">&quot;--testnet-magic&quot;</span>, <span class="kw-2">&amp;</span>magic.to_string()])
+                command.args(<span class="macro">vec!</span>[<span class="string">"--testnet-magic"</span>, <span class="kw-2">&amp;</span>magic.to_string()])
             }
         }
     }
@@ -861,7 +862,7 @@
             <span class="kw">let </span>message = String::from_utf8_lossy(<span class="kw-2">&amp;</span>output.stderr);
 
             <span class="prelude-val">Err</span>(<span class="macro">anyhow!</span>(
-                <span class="string">&quot;Error launching command {:?}, error = &#39;{}&#39;&quot;</span>,
+                <span class="string">"Error launching command {:?}, error = '{}'"</span>,
                 <span class="self">self</span>.command_for_utxo(address, out_file),
                 message
             ))
@@ -877,7 +878,7 @@
             <span class="kw">let </span>message = String::from_utf8_lossy(<span class="kw-2">&amp;</span>output.stderr);
 
             <span class="prelude-val">Err</span>(<span class="macro">anyhow!</span>(
-                <span class="string">&quot;Error launching command {:?}, error = &#39;{}&#39;&quot;</span>,
+                <span class="string">"Error launching command {:?}, error = '{}'"</span>,
                 <span class="self">self</span>.command_for_stake_distribution(),
                 message
             ))
@@ -896,7 +897,7 @@
             <span class="kw">let </span>message = String::from_utf8_lossy(<span class="kw-2">&amp;</span>output.stderr);
 
             <span class="prelude-val">Err</span>(<span class="macro">anyhow!</span>(
-                <span class="string">&quot;Error launching command {:?}, error = &#39;{}&#39;&quot;</span>,
+                <span class="string">"Error launching command {:?}, error = '{}'"</span>,
                 <span class="self">self</span>.command_for_stake_snapshot(stake_pool_id),
                 message
             ))
@@ -912,7 +913,7 @@
             <span class="kw">let </span>message = String::from_utf8_lossy(<span class="kw-2">&amp;</span>output.stderr);
 
             <span class="prelude-val">Err</span>(<span class="macro">anyhow!</span>(
-                <span class="string">&quot;Error launching command {:?}, error = &#39;{}&#39;&quot;</span>,
+                <span class="string">"Error launching command {:?}, error = '{}'"</span>,
                 <span class="self">self</span>.command_for_stake_snapshot_all_pools(),
                 message
             ))
@@ -928,7 +929,7 @@
             <span class="kw">let </span>message = String::from_utf8_lossy(<span class="kw-2">&amp;</span>output.stderr);
 
             <span class="prelude-val">Err</span>(<span class="macro">anyhow!</span>(
-                <span class="string">&quot;Error launching command {:?}, error = &#39;{}&#39;&quot;</span>,
+                <span class="string">"Error launching command {:?}, error = '{}'"</span>,
                 <span class="self">self</span>.command_for_epoch(),
                 message
             ))
@@ -944,7 +945,7 @@
             <span class="kw">let </span>message = String::from_utf8_lossy(<span class="kw-2">&amp;</span>output.stderr);
 
             <span class="prelude-val">Err</span>(<span class="macro">anyhow!</span>(
-                <span class="string">&quot;Error launching command {:?}, error = &#39;{}&#39;&quot;</span>,
+                <span class="string">"Error launching command {:?}, error = '{}'"</span>,
                 <span class="self">self</span>.command_for_kes_period(opcert_file),
                 message
             ))
@@ -952,7 +953,7 @@
     }
 }
 
-<span class="doccomment">/// A [ChainObserver] pulling it&#39;s data using a [CardanoCliRunner].
+<span class="doccomment">/// A [ChainObserver] pulling it's data using a [CardanoCliRunner].
 </span><span class="kw">pub struct </span>CardanoCliChainObserver {
     cli_runner: Box&lt;<span class="kw">dyn </span>CliRunner + Send + Sync&gt;,
 }
@@ -965,7 +966,7 @@
 
     <span class="comment">// This is the only way I found to tell the compiler the correct types
     // and lifetimes for the function `double`.
-    </span><span class="kw">fn </span>parse_string&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>, string: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str) -&gt; IResult&lt;<span class="kw-2">&amp;</span>str, f64&gt; {
+    </span><span class="kw">fn </span>parse_string&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">self</span>, string: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>str) -&gt; IResult&lt;<span class="kw-2">&amp;</span>str, f64&gt; {
         nom::number::complete::double(string)
     }
 
@@ -979,21 +980,21 @@
             .<span class="kw">await
             </span>.map_err(ChainObserverError::General)<span class="question-mark">?</span>;
         <span class="kw">let </span>stake_pool_snapshot: Value = serde_json::from_str(<span class="kw-2">&amp;</span>stake_pool_snapshot_output)
-            .with_context(|| <span class="macro">format!</span>(<span class="string">&quot;output was = &#39;{stake_pool_snapshot_output}&#39;&quot;</span>))
+            .with_context(|| <span class="macro">format!</span>(<span class="string">"output was = '{stake_pool_snapshot_output}'"</span>))
             .map_err(ChainObserverError::InvalidContent)<span class="question-mark">?</span>;
-        <span class="kw">if let </span>Value::Number(stake_pool_stake) = <span class="kw-2">&amp;</span>stake_pool_snapshot[<span class="string">&quot;poolStakeMark&quot;</span>] {
+        <span class="kw">if let </span>Value::Number(stake_pool_stake) = <span class="kw-2">&amp;</span>stake_pool_snapshot[<span class="string">"poolStakeMark"</span>] {
             <span class="kw">return </span>stake_pool_stake.as_u64().ok_or_else(|| {
                 ChainObserverError::InvalidContent(<span class="macro">anyhow!</span>(
-                    <span class="string">&quot;Error: could not parse stake pool value as u64 {stake_pool_stake:?}&quot;
+                    <span class="string">"Error: could not parse stake pool value as u64 {stake_pool_stake:?}"
                 </span>))
             });
         }
         <span class="prelude-val">Err</span>(ChainObserverError::InvalidContent(<span class="macro">anyhow!</span>(
-            <span class="string">&quot;Error: could not parse stake pool snapshot {stake_pool_snapshot:?}&quot;
+            <span class="string">"Error: could not parse stake pool snapshot {stake_pool_snapshot:?}"
         </span>)))
     }
 
-    <span class="comment">// This is the legacy way of computing stake distribution, not optimized for mainnet, and usable for versions of the Cardano node up to &#39;1.35.7&#39;
+    <span class="comment">// This is the legacy way of computing stake distribution, not optimized for mainnet, and usable for versions of the Cardano node up to '1.35.7'
     </span><span class="kw">async fn </span>get_current_stake_distribution_legacy(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;StakeDistribution&gt;, ChainObserverError&gt; {
@@ -1017,7 +1018,7 @@
             <span class="kw">if let </span><span class="prelude-val">Ok</span>((<span class="kw">_</span>, _f)) = <span class="self">self</span>.parse_string(stake_fraction) {
                 <span class="comment">// This block is a fix:
                 // the stake retrieved was computed on the current epoch, when we need a value computed on the previous epoch
-                // in &#39;let stake: u64 = (f * 1_000_000_000.0).round() as u64;&#39;
+                // in 'let stake: u64 = (f * 1_000_000_000.0).round() as u64;'
                 </span><span class="kw">let </span>stake: u64 = <span class="self">self</span>.get_current_stake_value(stake_pool_id).<span class="kw">await</span><span class="question-mark">?</span>;
 
                 <span class="kw">if </span>stake &gt; <span class="number">0 </span>{
@@ -1025,7 +1026,7 @@
                 }
             } <span class="kw">else </span>{
                 <span class="kw">return </span><span class="prelude-val">Err</span>(ChainObserverError::InvalidContent(<span class="macro">anyhow!</span>(
-                    <span class="string">&quot;could not parse stake from &#39;{}&#39;&quot;</span>,
+                    <span class="string">"could not parse stake from '{}'"</span>,
                     words[<span class="number">1</span>]
                 )));
             }
@@ -1034,7 +1035,7 @@
         <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(stake_distribution))
     }
 
-    <span class="comment">// This is the new way of computing stake distribution, optimized for mainnet, and usable for versions of the Cardano node from &#39;8.0.0&#39;
+    <span class="comment">// This is the new way of computing stake distribution, optimized for mainnet, and usable for versions of the Cardano node from '8.0.0'
     </span><span class="kw">async fn </span>get_current_stake_distribution_optimized(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;StakeDistribution&gt;, ChainObserverError&gt; {
@@ -1048,19 +1049,19 @@
         <span class="kw">let </span>data: HashMap&lt;String, Value&gt; =
             serde_json::from_str(<span class="kw-2">&amp;</span>output).map_err(|e| ChainObserverError::General(e.into()))<span class="question-mark">?</span>;
         <span class="kw">let </span>pools_data = data
-            .get(<span class="string">&quot;pools&quot;</span>)
+            .get(<span class="string">"pools"</span>)
             .ok_or(ChainObserverError::InvalidContent(<span class="macro">anyhow!</span>(
-                <span class="string">&quot;Missing &#39;pools&#39; field&quot;
+                <span class="string">"Missing 'pools' field"
             </span>)))<span class="question-mark">?
             </span>.as_object()
             .ok_or(ChainObserverError::InvalidContent(<span class="macro">anyhow!</span>(
-                <span class="string">&quot;Could not convert pool data to object&quot;
+                <span class="string">"Could not convert pool data to object"
             </span>)))<span class="question-mark">?</span>;
 
         <span class="kw">for </span>(k, v) <span class="kw">in </span>pools_data.iter() {
             <span class="kw">let </span>pool_id_hex = k;
             <span class="kw">let </span>pool_id_bech32 = bech32::encode(
-                <span class="string">&quot;pool&quot;</span>,
+                <span class="string">"pool"</span>,
                 Vec::from_hex(pool_id_hex.as_bytes())
                     .map_err(|e| ChainObserverError::General(e.into()))<span class="question-mark">?
                     </span>.to_base32(),
@@ -1068,13 +1069,13 @@
             )
             .map_err(|e| ChainObserverError::General(e.into()))<span class="question-mark">?</span>;
             <span class="kw">let </span>stakes = v
-                .get(<span class="string">&quot;stakeMark&quot;</span>)
+                .get(<span class="string">"stakeMark"</span>)
                 .ok_or(ChainObserverError::InvalidContent(<span class="macro">anyhow!</span>(
-                    <span class="string">&quot;Missing &#39;stakeMark&#39; field for {pool_id_bech32}&quot;
+                    <span class="string">"Missing 'stakeMark' field for {pool_id_bech32}"
                 </span>)))<span class="question-mark">?
                 </span>.as_u64()
                 .ok_or(ChainObserverError::InvalidContent(<span class="macro">anyhow!</span>(
-                    <span class="string">&quot;Stake could not be converted to integer for {pool_id_bech32}&quot;
+                    <span class="string">"Stake could not be converted to integer for {pool_id_bech32}"
                 </span>)))<span class="question-mark">?</span>;
             <span class="kw">if </span>stakes &gt; <span class="number">0 </span>{
                 stake_distribution.insert(pool_id_bech32, stakes);
@@ -1094,10 +1095,10 @@
             .<span class="kw">await
             </span>.map_err(ChainObserverError::General)<span class="question-mark">?</span>;
         <span class="kw">let </span>v: Value = serde_json::from_str(<span class="kw-2">&amp;</span>output)
-            .with_context(|| <span class="macro">format!</span>(<span class="string">&quot;output was = &#39;{output}&#39;&quot;</span>))
+            .with_context(|| <span class="macro">format!</span>(<span class="string">"output was = '{output}'"</span>))
             .map_err(ChainObserverError::InvalidContent)<span class="question-mark">?</span>;
 
-        <span class="kw">if let </span>Value::Number(epoch) = <span class="kw-2">&amp;</span>v[<span class="string">&quot;epoch&quot;</span>] {
+        <span class="kw">if let </span>Value::Number(epoch) = <span class="kw-2">&amp;</span>v[<span class="string">"epoch"</span>] {
             <span class="prelude-val">Ok</span>(epoch.as_u64().map(Epoch))
         } <span class="kw">else </span>{
             <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
@@ -1114,12 +1115,12 @@
             .<span class="kw">await
             </span>.map_err(ChainObserverError::General)<span class="question-mark">?</span>;
         <span class="kw">let </span>v: HashMap&lt;String, Value&gt; = serde_json::from_str(<span class="kw-2">&amp;</span>output)
-            .with_context(|| <span class="macro">format!</span>(<span class="string">&quot;output was = &#39;{output}&#39;&quot;</span>))
+            .with_context(|| <span class="macro">format!</span>(<span class="string">"output was = '{output}'"</span>))
             .map_err(ChainObserverError::InvalidContent)<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(v.values()
             .filter_map(|v| {
-                v.get(<span class="string">&quot;inlineDatum&quot;</span>)
+                v.get(<span class="string">"inlineDatum"</span>)
                     .filter(|datum| !datum.is_null())
                     .map(|datum| TxDatum(datum.to_string()))
             })
@@ -1140,10 +1141,10 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         opcert: <span class="kw-2">&amp;</span>OpCert,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;KESPeriod&gt;, ChainObserverError&gt; {
-        <span class="kw">let </span>dir = std::env::temp_dir().join(<span class="string">&quot;mithril_kes_period&quot;</span>);
+        <span class="kw">let </span>dir = std::env::temp_dir().join(<span class="string">"mithril_kes_period"</span>);
         fs::create_dir_all(<span class="kw-2">&amp;</span>dir).map_err(|e| ChainObserverError::General(e.into()))<span class="question-mark">?</span>;
         <span class="kw">let </span>opcert_file =
-            std::env::temp_dir().join(<span class="macro">format!</span>(<span class="string">&quot;opcert_kes_period-{}&quot;</span>, opcert.compute_hash()));
+            std::env::temp_dir().join(<span class="macro">format!</span>(<span class="string">"opcert_kes_period-{}"</span>, opcert.compute_hash()));
         opcert
             .to_file(<span class="kw-2">&amp;</span>opcert_file)
             .map_err(|e| ChainObserverError::General(e.into()))<span class="question-mark">?</span>;
@@ -1152,13 +1153,13 @@
             .launch_kes_period(opcert_file.to_str().unwrap())
             .<span class="kw">await
             </span>.map_err(ChainObserverError::General)<span class="question-mark">?</span>;
-        <span class="kw">let </span>first_left_curly_bracket_index = output.find(<span class="string">&#39;{&#39;</span>).unwrap_or_default();
+        <span class="kw">let </span>first_left_curly_bracket_index = output.find(<span class="string">'{'</span>).unwrap_or_default();
         <span class="kw">let </span>output_cleaned = output.split_at(first_left_curly_bracket_index).<span class="number">1</span>;
         <span class="kw">let </span>v: Value = serde_json::from_str(output_cleaned)
-            .with_context(|| <span class="macro">format!</span>(<span class="string">&quot;output was = &#39;{output}&#39;&quot;</span>))
+            .with_context(|| <span class="macro">format!</span>(<span class="string">"output was = '{output}'"</span>))
             .map_err(ChainObserverError::InvalidContent)<span class="question-mark">?</span>;
 
-        <span class="kw">if let </span>Value::Number(kes_period) = <span class="kw-2">&amp;</span>v[<span class="string">&quot;qKesCurrentKesPeriod&quot;</span>] {
+        <span class="kw">if let </span>Value::Number(kes_period) = <span class="kw-2">&amp;</span>v[<span class="string">"qKesCurrentKesPeriod"</span>] {
             <span class="prelude-val">Ok</span>(kes_period.as_u64().map(|p| p <span class="kw">as </span>KESPeriod))
         } <span class="kw">else </span>{
             <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
@@ -1186,66 +1187,66 @@
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>test_cli_testnet_runner() {
         <span class="kw">let </span>runner = CardanoCliRunner::new(
-            PathBuf::new().join(<span class="string">&quot;cardano-cli&quot;</span>),
-            PathBuf::new().join(<span class="string">&quot;/tmp/whatever.sock&quot;</span>),
+            PathBuf::new().join(<span class="string">"cardano-cli"</span>),
+            PathBuf::new().join(<span class="string">"/tmp/whatever.sock"</span>),
             CardanoNetwork::TestNet(<span class="number">10</span>),
         );
 
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;Command { std: CARDANO_NODE_SOCKET_PATH=\&quot;/tmp/whatever.sock\&quot; \&quot;cardano-cli\&quot; \&quot;query\&quot; \&quot;tip\&quot; \&quot;--testnet-magic\&quot; \&quot;10\&quot;, kill_on_drop: false }&quot;</span>, <span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, runner.command_for_epoch()));
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;Command { std: CARDANO_NODE_SOCKET_PATH=\&quot;/tmp/whatever.sock\&quot; \&quot;cardano-cli\&quot; \&quot;query\&quot; \&quot;stake-distribution\&quot; \&quot;--testnet-magic\&quot; \&quot;10\&quot;, kill_on_drop: false }&quot;</span>, <span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, runner.command_for_stake_distribution()));
+        <span class="macro">assert_eq!</span>(<span class="string">"Command { std: CARDANO_NODE_SOCKET_PATH=\"/tmp/whatever.sock\" \"cardano-cli\" \"query\" \"tip\" \"--testnet-magic\" \"10\", kill_on_drop: false }"</span>, <span class="macro">format!</span>(<span class="string">"{:?}"</span>, runner.command_for_epoch()));
+        <span class="macro">assert_eq!</span>(<span class="string">"Command { std: CARDANO_NODE_SOCKET_PATH=\"/tmp/whatever.sock\" \"cardano-cli\" \"query\" \"stake-distribution\" \"--testnet-magic\" \"10\", kill_on_drop: false }"</span>, <span class="macro">format!</span>(<span class="string">"{:?}"</span>, runner.command_for_stake_distribution()));
     }
 
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>test_cli_devnet_runner() {
         <span class="kw">let </span>runner = CardanoCliRunner::new(
-            PathBuf::new().join(<span class="string">&quot;cardano-cli&quot;</span>),
-            PathBuf::new().join(<span class="string">&quot;/tmp/whatever.sock&quot;</span>),
+            PathBuf::new().join(<span class="string">"cardano-cli"</span>),
+            PathBuf::new().join(<span class="string">"/tmp/whatever.sock"</span>),
             CardanoNetwork::DevNet(<span class="number">25</span>),
         );
 
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;Command { std: CARDANO_NODE_SOCKET_PATH=\&quot;/tmp/whatever.sock\&quot; \&quot;cardano-cli\&quot; \&quot;query\&quot; \&quot;tip\&quot; \&quot;--cardano-mode\&quot; \&quot;--testnet-magic\&quot; \&quot;25\&quot;, kill_on_drop: false }&quot;</span>, <span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, runner.command_for_epoch()));
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;Command { std: CARDANO_NODE_SOCKET_PATH=\&quot;/tmp/whatever.sock\&quot; \&quot;cardano-cli\&quot; \&quot;query\&quot; \&quot;stake-distribution\&quot; \&quot;--cardano-mode\&quot; \&quot;--testnet-magic\&quot; \&quot;25\&quot;, kill_on_drop: false }&quot;</span>, <span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, runner.command_for_stake_distribution()));
+        <span class="macro">assert_eq!</span>(<span class="string">"Command { std: CARDANO_NODE_SOCKET_PATH=\"/tmp/whatever.sock\" \"cardano-cli\" \"query\" \"tip\" \"--cardano-mode\" \"--testnet-magic\" \"25\", kill_on_drop: false }"</span>, <span class="macro">format!</span>(<span class="string">"{:?}"</span>, runner.command_for_epoch()));
+        <span class="macro">assert_eq!</span>(<span class="string">"Command { std: CARDANO_NODE_SOCKET_PATH=\"/tmp/whatever.sock\" \"cardano-cli\" \"query\" \"stake-distribution\" \"--cardano-mode\" \"--testnet-magic\" \"25\", kill_on_drop: false }"</span>, <span class="macro">format!</span>(<span class="string">"{:?}"</span>, runner.command_for_stake_distribution()));
     }
 
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>test_cli_mainnet_runner() {
         <span class="kw">let </span>runner = CardanoCliRunner::new(
-            PathBuf::new().join(<span class="string">&quot;cardano-cli&quot;</span>),
-            PathBuf::new().join(<span class="string">&quot;/tmp/whatever.sock&quot;</span>),
+            PathBuf::new().join(<span class="string">"cardano-cli"</span>),
+            PathBuf::new().join(<span class="string">"/tmp/whatever.sock"</span>),
             CardanoNetwork::MainNet,
         );
 
         <span class="macro">assert_eq!</span>(
-            <span class="string">&quot;Command { std: CARDANO_NODE_SOCKET_PATH=\&quot;/tmp/whatever.sock\&quot; \&quot;cardano-cli\&quot; \&quot;query\&quot; \&quot;tip\&quot; \&quot;--mainnet\&quot;, kill_on_drop: false }&quot;</span>,
-            <span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, runner.command_for_epoch())
+            <span class="string">"Command { std: CARDANO_NODE_SOCKET_PATH=\"/tmp/whatever.sock\" \"cardano-cli\" \"query\" \"tip\" \"--mainnet\", kill_on_drop: false }"</span>,
+            <span class="macro">format!</span>(<span class="string">"{:?}"</span>, runner.command_for_epoch())
         );
         <span class="macro">assert_eq!</span>(
-            <span class="string">&quot;Command { std: CARDANO_NODE_SOCKET_PATH=\&quot;/tmp/whatever.sock\&quot; \&quot;cardano-cli\&quot; \&quot;query\&quot; \&quot;stake-distribution\&quot; \&quot;--mainnet\&quot;, kill_on_drop: false }&quot;</span>,
-            <span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, runner.command_for_stake_distribution())
+            <span class="string">"Command { std: CARDANO_NODE_SOCKET_PATH=\"/tmp/whatever.sock\" \"cardano-cli\" \"query\" \"stake-distribution\" \"--mainnet\", kill_on_drop: false }"</span>,
+            <span class="macro">format!</span>(<span class="string">"{:?}"</span>, runner.command_for_stake_distribution())
         );
     }
 
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>test_get_current_datums() {
         <span class="kw">let </span>observer = CardanoCliChainObserver::new(Box::&lt;TestCliRunner&gt;::default());
-        <span class="kw">let </span>address = <span class="string">&quot;addrtest_123456&quot;</span>.to_string();
+        <span class="kw">let </span>address = <span class="string">"addrtest_123456"</span>.to_string();
         <span class="kw">let </span>datums = observer.get_current_datums(<span class="kw-2">&amp;</span>address).<span class="kw">await</span>.unwrap();
-        <span class="macro">assert_eq!</span>(<span class="macro">vec!</span>[TxDatum(<span class="string">r#&quot;{&quot;constructor&quot;:0,&quot;fields&quot;:[{&quot;bytes&quot;:&quot;5b0a20207b0a20202020226e616d65223a20227468616c6573222c0a202020202265706f6368223a203132330a20207d2c0a20207b0a20202020226e616d65223a20227079746861676f726173222c0a202020202265706f6368223a206e756c6c0a20207d0a5d0a&quot;}]}&quot;#</span>.to_string())], datums);
+        <span class="macro">assert_eq!</span>(<span class="macro">vec!</span>[TxDatum(<span class="string">r#"{"constructor":0,"fields":[{"bytes":"5b0a20207b0a20202020226e616d65223a20227468616c6573222c0a202020202265706f6368223a203132330a20207d2c0a20207b0a20202020226e616d65223a20227079746861676f726173222c0a202020202265706f6368223a206e756c6c0a20207d0a5d0a"}]}"#</span>.to_string())], datums);
     }
 
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>test_get_current_stake_value() {
         <span class="kw">let </span>observer = CardanoCliChainObserver::new(Box::&lt;TestCliRunner&gt;::default());
         <span class="kw">let </span>stake = observer
-            .get_current_stake_value(<span class="string">&quot;pool1qqyjr9pcrv97gwrueunug829fs5znw6p2wxft3fvqkgu5f4qlrg&quot;</span>)
+            .get_current_stake_value(<span class="string">"pool1qqyjr9pcrv97gwrueunug829fs5znw6p2wxft3fvqkgu5f4qlrg"</span>)
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;get current stake value should not fail&quot;</span>);
+            </span>.expect(<span class="string">"get current stake value should not fail"</span>);
         <span class="macro">assert_eq!</span>(<span class="number">3_000_000</span>, stake);
 
         <span class="kw">let </span>stake = observer
-            .get_current_stake_value(<span class="string">&quot;pool1qpqvz90w7qsex2al2ejjej0rfgrwsguch307w8fraw7a7adf6g8&quot;</span>)
+            .get_current_stake_value(<span class="string">"pool1qpqvz90w7qsex2al2ejjej0rfgrwsguch307w8fraw7a7adf6g8"</span>)
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;get current stake value should not fail&quot;</span>);
+            </span>.expect(<span class="string">"get current stake value should not fail"</span>);
         <span class="macro">assert_eq!</span>(<span class="number">0</span>, stake);
     }
 
@@ -1261,17 +1262,17 @@
         <span class="macro">assert_eq!</span>(
             <span class="number">3_000_000</span>,
             <span class="kw-2">*</span>results
-                .get(<span class="string">&quot;pool1qqyjr9pcrv97gwrueunug829fs5znw6p2wxft3fvqkgu5f4qlrg&quot;</span>)
+                .get(<span class="string">"pool1qqyjr9pcrv97gwrueunug829fs5znw6p2wxft3fvqkgu5f4qlrg"</span>)
                 .unwrap()
         );
         <span class="macro">assert_eq!</span>(
             <span class="number">3_000_000</span>,
             <span class="kw-2">*</span>results
-                .get(<span class="string">&quot;pool1qz2vzszautc2c8mljnqre2857dpmheq7kgt6vav0s38tvvhxm6w&quot;</span>)
+                .get(<span class="string">"pool1qz2vzszautc2c8mljnqre2857dpmheq7kgt6vav0s38tvvhxm6w"</span>)
                 .unwrap()
         );
         <span class="macro">assert!</span>(results
-            .get(<span class="string">&quot;pool1qpqvz90w7qsex2al2ejjej0rfgrwsguch307w8fraw7a7adf6g8&quot;</span>)
+            .get(<span class="string">"pool1qpqvz90w7qsex2al2ejjej0rfgrwsguch307w8fraw7a7adf6g8"</span>)
             .is_none());
     }
 
@@ -1285,15 +1286,15 @@
             .unwrap();
         <span class="kw">let </span><span class="kw-2">mut </span>expected_stake_distribution = StakeDistribution::new();
         expected_stake_distribution.insert(
-            <span class="string">&quot;pool1qqqqqdk4zhsjuxxd8jyvwncf5eucfskz0xjjj64fdmlgj735lr9&quot;</span>.to_string(),
+            <span class="string">"pool1qqqqqdk4zhsjuxxd8jyvwncf5eucfskz0xjjj64fdmlgj735lr9"</span>.to_string(),
             <span class="number">300000000001</span>,
         );
         expected_stake_distribution.insert(
-            <span class="string">&quot;pool1qqqqpanw9zc0rzh0yp247nzf2s35uvnsm7aaesfl2nnejaev0uc&quot;</span>.to_string(),
+            <span class="string">"pool1qqqqpanw9zc0rzh0yp247nzf2s35uvnsm7aaesfl2nnejaev0uc"</span>.to_string(),
             <span class="number">600000000001</span>,
         );
         expected_stake_distribution.insert(
-            <span class="string">&quot;pool1qqqqzyqf8mlm70883zht60n4q6uqxg4a8x266sewv8ad2grkztl&quot;</span>.to_string(),
+            <span class="string">"pool1qqqqzyqf8mlm70883zht60n4q6uqxg4a8x266sewv8ad2grkztl"</span>.to_string(),
             <span class="number">1200000000001</span>,
         );
         <span class="macro">assert_eq!</span>(

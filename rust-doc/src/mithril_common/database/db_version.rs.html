@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-common/src/database/db_version.rs`."><title>db_version.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-common/src/database/db_version.rs`."><title>db_version.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -315,18 +316,18 @@
     <span class="doccomment">/// [ApplicationNodeType] constructor.
     </span><span class="kw">pub fn </span>new(node_type: <span class="kw-2">&amp;</span>str) -&gt; StdResult&lt;<span class="self">Self</span>&gt; {
         <span class="kw">match </span>node_type {
-            <span class="string">&quot;aggregator&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::Aggregator),
-            <span class="string">&quot;signer&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::Signer),
-            <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<span class="macro">anyhow!</span>(<span class="string">&quot;unknown node type &#39;{node_type}&#39;&quot;</span>)),
+            <span class="string">"aggregator" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::Aggregator),
+            <span class="string">"signer" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::Signer),
+            <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<span class="macro">anyhow!</span>(<span class="string">"unknown node type '{node_type}'"</span>)),
         }
     }
 }
 
 <span class="kw">impl </span>Display <span class="kw">for </span>ApplicationNodeType {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
         <span class="kw">match </span><span class="self">self </span>{
-            <span class="self">Self</span>::Aggregator =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;aggregator&quot;</span>),
-            <span class="self">Self</span>::Signer =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;signer&quot;</span>),
+            <span class="self">Self</span>::Aggregator =&gt; <span class="macro">write!</span>(f, <span class="string">"aggregator"</span>),
+            <span class="self">Self</span>::Signer =&gt; <span class="macro">write!</span>(f, <span class="string">"signer"</span>),
         }
     }
 }
@@ -353,15 +354,15 @@
         <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
             version,
             application_type: ApplicationNodeType::new(application_type)
-                .map_err(|e| HydrationError::InvalidData(<span class="macro">format!</span>(<span class="string">&quot;{e}&quot;</span>)))<span class="question-mark">?</span>,
+                .map_err(|e| HydrationError::InvalidData(<span class="macro">format!</span>(<span class="string">"{e}"</span>)))<span class="question-mark">?</span>,
             updated_at: <span class="kw">match </span>DateTime::parse_from_rfc3339(updated_at) {
                 <span class="prelude-val">Ok</span>(date) =&gt; <span class="prelude-val">Ok</span>(date.with_timezone(<span class="kw-2">&amp;</span>Utc)),
                 <span class="comment">// todo: remove this fallback when aggregators &amp; signers have been migrated
                 // Fallback to previous date format for compatibility
-                </span><span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; NaiveDateTime::parse_from_str(updated_at, <span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>)
+                </span><span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; NaiveDateTime::parse_from_str(updated_at, <span class="string">"%Y-%m-%d %H:%M:%S"</span>)
                     .map_err(|e| {
                         HydrationError::InvalidData(<span class="macro">format!</span>(
-                            <span class="string">&quot;Could not turn string &#39;{updated_at}&#39; to rfc3339 Datetime. Error: {e}&quot;
+                            <span class="string">"Could not turn string '{updated_at}' to rfc3339 Datetime. Error: {e}"
                         </span>))
                     })
                     .map(|d| d.and_utc()),
@@ -371,13 +372,13 @@
 
     <span class="kw">fn </span>get_projection() -&gt; Projection {
         <span class="kw">let </span><span class="kw-2">mut </span>projection = Projection::default();
-        projection.add_field(<span class="string">&quot;version&quot;</span>, <span class="string">&quot;{:db_version:}.version&quot;</span>, <span class="string">&quot;text&quot;</span>);
+        projection.add_field(<span class="string">"version"</span>, <span class="string">"{:db_version:}.version"</span>, <span class="string">"text"</span>);
         projection.add_field(
-            <span class="string">&quot;application_type&quot;</span>,
-            <span class="string">&quot;{:db_version:}.application_type&quot;</span>,
-            <span class="string">&quot;text&quot;</span>,
+            <span class="string">"application_type"</span>,
+            <span class="string">"{:db_version:}.application_type"</span>,
+            <span class="string">"text"</span>,
         );
-        projection.add_field(<span class="string">&quot;updated_at&quot;</span>, <span class="string">&quot;{:db_version:}.updated_at&quot;</span>, <span class="string">&quot;timestamp&quot;</span>);
+        projection.add_field(<span class="string">"updated_at"</span>, <span class="string">"{:db_version:}.updated_at"</span>, <span class="string">"timestamp"</span>);
 
         projection
     }
@@ -394,13 +395,13 @@
 }
 
 <span class="doccomment">/// Provider for the [DatabaseVersion] entities using the `DatabaseVersionProjection`.
-</span><span class="kw">pub struct </span>DatabaseVersionProvider&lt;<span class="lifetime">&#39;conn</span>&gt; {
-    connection: <span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span>SqliteConnection,
+</span><span class="kw">pub struct </span>DatabaseVersionProvider&lt;<span class="lifetime">'conn</span>&gt; {
+    connection: <span class="kw-2">&amp;</span><span class="lifetime">'conn </span>SqliteConnection,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;conn</span>&gt; DatabaseVersionProvider&lt;<span class="lifetime">&#39;conn</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'conn</span>&gt; DatabaseVersionProvider&lt;<span class="lifetime">'conn</span>&gt; {
     <span class="doccomment">/// [DatabaseVersionProvider] constructor.
-    </span><span class="kw">pub fn </span>new(connection: <span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span>SqliteConnection) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>new(connection: <span class="kw-2">&amp;</span><span class="lifetime">'conn </span>SqliteConnection) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{ connection }
     }
 
@@ -411,7 +412,7 @@
         application_type: <span class="kw-2">&amp;</span>ApplicationNodeType,
     ) -&gt; StdResult&lt;()&gt; {
         <span class="kw">let </span>connection = <span class="self">self</span>.get_connection();
-        <span class="kw">let </span>sql = <span class="string">&quot;select exists(select name from sqlite_master where type=&#39;table&#39; and name=&#39;db_version&#39;) as table_exists&quot;</span>;
+        <span class="kw">let </span>sql = <span class="string">"select exists(select name from sqlite_master where type='table' and name='db_version') as table_exists"</span>;
         <span class="kw">let </span>table_exists = connection
             .prepare(sql)<span class="question-mark">?
             </span>.iter()
@@ -422,10 +423,10 @@
             == <span class="number">1</span>;
 
         <span class="kw">if </span>!table_exists {
-            <span class="kw">let </span>sql = <span class="macro">format!</span>(<span class="string">&quot;
+            <span class="kw">let </span>sql = <span class="macro">format!</span>(<span class="string">"
 create table db_version (application_type text not null primary key, version integer not null, updated_at text not null);
-insert into db_version (application_type, version, updated_at) values (&#39;{application_type}&#39;, 0, &#39;{}&#39;);
-&quot;</span>, Utc::now().to_rfc3339());
+insert into db_version (application_type, version, updated_at) values ('{application_type}', 0, '{}');
+"</span>, Utc::now().to_rfc3339());
             connection.execute(sql)<span class="question-mark">?</span>;
         }
 
@@ -438,8 +439,8 @@ insert into db_version (application_type, version, updated_at) values (&#39;{app
         application_type: <span class="kw-2">&amp;</span>ApplicationNodeType,
     ) -&gt; StdResult&lt;<span class="prelude-ty">Option</span>&lt;DatabaseVersion&gt;&gt; {
         <span class="kw">let </span>filters = WhereCondition::new(
-            <span class="string">&quot;application_type = ?*&quot;</span>,
-            <span class="macro">vec!</span>[Value::String(<span class="macro">format!</span>(<span class="string">&quot;{application_type}&quot;</span>))],
+            <span class="string">"application_type = ?*"</span>,
+            <span class="macro">vec!</span>[Value::String(<span class="macro">format!</span>(<span class="string">"{application_type}"</span>))],
         );
         <span class="kw">let </span>result = <span class="self">self</span>.find(filters)<span class="question-mark">?</span>.next();
 
@@ -447,45 +448,45 @@ insert into db_version (application_type, version, updated_at) values (&#39;{app
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;conn</span>&gt; Provider&lt;<span class="lifetime">&#39;conn</span>&gt; <span class="kw">for </span>DatabaseVersionProvider&lt;<span class="lifetime">&#39;conn</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'conn</span>&gt; Provider&lt;<span class="lifetime">'conn</span>&gt; <span class="kw">for </span>DatabaseVersionProvider&lt;<span class="lifetime">'conn</span>&gt; {
     <span class="kw">type </span>Entity = DatabaseVersion;
 
-    <span class="kw">fn </span>get_connection(<span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>SqliteConnection {
+    <span class="kw">fn </span>get_connection(<span class="kw-2">&amp;</span><span class="lifetime">'conn </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>SqliteConnection {
         <span class="self">self</span>.connection
     }
 
     <span class="kw">fn </span>get_definition(<span class="kw-2">&amp;</span><span class="self">self</span>, condition: <span class="kw-2">&amp;</span>str) -&gt; String {
-        <span class="kw">let </span>aliases = SourceAlias::new(<span class="kw-2">&amp;</span>[(<span class="string">&quot;{:db_version:}&quot;</span>, <span class="string">&quot;db_version&quot;</span>)]);
+        <span class="kw">let </span>aliases = SourceAlias::new(<span class="kw-2">&amp;</span>[(<span class="string">"{:db_version:}"</span>, <span class="string">"db_version"</span>)]);
         <span class="kw">let </span>projection = <span class="self">Self</span>::Entity::get_projection().expand(aliases);
 
         <span class="macro">format!</span>(
-            <span class="string">r#&quot;
+            <span class="string">r#"
 select {projection}
 from db_version
 where {condition}
-&quot;#
+"#
         </span>)
     }
 }
 
 <span class="doccomment">/// Write [Provider] for the [DatabaseVersion] entities.
 /// This will perform an UPSERT and return the updated entity.
-</span><span class="kw">pub struct </span>DatabaseVersionUpdater&lt;<span class="lifetime">&#39;conn</span>&gt; {
-    connection: <span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span>SqliteConnection,
+</span><span class="kw">pub struct </span>DatabaseVersionUpdater&lt;<span class="lifetime">'conn</span>&gt; {
+    connection: <span class="kw-2">&amp;</span><span class="lifetime">'conn </span>SqliteConnection,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;conn</span>&gt; DatabaseVersionUpdater&lt;<span class="lifetime">&#39;conn</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'conn</span>&gt; DatabaseVersionUpdater&lt;<span class="lifetime">'conn</span>&gt; {
     <span class="doccomment">/// [DatabaseVersionUpdater] constructor.
-    </span><span class="kw">pub fn </span>new(connection: <span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span>SqliteConnection) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>new(connection: <span class="kw-2">&amp;</span><span class="lifetime">'conn </span>SqliteConnection) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{ connection }
     }
 
     <span class="doccomment">/// Persist the given entity and return the projection of the saved entity.
     </span><span class="kw">pub fn </span>save(<span class="kw-2">&amp;</span><span class="self">self</span>, version: DatabaseVersion) -&gt; StdResult&lt;DatabaseVersion&gt; {
         <span class="kw">let </span>filters = WhereCondition::new(
-            <span class="string">&quot;&quot;</span>,
+            <span class="string">""</span>,
             <span class="macro">vec!</span>[
-                Value::String(<span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, version.application_type)),
+                Value::String(<span class="macro">format!</span>(<span class="string">"{}"</span>, version.application_type)),
                 Value::Integer(version.version),
                 Value::String(version.updated_at.to_rfc3339()),
             ],
@@ -493,29 +494,29 @@ where {condition}
         <span class="kw">let </span>entity = <span class="self">self
             </span>.find(filters)<span class="question-mark">?
             </span>.next()
-            .ok_or(<span class="macro">anyhow!</span>(<span class="string">&quot;No data returned after insertion&quot;</span>))<span class="question-mark">?</span>;
+            .ok_or(<span class="macro">anyhow!</span>(<span class="string">"No data returned after insertion"</span>))<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(entity)
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;conn</span>&gt; Provider&lt;<span class="lifetime">&#39;conn</span>&gt; <span class="kw">for </span>DatabaseVersionUpdater&lt;<span class="lifetime">&#39;conn</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'conn</span>&gt; Provider&lt;<span class="lifetime">'conn</span>&gt; <span class="kw">for </span>DatabaseVersionUpdater&lt;<span class="lifetime">'conn</span>&gt; {
     <span class="kw">type </span>Entity = DatabaseVersion;
 
-    <span class="kw">fn </span>get_connection(<span class="kw-2">&amp;</span><span class="lifetime">&#39;conn </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>SqliteConnection {
+    <span class="kw">fn </span>get_connection(<span class="kw-2">&amp;</span><span class="lifetime">'conn </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>SqliteConnection {
         <span class="self">self</span>.connection
     }
 
     <span class="kw">fn </span>get_definition(<span class="kw-2">&amp;</span><span class="self">self</span>, _condition: <span class="kw-2">&amp;</span>str) -&gt; String {
-        <span class="kw">let </span>aliases = SourceAlias::new(<span class="kw-2">&amp;</span>[(<span class="string">&quot;{:db_version:}&quot;</span>, <span class="string">&quot;db_version&quot;</span>)]);
+        <span class="kw">let </span>aliases = SourceAlias::new(<span class="kw-2">&amp;</span>[(<span class="string">"{:db_version:}"</span>, <span class="string">"db_version"</span>)]);
         <span class="kw">let </span>projection = <span class="self">Self</span>::Entity::get_projection().expand(aliases);
 
         <span class="macro">format!</span>(
-            <span class="string">r#&quot;
+            <span class="string">r#"
 insert into db_version (application_type, version, updated_at) values (?, ?, ?)
   on conflict (application_type) do update set version = excluded.version, updated_at = excluded.updated_at
 returning {projection}
-&quot;#
+"#
         </span>)
     }
 }
@@ -529,10 +530,10 @@ returning {projection}
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_projection() {
         <span class="kw">let </span>projection = DatabaseVersion::get_projection();
-        <span class="kw">let </span>aliases = SourceAlias::new(<span class="kw-2">&amp;</span>[(<span class="string">&quot;{:db_version:}&quot;</span>, <span class="string">&quot;whatever&quot;</span>)]);
+        <span class="kw">let </span>aliases = SourceAlias::new(<span class="kw-2">&amp;</span>[(<span class="string">"{:db_version:}"</span>, <span class="string">"whatever"</span>)]);
 
         <span class="macro">assert_eq!</span>(
-            <span class="string">&quot;whatever.version as version, whatever.application_type as application_type, whatever.updated_at as updated_at&quot;
+            <span class="string">"whatever.version as version, whatever.application_type as application_type, whatever.updated_at as updated_at"
                 </span>.to_string(),
             projection.expand(aliases)
         );
@@ -540,31 +541,31 @@ returning {projection}
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_definition() {
-        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">&quot;:memory:&quot;</span>).unwrap();
+        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">":memory:"</span>).unwrap();
         <span class="kw">let </span>provider = DatabaseVersionProvider::new(<span class="kw-2">&amp;</span>connection);
 
         <span class="macro">assert_eq!</span>(
-            <span class="string">r#&quot;
+            <span class="string">r#"
 select db_version.version as version, db_version.application_type as application_type, db_version.updated_at as updated_at
 from db_version
 where true
-&quot;#</span>,
-            provider.get_definition(<span class="string">&quot;true&quot;</span>)
+"#</span>,
+            provider.get_definition(<span class="string">"true"</span>)
         )
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_updated_entity() {
-        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">&quot;:memory:&quot;</span>).unwrap();
+        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">":memory:"</span>).unwrap();
         <span class="kw">let </span>provider = DatabaseVersionUpdater::new(<span class="kw-2">&amp;</span>connection);
 
         <span class="macro">assert_eq!</span>(
-            <span class="string">r#&quot;
+            <span class="string">r#"
 insert into db_version (application_type, version, updated_at) values (?, ?, ?)
   on conflict (application_type) do update set version = excluded.version, updated_at = excluded.updated_at
 returning db_version.version as version, db_version.application_type as application_type, db_version.updated_at as updated_at
-&quot;#</span>,
-            provider.get_definition(<span class="string">&quot;true&quot;</span>)
+"#</span>,
+            provider.get_definition(<span class="string">"true"</span>)
         )
     }
 }

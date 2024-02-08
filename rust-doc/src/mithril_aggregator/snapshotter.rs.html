@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-aggregator/src/snapshotter.rs`."><title>snapshotter.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="mithril_aggregator" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-aggregator/src/snapshotter.rs`."><title>snapshotter.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="mithril_aggregator" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -651,23 +652,23 @@
 </span><span class="attr">#[derive(Error, Debug)]
 </span><span class="kw">pub enum </span>SnapshotError {
     <span class="doccomment">/// Set when the snapshotter fails at creating a snapshot.
-    </span><span class="attr">#[error(<span class="string">&quot;Create archive error: {0}&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"Create archive error: {0}"</span>)]
     </span>CreateArchiveError(<span class="attr">#[from] </span>io::Error),
 
     <span class="doccomment">/// Set when the snapshotter creates an invalid snapshot.
-    </span><span class="attr">#[error(<span class="string">&quot;Invalid archive error: {0}&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"Invalid archive error: {0}"</span>)]
     </span>InvalidArchiveError(String),
 
     <span class="doccomment">/// Set when the snapshotter fails verifying a snapshot.
-    </span><span class="attr">#[error(<span class="string">&quot;Archive verification error: {0}&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"Archive verification error: {0}"</span>)]
     </span>VerifyArchiveError(String),
 
     <span class="doccomment">/// Set when the snapshotter fails at uploading the snapshot.
-    </span><span class="attr">#[error(<span class="string">&quot;Upload file error: `{0}`&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"Upload file error: `{0}`"</span>)]
     </span>UploadFileError(String),
 
     <span class="doccomment">/// General error.
-    </span><span class="attr">#[error(<span class="string">&quot;Snapshot General Error: `{0}`&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">"Snapshot General Error: `{0}`"</span>)]
     </span>GeneralError(String),
 }
 
@@ -678,7 +679,7 @@
             <span class="kw">if </span>archive_path.exists() {
                 <span class="kw">if let </span><span class="prelude-val">Err</span>(remove_error) = std::fs::remove_file(<span class="kw-2">&amp;</span>archive_path) {
                     <span class="macro">warn!</span>(
-                        <span class="string">&quot; &gt; Post snapshotter.snapshot failure, could not remove temporary archive at path: path:{}, err: {}&quot;</span>,
+                        <span class="string">" &gt; Post snapshotter.snapshot failure, could not remove temporary archive at path: path:{}, err: {}"</span>,
                         archive_path.display(),
                         remove_error
                     );
@@ -686,7 +687,7 @@
             }
 
             err
-        }).with_context(|| <span class="macro">format!</span>(<span class="string">&quot;CompressedArchiveSnapshotter can not create and verify archive: &#39;{}&#39;&quot;</span>, archive_path.display()))<span class="question-mark">?</span>;
+        }).with_context(|| <span class="macro">format!</span>(<span class="string">"CompressedArchiveSnapshotter can not create and verify archive: '{}'"</span>, archive_path.display()))<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(OngoingSnapshot {
             filepath: archive_path,
@@ -705,7 +706,7 @@
         <span class="kw">if </span>ongoing_snapshot_directory.exists() {
             std::fs::remove_dir_all(<span class="kw-2">&amp;</span>ongoing_snapshot_directory).with_context(|| {
                 <span class="macro">format!</span>(
-                    <span class="string">&quot;Can not remove snapshotter directory: &#39;{}&#39;.&quot;</span>,
+                    <span class="string">"Can not remove snapshotter directory: '{}'."</span>,
                     ongoing_snapshot_directory.display()
                 )
             })<span class="question-mark">?</span>;
@@ -714,7 +715,7 @@
         std::fs::create_dir(<span class="kw-2">&amp;</span>ongoing_snapshot_directory).map_err(|e| {
             DependenciesBuilderError::Initialization {
                 message: <span class="macro">format!</span>(
-                    <span class="string">&quot;Can not create snapshotter directory: &#39;{}&#39;.&quot;</span>,
+                    <span class="string">"Can not create snapshotter directory: '{}'."</span>,
                     ongoing_snapshot_directory.display()
                 ),
                 error: <span class="prelude-val">Some</span>(e.into()),
@@ -737,7 +738,7 @@
 
     <span class="kw">fn </span>create_archive(<span class="kw-2">&amp;</span><span class="self">self</span>, archive_path: <span class="kw-2">&amp;</span>Path) -&gt; StdResult&lt;u64&gt; {
         <span class="macro">info!</span>(
-            <span class="string">&quot;compressing {} into {}&quot;</span>,
+            <span class="string">"compressing {} into {}"</span>,
             <span class="self">self</span>.db_directory.display(),
             archive_path.display()
         );
@@ -749,11 +750,11 @@
                 <span class="kw">let </span>enc = GzEncoder::new(tar_file, Compression::default());
                 <span class="kw">let </span><span class="kw-2">mut </span>tar = tar::Builder::new(enc);
 
-                tar.append_dir_all(<span class="string">&quot;.&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.db_directory)
+                tar.append_dir_all(<span class="string">"."</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.db_directory)
                     .map_err(SnapshotError::CreateArchiveError)
                     .with_context(|| {
                         <span class="macro">format!</span>(
-                            <span class="string">&quot;GzEncoder Builder can not add directory: &#39;{}&#39; to the archive&quot;</span>,
+                            <span class="string">"GzEncoder Builder can not add directory: '{}' to the archive"</span>,
                             <span class="self">self</span>.db_directory.display()
                         )
                     })<span class="question-mark">?</span>;
@@ -761,10 +762,10 @@
                 <span class="kw">let </span><span class="kw-2">mut </span>gz = tar
                     .into_inner()
                     .map_err(SnapshotError::CreateArchiveError)
-                    .with_context(|| <span class="string">&quot;GzEncoder Builder can not write the archive&quot;</span>)<span class="question-mark">?</span>;
+                    .with_context(|| <span class="string">"GzEncoder Builder can not write the archive"</span>)<span class="question-mark">?</span>;
                 gz.try_finish()
                     .map_err(SnapshotError::CreateArchiveError)
-                    .with_context(|| <span class="string">&quot;GzEncoder can not finish the output stream after writing&quot;</span>)<span class="question-mark">?</span>;
+                    .with_context(|| <span class="string">"GzEncoder can not finish the output stream after writing"</span>)<span class="question-mark">?</span>;
             }
             SnapshotterCompressionAlgorithm::Zstandard(params) =&gt; {
                 <span class="kw">let </span><span class="kw-2">mut </span>enc = Encoder::new(tar_file, params.level)<span class="question-mark">?</span>;
@@ -772,11 +773,11 @@
                     .map_err(SnapshotError::CreateArchiveError)<span class="question-mark">?</span>;
                 <span class="kw">let </span><span class="kw-2">mut </span>tar = tar::Builder::new(enc);
 
-                tar.append_dir_all(<span class="string">&quot;.&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.db_directory)
+                tar.append_dir_all(<span class="string">"."</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.db_directory)
                     .map_err(SnapshotError::CreateArchiveError)
                     .with_context(|| {
                         <span class="macro">format!</span>(
-                            <span class="string">&quot;ZstandardEncoder Builder can not add directory: &#39;{}&#39; to the archive&quot;</span>,
+                            <span class="string">"ZstandardEncoder Builder can not add directory: '{}' to the archive"</span>,
                             <span class="self">self</span>.db_directory.display()
                         )
                     })<span class="question-mark">?</span>;
@@ -784,18 +785,18 @@
                 <span class="kw">let </span>zstd = tar
                     .into_inner()
                     .map_err(SnapshotError::CreateArchiveError)
-                    .with_context(|| <span class="string">&quot;ZstandardEncoder Builder can not write the archive&quot;</span>)<span class="question-mark">?</span>;
+                    .with_context(|| <span class="string">"ZstandardEncoder Builder can not write the archive"</span>)<span class="question-mark">?</span>;
                 zstd.finish()
                     .map_err(SnapshotError::CreateArchiveError)
                     .with_context(|| {
-                        <span class="string">&quot;ZstandardEncoder can not finish the output stream after writing&quot;
+                        <span class="string">"ZstandardEncoder can not finish the output stream after writing"
                     </span>})<span class="question-mark">?</span>;
             }
         }
 
         <span class="kw">let </span>filesize = <span class="self">Self</span>::get_file_size(archive_path).with_context(|| {
             <span class="macro">format!</span>(
-                <span class="string">&quot;CompressedArchiveSnapshotter can not get file size of archive with path: &#39;{}&#39;&quot;</span>,
+                <span class="string">"CompressedArchiveSnapshotter can not get file size of archive with path: '{}'"</span>,
                 archive_path.display()
             )
         })<span class="question-mark">?</span>;
@@ -806,13 +807,13 @@
     <span class="kw">fn </span>create_and_verify_archive(<span class="kw-2">&amp;</span><span class="self">self</span>, archive_path: <span class="kw-2">&amp;</span>Path) -&gt; StdResult&lt;u64&gt; {
         <span class="kw">let </span>filesize = <span class="self">self</span>.create_archive(archive_path).with_context(|| {
             <span class="macro">format!</span>(
-                <span class="string">&quot;CompressedArchiveSnapshotter can not create archive with path: &#39;{}&#39;&#39;&quot;</span>,
+                <span class="string">"CompressedArchiveSnapshotter can not create archive with path: '{}''"</span>,
                 archive_path.display()
             )
         })<span class="question-mark">?</span>;
         <span class="self">self</span>.verify_archive(archive_path).with_context(|| {
             <span class="macro">format!</span>(
-                <span class="string">&quot;CompressedArchiveSnapshotter can not verify archive with path: &#39;{}&#39;&#39;&quot;</span>,
+                <span class="string">"CompressedArchiveSnapshotter can not verify archive with path: '{}''"</span>,
                 archive_path.display()
             )
         })<span class="question-mark">?</span>;
@@ -822,7 +823,7 @@
 
     <span class="comment">// Verify if an archive is corrupted (i.e. at least one entry is invalid)
     </span><span class="kw">fn </span>verify_archive(<span class="kw-2">&amp;</span><span class="self">self</span>, archive_path: <span class="kw-2">&amp;</span>Path) -&gt; StdResult&lt;()&gt; {
-        <span class="macro">info!</span>(<span class="string">&quot;verifying archive: {}&quot;</span>, archive_path.display());
+        <span class="macro">info!</span>(<span class="string">"verifying archive: {}"</span>, archive_path.display());
 
         <span class="kw">let </span><span class="kw-2">mut </span>snapshot_file_tar = File::open(archive_path)
             .map_err(|e| SnapshotError::InvalidArchiveError(e.to_string()))<span class="question-mark">?</span>;
@@ -840,26 +841,26 @@
         };
 
         <span class="kw">let </span>unpack_temp_dir = std::env::temp_dir()
-            .join(<span class="string">&quot;mithril_snapshotter_verify_archive&quot;</span>)
+            .join(<span class="string">"mithril_snapshotter_verify_archive"</span>)
             <span class="comment">// Add the archive name to the directory to allow two verifications at the same time
             // (useful for tests).
             </span>.join(
                 archive_path
                     .file_name()
                     .ok_or(SnapshotError::VerifyArchiveError(<span class="macro">format!</span>(
-                        <span class="string">&quot;Could not append archive name to temp directory: archive `{}`&quot;</span>,
+                        <span class="string">"Could not append archive name to temp directory: archive `{}`"</span>,
                         archive_path.display(),
                     )))<span class="question-mark">?</span>,
             );
 
         fs::create_dir_all(<span class="kw-2">&amp;</span>unpack_temp_dir).map_err(|e| {
             SnapshotError::VerifyArchiveError(<span class="macro">format!</span>(
-                <span class="string">&quot;Could not create directory `{}`: {e}&quot;</span>,
+                <span class="string">"Could not create directory `{}`: {e}"</span>,
                 unpack_temp_dir.display(),
             ))
         })<span class="question-mark">?</span>;
 
-        <span class="kw">let </span>unpack_temp_file = <span class="kw-2">&amp;</span>unpack_temp_dir.join(<span class="string">&quot;unpack.tmp&quot;</span>);
+        <span class="kw">let </span>unpack_temp_file = <span class="kw-2">&amp;</span>unpack_temp_dir.join(<span class="string">"unpack.tmp"</span>);
 
         <span class="kw">let </span>verify_result = {
             <span class="kw">let </span><span class="kw-2">mut </span>result = <span class="prelude-val">Ok</span>(());
@@ -867,7 +868,7 @@
                 <span class="kw">match </span>e {
                     <span class="prelude-val">Err</span>(e) =&gt; {
                         result = <span class="prelude-val">Err</span>(<span class="macro">anyhow!</span>(SnapshotError::InvalidArchiveError(<span class="macro">format!</span>(
-                            <span class="string">&quot;invalid entry with error: &#39;{:?}&#39;&quot;</span>,
+                            <span class="string">"invalid entry with error: '{:?}'"</span>,
                             e
                         ))));
                         <span class="kw">break</span>;
@@ -881,7 +882,7 @@
         <span class="comment">// Always remove the temp directory
         </span>fs::remove_dir_all(<span class="kw-2">&amp;</span>unpack_temp_dir).map_err(|e| {
             SnapshotError::VerifyArchiveError(<span class="macro">format!</span>(
-                <span class="string">&quot;Could not remove directory `{}`: {e}&quot;</span>,
+                <span class="string">"Could not remove directory `{}`: {e}"</span>,
                 unpack_temp_dir.display(),
             ))
         })<span class="question-mark">?</span>;
@@ -899,14 +900,14 @@
             <span class="kw">match </span>file.unpack(unpack_file_path) {
                 <span class="prelude-val">Err</span>(e) =&gt; {
                     <span class="kw">return </span><span class="prelude-val">Err</span>(SnapshotError::InvalidArchiveError(<span class="macro">format!</span>(
-                        <span class="string">&quot;can&#39;t unpack entry with error: &#39;{:?}&#39;&quot;</span>,
+                        <span class="string">"can't unpack entry with error: '{:?}'"</span>,
                         e
                     )))
                 }
                 <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; {
                     <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = fs::remove_file(unpack_file_path) {
                         <span class="kw">return </span><span class="prelude-val">Err</span>(SnapshotError::VerifyArchiveError(<span class="macro">format!</span>(
-                            <span class="string">&quot;can&#39;t remove temporary unpacked file with error: &#39;{e:?}&#39;, file path: `{}`&quot;</span>,
+                            <span class="string">"can't remove temporary unpacked file with error: '{e:?}', file path: `{}`"</span>,
                             unpack_file_path.display()
                         )));
                     }
@@ -976,8 +977,8 @@
 
     <span class="kw">fn </span>get_test_directory(dir_name: <span class="kw-2">&amp;</span>str) -&gt; PathBuf {
         <span class="kw">let </span>test_dir = std::env::temp_dir()
-            .join(<span class="string">&quot;mithril_test&quot;</span>)
-            .join(<span class="string">&quot;snapshotter&quot;</span>)
+            .join(<span class="string">"mithril_test"</span>)
+            .join(<span class="string">"snapshotter"</span>)
             .join(dir_name);
         <span class="kw">if </span>test_dir.exists() {
             std::fs::remove_dir_all(<span class="kw-2">&amp;</span>test_dir).unwrap();
@@ -992,25 +993,25 @@
         <span class="kw">let </span>snapshotter = DumbSnapshotter::new();
         <span class="macro">assert!</span>(snapshotter
             .get_last_snapshot()
-            .expect(<span class="string">&quot;Dumb snapshotter::get_last_snapshot should not fail when no last snapshot.&quot;</span>)
+            .expect(<span class="string">"Dumb snapshotter::get_last_snapshot should not fail when no last snapshot."</span>)
             .is_none());
 
         <span class="kw">let </span>snapshot = snapshotter
-            .snapshot(<span class="string">&quot;whatever&quot;</span>)
-            .expect(<span class="string">&quot;Dumb snapshotter::snapshot should not fail.&quot;</span>);
+            .snapshot(<span class="string">"whatever"</span>)
+            .expect(<span class="string">"Dumb snapshotter::snapshot should not fail."</span>);
         <span class="macro">assert_eq!</span>(
             <span class="prelude-val">Some</span>(snapshot),
             snapshotter.get_last_snapshot().expect(
-                <span class="string">&quot;Dumb snapshotter::get_last_snapshot should not fail when some last snapshot.&quot;
+                <span class="string">"Dumb snapshotter::get_last_snapshot should not fail when some last snapshot."
             </span>)
         );
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>should_create_directory_if_does_not_exist() {
-        <span class="kw">let </span>test_dir = get_test_directory(<span class="string">&quot;should_create_directory_if_does_not_exist&quot;</span>);
-        <span class="kw">let </span>pending_snapshot_directory = test_dir.join(<span class="string">&quot;pending_snapshot&quot;</span>);
-        <span class="kw">let </span>db_directory = std::env::temp_dir().join(<span class="string">&quot;whatever&quot;</span>);
+        <span class="kw">let </span>test_dir = get_test_directory(<span class="string">"should_create_directory_if_does_not_exist"</span>);
+        <span class="kw">let </span>pending_snapshot_directory = test_dir.join(<span class="string">"pending_snapshot"</span>);
+        <span class="kw">let </span>db_directory = std::env::temp_dir().join(<span class="string">"whatever"</span>);
 
         Arc::new(
             CompressedArchiveSnapshotter::new(
@@ -1027,13 +1028,13 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>should_clean_pending_snapshot_directory_if_already_exists() {
         <span class="kw">let </span>test_dir =
-            get_test_directory(<span class="string">&quot;should_clean_pending_snapshot_directory_if_already_exists&quot;</span>);
-        <span class="kw">let </span>pending_snapshot_directory = test_dir.join(<span class="string">&quot;pending_snapshot&quot;</span>);
-        <span class="kw">let </span>db_directory = std::env::temp_dir().join(<span class="string">&quot;whatever&quot;</span>);
+            get_test_directory(<span class="string">"should_clean_pending_snapshot_directory_if_already_exists"</span>);
+        <span class="kw">let </span>pending_snapshot_directory = test_dir.join(<span class="string">"pending_snapshot"</span>);
+        <span class="kw">let </span>db_directory = std::env::temp_dir().join(<span class="string">"whatever"</span>);
 
         std::fs::create_dir_all(<span class="kw-2">&amp;</span>pending_snapshot_directory).unwrap();
 
-        File::create(pending_snapshot_directory.join(<span class="string">&quot;whatever.txt&quot;</span>)).unwrap();
+        File::create(pending_snapshot_directory.join(<span class="string">"whatever.txt"</span>)).unwrap();
 
         Arc::new(
             CompressedArchiveSnapshotter::new(
@@ -1055,10 +1056,10 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>should_delete_tmp_file_in_pending_snapshot_directory_if_snapshotting_fail() {
         <span class="kw">let </span>test_dir = get_test_directory(
-            <span class="string">&quot;should_delete_tmp_file_in_pending_snapshot_directory_if_snapshotting_fail&quot;</span>,
+            <span class="string">"should_delete_tmp_file_in_pending_snapshot_directory_if_snapshotting_fail"</span>,
         );
-        <span class="kw">let </span>pending_snapshot_directory = test_dir.join(<span class="string">&quot;pending_snapshot&quot;</span>);
-        <span class="kw">let </span>db_directory = test_dir.join(<span class="string">&quot;db&quot;</span>);
+        <span class="kw">let </span>pending_snapshot_directory = test_dir.join(<span class="string">"pending_snapshot"</span>);
+        <span class="kw">let </span>db_directory = test_dir.join(<span class="string">"db"</span>);
 
         <span class="kw">let </span>snapshotter = Arc::new(
             CompressedArchiveSnapshotter::new(
@@ -1070,25 +1071,25 @@
         );
 
         <span class="comment">// this file should not be deleted by the archive creation
-        </span>File::create(pending_snapshot_directory.join(<span class="string">&quot;other-process.file&quot;</span>)).unwrap();
+        </span>File::create(pending_snapshot_directory.join(<span class="string">"other-process.file"</span>)).unwrap();
 
         <span class="kw">let _ </span>= snapshotter
-            .snapshot(<span class="string">&quot;whatever.tar.gz&quot;</span>)
-            .expect_err(<span class="string">&quot;Snapshotter::snapshot should fail if the db is empty.&quot;</span>);
+            .snapshot(<span class="string">"whatever.tar.gz"</span>)
+            .expect_err(<span class="string">"Snapshotter::snapshot should fail if the db is empty."</span>);
         <span class="kw">let </span>remaining_files: Vec&lt;String&gt; = std::fs::read_dir(<span class="kw-2">&amp;</span>pending_snapshot_directory)
             .unwrap()
             .map(|f| f.unwrap().file_name().to_str().unwrap().to_owned())
             .collect();
 
-        <span class="macro">assert_eq!</span>(<span class="macro">vec!</span>[<span class="string">&quot;other-process.file&quot;</span>.to_string()], remaining_files);
+        <span class="macro">assert_eq!</span>(<span class="macro">vec!</span>[<span class="string">"other-process.file"</span>.to_string()], remaining_files);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>should_create_a_valid_archive_with_gzip_snapshotter() {
-        <span class="kw">let </span>test_dir = get_test_directory(<span class="string">&quot;should_create_a_valid_archive_with_gzip_snapshotter&quot;</span>);
-        <span class="kw">let </span>pending_snapshot_directory = test_dir.join(<span class="string">&quot;pending_snapshot&quot;</span>);
-        <span class="kw">let </span>pending_snapshot_archive_file = <span class="string">&quot;archive.tar.gz&quot;</span>;
-        <span class="kw">let </span>db_directory = test_dir.join(<span class="string">&quot;db&quot;</span>);
+        <span class="kw">let </span>test_dir = get_test_directory(<span class="string">"should_create_a_valid_archive_with_gzip_snapshotter"</span>);
+        <span class="kw">let </span>pending_snapshot_directory = test_dir.join(<span class="string">"pending_snapshot"</span>);
+        <span class="kw">let </span>pending_snapshot_archive_file = <span class="string">"archive.tar.gz"</span>;
+        <span class="kw">let </span>db_directory = test_dir.join(<span class="string">"db"</span>);
 
         DummyImmutablesDbBuilder::new(db_directory.as_os_str().to_str().unwrap())
             .with_immutables(<span class="kw-2">&amp;</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])
@@ -1108,25 +1109,25 @@
             .create_archive(
                 <span class="kw-2">&amp;</span>pending_snapshot_directory.join(Path::new(pending_snapshot_archive_file)),
             )
-            .expect(<span class="string">&quot;create_archive should not fail&quot;</span>);
+            .expect(<span class="string">"create_archive should not fail"</span>);
         snapshotter
             .verify_archive(
                 <span class="kw-2">&amp;</span>pending_snapshot_directory.join(Path::new(pending_snapshot_archive_file)),
             )
-            .expect(<span class="string">&quot;verify_archive should not fail&quot;</span>);
+            .expect(<span class="string">"verify_archive should not fail"</span>);
 
         snapshotter
             .snapshot(pending_snapshot_archive_file)
-            .expect(<span class="string">&quot;Snapshotter::snapshot should not fail.&quot;</span>);
+            .expect(<span class="string">"Snapshotter::snapshot should not fail."</span>);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>should_create_a_valid_archive_with_zstandard_snapshotter() {
         <span class="kw">let </span>test_dir =
-            get_test_directory(<span class="string">&quot;should_create_a_valid_archive_with_zstandard_snapshotter&quot;</span>);
-        <span class="kw">let </span>pending_snapshot_directory = test_dir.join(<span class="string">&quot;pending_snapshot&quot;</span>);
-        <span class="kw">let </span>pending_snapshot_archive_file = <span class="string">&quot;archive.tar.zst&quot;</span>;
-        <span class="kw">let </span>db_directory = test_dir.join(<span class="string">&quot;db&quot;</span>);
+            get_test_directory(<span class="string">"should_create_a_valid_archive_with_zstandard_snapshotter"</span>);
+        <span class="kw">let </span>pending_snapshot_directory = test_dir.join(<span class="string">"pending_snapshot"</span>);
+        <span class="kw">let </span>pending_snapshot_archive_file = <span class="string">"archive.tar.zst"</span>;
+        <span class="kw">let </span>db_directory = test_dir.join(<span class="string">"db"</span>);
 
         DummyImmutablesDbBuilder::new(db_directory.as_os_str().to_str().unwrap())
             .with_immutables(<span class="kw-2">&amp;</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])
@@ -1146,16 +1147,16 @@
             .create_archive(
                 <span class="kw-2">&amp;</span>pending_snapshot_directory.join(Path::new(pending_snapshot_archive_file)),
             )
-            .expect(<span class="string">&quot;create_archive should not fail&quot;</span>);
+            .expect(<span class="string">"create_archive should not fail"</span>);
         snapshotter
             .verify_archive(
                 <span class="kw-2">&amp;</span>pending_snapshot_directory.join(Path::new(pending_snapshot_archive_file)),
             )
-            .expect(<span class="string">&quot;verify_archive should not fail&quot;</span>);
+            .expect(<span class="string">"verify_archive should not fail"</span>);
 
         snapshotter
             .snapshot(pending_snapshot_archive_file)
-            .expect(<span class="string">&quot;Snapshotter::snapshot should not fail.&quot;</span>);
+            .expect(<span class="string">"Snapshotter::snapshot should not fail."</span>);
     }
 }
 </code></pre></div></section></main></body></html>

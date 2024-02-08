@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-aggregator/src/tools/signer_importer.rs`."><title>signer_importer.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_aggregator" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-aggregator/src/tools/signer_importer.rs`."><title>signer_importer.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_aggregator" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -510,16 +511,16 @@
 
     <span class="doccomment">/// Import and persist the signers
     </span><span class="kw">pub async fn </span>run(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; StdResult&lt;()&gt; {
-        <span class="macro">info!</span>(<span class="string">&quot;🔧 Signer Importer: starting&quot;</span>);
+        <span class="macro">info!</span>(<span class="string">"🔧 Signer Importer: starting"</span>);
         <span class="kw">let </span>items = <span class="self">self
             </span>.retriever
             .retrieve()
             .<span class="kw">await
-            </span>.with_context(|| <span class="string">&quot;Failed to retrieve signers from remote service&quot;</span>)<span class="question-mark">?</span>;
+            </span>.with_context(|| <span class="string">"Failed to retrieve signers from remote service"</span>)<span class="question-mark">?</span>;
         <span class="self">self</span>.persister
             .persist(items)
             .<span class="kw">await
-            </span>.with_context(|| <span class="string">&quot;Failed to persist retrieved data into the database&quot;</span>)
+            </span>.with_context(|| <span class="string">"Failed to persist retrieved data into the database"</span>)
     }
 
     <span class="doccomment">/// Start a loop that call [run][Self::run] at the given time interval.
@@ -529,10 +530,10 @@
         <span class="kw">loop </span>{
             interval.tick().<span class="kw">await</span>;
             <span class="kw">if let </span><span class="prelude-val">Err</span>(error) = <span class="self">self</span>.run().<span class="kw">await </span>{
-                <span class="macro">warn!</span>(<span class="string">&quot;Signer retriever failed: Error: «{:?}».&quot;</span>, error);
+                <span class="macro">warn!</span>(<span class="string">"Signer retriever failed: Error: «{:?}»."</span>, error);
             }
             <span class="macro">info!</span>(
-                <span class="string">&quot;🔧 Signer Importer: Cycle finished, Sleeping for {} min&quot;</span>,
+                <span class="string">"🔧 Signer Importer: Cycle finished, Sleeping for {} min"</span>,
                 run_interval.as_secs() / <span class="number">60
             </span>);
         }
@@ -559,8 +560,8 @@
 </span><span class="kw">impl </span>SignersImporterPersister <span class="kw">for </span>SignerStore {
     <span class="kw">async fn </span>persist(<span class="kw-2">&amp;</span><span class="self">self</span>, signers: HashMap&lt;PartyId, <span class="prelude-ty">Option</span>&lt;PoolTicker&gt;&gt;) -&gt; StdResult&lt;()&gt; {
         <span class="macro">info!</span>(
-            <span class="string">&quot;🔧 Signer Importer: persisting retrieved data in the database&quot;</span>;
-            <span class="string">&quot;number_of_signer_to_insert&quot; </span>=&gt; signers.len()
+            <span class="string">"🔧 Signer Importer: persisting retrieved data in the database"</span>;
+            <span class="string">"number_of_signer_to_insert" </span>=&gt; signers.len()
         );
         <span class="self">self</span>.import_many_signers(signers).<span class="kw">await</span><span class="question-mark">?</span>;
 
@@ -580,14 +581,14 @@
     </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>new&lt;T: IntoUrl&gt;(source_url: T, timeout: <span class="prelude-ty">Option</span>&lt;Duration&gt;) -&gt; StdResult&lt;<span class="self">Self</span>&gt; {
         <span class="kw">let </span>source_url = source_url
             .into_url()
-            .with_context(|| <span class="string">&quot;Given `source_url` is not a valid Url&quot;</span>)<span class="question-mark">?</span>;
+            .with_context(|| <span class="string">"Given `source_url` is not a valid Url"</span>)<span class="question-mark">?</span>;
         <span class="kw">let </span>client_builder = reqwest::Client::builder();
         <span class="kw">let </span>client = <span class="kw">match </span>timeout {
             <span class="prelude-val">None </span>=&gt; client_builder,
             <span class="prelude-val">Some</span>(timeout) =&gt; client_builder.timeout(timeout),
         }
         .build()
-        .with_context(|| <span class="string">&quot;Http Client build failed&quot;</span>)<span class="question-mark">?</span>;
+        .with_context(|| <span class="string">"Http Client build failed"</span>)<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(<span class="self">Self </span>{ source_url, client })
     }
@@ -597,22 +598,22 @@
 </span><span class="kw">impl </span>SignersImporterRetriever <span class="kw">for </span>CExplorerSignerRetriever {
     <span class="kw">async fn </span>retrieve(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; StdResult&lt;HashMap&lt;PartyId, <span class="prelude-ty">Option</span>&lt;PoolTicker&gt;&gt;&gt; {
         <span class="macro">info!</span>(
-            <span class="string">&quot;🔧 Signer Importer: retrieving data from source&quot;</span>;
-            <span class="string">&quot;source_url&quot; </span>=&gt; <span class="kw-2">&amp;</span><span class="self">self</span>.source_url.as_str()
+            <span class="string">"🔧 Signer Importer: retrieving data from source"</span>;
+            <span class="string">"source_url" </span>=&gt; <span class="kw-2">&amp;</span><span class="self">self</span>.source_url.as_str()
         );
         <span class="kw">let </span>response = <span class="self">self
             </span>.client
             .get(<span class="self">self</span>.source_url.to_owned())
             .send()
             .<span class="kw">await
-            </span>.with_context(|| <span class="string">&quot;Retrieving of CExplorer SPO list failed&quot;</span>)<span class="question-mark">?</span>;
+            </span>.with_context(|| <span class="string">"Retrieving of CExplorer SPO list failed"</span>)<span class="question-mark">?</span>;
 
         <span class="kw">let </span>spo_list = response
             .error_for_status()
-            .with_context(|| <span class="string">&quot;Data fetching failed&quot;</span>)<span class="question-mark">?
+            .with_context(|| <span class="string">"Data fetching failed"</span>)<span class="question-mark">?
             </span>.json::&lt;SPOList&gt;()
             .<span class="kw">await
-            </span>.with_context(|| <span class="string">&quot;Failed to deserialize retrieved SPO list from CExplorer&quot;</span>)<span class="question-mark">?</span>;
+            </span>.with_context(|| <span class="string">"Failed to deserialize retrieved SPO list from CExplorer"</span>)<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(spo_list
             .data
@@ -636,7 +637,7 @@
 }
 
 <span class="kw">impl </span>SPOItem {
-    <span class="kw">const </span>EMPTY_NAME: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = <span class="string">&quot;[] &quot;</span>;
+    <span class="kw">const </span>EMPTY_NAME: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = <span class="string">"[] "</span>;
 
     <span class="kw">fn </span>is_name_empty(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="self">self</span>.name.is_empty() || <span class="self">self</span>.name == <span class="self">Self</span>::EMPTY_NAME
@@ -694,7 +695,7 @@
     }
 
     <span class="kw">fn </span>connection_without_foreign_key_support() -&gt; SqliteConnection {
-        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">&quot;:memory:&quot;</span>).unwrap();
+        <span class="kw">let </span>connection = Connection::open_thread_safe(<span class="string">":memory:"</span>).unwrap();
         apply_all_migrations_to_db(<span class="kw-2">&amp;</span>connection).unwrap();
         disable_foreign_key_support(<span class="kw-2">&amp;</span>connection).unwrap();
 
@@ -733,42 +734,42 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>item_with_empty_name_yield_empty_pool_ticker() {
-        <span class="kw">for </span>name <span class="kw">in </span>[<span class="string">&quot;&quot;</span>, SPOItem::EMPTY_NAME] {
+        <span class="kw">for </span>name <span class="kw">in </span>[<span class="string">""</span>, SPOItem::EMPTY_NAME] {
             <span class="kw">let </span>item = SPOItem {
-                pool_id: <span class="string">&quot;whatever&quot;</span>.to_string(),
+                pool_id: <span class="string">"whatever"</span>.to_string(),
                 name: name.to_string(),
             };
             <span class="macro">assert!</span>(item.is_name_empty());
-            <span class="macro">assert_eq!</span>((<span class="string">&quot;whatever&quot;</span>.to_string(), <span class="prelude-val">None</span>), item.extract());
+            <span class="macro">assert_eq!</span>((<span class="string">"whatever"</span>.to_string(), <span class="prelude-val">None</span>), item.extract());
         }
     }
 
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>retriever_should_return_deduplicated_data_and_handle_empty_name() {
-        <span class="kw">let </span>server = test_http_server(warp::path(<span class="string">&quot;list&quot;</span>).map(|| {
-            <span class="string">r#&quot;{
-            &quot;data&quot;: [
-                {&quot;pool_id&quot;: &quot;pool1&quot;, &quot;name&quot;: &quot;&quot;},
-                {&quot;pool_id&quot;: &quot;pool2&quot;, &quot;name&quot;: &quot;[] &quot;},
-                {&quot;pool_id&quot;: &quot;pool3&quot;, &quot;name&quot;: &quot;whatever&quot;},
-                {&quot;pool_id&quot;: &quot;pool3&quot;, &quot;name&quot;: &quot;whatever2&quot;}
+        <span class="kw">let </span>server = test_http_server(warp::path(<span class="string">"list"</span>).map(|| {
+            <span class="string">r#"{
+            "data": [
+                {"pool_id": "pool1", "name": ""},
+                {"pool_id": "pool2", "name": "[] "},
+                {"pool_id": "pool3", "name": "whatever"},
+                {"pool_id": "pool3", "name": "whatever2"}
             ]
-        }&quot;#
+        }"#
         </span>}));
 
         <span class="kw">let </span>retriever =
-            CExplorerSignerRetriever::new(<span class="macro">format!</span>(<span class="string">&quot;{}/list&quot;</span>, server.url()), <span class="prelude-val">None</span>).unwrap();
+            CExplorerSignerRetriever::new(<span class="macro">format!</span>(<span class="string">"{}/list"</span>, server.url()), <span class="prelude-val">None</span>).unwrap();
         <span class="kw">let </span>result = retriever
             .retrieve()
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;Retriever should not fail&quot;</span>);
+            </span>.expect(<span class="string">"Retriever should not fail"</span>);
 
         <span class="macro">assert_eq!</span>(
             result.into_iter().collect::&lt;BTreeMap&lt;<span class="kw">_</span>, <span class="kw">_</span>&gt;&gt;(),
             BTreeMap::from([
-                (<span class="string">&quot;pool1&quot;</span>.to_string(), <span class="prelude-val">None</span>),
-                (<span class="string">&quot;pool2&quot;</span>.to_string(), <span class="prelude-val">None</span>),
-                (<span class="string">&quot;pool3&quot;</span>.to_string(), <span class="prelude-val">Some</span>(<span class="string">&quot;whatever2&quot;</span>.to_string())),
+                (<span class="string">"pool1"</span>.to_string(), <span class="prelude-val">None</span>),
+                (<span class="string">"pool2"</span>.to_string(), <span class="prelude-val">None</span>),
+                (<span class="string">"pool3"</span>.to_string(), <span class="prelude-val">Some</span>(<span class="string">"whatever2"</span>.to_string())),
             ])
         );
     }
@@ -776,44 +777,44 @@
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>retriever_handle_http_data_fetching_error() {
         <span class="kw">let </span>server =
-            test_http_server(warp::path(<span class="string">&quot;list&quot;</span>).map(|| reply::internal_server_error(<span class="string">&quot;whatever&quot;</span>)));
+            test_http_server(warp::path(<span class="string">"list"</span>).map(|| reply::internal_server_error(<span class="string">"whatever"</span>)));
 
         <span class="kw">let </span>retriever =
-            CExplorerSignerRetriever::new(<span class="macro">format!</span>(<span class="string">&quot;{}/list&quot;</span>, server.url()), <span class="prelude-val">None</span>).unwrap();
+            CExplorerSignerRetriever::new(<span class="macro">format!</span>(<span class="string">"{}/list"</span>, server.url()), <span class="prelude-val">None</span>).unwrap();
         retriever
             .retrieve()
             .<span class="kw">await
-            </span>.expect_err(<span class="string">&quot;An error should have been raised&quot;</span>);
+            </span>.expect_err(<span class="string">"An error should have been raised"</span>);
     }
 
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>retriever_yield_error_when_json_is_malformed() {
-        <span class="kw">let </span>server = test_http_server(warp::path(<span class="string">&quot;list&quot;</span>).map(|| <span class="string">r#&quot;{ &quot;data&quot;: [ {&quot;pool_&quot; ] }&quot;#</span>));
+        <span class="kw">let </span>server = test_http_server(warp::path(<span class="string">"list"</span>).map(|| <span class="string">r#"{ "data": [ {"pool_" ] }"#</span>));
 
         <span class="kw">let </span>retriever =
-            CExplorerSignerRetriever::new(<span class="macro">format!</span>(<span class="string">&quot;{}/list&quot;</span>, server.url()), <span class="prelude-val">None</span>).unwrap();
+            CExplorerSignerRetriever::new(<span class="macro">format!</span>(<span class="string">"{}/list"</span>, server.url()), <span class="prelude-val">None</span>).unwrap();
         retriever
             .retrieve()
             .<span class="kw">await
-            </span>.expect_err(<span class="string">&quot;An error should have been raised&quot;</span>);
+            </span>.expect_err(<span class="string">"An error should have been raised"</span>);
     }
 
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>retriever_can_timeout() {
-        <span class="kw">let </span>server = test_http_server(warp::path(<span class="string">&quot;list&quot;</span>).and_then(|| <span class="kw">async </span>{
+        <span class="kw">let </span>server = test_http_server(warp::path(<span class="string">"list"</span>).and_then(|| <span class="kw">async </span>{
             tokio::time::sleep(Duration::from_millis(<span class="number">70</span>)).<span class="kw">await</span>;
-            <span class="prelude-val">Ok</span>::&lt;<span class="kw-2">&amp;</span>str, Infallible&gt;(<span class="string">r#&quot;{&quot;data&quot;:[]}&quot;#</span>)
+            <span class="prelude-val">Ok</span>::&lt;<span class="kw-2">&amp;</span>str, Infallible&gt;(<span class="string">r#"{"data":[]}"#</span>)
         }));
 
         <span class="kw">let </span>retriever = CExplorerSignerRetriever::new(
-            <span class="macro">format!</span>(<span class="string">&quot;{}/list&quot;</span>, server.url()),
+            <span class="macro">format!</span>(<span class="string">"{}/list"</span>, server.url()),
             <span class="prelude-val">Some</span>(Duration::from_millis(<span class="number">10</span>)),
         )
         .unwrap();
         retriever
             .retrieve()
             .<span class="kw">await
-            </span>.expect_err(<span class="string">&quot;An error should have been raised&quot;</span>);
+            </span>.expect_err(<span class="string">"An error should have been raised"</span>);
     }
 
     <span class="attr">#[tokio::test]
@@ -822,8 +823,8 @@
         <span class="kw">let </span><span class="kw-2">mut </span>retriever = MockSignersImporterRetriever::new();
         retriever.expect_retrieve().returning(|| {
             <span class="prelude-val">Ok</span>(HashMap::from([
-                (<span class="string">&quot;pool1&quot;</span>.to_string(), <span class="prelude-val">Some</span>(<span class="string">&quot;[Pool name test]&quot;</span>.to_string())),
-                (<span class="string">&quot;pool2&quot;</span>.to_string(), <span class="prelude-val">None</span>),
+                (<span class="string">"pool1"</span>.to_string(), <span class="prelude-val">Some</span>(<span class="string">"[Pool name test]"</span>.to_string())),
+                (<span class="string">"pool2"</span>.to_string(), <span class="prelude-val">None</span>),
             ]))
         });
 
@@ -834,14 +835,14 @@
         importer
             .run()
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;running importer should not fail&quot;</span>);
+            </span>.expect(<span class="string">"running importer should not fail"</span>);
 
         <span class="kw">let </span>result = get_all_signers(connection).<span class="kw">await</span>.unwrap();
         <span class="macro">assert_eq!</span>(
             result,
             BTreeSet::from([
-                TestSigner::with_ticker(<span class="string">&quot;pool1&quot;</span>, <span class="string">&quot;[Pool name test]&quot;</span>,),
-                TestSigner::without_ticker(<span class="string">&quot;pool2&quot;</span>),
+                TestSigner::with_ticker(<span class="string">"pool1"</span>, <span class="string">"[Pool name test]"</span>,),
+                TestSigner::without_ticker(<span class="string">"pool2"</span>),
             ])
         );
     }
@@ -852,10 +853,10 @@
         fill_signer_db(
             connection.clone(),
             <span class="kw-2">&amp;</span>[
-                TestSigner::with_ticker(<span class="string">&quot;pool1&quot;</span>, <span class="string">&quot;[Pool name test]&quot;</span>),
-                TestSigner::without_ticker(<span class="string">&quot;pool2&quot;</span>),
-                TestSigner::with_ticker(<span class="string">&quot;pool3&quot;</span>, <span class="string">&quot;[Not updated]&quot;</span>),
-                TestSigner::with_ticker(<span class="string">&quot;pool4&quot;</span>, <span class="string">&quot;[Ticker will be removed]&quot;</span>),
+                TestSigner::with_ticker(<span class="string">"pool1"</span>, <span class="string">"[Pool name test]"</span>),
+                TestSigner::without_ticker(<span class="string">"pool2"</span>),
+                TestSigner::with_ticker(<span class="string">"pool3"</span>, <span class="string">"[Not updated]"</span>),
+                TestSigner::with_ticker(<span class="string">"pool4"</span>, <span class="string">"[Ticker will be removed]"</span>),
             ],
         )
         .<span class="kw">await
@@ -863,11 +864,11 @@
         <span class="kw">let </span><span class="kw-2">mut </span>retriever = MockSignersImporterRetriever::new();
         retriever.expect_retrieve().returning(|| {
             <span class="prelude-val">Ok</span>(HashMap::from([
-                (<span class="string">&quot;pool1&quot;</span>.to_string(), <span class="prelude-val">Some</span>(<span class="string">&quot;[Updated Pool name]&quot;</span>.to_string())),
-                (<span class="string">&quot;pool2&quot;</span>.to_string(), <span class="prelude-val">Some</span>(<span class="string">&quot;[Added Pool name]&quot;</span>.to_string())),
-                (<span class="string">&quot;pool3&quot;</span>.to_string(), <span class="prelude-val">Some</span>(<span class="string">&quot;[Not updated]&quot;</span>.to_string())),
-                (<span class="string">&quot;pool4&quot;</span>.to_string(), <span class="prelude-val">None</span>),
-                (<span class="string">&quot;pool5&quot;</span>.to_string(), <span class="prelude-val">Some</span>(<span class="string">&quot;[New Pool]&quot;</span>.to_string())),
+                (<span class="string">"pool1"</span>.to_string(), <span class="prelude-val">Some</span>(<span class="string">"[Updated Pool name]"</span>.to_string())),
+                (<span class="string">"pool2"</span>.to_string(), <span class="prelude-val">Some</span>(<span class="string">"[Added Pool name]"</span>.to_string())),
+                (<span class="string">"pool3"</span>.to_string(), <span class="prelude-val">Some</span>(<span class="string">"[Not updated]"</span>.to_string())),
+                (<span class="string">"pool4"</span>.to_string(), <span class="prelude-val">None</span>),
+                (<span class="string">"pool5"</span>.to_string(), <span class="prelude-val">Some</span>(<span class="string">"[New Pool]"</span>.to_string())),
             ]))
         });
 
@@ -878,17 +879,17 @@
         importer
             .run()
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;running importer should not fail&quot;</span>);
+            </span>.expect(<span class="string">"running importer should not fail"</span>);
 
         <span class="kw">let </span>result = get_all_signers(connection).<span class="kw">await</span>.unwrap();
         <span class="macro">assert_eq!</span>(
             result,
             BTreeSet::from([
-                TestSigner::with_ticker(<span class="string">&quot;pool1&quot;</span>, <span class="string">&quot;[Updated Pool name]&quot;</span>),
-                TestSigner::with_ticker(<span class="string">&quot;pool2&quot;</span>, <span class="string">&quot;[Added Pool name]&quot;</span>),
-                TestSigner::with_ticker(<span class="string">&quot;pool3&quot;</span>, <span class="string">&quot;[Not updated]&quot;</span>),
-                TestSigner::without_ticker(<span class="string">&quot;pool4&quot;</span>),
-                TestSigner::with_ticker(<span class="string">&quot;pool5&quot;</span>, <span class="string">&quot;[New Pool]&quot;</span>),
+                TestSigner::with_ticker(<span class="string">"pool1"</span>, <span class="string">"[Updated Pool name]"</span>),
+                TestSigner::with_ticker(<span class="string">"pool2"</span>, <span class="string">"[Added Pool name]"</span>),
+                TestSigner::with_ticker(<span class="string">"pool3"</span>, <span class="string">"[Not updated]"</span>),
+                TestSigner::without_ticker(<span class="string">"pool4"</span>),
+                TestSigner::with_ticker(<span class="string">"pool5"</span>, <span class="string">"[New Pool]"</span>),
             ])
         );
     }
@@ -899,49 +900,49 @@
         fill_signer_db(
             connection.clone(),
             <span class="kw-2">&amp;</span>[
-                TestSigner::with_ticker(<span class="string">&quot;pool4&quot;</span>, <span class="string">&quot;[Pool4 dont change]&quot;</span>),
-                TestSigner::without_ticker(<span class="string">&quot;pool5&quot;</span>),
-                TestSigner::with_ticker(<span class="string">&quot;pool6&quot;</span>, <span class="string">&quot;[Pool6 not returned by server]&quot;</span>),
-                TestSigner::with_ticker(<span class="string">&quot;pool7&quot;</span>, <span class="string">&quot;[Pool7 ticker will be removed]&quot;</span>),
+                TestSigner::with_ticker(<span class="string">"pool4"</span>, <span class="string">"[Pool4 dont change]"</span>),
+                TestSigner::without_ticker(<span class="string">"pool5"</span>),
+                TestSigner::with_ticker(<span class="string">"pool6"</span>, <span class="string">"[Pool6 not returned by server]"</span>),
+                TestSigner::with_ticker(<span class="string">"pool7"</span>, <span class="string">"[Pool7 ticker will be removed]"</span>),
             ],
         )
         .<span class="kw">await
         </span>.unwrap();
-        <span class="kw">let </span>server = test_http_server(warp::path(<span class="string">&quot;list&quot;</span>).map(|| {
-            <span class="string">r#&quot;{
-            &quot;data&quot;: [
-                {&quot;pool_id&quot;: &quot;pool1&quot;, &quot;name&quot;: &quot;&quot;},
-                {&quot;pool_id&quot;: &quot;pool2&quot;, &quot;name&quot;: &quot;[] &quot;},
-                {&quot;pool_id&quot;: &quot;pool3&quot;, &quot;name&quot;: &quot;[Pool3 added]&quot;},
-                {&quot;pool_id&quot;: &quot;pool4&quot;, &quot;name&quot;: &quot;[Pool4 dont change]&quot;},
-                {&quot;pool_id&quot;: &quot;pool5&quot;, &quot;name&quot;: &quot;[Pool5 add ticker]&quot;},
-                {&quot;pool_id&quot;: &quot;pool7&quot;, &quot;name&quot;: &quot;[] &quot;}
+        <span class="kw">let </span>server = test_http_server(warp::path(<span class="string">"list"</span>).map(|| {
+            <span class="string">r#"{
+            "data": [
+                {"pool_id": "pool1", "name": ""},
+                {"pool_id": "pool2", "name": "[] "},
+                {"pool_id": "pool3", "name": "[Pool3 added]"},
+                {"pool_id": "pool4", "name": "[Pool4 dont change]"},
+                {"pool_id": "pool5", "name": "[Pool5 add ticker]"},
+                {"pool_id": "pool7", "name": "[] "}
             ]
-        }&quot;#
+        }"#
         </span>}));
 
         <span class="kw">let </span>importer = SignersImporter::new(
             Arc::new(
-                CExplorerSignerRetriever::new(<span class="macro">format!</span>(<span class="string">&quot;{}/list&quot;</span>, server.url()), <span class="prelude-val">None</span>).unwrap(),
+                CExplorerSignerRetriever::new(<span class="macro">format!</span>(<span class="string">"{}/list"</span>, server.url()), <span class="prelude-val">None</span>).unwrap(),
             ),
             Arc::new(SignerStore::new(connection.clone())),
         );
         importer
             .run()
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;running importer should not fail&quot;</span>);
+            </span>.expect(<span class="string">"running importer should not fail"</span>);
 
         <span class="kw">let </span>result = get_all_signers(connection).<span class="kw">await</span>.unwrap();
         <span class="macro">assert_eq!</span>(
             result,
             BTreeSet::from([
-                TestSigner::without_ticker(<span class="string">&quot;pool1&quot;</span>),
-                TestSigner::without_ticker(<span class="string">&quot;pool2&quot;</span>),
-                TestSigner::with_ticker(<span class="string">&quot;pool3&quot;</span>, <span class="string">&quot;[Pool3 added]&quot;</span>,),
-                TestSigner::with_ticker(<span class="string">&quot;pool4&quot;</span>, <span class="string">&quot;[Pool4 dont change]&quot;</span>,),
-                TestSigner::with_ticker(<span class="string">&quot;pool5&quot;</span>, <span class="string">&quot;[Pool5 add ticker]&quot;</span>,),
-                TestSigner::with_ticker(<span class="string">&quot;pool6&quot;</span>, <span class="string">&quot;[Pool6 not returned by server]&quot;</span>,),
-                TestSigner::without_ticker(<span class="string">&quot;pool7&quot;</span>),
+                TestSigner::without_ticker(<span class="string">"pool1"</span>),
+                TestSigner::without_ticker(<span class="string">"pool2"</span>),
+                TestSigner::with_ticker(<span class="string">"pool3"</span>, <span class="string">"[Pool3 added]"</span>,),
+                TestSigner::with_ticker(<span class="string">"pool4"</span>, <span class="string">"[Pool4 dont change]"</span>,),
+                TestSigner::with_ticker(<span class="string">"pool5"</span>, <span class="string">"[Pool5 add ticker]"</span>,),
+                TestSigner::with_ticker(<span class="string">"pool6"</span>, <span class="string">"[Pool6 not returned by server]"</span>,),
+                TestSigner::without_ticker(<span class="string">"pool7"</span>),
             ])
         );
     }

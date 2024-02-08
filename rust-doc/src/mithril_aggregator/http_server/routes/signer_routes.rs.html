@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-aggregator/src/http_server/routes/signer_routes.rs`."><title>signer_routes.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="mithril_aggregator" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-aggregator/src/http_server/routes/signer_routes.rs`."><title>signer_routes.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="mithril_aggregator" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -654,7 +655,7 @@
 <span class="kw">use </span>std::sync::Arc;
 <span class="kw">use </span>warp::Filter;
 
-<span class="kw">const </span>MITHRIL_SIGNER_VERSION_HEADER: <span class="kw-2">&amp;</span>str = <span class="string">&quot;signer-node-version&quot;</span>;
+<span class="kw">const </span>MITHRIL_SIGNER_VERSION_HEADER: <span class="kw-2">&amp;</span>str = <span class="string">"signer-node-version"</span>;
 
 <span class="kw">pub fn </span>routes(
     dependency_manager: Arc&lt;DependencyContainer&gt;,
@@ -668,7 +669,7 @@
 </span><span class="kw">fn </span>register_signer(
     dependency_manager: Arc&lt;DependencyContainer&gt;,
 ) -&gt; <span class="kw">impl </span>Filter&lt;Extract = (<span class="kw">impl </span>warp::Reply,), Error = warp::Rejection&gt; + Clone {
-    <span class="macro">warp::path!</span>(<span class="string">&quot;register-signer&quot;</span>)
+    <span class="macro">warp::path!</span>(<span class="string">"register-signer"</span>)
         .and(warp::post())
         .and(warp::header::optional::&lt;String&gt;(
             MITHRIL_SIGNER_VERSION_HEADER,
@@ -688,7 +689,7 @@
 </span><span class="kw">fn </span>signers_tickers(
     dependency_manager: Arc&lt;DependencyContainer&gt;,
 ) -&gt; <span class="kw">impl </span>Filter&lt;Extract = (<span class="kw">impl </span>warp::Reply,), Error = warp::Rejection&gt; + Clone {
-    <span class="macro">warp::path!</span>(<span class="string">&quot;signers&quot; </span>/ <span class="string">&quot;tickers&quot;</span>)
+    <span class="macro">warp::path!</span>(<span class="string">"signers" </span>/ <span class="string">"tickers"</span>)
         .and(warp::get())
         .and(middlewares::with_config(dependency_manager.clone()))
         .and(middlewares::with_signer_getter(dependency_manager))
@@ -699,7 +700,7 @@
 </span><span class="kw">fn </span>registered_signers(
     dependency_manager: Arc&lt;DependencyContainer&gt;,
 ) -&gt; <span class="kw">impl </span>Filter&lt;Extract = (<span class="kw">impl </span>warp::Reply,), Error = warp::Rejection&gt; + Clone {
-    <span class="macro">warp::path!</span>(<span class="string">&quot;signers&quot; </span>/ <span class="string">&quot;registered&quot; </span>/ String)
+    <span class="macro">warp::path!</span>(<span class="string">"signers" </span>/ <span class="string">"registered" </span>/ String)
         .and(warp::get())
         .and(middlewares::with_verification_key_store(dependency_manager))
         .and_then(handlers::registered_signers)
@@ -732,12 +733,12 @@
         beacon_provider: Arc&lt;<span class="kw">dyn </span>BeaconProvider&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw">impl </span>warp::Reply, Infallible&gt; {
         <span class="macro">debug!</span>(
-            <span class="string">&quot;⇄ HTTP SERVER: register_signer/{:?}&quot;</span>,
+            <span class="string">"⇄ HTTP SERVER: register_signer/{:?}"</span>,
             register_signer_message
         );
         <span class="macro">trace!</span>(
-            <span class="string">&quot;⇄ HTTP SERVER: register_signer&quot;</span>;
-            <span class="string">&quot;complete_message&quot; </span>=&gt; #<span class="question-mark">?</span>register_signer_message
+            <span class="string">"⇄ HTTP SERVER: register_signer"</span>;
+            <span class="string">"complete_message" </span>=&gt; #<span class="question-mark">?</span>register_signer_message
         );
 
         <span class="kw">let </span>registration_epoch = <span class="kw">match </span>register_signer_message.epoch {
@@ -746,7 +747,7 @@
                 <span class="prelude-val">Some</span>(round) =&gt; round.epoch,
                 <span class="prelude-val">None </span>=&gt; {
                     <span class="kw">let </span>err = SignerRegistrationError::RegistrationRoundNotYetOpened;
-                    <span class="macro">warn!</span>(<span class="string">&quot;register_signer::error&quot;</span>; <span class="string">&quot;error&quot; </span>=&gt; <span class="question-mark">?</span>err);
+                    <span class="macro">warn!</span>(<span class="string">"register_signer::error"</span>; <span class="string">"error" </span>=&gt; <span class="question-mark">?</span>err);
                     <span class="kw">return </span><span class="prelude-val">Ok</span>(reply::service_unavailable(err.to_string()));
                 }
             },
@@ -755,29 +756,29 @@
         <span class="kw">let </span>signer = <span class="kw">match </span>FromRegisterSignerAdapter::try_adapt(register_signer_message) {
             <span class="prelude-val">Ok</span>(signer) =&gt; signer,
             <span class="prelude-val">Err</span>(err) =&gt; {
-                <span class="macro">warn!</span>(<span class="string">&quot;register_signer::payload decoding error&quot;</span>; <span class="string">&quot;error&quot; </span>=&gt; <span class="question-mark">?</span>err);
+                <span class="macro">warn!</span>(<span class="string">"register_signer::payload decoding error"</span>; <span class="string">"error" </span>=&gt; <span class="question-mark">?</span>err);
                 <span class="kw">return </span><span class="prelude-val">Ok</span>(reply::bad_request(
-                    <span class="string">&quot;Could not decode signer payload&quot;</span>.to_string(),
+                    <span class="string">"Could not decode signer payload"</span>.to_string(),
                     err.to_string(),
                 ));
             }
         };
 
         <span class="kw">let </span><span class="kw-2">mut </span>headers: Vec&lt;(<span class="kw-2">&amp;</span>str, <span class="kw-2">&amp;</span>str)&gt; = <span class="kw">match </span>signer_node_version.as_ref() {
-            <span class="prelude-val">Some</span>(version) =&gt; <span class="macro">vec!</span>[(<span class="string">&quot;signer-node-version&quot;</span>, version)],
+            <span class="prelude-val">Some</span>(version) =&gt; <span class="macro">vec!</span>[(<span class="string">"signer-node-version"</span>, version)],
             <span class="prelude-val">None </span>=&gt; Vec::new(),
         };
 
         <span class="kw">let </span>epoch_str = <span class="kw">match </span>beacon_provider.get_current_beacon().<span class="kw">await </span>{
-            <span class="prelude-val">Ok</span>(beacon) =&gt; <span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, beacon.epoch),
+            <span class="prelude-val">Ok</span>(beacon) =&gt; <span class="macro">format!</span>(<span class="string">"{}"</span>, beacon.epoch),
             <span class="prelude-val">Err</span>(e) =&gt; {
-                <span class="macro">warn!</span>(<span class="string">&quot;Could not read beacon to add in event: {e}&quot;</span>);
+                <span class="macro">warn!</span>(<span class="string">"Could not read beacon to add in event: {e}"</span>);
 
                 String::new()
             }
         };
         <span class="kw">if </span>!epoch_str.is_empty() {
-            headers.push((<span class="string">&quot;epoch&quot;</span>, epoch_str.as_str()));
+            headers.push((<span class="string">"epoch"</span>, epoch_str.as_str()));
         }
 
         <span class="kw">match </span>signer_registerer
@@ -786,8 +787,8 @@
         </span>{
             <span class="prelude-val">Ok</span>(signer_with_stake) =&gt; {
                 <span class="kw">let _ </span>= event_transmitter.send_event_message(
-                    <span class="string">&quot;HTTP::signer_register&quot;</span>,
-                    <span class="string">&quot;register_signer&quot;</span>,
+                    <span class="string">"HTTP::signer_register"</span>,
+                    <span class="string">"register_signer"</span>,
                     <span class="kw-2">&amp;</span>signer_with_stake,
                     headers,
                 );
@@ -795,30 +796,30 @@
                 <span class="prelude-val">Ok</span>(reply::empty(StatusCode::CREATED))
             }
             <span class="prelude-val">Err</span>(SignerRegistrationError::ExistingSigner(signer_with_stake)) =&gt; {
-                <span class="macro">debug!</span>(<span class="string">&quot;register_signer::already_registered&quot;</span>);
+                <span class="macro">debug!</span>(<span class="string">"register_signer::already_registered"</span>);
                 <span class="kw">let _ </span>= event_transmitter.send_event_message(
-                    <span class="string">&quot;HTTP::signer_register&quot;</span>,
-                    <span class="string">&quot;register_signer&quot;</span>,
+                    <span class="string">"HTTP::signer_register"</span>,
+                    <span class="string">"register_signer"</span>,
                     <span class="kw-2">&amp;</span>signer_with_stake,
                     headers,
                 );
                 <span class="prelude-val">Ok</span>(reply::empty(StatusCode::CREATED))
             }
             <span class="prelude-val">Err</span>(SignerRegistrationError::FailedSignerRegistration(err)) =&gt; {
-                <span class="macro">warn!</span>(<span class="string">&quot;register_signer::failed_signer_registration&quot;</span>; <span class="string">&quot;error&quot; </span>=&gt; <span class="question-mark">?</span>err);
+                <span class="macro">warn!</span>(<span class="string">"register_signer::failed_signer_registration"</span>; <span class="string">"error" </span>=&gt; <span class="question-mark">?</span>err);
                 <span class="prelude-val">Ok</span>(reply::bad_request(
-                    <span class="string">&quot;failed_signer_registration&quot;</span>.to_string(),
+                    <span class="string">"failed_signer_registration"</span>.to_string(),
                     err.to_string(),
                 ))
             }
             <span class="prelude-val">Err</span>(SignerRegistrationError::RegistrationRoundNotYetOpened) =&gt; {
-                <span class="macro">warn!</span>(<span class="string">&quot;register_signer::registration_round_not_yed_opened&quot;</span>);
+                <span class="macro">warn!</span>(<span class="string">"register_signer::registration_round_not_yed_opened"</span>);
                 <span class="prelude-val">Ok</span>(reply::service_unavailable(
                     SignerRegistrationError::RegistrationRoundNotYetOpened.to_string(),
                 ))
             }
             <span class="prelude-val">Err</span>(err) =&gt; {
-                <span class="macro">warn!</span>(<span class="string">&quot;register_signer::error&quot;</span>; <span class="string">&quot;error&quot; </span>=&gt; <span class="question-mark">?</span>err);
+                <span class="macro">warn!</span>(<span class="string">"register_signer::error"</span>; <span class="string">"error" </span>=&gt; <span class="question-mark">?</span>err);
                 <span class="prelude-val">Ok</span>(reply::internal_server_error(err.to_string()))
             }
         }
@@ -829,14 +830,14 @@
         registered_at: String,
         verification_key_store: Arc&lt;<span class="kw">dyn </span>VerificationKeyStorer&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw">impl </span>warp::Reply, Infallible&gt; {
-        <span class="macro">debug!</span>(<span class="string">&quot;⇄ HTTP SERVER: signers/registered/{:?}&quot;</span>, registered_at);
+        <span class="macro">debug!</span>(<span class="string">"⇄ HTTP SERVER: signers/registered/{:?}"</span>, registered_at);
 
         <span class="kw">let </span>registered_at = <span class="kw">match </span>registered_at.parse::&lt;u64&gt;() {
             <span class="prelude-val">Ok</span>(epoch) =&gt; Epoch(epoch),
             <span class="prelude-val">Err</span>(err) =&gt; {
-                <span class="macro">warn!</span>(<span class="string">&quot;registered_signers::invalid_epoch&quot;</span>; <span class="string">&quot;error&quot; </span>=&gt; <span class="question-mark">?</span>err);
+                <span class="macro">warn!</span>(<span class="string">"registered_signers::invalid_epoch"</span>; <span class="string">"error" </span>=&gt; <span class="question-mark">?</span>err);
                 <span class="kw">return </span><span class="prelude-val">Ok</span>(reply::bad_request(
-                    <span class="string">&quot;invalid_epoch&quot;</span>.to_string(),
+                    <span class="string">"invalid_epoch"</span>.to_string(),
                     err.to_string(),
                 ));
             }
@@ -853,11 +854,11 @@
                 <span class="prelude-val">Ok</span>(reply::json(<span class="kw-2">&amp;</span>message, StatusCode::OK))
             }
             <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>) =&gt; {
-                <span class="macro">warn!</span>(<span class="string">&quot;registered_signers::not_found&quot;</span>);
+                <span class="macro">warn!</span>(<span class="string">"registered_signers::not_found"</span>);
                 <span class="prelude-val">Ok</span>(reply::empty(StatusCode::NOT_FOUND))
             }
             <span class="prelude-val">Err</span>(err) =&gt; {
-                <span class="macro">warn!</span>(<span class="string">&quot;registered_signers::error&quot;</span>; <span class="string">&quot;error&quot; </span>=&gt; <span class="question-mark">?</span>err);
+                <span class="macro">warn!</span>(<span class="string">"registered_signers::error"</span>; <span class="string">"error" </span>=&gt; <span class="question-mark">?</span>err);
                 <span class="prelude-val">Ok</span>(reply::internal_server_error(err))
             }
         }
@@ -867,7 +868,7 @@
         configuration: Configuration,
         signer_getter: Arc&lt;<span class="kw">dyn </span>SignerGetter&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw">impl </span>warp::Reply, Infallible&gt; {
-        <span class="macro">debug!</span>(<span class="string">&quot;⇄ HTTP SERVER: signers/tickers&quot;</span>);
+        <span class="macro">debug!</span>(<span class="string">"⇄ HTTP SERVER: signers/tickers"</span>);
         <span class="kw">let </span>network = configuration.network;
 
         <span class="kw">match </span>signer_getter.get_all().<span class="kw">await </span>{
@@ -886,7 +887,7 @@
                 ))
             }
             <span class="prelude-val">Err</span>(err) =&gt; {
-                <span class="macro">warn!</span>(<span class="string">&quot;registered_signers::error&quot;</span>; <span class="string">&quot;error&quot; </span>=&gt; <span class="question-mark">?</span>err);
+                <span class="macro">warn!</span>(<span class="string">"registered_signers::error"</span>; <span class="string">"error" </span>=&gt; <span class="question-mark">?</span>err);
                 <span class="prelude-val">Ok</span>(reply::internal_server_error(err))
             }
         }
@@ -921,7 +922,7 @@
     ) -&gt; <span class="kw">impl </span>Filter&lt;Extract = (<span class="kw">impl </span>warp::Reply,), Error = warp::Rejection&gt; + Clone {
         <span class="kw">let </span>cors = warp::cors()
             .allow_any_origin()
-            .allow_headers(<span class="macro">vec!</span>[<span class="string">&quot;content-type&quot;</span>])
+            .allow_headers(<span class="macro">vec!</span>[<span class="string">"content-type"</span>])
             .allow_methods(<span class="macro">vec!</span>[Method::GET, Method::POST, Method::OPTIONS]);
 
         warp::any()
@@ -945,11 +946,11 @@
         <span class="kw">let </span>signer: RegisterSignerMessage = RegisterSignerMessage::dummy();
 
         <span class="kw">let </span>method = Method::POST.as_str();
-        <span class="kw">let </span>path = <span class="string">&quot;/register-signer&quot;</span>;
+        <span class="kw">let </span>path = <span class="string">"/register-signer"</span>;
 
         <span class="kw">let </span>response = request()
             .method(method)
-            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;/{SERVER_BASE_PATH}{path}&quot;</span>))
+            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"/{SERVER_BASE_PATH}{path}"</span>))
             .json(<span class="kw-2">&amp;</span>signer)
             .reply(<span class="kw-2">&amp;</span>setup_router(Arc::new(dependency_manager)))
             .<span class="kw">await</span>;
@@ -958,7 +959,7 @@
             APISpec::get_all_spec_files(),
             method,
             path,
-            <span class="string">&quot;application/json&quot;</span>,
+            <span class="string">"application/json"</span>,
             <span class="kw-2">&amp;</span>signer,
             <span class="kw-2">&amp;</span>response,
         );
@@ -984,11 +985,11 @@
         <span class="kw">let </span>signer: RegisterSignerMessage = RegisterSignerMessage::dummy();
 
         <span class="kw">let </span>method = Method::POST.as_str();
-        <span class="kw">let </span>path = <span class="string">&quot;/register-signer&quot;</span>;
+        <span class="kw">let </span>path = <span class="string">"/register-signer"</span>;
 
         <span class="kw">let </span>response = request()
             .method(method)
-            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;/{SERVER_BASE_PATH}{path}&quot;</span>))
+            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"/{SERVER_BASE_PATH}{path}"</span>))
             .json(<span class="kw-2">&amp;</span>signer)
             .reply(<span class="kw-2">&amp;</span>setup_router(Arc::new(dependency_manager)))
             .<span class="kw">await</span>;
@@ -997,7 +998,7 @@
             APISpec::get_all_spec_files(),
             method,
             path,
-            <span class="string">&quot;application/json&quot;</span>,
+            <span class="string">"application/json"</span>,
             <span class="kw-2">&amp;</span>signer,
             <span class="kw-2">&amp;</span>response,
         );
@@ -1022,11 +1023,11 @@
         <span class="kw">let </span>signer: RegisterSignerMessage = RegisterSignerMessage::dummy();
 
         <span class="kw">let </span>method = Method::POST.as_str();
-        <span class="kw">let </span>path = <span class="string">&quot;/register-signer&quot;</span>;
+        <span class="kw">let </span>path = <span class="string">"/register-signer"</span>;
 
         <span class="kw">let </span>response = request()
             .method(method)
-            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;/{SERVER_BASE_PATH}{path}&quot;</span>))
+            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"/{SERVER_BASE_PATH}{path}"</span>))
             .json(<span class="kw-2">&amp;</span>signer)
             .reply(<span class="kw-2">&amp;</span>setup_router(Arc::new(dependency_manager)))
             .<span class="kw">await</span>;
@@ -1035,7 +1036,7 @@
             APISpec::get_all_spec_files(),
             method,
             path,
-            <span class="string">&quot;application/json&quot;</span>,
+            <span class="string">"application/json"</span>,
             <span class="kw-2">&amp;</span>signer,
             <span class="kw-2">&amp;</span>response,
         );
@@ -1048,7 +1049,7 @@
             .expect_register_signer()
             .return_once(|<span class="kw">_</span>, <span class="kw">_</span>| {
                 <span class="prelude-val">Err</span>(SignerRegistrationError::FailedSignerRecorder(
-                    <span class="string">&quot;an error occurred&quot;</span>.to_string(),
+                    <span class="string">"an error occurred"</span>.to_string(),
                 ))
             });
         mock_signer_registerer
@@ -1059,11 +1060,11 @@
 
         <span class="kw">let </span>signer: RegisterSignerMessage = RegisterSignerMessage::dummy();
         <span class="kw">let </span>method = Method::POST.as_str();
-        <span class="kw">let </span>path = <span class="string">&quot;/register-signer&quot;</span>;
+        <span class="kw">let </span>path = <span class="string">"/register-signer"</span>;
 
         <span class="kw">let </span>response = request()
             .method(method)
-            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;/{SERVER_BASE_PATH}{path}&quot;</span>))
+            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"/{SERVER_BASE_PATH}{path}"</span>))
             .json(<span class="kw-2">&amp;</span>signer)
             .reply(<span class="kw-2">&amp;</span>setup_router(Arc::new(dependency_manager)))
             .<span class="kw">await</span>;
@@ -1072,7 +1073,7 @@
             APISpec::get_all_spec_files(),
             method,
             path,
-            <span class="string">&quot;application/json&quot;</span>,
+            <span class="string">"application/json"</span>,
             <span class="kw-2">&amp;</span>signer,
             <span class="kw-2">&amp;</span>response,
         );
@@ -1092,11 +1093,11 @@
 
         <span class="kw">let </span>signer: RegisterSignerMessage = RegisterSignerMessage::dummy();
         <span class="kw">let </span>method = Method::POST.as_str();
-        <span class="kw">let </span>path = <span class="string">&quot;/register-signer&quot;</span>;
+        <span class="kw">let </span>path = <span class="string">"/register-signer"</span>;
 
         <span class="kw">let </span>response = request()
             .method(method)
-            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;/{SERVER_BASE_PATH}{path}&quot;</span>))
+            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"/{SERVER_BASE_PATH}{path}"</span>))
             .json(<span class="kw-2">&amp;</span>signer)
             .reply(<span class="kw-2">&amp;</span>setup_router(Arc::new(dependency_manager)))
             .<span class="kw">await</span>;
@@ -1105,7 +1106,7 @@
             APISpec::get_all_spec_files(),
             method,
             path,
-            <span class="string">&quot;application/json&quot;</span>,
+            <span class="string">"application/json"</span>,
             <span class="kw-2">&amp;</span>signer,
             <span class="kw-2">&amp;</span>response,
         );
@@ -1125,17 +1126,17 @@
         dependency_manager.verification_key_store = Arc::new(mock_verification_key_store);
 
         <span class="kw">let </span>method = Method::GET.as_str();
-        <span class="kw">let </span>base_path = <span class="string">&quot;/signers/registered&quot;</span>;
+        <span class="kw">let </span>base_path = <span class="string">"/signers/registered"</span>;
 
         <span class="kw">let </span>response = request()
             .method(method)
-            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;/{SERVER_BASE_PATH}{base_path}/{}&quot;</span>, asked_epoch))
+            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"/{SERVER_BASE_PATH}{base_path}/{}"</span>, asked_epoch))
             .reply(<span class="kw-2">&amp;</span>setup_router(Arc::new(dependency_manager)))
             .<span class="kw">await</span>;
 
         <span class="macro">assert!</span>(
             response.status().is_success(),
-            <span class="string">&quot;expected the response to succeed, was: {response:#?}&quot;
+            <span class="string">"expected the response to succeed, was: {response:#?}"
         </span>);
     }
 
@@ -1149,20 +1150,20 @@
         <span class="kw">let </span><span class="kw-2">mut </span>dependency_manager = initialize_dependencies().<span class="kw">await</span>;
         dependency_manager.verification_key_store = Arc::new(mock_verification_key_store);
 
-        <span class="kw">let </span>base_path = <span class="string">&quot;/signers/registered&quot;</span>;
+        <span class="kw">let </span>base_path = <span class="string">"/signers/registered"</span>;
         <span class="kw">let </span>method = Method::GET.as_str();
 
         <span class="kw">let </span>response = request()
             .method(method)
-            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;/{SERVER_BASE_PATH}{base_path}/1&quot;</span>))
+            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"/{SERVER_BASE_PATH}{base_path}/1"</span>))
             .reply(<span class="kw-2">&amp;</span>setup_router(Arc::new(dependency_manager)))
             .<span class="kw">await</span>;
 
         APISpec::verify_conformity(
             APISpec::get_all_spec_files(),
             method,
-            <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{base_path}/{{epoch}}&quot;</span>),
-            <span class="string">&quot;application/json&quot;</span>,
+            <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"{base_path}/{{epoch}}"</span>),
+            <span class="string">"application/json"</span>,
             <span class="kw-2">&amp;</span>Null,
             <span class="kw-2">&amp;</span>response,
         );
@@ -1179,19 +1180,19 @@
         dependency_manager.verification_key_store = Arc::new(mock_verification_key_store);
 
         <span class="kw">let </span>method = Method::GET.as_str();
-        <span class="kw">let </span>base_path = <span class="string">&quot;/signers/registered&quot;</span>;
+        <span class="kw">let </span>base_path = <span class="string">"/signers/registered"</span>;
 
         <span class="kw">let </span>response = request()
             .method(method)
-            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;/{SERVER_BASE_PATH}{base_path}/3&quot;</span>))
+            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"/{SERVER_BASE_PATH}{base_path}/3"</span>))
             .reply(<span class="kw-2">&amp;</span>setup_router(Arc::new(dependency_manager)))
             .<span class="kw">await</span>;
 
         APISpec::verify_conformity(
             APISpec::get_all_spec_files(),
             method,
-            <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{base_path}/{{epoch}}&quot;</span>),
-            <span class="string">&quot;application/json&quot;</span>,
+            <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"{base_path}/{{epoch}}"</span>),
+            <span class="string">"application/json"</span>,
             <span class="kw-2">&amp;</span>Null,
             <span class="kw-2">&amp;</span>response,
         );
@@ -1202,24 +1203,24 @@
         <span class="kw">let </span><span class="kw-2">mut </span>mock_verification_key_store = MockVerificationKeyStorer::new();
         mock_verification_key_store
             .expect_get_signers()
-            .return_once(|<span class="kw">_</span>| <span class="prelude-val">Err</span>(AdapterError::GeneralError(<span class="macro">anyhow!</span>(<span class="string">&quot;invalid query&quot;</span>)).into()));
+            .return_once(|<span class="kw">_</span>| <span class="prelude-val">Err</span>(AdapterError::GeneralError(<span class="macro">anyhow!</span>(<span class="string">"invalid query"</span>)).into()));
         <span class="kw">let </span><span class="kw-2">mut </span>dependency_manager = initialize_dependencies().<span class="kw">await</span>;
         dependency_manager.verification_key_store = Arc::new(mock_verification_key_store);
 
         <span class="kw">let </span>method = Method::GET.as_str();
-        <span class="kw">let </span>base_path = <span class="string">&quot;/signers/registered&quot;</span>;
+        <span class="kw">let </span>base_path = <span class="string">"/signers/registered"</span>;
 
         <span class="kw">let </span>response = request()
             .method(method)
-            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;/{SERVER_BASE_PATH}{base_path}/1&quot;</span>))
+            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"/{SERVER_BASE_PATH}{base_path}/1"</span>))
             .reply(<span class="kw-2">&amp;</span>setup_router(Arc::new(dependency_manager)))
             .<span class="kw">await</span>;
 
         APISpec::verify_conformity(
             APISpec::get_all_spec_files(),
             method,
-            <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{base_path}/{{epoch}}&quot;</span>),
-            <span class="string">&quot;application/json&quot;</span>,
+            <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"{base_path}/{{epoch}}"</span>),
+            <span class="string">"application/json"</span>,
             <span class="kw-2">&amp;</span>Null,
             <span class="kw-2">&amp;</span>response,
         );
@@ -1233,15 +1234,15 @@
             .return_once(|| {
                 <span class="prelude-val">Ok</span>(<span class="macro">vec!</span>[
                     SignerRecord {
-                        signer_id: <span class="string">&quot;pool_without_ticker&quot;</span>.to_string(),
+                        signer_id: <span class="string">"pool_without_ticker"</span>.to_string(),
                         pool_ticker: <span class="prelude-val">None</span>,
                         created_at: Default::default(),
                         updated_at: Default::default(),
                         last_registered_at: <span class="prelude-val">None</span>,
                     },
                     SignerRecord {
-                        signer_id: <span class="string">&quot;pool_with_ticker&quot;</span>.to_string(),
-                        pool_ticker: <span class="prelude-val">Some</span>(<span class="string">&quot;pool_ticker&quot;</span>.to_string()),
+                        signer_id: <span class="string">"pool_with_ticker"</span>.to_string(),
+                        pool_ticker: <span class="prelude-val">Some</span>(<span class="string">"pool_ticker"</span>.to_string()),
                         created_at: Default::default(),
                         updated_at: Default::default(),
                         last_registered_at: <span class="prelude-val">None</span>,
@@ -1253,11 +1254,11 @@
         dependency_manager.signer_getter = Arc::new(mock_signer_getter);
 
         <span class="kw">let </span>method = Method::GET.as_str();
-        <span class="kw">let </span>path = <span class="string">&quot;/signers/tickers&quot;</span>;
+        <span class="kw">let </span>path = <span class="string">"/signers/tickers"</span>;
 
         <span class="kw">let </span>response = request()
             .method(method)
-            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;/{SERVER_BASE_PATH}{path}&quot;</span>))
+            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"/{SERVER_BASE_PATH}{path}"</span>))
             .reply(<span class="kw-2">&amp;</span>setup_router(Arc::new(dependency_manager)))
             .<span class="kw">await</span>;
 
@@ -1265,7 +1266,7 @@
             APISpec::get_all_spec_files(),
             method,
             path,
-            <span class="string">&quot;application/json&quot;</span>,
+            <span class="string">"application/json"</span>,
             <span class="kw-2">&amp;</span>Null,
             <span class="kw-2">&amp;</span>response,
         );
@@ -1276,17 +1277,17 @@
         <span class="kw">let </span><span class="kw-2">mut </span>mock_signer_getter = MockSignerGetter::new();
         mock_signer_getter
             .expect_get_all()
-            .return_once(|| <span class="prelude-val">Err</span>(<span class="macro">anyhow!</span>(<span class="string">&quot;an error&quot;</span>)))
+            .return_once(|| <span class="prelude-val">Err</span>(<span class="macro">anyhow!</span>(<span class="string">"an error"</span>)))
             .once();
         <span class="kw">let </span><span class="kw-2">mut </span>dependency_manager = initialize_dependencies().<span class="kw">await</span>;
         dependency_manager.signer_getter = Arc::new(mock_signer_getter);
 
         <span class="kw">let </span>method = Method::GET.as_str();
-        <span class="kw">let </span>path = <span class="string">&quot;/signers/tickers&quot;</span>;
+        <span class="kw">let </span>path = <span class="string">"/signers/tickers"</span>;
 
         <span class="kw">let </span>response = request()
             .method(method)
-            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;/{SERVER_BASE_PATH}{path}&quot;</span>))
+            .path(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"/{SERVER_BASE_PATH}{path}"</span>))
             .reply(<span class="kw-2">&amp;</span>setup_router(Arc::new(dependency_manager)))
             .<span class="kw">await</span>;
 
@@ -1294,7 +1295,7 @@
             APISpec::get_all_spec_files(),
             method,
             path,
-            <span class="string">&quot;application/json&quot;</span>,
+            <span class="string">"application/json"</span>,
             <span class="kw-2">&amp;</span>Null,
             <span class="kw-2">&amp;</span>response,
         );

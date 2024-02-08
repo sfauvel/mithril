@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-aggregator/src/snapshot_uploaders/local_snapshot_uploader.rs`."><title>local_snapshot_uploader.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_aggregator" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-aggregator/src/snapshot_uploaders/local_snapshot_uploader.rs`."><title>local_snapshot_uploader.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_aggregator" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -132,7 +133,7 @@
 <span class="kw">impl </span>LocalSnapshotUploader {
     <span class="doccomment">/// LocalSnapshotUploader factory
     </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>new(snapshot_server_url: String, target_location: <span class="kw-2">&amp;</span>Path) -&gt; <span class="self">Self </span>{
-        <span class="macro">debug!</span>(<span class="string">&quot;New LocalSnapshotUploader created&quot;</span>; <span class="string">&quot;snapshot_server_url&quot; </span>=&gt; <span class="kw-2">&amp;</span>snapshot_server_url);
+        <span class="macro">debug!</span>(<span class="string">"New LocalSnapshotUploader created"</span>; <span class="string">"snapshot_server_url" </span>=&gt; <span class="kw-2">&amp;</span>snapshot_server_url);
         <span class="self">Self </span>{
             snapshot_server_url,
             target_location: target_location.to_path_buf(),
@@ -147,11 +148,11 @@
         <span class="kw">let </span>target_path = <span class="kw-2">&amp;</span><span class="self">self</span>.target_location.join(archive_name);
         tokio::fs::copy(snapshot_filepath, target_path)
             .<span class="kw">await
-            </span>.with_context(|| <span class="string">&quot;Snapshot copy failure&quot;</span>)<span class="question-mark">?</span>;
+            </span>.with_context(|| <span class="string">"Snapshot copy failure"</span>)<span class="question-mark">?</span>;
 
         <span class="kw">let </span>digest = tools::extract_digest_from_path(Path::new(archive_name));
         <span class="kw">let </span>location = <span class="macro">format!</span>(
-            <span class="string">&quot;{}{}/artifact/snapshot/{}/download&quot;</span>,
+            <span class="string">"{}{}/artifact/snapshot/{}/download"</span>,
             <span class="self">self</span>.snapshot_server_url,
             http_server::SERVER_BASE_PATH,
             digest.unwrap()
@@ -172,11 +173,11 @@
     <span class="kw">use </span>tempfile::tempdir;
 
     <span class="kw">fn </span>create_fake_archive(dir: <span class="kw-2">&amp;</span>Path, digest: <span class="kw-2">&amp;</span>str) -&gt; PathBuf {
-        <span class="kw">let </span>file_path = dir.join(<span class="macro">format!</span>(<span class="string">&quot;test.{digest}.tar.gz&quot;</span>));
+        <span class="kw">let </span>file_path = dir.join(<span class="macro">format!</span>(<span class="string">"test.{digest}.tar.gz"</span>));
         <span class="kw">let </span><span class="kw-2">mut </span>file = File::create(<span class="kw-2">&amp;</span>file_path).unwrap();
         <span class="macro">writeln!</span>(
             file,
-            <span class="string">&quot;I swear, this is an archive, not a temporary test file.&quot;
+            <span class="string">"I swear, this is an archive, not a temporary test file."
         </span>)
         .unwrap();
 
@@ -187,11 +188,11 @@
     </span><span class="kw">async fn </span>should_extract_digest_to_deduce_location() {
         <span class="kw">let </span>source_dir = tempdir().unwrap();
         <span class="kw">let </span>target_dir = tempdir().unwrap();
-        <span class="kw">let </span>url = <span class="string">&quot;http://test.com:8080/&quot;</span>.to_string();
-        <span class="kw">let </span>digest = <span class="string">&quot;41e27b9ed5a32531b95b2b7ff3c0757591a06a337efaf19a524a998e348028e7&quot;</span>;
+        <span class="kw">let </span>url = <span class="string">"http://test.com:8080/"</span>.to_string();
+        <span class="kw">let </span>digest = <span class="string">"41e27b9ed5a32531b95b2b7ff3c0757591a06a337efaf19a524a998e348028e7"</span>;
         <span class="kw">let </span>archive = create_fake_archive(source_dir.path(), digest);
         <span class="kw">let </span>expected_location = <span class="macro">format!</span>(
-            <span class="string">&quot;{}{}/artifact/snapshot/{}/download&quot;</span>,
+            <span class="string">"{}{}/artifact/snapshot/{}/download"</span>,
             url,
             http_server::SERVER_BASE_PATH,
             <span class="kw-2">&amp;</span>digest
@@ -201,7 +202,7 @@
         <span class="kw">let </span>location = uploader
             .upload_snapshot(<span class="kw-2">&amp;</span>archive)
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;local upload should not fail&quot;</span>);
+            </span>.expect(<span class="string">"local upload should not fail"</span>);
 
         <span class="macro">assert_eq!</span>(expected_location, location);
     }
@@ -210,10 +211,10 @@
     </span><span class="kw">async fn </span>should_copy_file_to_target_location() {
         <span class="kw">let </span>source_dir = tempdir().unwrap();
         <span class="kw">let </span>target_dir = tempdir().unwrap();
-        <span class="kw">let </span>digest = <span class="string">&quot;41e27b9ed5a32531b95b2b7ff3c0757591a06a337efaf19a524a998e348028e7&quot;</span>;
+        <span class="kw">let </span>digest = <span class="string">"41e27b9ed5a32531b95b2b7ff3c0757591a06a337efaf19a524a998e348028e7"</span>;
         <span class="kw">let </span>archive = create_fake_archive(source_dir.path(), digest);
         <span class="kw">let </span>uploader =
-            LocalSnapshotUploader::new(<span class="string">&quot;http://test.com:8080/&quot;</span>.to_string(), target_dir.path());
+            LocalSnapshotUploader::new(<span class="string">"http://test.com:8080/"</span>.to_string(), target_dir.path());
         uploader.upload_snapshot(<span class="kw-2">&amp;</span>archive).<span class="kw">await</span>.unwrap();
 
         <span class="macro">assert!</span>(target_dir

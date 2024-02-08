@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-signer/src/runtime/state_machine.rs`."><title>state_machine.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_signer" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-signer/src/runtime/state_machine.rs`."><title>state_machine.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_signer" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -902,15 +903,15 @@
 }
 
 <span class="kw">impl </span>Display <span class="kw">for </span>SignerState {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
         <span class="kw">match </span><span class="self">self </span>{
-            <span class="self">Self</span>::Init =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;Init&quot;</span>),
-            <span class="self">Self</span>::Unregistered { epoch } =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;Unregistered - {epoch:?}&quot;</span>),
-            <span class="self">Self</span>::Registered { epoch } =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;Registered - {epoch}&quot;</span>),
+            <span class="self">Self</span>::Init =&gt; <span class="macro">write!</span>(f, <span class="string">"Init"</span>),
+            <span class="self">Self</span>::Unregistered { epoch } =&gt; <span class="macro">write!</span>(f, <span class="string">"Unregistered - {epoch:?}"</span>),
+            <span class="self">Self</span>::Registered { epoch } =&gt; <span class="macro">write!</span>(f, <span class="string">"Registered - {epoch}"</span>),
             <span class="self">Self</span>::Signed {
                 epoch,
                 signed_entity_type,
-            } =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;Signed - {epoch} - {signed_entity_type:?}&quot;</span>),
+            } =&gt; <span class="macro">write!</span>(f, <span class="string">"Signed - {epoch} - {signed_entity_type:?}"</span>),
         }
     }
 }
@@ -943,21 +944,21 @@
 
     <span class="doccomment">/// Launch the state machine until an error occurs or it is interrupted.
     </span><span class="kw">pub async fn </span>run(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(), RuntimeError&gt; {
-        <span class="macro">info!</span>(<span class="string">&quot;STATE MACHINE: launching&quot;</span>);
+        <span class="macro">info!</span>(<span class="string">"STATE MACHINE: launching"</span>);
 
         <span class="kw">loop </span>{
             <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = <span class="self">self</span>.cycle().<span class="kw">await </span>{
                 <span class="kw">if </span>e.is_critical() {
-                    <span class="macro">crit!</span>(<span class="string">&quot;{e}&quot;</span>);
+                    <span class="macro">crit!</span>(<span class="string">"{e}"</span>);
 
                     <span class="kw">return </span><span class="prelude-val">Err</span>(e);
                 } <span class="kw">else </span>{
-                    <span class="macro">error!</span>(<span class="string">&quot;{e}&quot;</span>);
+                    <span class="macro">error!</span>(<span class="string">"{e}"</span>);
                 }
             }
 
             <span class="macro">info!</span>(
-                <span class="string">&quot;… Cycle finished, Sleeping for {} ms&quot;</span>,
+                <span class="string">"… Cycle finished, Sleeping for {} ms"</span>,
                 <span class="self">self</span>.state_sleep.as_millis()
             );
             sleep(<span class="self">self</span>.state_sleep).<span class="kw">await</span>;
@@ -967,8 +968,8 @@
     <span class="doccomment">/// Perform a cycle of the state machine.
     </span><span class="kw">pub async fn </span>cycle(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(), RuntimeError&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>state = <span class="self">self</span>.state.lock().<span class="kw">await</span>;
-        <span class="macro">info!</span>(<span class="string">&quot;================================================================================&quot;</span>);
-        <span class="macro">info!</span>(<span class="string">&quot;STATE MACHINE: new cycle: {}&quot;</span>, <span class="kw-2">*</span>state);
+        <span class="macro">info!</span>(<span class="string">"================================================================================"</span>);
+        <span class="macro">info!</span>(<span class="string">"STATE MACHINE: new cycle: {}"</span>, <span class="kw-2">*</span>state);
 
         <span class="kw">match </span>state.deref() {
             SignerState::Init =&gt; {
@@ -976,7 +977,7 @@
             }
             SignerState::Unregistered { epoch } =&gt; {
                 <span class="kw">if let </span><span class="prelude-val">Some</span>(new_beacon) = <span class="self">self</span>.has_epoch_changed(<span class="kw-2">*</span>epoch).<span class="kw">await</span><span class="question-mark">? </span>{
-                    <span class="macro">info!</span>(<span class="string">&quot;→ Epoch has changed, transiting to UNREGISTERED&quot;</span>);
+                    <span class="macro">info!</span>(<span class="string">"→ Epoch has changed, transiting to UNREGISTERED"</span>);
                     <span class="kw-2">*</span>state = <span class="self">self
                         </span>.transition_from_unregistered_to_unregistered(new_beacon)
                         .<span class="kw">await</span><span class="question-mark">?</span>;
@@ -985,45 +986,45 @@
                     .get_epoch_settings()
                     .<span class="kw">await
                     </span>.map_err(|e| RuntimeError::KeepState {
-                        message: <span class="macro">format!</span>(<span class="string">&quot;could not retrieve epoch settings at epoch {epoch:?}&quot;</span>),
+                        message: <span class="macro">format!</span>(<span class="string">"could not retrieve epoch settings at epoch {epoch:?}"</span>),
                         nested_error: <span class="prelude-val">Some</span>(e),
                     })<span class="question-mark">?
                 </span>{
-                    <span class="macro">info!</span>(<span class="string">&quot;→ Epoch settings found&quot;</span>);
+                    <span class="macro">info!</span>(<span class="string">"→ Epoch settings found"</span>);
                     <span class="kw">if </span>epoch_settings.epoch &gt;= <span class="kw-2">*</span>epoch {
-                        <span class="macro">info!</span>(<span class="string">&quot;new Epoch found&quot;</span>);
-                        <span class="macro">info!</span>(<span class="string">&quot; ⋅ transiting to REGISTERED&quot;</span>);
+                        <span class="macro">info!</span>(<span class="string">"new Epoch found"</span>);
+                        <span class="macro">info!</span>(<span class="string">" ⋅ transiting to REGISTERED"</span>);
                         <span class="kw-2">*</span>state = <span class="self">self
                             </span>.transition_from_unregistered_to_registered(<span class="kw-2">&amp;</span>epoch_settings)
                             .<span class="kw">await</span><span class="question-mark">?</span>;
                     } <span class="kw">else </span>{
                         <span class="macro">info!</span>(
-                            <span class="string">&quot; ⋅ Epoch settings found, but its epoch is behind the known epoch, waiting…&quot;</span>;
-                            <span class="string">&quot;epoch_settings&quot; </span>=&gt; <span class="question-mark">?</span>epoch_settings,
-                            <span class="string">&quot;known_epoch&quot; </span>=&gt; <span class="question-mark">?</span>epoch,
+                            <span class="string">" ⋅ Epoch settings found, but its epoch is behind the known epoch, waiting…"</span>;
+                            <span class="string">"epoch_settings" </span>=&gt; <span class="question-mark">?</span>epoch_settings,
+                            <span class="string">"known_epoch" </span>=&gt; <span class="question-mark">?</span>epoch,
                         );
                     }
                 } <span class="kw">else </span>{
-                    <span class="macro">info!</span>(<span class="string">&quot;→ No epoch settings found yet, waiting…&quot;</span>);
+                    <span class="macro">info!</span>(<span class="string">"→ No epoch settings found yet, waiting…"</span>);
                 }
             }
             SignerState::Registered { epoch } =&gt; {
                 <span class="kw">if let </span><span class="prelude-val">Some</span>(new_epoch) = <span class="self">self</span>.has_epoch_changed(<span class="kw-2">*</span>epoch).<span class="kw">await</span><span class="question-mark">? </span>{
-                    <span class="macro">info!</span>(<span class="string">&quot;→ Epoch has changed, transiting to UNREGISTERED&quot;</span>);
+                    <span class="macro">info!</span>(<span class="string">"→ Epoch has changed, transiting to UNREGISTERED"</span>);
                     <span class="kw-2">*</span>state = <span class="self">self
                         </span>.transition_from_registered_to_unregistered(new_epoch)
                         .<span class="kw">await</span><span class="question-mark">?</span>;
                 } <span class="kw">else if let </span><span class="prelude-val">Some</span>(pending_certificate) =
                     <span class="self">self</span>.runner.get_pending_certificate().<span class="kw">await</span>.map_err(|e| {
                         RuntimeError::KeepState {
-                            message: <span class="string">&quot;could not fetch the pending certificate&quot;</span>.to_string(),
+                            message: <span class="string">"could not fetch the pending certificate"</span>.to_string(),
                             nested_error: <span class="prelude-val">Some</span>(e),
                         }
                     })<span class="question-mark">?
                 </span>{
                     <span class="macro">info!</span>(
-                        <span class="string">&quot; ⋅ Epoch has NOT changed but there is a pending certificate&quot;</span>;
-                        <span class="string">&quot;pending_certificate&quot; </span>=&gt; <span class="question-mark">?</span>pending_certificate
+                        <span class="string">" ⋅ Epoch has NOT changed but there is a pending certificate"</span>;
+                        <span class="string">"pending_certificate" </span>=&gt; <span class="question-mark">?</span>pending_certificate
                     );
 
                     <span class="kw">if </span><span class="self">self
@@ -1031,19 +1032,19 @@
                         .can_i_sign(<span class="kw-2">&amp;</span>pending_certificate)
                         .<span class="kw">await
                         </span>.map_err(|e| RuntimeError::KeepState {
-                            message: <span class="string">&quot;could not determine if I can sign certificate&quot;</span>.to_string(),
+                            message: <span class="string">"could not determine if I can sign certificate"</span>.to_string(),
                             nested_error: <span class="prelude-val">Some</span>(e),
                         })<span class="question-mark">?
                     </span>{
-                        <span class="macro">info!</span>(<span class="string">&quot; → we can sign this certificate, transiting to SIGNED&quot;</span>);
+                        <span class="macro">info!</span>(<span class="string">" → we can sign this certificate, transiting to SIGNED"</span>);
                         <span class="kw-2">*</span>state = <span class="self">self
                             </span>.transition_from_registered_to_signed(<span class="kw-2">&amp;</span>pending_certificate)
                             .<span class="kw">await</span><span class="question-mark">?</span>;
                     } <span class="kw">else </span>{
-                        <span class="macro">info!</span>(<span class="string">&quot; ⋅ cannot sign this pending certificate, waiting…&quot;</span>);
+                        <span class="macro">info!</span>(<span class="string">" ⋅ cannot sign this pending certificate, waiting…"</span>);
                     }
                 } <span class="kw">else </span>{
-                    <span class="macro">info!</span>(<span class="string">&quot; ⋅ no pending certificate, waiting…&quot;</span>);
+                    <span class="macro">info!</span>(<span class="string">" ⋅ no pending certificate, waiting…"</span>);
                 }
             }
             SignerState::Signed {
@@ -1051,30 +1052,30 @@
                 signed_entity_type,
             } =&gt; {
                 <span class="kw">if let </span><span class="prelude-val">Some</span>(new_epoch) = <span class="self">self</span>.has_epoch_changed(<span class="kw-2">*</span>epoch).<span class="kw">await</span><span class="question-mark">? </span>{
-                    <span class="macro">info!</span>(<span class="string">&quot; → new Epoch detected, transiting to UNREGISTERED&quot;</span>);
+                    <span class="macro">info!</span>(<span class="string">" → new Epoch detected, transiting to UNREGISTERED"</span>);
                     <span class="kw-2">*</span>state = <span class="self">self
                         </span>.transition_from_signed_to_unregistered(new_epoch)
                         .<span class="kw">await</span><span class="question-mark">?</span>;
                 } <span class="kw">else if let </span><span class="prelude-val">Some</span>(pending_certificate) =
                     <span class="self">self</span>.runner.get_pending_certificate().<span class="kw">await</span>.map_err(|e| {
                         RuntimeError::KeepState {
-                            message: <span class="string">&quot;could not fetch the pending certificate&quot;</span>.to_string(),
+                            message: <span class="string">"could not fetch the pending certificate"</span>.to_string(),
                             nested_error: <span class="prelude-val">Some</span>(e),
                         }
                     })<span class="question-mark">?
                 </span>{
                     <span class="macro">info!</span>(
-                        <span class="string">&quot; ⋅ Epoch has NOT changed but there is a pending certificate&quot;</span>;
-                        <span class="string">&quot;pending_certificate&quot; </span>=&gt; <span class="question-mark">?</span>pending_certificate
+                        <span class="string">" ⋅ Epoch has NOT changed but there is a pending certificate"</span>;
+                        <span class="string">"pending_certificate" </span>=&gt; <span class="question-mark">?</span>pending_certificate
                     );
                     <span class="kw">if </span>pending_certificate.signed_entity_type == <span class="kw-2">*</span>signed_entity_type {
-                        <span class="macro">info!</span>(<span class="string">&quot; ⋅ pending certificate has not changed, waiting…&quot;</span>);
+                        <span class="macro">info!</span>(<span class="string">" ⋅ pending certificate has not changed, waiting…"</span>);
                     } <span class="kw">else </span>{
-                        <span class="macro">info!</span>(<span class="string">&quot; → new pending certificate detected, transiting to REGISTERED&quot;</span>);
+                        <span class="macro">info!</span>(<span class="string">" → new pending certificate detected, transiting to REGISTERED"</span>);
                         <span class="kw-2">*</span>state = <span class="self">self</span>.transition_from_signed_to_registered(<span class="kw-2">*</span>epoch).<span class="kw">await</span><span class="question-mark">?</span>;
                     }
                 } <span class="kw">else </span>{
-                    <span class="macro">info!</span>(<span class="string">&quot; ⋅ no pending certificate, waiting…&quot;</span>);
+                    <span class="macro">info!</span>(<span class="string">" ⋅ no pending certificate, waiting…"</span>);
                 }
             }
         };
@@ -1085,7 +1086,7 @@
     <span class="doccomment">/// Return the new epoch if the epoch is different than the given one.
     </span><span class="kw">async fn </span>has_epoch_changed(<span class="kw-2">&amp;</span><span class="self">self</span>, epoch: Epoch) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;Epoch&gt;, RuntimeError&gt; {
         <span class="kw">let </span>current_beacon = <span class="self">self
-            </span>.get_current_beacon(<span class="string">&quot;checking if epoch has changed&quot;</span>)
+            </span>.get_current_beacon(<span class="string">"checking if epoch has changed"</span>)
             .<span class="kw">await</span><span class="question-mark">?</span>;
 
         <span class="kw">if </span>current_beacon.epoch &gt; epoch {
@@ -1099,15 +1100,15 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         new_epoch: Epoch,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;SignerState, RuntimeError&gt; {
-        <span class="self">self</span>.update_era_checker(new_epoch, <span class="string">&quot;unregistered → unregistered&quot;</span>)
+        <span class="self">self</span>.update_era_checker(new_epoch, <span class="string">"unregistered → unregistered"</span>)
             .<span class="kw">await</span><span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(SignerState::Unregistered { epoch: new_epoch })
     }
 
     <span class="kw">async fn </span>transition_from_init_to_unregistered(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;SignerState, RuntimeError&gt; {
-        <span class="kw">let </span>current_beacon = <span class="self">self</span>.get_current_beacon(<span class="string">&quot;init → unregistered&quot;</span>).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="self">self</span>.update_era_checker(current_beacon.epoch, <span class="string">&quot;init → unregistered&quot;</span>)
+        <span class="kw">let </span>current_beacon = <span class="self">self</span>.get_current_beacon(<span class="string">"init → unregistered"</span>).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="self">self</span>.update_era_checker(current_beacon.epoch, <span class="string">"init → unregistered"</span>)
             .<span class="kw">await</span><span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(SignerState::Unregistered {
@@ -1119,7 +1120,7 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         epoch: Epoch,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;SignerState, RuntimeError&gt; {
-        <span class="self">self</span>.update_era_checker(epoch, <span class="string">&quot;signed → unregistered&quot;</span>)
+        <span class="self">self</span>.update_era_checker(epoch, <span class="string">"signed → unregistered"</span>)
             .<span class="kw">await</span><span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(SignerState::Unregistered { epoch })
@@ -1136,7 +1137,7 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         epoch: Epoch,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;SignerState, RuntimeError&gt; {
-        <span class="self">self</span>.update_era_checker(epoch, <span class="string">&quot;registered → unregistered&quot;</span>)
+        <span class="self">self</span>.update_era_checker(epoch, <span class="string">"registered → unregistered"</span>)
             .<span class="kw">await</span><span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(SignerState::Unregistered { epoch })
@@ -1147,11 +1148,11 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         epoch_settings: <span class="kw-2">&amp;</span>EpochSettings,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;SignerState, RuntimeError&gt; {
-        <span class="kw">let </span>beacon = <span class="self">self</span>.get_current_beacon(<span class="string">&quot;unregistered → registered&quot;</span>).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>beacon = <span class="self">self</span>.get_current_beacon(<span class="string">"unregistered → registered"</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="self">self</span>.runner.update_stake_distribution(beacon.epoch)
             .<span class="kw">await
             </span>.map_err(|e| RuntimeError::KeepState {
-                message: <span class="macro">format!</span>(<span class="string">&quot;Could not update stake distribution in &#39;unregistered → registered&#39; phase for epoch {:?}.&quot;</span>, beacon.epoch),
+                message: <span class="macro">format!</span>(<span class="string">"Could not update stake distribution in 'unregistered → registered' phase for epoch {:?}."</span>, beacon.epoch),
                 nested_error: <span class="prelude-val">Some</span>(e) })<span class="question-mark">?</span>;
 
         <span class="self">self</span>.runner. register_signer_to_aggregator(
@@ -1160,9 +1161,9 @@
         )
         .<span class="kw">await</span>.map_err(|e| {
             <span class="kw">if </span>e.downcast_ref::&lt;ProtocolInitializerError&gt;().is_some(){
-                RuntimeError::Critical { message: <span class="macro">format!</span>(<span class="string">&quot;Could not register to aggregator in &#39;unregistered → registered&#39; phase for epoch {:?}.&quot;</span>, beacon.epoch), nested_error: <span class="prelude-val">Some</span>(e) }
+                RuntimeError::Critical { message: <span class="macro">format!</span>(<span class="string">"Could not register to aggregator in 'unregistered → registered' phase for epoch {:?}."</span>, beacon.epoch), nested_error: <span class="prelude-val">Some</span>(e) }
             }<span class="kw">else</span>{
-                RuntimeError::KeepState { message: <span class="macro">format!</span>(<span class="string">&quot;Could not register to aggregator in &#39;unregistered → registered&#39; phase for epoch {:?}.&quot;</span>, beacon.epoch), nested_error: <span class="prelude-val">Some</span>(e) }
+                RuntimeError::KeepState { message: <span class="macro">format!</span>(<span class="string">"Could not register to aggregator in 'unregistered → registered' phase for epoch {:?}."</span>, beacon.epoch), nested_error: <span class="prelude-val">Some</span>(e) }
             }
         })<span class="question-mark">?</span>;
 
@@ -1183,10 +1184,10 @@
         );
 
         <span class="macro">debug!</span>(
-            <span class="string">&quot; &gt; transition_from_registered_to_signed&quot;</span>;
-            <span class="string">&quot;current_epoch&quot; </span>=&gt; <span class="question-mark">?</span>current_beacon.epoch,
-            <span class="string">&quot;retrieval_epoch&quot; </span>=&gt; <span class="question-mark">?</span>retrieval_epoch,
-            <span class="string">&quot;next_retrieval_epoch&quot; </span>=&gt; <span class="question-mark">?</span>next_retrieval_epoch,
+            <span class="string">" &gt; transition_from_registered_to_signed"</span>;
+            <span class="string">"current_epoch" </span>=&gt; <span class="question-mark">?</span>current_beacon.epoch,
+            <span class="string">"retrieval_epoch" </span>=&gt; <span class="question-mark">?</span>retrieval_epoch,
+            <span class="string">"next_retrieval_epoch" </span>=&gt; <span class="question-mark">?</span>next_retrieval_epoch,
         );
 
         <span class="kw">let </span>signers: Vec&lt;SignerWithStake&gt; = <span class="self">self
@@ -1194,7 +1195,7 @@
             .associate_signers_with_stake(retrieval_epoch, <span class="kw-2">&amp;</span>pending_certificate.signers)
             .<span class="kw">await
             </span>.map_err(|e| RuntimeError::KeepState {
-                message: <span class="macro">format!</span>(<span class="string">&quot;Could not associate current signers with stakes during &#39;registered → signed&#39; phase (current beacon {current_beacon:?}, retrieval epoch {retrieval_epoch:?})&quot;</span>),
+                message: <span class="macro">format!</span>(<span class="string">"Could not associate current signers with stakes during 'registered → signed' phase (current beacon {current_beacon:?}, retrieval epoch {retrieval_epoch:?})"</span>),
                 nested_error: <span class="prelude-val">Some</span>(e)
             })<span class="question-mark">?</span>;
         <span class="kw">let </span>next_signers: Vec&lt;SignerWithStake&gt; = <span class="self">self
@@ -1202,7 +1203,7 @@
             .associate_signers_with_stake(next_retrieval_epoch, <span class="kw-2">&amp;</span>pending_certificate.next_signers)
             .<span class="kw">await
             </span>.map_err(|e| RuntimeError::KeepState {
-                message: <span class="macro">format!</span>(<span class="string">&quot;Could not associate next signers with stakes during &#39;registered → signed&#39; phase (current beacon {current_beacon:?}, next retrieval epoch {next_retrieval_epoch:?})&quot;</span>),
+                message: <span class="macro">format!</span>(<span class="string">"Could not associate next signers with stakes during 'registered → signed' phase (current beacon {current_beacon:?}, next retrieval epoch {next_retrieval_epoch:?})"</span>),
                 nested_error: <span class="prelude-val">Some</span>(e)
             })<span class="question-mark">?</span>;
 
@@ -1211,7 +1212,7 @@
             .compute_message(<span class="kw-2">&amp;</span>pending_certificate.signed_entity_type, <span class="kw-2">&amp;</span>next_signers)
             .<span class="kw">await
             </span>.map_err(|e| RuntimeError::KeepState {
-                message: <span class="macro">format!</span>(<span class="string">&quot;Could not compute message during &#39;registered → signed&#39; phase (current beacon {current_beacon:?})&quot;</span>),
+                message: <span class="macro">format!</span>(<span class="string">"Could not compute message during 'registered → signed' phase (current beacon {current_beacon:?})"</span>),
                 nested_error: <span class="prelude-val">Some</span>(e)
             })<span class="question-mark">?</span>;
         <span class="kw">let </span>single_signatures = <span class="self">self
@@ -1219,12 +1220,12 @@
             .compute_single_signature( current_beacon.epoch, <span class="kw-2">&amp;</span>message, <span class="kw-2">&amp;</span>signers)
             .<span class="kw">await
             </span>.map_err(|e| RuntimeError::KeepState {
-                message: <span class="macro">format!</span>(<span class="string">&quot;Could not compute single signature during &#39;registered → signed&#39; phase (current beacon {current_beacon:?})&quot;</span>),
+                message: <span class="macro">format!</span>(<span class="string">"Could not compute single signature during 'registered → signed' phase (current beacon {current_beacon:?})"</span>),
                 nested_error: <span class="prelude-val">Some</span>(e)
             })<span class="question-mark">?</span>;
         <span class="self">self</span>.runner.send_single_signature(<span class="kw-2">&amp;</span>pending_certificate.signed_entity_type, single_signatures).<span class="kw">await
             </span>.map_err(|e| RuntimeError::KeepState {
-                message: <span class="macro">format!</span>(<span class="string">&quot;Could not send single signature during &#39;registered → signed&#39; phase (current beacon {current_beacon:?})&quot;</span>),
+                message: <span class="macro">format!</span>(<span class="string">"Could not send single signature during 'registered → signed' phase (current beacon {current_beacon:?})"</span>),
                 nested_error: <span class="prelude-val">Some</span>(e)
             })<span class="question-mark">?</span>;
 
@@ -1240,7 +1241,7 @@
                 .get_current_beacon()
                 .<span class="kw">await
                 </span>.map_err(|e| RuntimeError::KeepState {
-                    message: <span class="macro">format!</span>(<span class="string">&quot;Could not retrieve current beacon in context &#39;{context}&#39;.&quot;</span>),
+                    message: <span class="macro">format!</span>(<span class="string">"Could not retrieve current beacon in context '{context}'."</span>),
                     nested_error: <span class="prelude-val">Some</span>(e),
                 })<span class="question-mark">?</span>;
 
@@ -1253,7 +1254,7 @@
             .<span class="kw">await
             </span>.map_err(|e| RuntimeError::Critical {
                 message: <span class="macro">format!</span>(
-                    <span class="string">&quot;Could not update Era checker with context &#39;{context}&#39; for epoch {epoch:?}&quot;
+                    <span class="string">"Could not update Era checker with context '{context}' for epoch {epoch:?}"
                 </span>),
                 nested_error: <span class="prelude-val">Some</span>(e),
             })
@@ -1296,7 +1297,7 @@
         state_machine
             .cycle()
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;Cycling the state machine should not fail&quot;</span>);
+            </span>.expect(<span class="string">"Cycling the state machine should not fail"</span>);
 
         <span class="macro">assert_eq!</span>(
             SignerState::Unregistered {
@@ -1329,7 +1330,7 @@
         state_machine
             .cycle()
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;Cycling the state machine should not fail&quot;</span>);
+            </span>.expect(<span class="string">"Cycling the state machine should not fail"</span>);
 
         <span class="macro">assert_eq!</span>(
             SignerState::Unregistered { epoch: known_epoch },
@@ -1367,12 +1368,12 @@
         state_machine
             .cycle()
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;Cycling the state machine should not fail&quot;</span>);
+            </span>.expect(<span class="string">"Cycling the state machine should not fail"</span>);
 
         <span class="kw">if let </span>SignerState::Registered { epoch: <span class="kw">_ </span>} = state_machine.get_state().<span class="kw">await </span>{
         } <span class="kw">else </span>{
             <span class="macro">panic!</span>(
-                <span class="string">&quot;state machine did not return a RegisteredState but {:?}&quot;</span>,
+                <span class="string">"state machine did not return a RegisteredState but {:?}"</span>,
                 state_machine.get_state().<span class="kw">await
             </span>);
         }
@@ -1395,7 +1396,7 @@
         state_machine
             .cycle()
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;Cycling the state machine should not fail&quot;</span>);
+            </span>.expect(<span class="string">"Cycling the state machine should not fail"</span>);
         <span class="macro">assert_eq!</span>(
             SignerState::Unregistered {
                 epoch: fake_data::beacon().epoch
@@ -1432,12 +1433,12 @@
         state_machine
             .cycle()
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;Cycling the state machine should not fail&quot;</span>);
+            </span>.expect(<span class="string">"Cycling the state machine should not fail"</span>);
 
         <span class="macro">assert_eq!</span>(
             SignerState::Registered { epoch: Epoch(<span class="number">9</span>) },
             state_machine.get_state().<span class="kw">await</span>,
-            <span class="string">&quot;state machine did not return a RegisteredState but {:?}&quot;</span>,
+            <span class="string">"state machine did not return a RegisteredState but {:?}"</span>,
             state_machine.get_state().<span class="kw">await
         </span>);
     }
@@ -1487,7 +1488,7 @@
         state_machine
             .cycle()
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;Cycling the state machine should not fail&quot;</span>);
+            </span>.expect(<span class="string">"Cycling the state machine should not fail"</span>);
 
         <span class="macro">assert_eq!</span>(
             SignerState::Signed {
@@ -1495,7 +1496,7 @@
                 signed_entity_type
             },
             state_machine.get_state().<span class="kw">await</span>,
-            <span class="string">&quot;state machine did not return a RegisteredState but {:?}&quot;</span>,
+            <span class="string">"state machine did not return a RegisteredState but {:?}"</span>,
             state_machine.get_state().<span class="kw">await
         </span>);
     }
@@ -1532,7 +1533,7 @@
         state_machine
             .cycle()
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;Cycling the state machine should not fail&quot;</span>);
+            </span>.expect(<span class="string">"Cycling the state machine should not fail"</span>);
 
         <span class="macro">assert_eq!</span>(
             SignerState::Registered {
@@ -1572,7 +1573,7 @@
         state_machine
             .cycle()
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;Cycling the state machine should not fail&quot;</span>);
+            </span>.expect(<span class="string">"Cycling the state machine should not fail"</span>);
 
         <span class="macro">assert_eq!</span>(
             SignerState::Unregistered { epoch: Epoch(<span class="number">10</span>) },
@@ -1610,7 +1611,7 @@
         state_machine
             .cycle()
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;Cycling the state machine should not fail&quot;</span>);
+            </span>.expect(<span class="string">"Cycling the state machine should not fail"</span>);
 
         <span class="macro">assert_eq!</span>(
             SignerState::Signed {
@@ -1651,7 +1652,7 @@
         state_machine
             .cycle()
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;Cycling the state machine should not fail&quot;</span>);
+            </span>.expect(<span class="string">"Cycling the state machine should not fail"</span>);
 
         <span class="macro">assert_eq!</span>(
             SignerState::Signed {

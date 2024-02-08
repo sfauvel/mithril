@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-common/src/sqlite/condition.rs`."><title>condition.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-common/src/sqlite/condition.rs`."><title>condition.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -374,15 +375,15 @@
     <span class="doccomment">/// Turn a boolean expression to its string SQL representation.
     </span><span class="kw">pub fn </span>expand(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
         <span class="kw">match </span><span class="self">self </span>{
-            <span class="self">Self</span>::None =&gt; <span class="string">&quot;true&quot;</span>.to_string(),
+            <span class="self">Self</span>::None =&gt; <span class="string">"true"</span>.to_string(),
             <span class="self">Self</span>::Expression(expr) =&gt; expr.to_owned(),
             <span class="self">Self</span>::And(lft, rgt) =&gt; <span class="kw">match </span>(lft.needs_precedence(), rgt.needs_precedence()) {
-                (<span class="bool-val">true</span>, <span class="bool-val">false</span>) =&gt; <span class="macro">format!</span>(<span class="string">&quot;({}) and {}&quot;</span>, lft.expand(), rgt.expand()),
-                (<span class="bool-val">false</span>, <span class="bool-val">true</span>) =&gt; <span class="macro">format!</span>(<span class="string">&quot;{} and ({})&quot;</span>, lft.expand(), rgt.expand()),
-                (<span class="bool-val">true</span>, <span class="bool-val">true</span>) =&gt; <span class="macro">format!</span>(<span class="string">&quot;({}) and ({})&quot;</span>, lft.expand(), rgt.expand()),
-                (<span class="bool-val">false</span>, <span class="bool-val">false</span>) =&gt; <span class="macro">format!</span>(<span class="string">&quot;{} and {}&quot;</span>, lft.expand(), rgt.expand()),
+                (<span class="bool-val">true</span>, <span class="bool-val">false</span>) =&gt; <span class="macro">format!</span>(<span class="string">"({}) and {}"</span>, lft.expand(), rgt.expand()),
+                (<span class="bool-val">false</span>, <span class="bool-val">true</span>) =&gt; <span class="macro">format!</span>(<span class="string">"{} and ({})"</span>, lft.expand(), rgt.expand()),
+                (<span class="bool-val">true</span>, <span class="bool-val">true</span>) =&gt; <span class="macro">format!</span>(<span class="string">"({}) and ({})"</span>, lft.expand(), rgt.expand()),
+                (<span class="bool-val">false</span>, <span class="bool-val">false</span>) =&gt; <span class="macro">format!</span>(<span class="string">"{} and {}"</span>, lft.expand(), rgt.expand()),
             },
-            <span class="self">Self</span>::Or(lft, rgt) =&gt; <span class="macro">format!</span>(<span class="string">&quot;{} or {}&quot;</span>, lft.expand(), rgt.expand()),
+            <span class="self">Self</span>::Or(lft, rgt) =&gt; <span class="macro">format!</span>(<span class="string">"{} or {}"</span>, lft.expand(), rgt.expand()),
         }
     }
 
@@ -430,10 +431,10 @@
         <span class="comment">//
         // Replace parameters placeholders by numerated parameters.
         </span><span class="kw">loop </span>{
-            <span class="kw">if </span>!expression.contains(<span class="string">&quot;?*&quot;</span>) {
+            <span class="kw">if </span>!expression.contains(<span class="string">"?*"</span>) {
                 <span class="kw">break</span>;
             }
-            expression = expression.replacen(<span class="string">&quot;?*&quot;</span>, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;?{param_index}&quot;</span>), <span class="number">1</span>);
+            expression = expression.replacen(<span class="string">"?*"</span>, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"?{param_index}"</span>), <span class="number">1</span>);
             param_index += <span class="number">1</span>;
         }
 
@@ -442,8 +443,8 @@
 
     <span class="doccomment">/// Instanciate a condition with a `IN` statement.
     </span><span class="kw">pub fn </span>where_in(field: <span class="kw-2">&amp;</span>str, parameters: Vec&lt;Value&gt;) -&gt; <span class="self">Self </span>{
-        <span class="kw">let </span>params: Vec&lt;<span class="kw-2">&amp;</span>str&gt; = repeat(<span class="string">&quot;?*&quot;</span>).take(parameters.len()).collect();
-        <span class="kw">let </span>expression = <span class="macro">format!</span>(<span class="string">&quot;{} in ({})&quot;</span>, field, params.join(<span class="string">&quot;, &quot;</span>));
+        <span class="kw">let </span>params: Vec&lt;<span class="kw-2">&amp;</span>str&gt; = repeat(<span class="string">"?*"</span>).take(parameters.len()).collect();
+        <span class="kw">let </span>expression = <span class="macro">format!</span>(<span class="string">"{} in ({})"</span>, field, params.join(<span class="string">", "</span>));
 
         <span class="self">Self </span>{
             condition: BooleanCondition::Expression(expression),
@@ -499,32 +500,32 @@
     </span><span class="kw">fn </span>boolean_expand_none() {
         <span class="kw">let </span>condition = BooleanCondition::None;
 
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;true&quot;</span>.to_string(), condition.expand());
+        <span class="macro">assert_eq!</span>(<span class="string">"true"</span>.to_string(), condition.expand());
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>boolean_expand_expression() {
-        <span class="kw">let </span>condition = BooleanCondition::Expression(<span class="string">&quot;something&quot;</span>.to_string());
+        <span class="kw">let </span>condition = BooleanCondition::Expression(<span class="string">"something"</span>.to_string());
 
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;something&quot;</span>.to_string(), condition.expand());
+        <span class="macro">assert_eq!</span>(<span class="string">"something"</span>.to_string(), condition.expand());
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>boolean_expand_and() {
-        <span class="kw">let </span>left = BooleanCondition::Expression(<span class="string">&quot;left&quot;</span>.to_string());
-        <span class="kw">let </span>right = BooleanCondition::Expression(<span class="string">&quot;right&quot;</span>.to_string());
+        <span class="kw">let </span>left = BooleanCondition::Expression(<span class="string">"left"</span>.to_string());
+        <span class="kw">let </span>right = BooleanCondition::Expression(<span class="string">"right"</span>.to_string());
         <span class="kw">let </span>condition = BooleanCondition::And(Box::new(left), Box::new(right));
 
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;left and right&quot;</span>.to_string(), condition.expand());
+        <span class="macro">assert_eq!</span>(<span class="string">"left and right"</span>.to_string(), condition.expand());
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>boolean_expand_or() {
-        <span class="kw">let </span>left = BooleanCondition::Expression(<span class="string">&quot;left&quot;</span>.to_string());
-        <span class="kw">let </span>right = BooleanCondition::Expression(<span class="string">&quot;right&quot;</span>.to_string());
+        <span class="kw">let </span>left = BooleanCondition::Expression(<span class="string">"left"</span>.to_string());
+        <span class="kw">let </span>right = BooleanCondition::Expression(<span class="string">"right"</span>.to_string());
         <span class="kw">let </span>condition = BooleanCondition::Or(Box::new(left), Box::new(right));
 
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;left or right&quot;</span>.to_string(), condition.expand());
+        <span class="macro">assert_eq!</span>(<span class="string">"left or right"</span>.to_string(), condition.expand());
     }
 
     <span class="attr">#[test]
@@ -532,156 +533,156 @@
         <span class="kw">let </span>expression = WhereCondition::default();
         <span class="kw">let </span>(sql, params) = expression.expand();
 
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;true&quot;</span>.to_string(), sql);
+        <span class="macro">assert_eq!</span>(<span class="string">"true"</span>.to_string(), sql);
         <span class="macro">assert!</span>(params.is_empty());
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>expression_sql() {
-        <span class="kw">let </span>expression = WhereCondition::new(<span class="string">&quot;something is not null&quot;</span>, Vec::new());
+        <span class="kw">let </span>expression = WhereCondition::new(<span class="string">"something is not null"</span>, Vec::new());
         <span class="kw">let </span>(sql, params) = expression.expand();
 
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;something is not null&quot;</span>.to_string(), sql);
+        <span class="macro">assert_eq!</span>(<span class="string">"something is not null"</span>.to_string(), sql);
         <span class="macro">assert!</span>(params.is_empty());
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>expression_and() {
         <span class="kw">let </span>expression =
-            WhereCondition::new(<span class="string">&quot;A&quot;</span>, Vec::new()).and_where(WhereCondition::new(<span class="string">&quot;B&quot;</span>, Vec::new()));
+            WhereCondition::new(<span class="string">"A"</span>, Vec::new()).and_where(WhereCondition::new(<span class="string">"B"</span>, Vec::new()));
         <span class="kw">let </span>(sql, params) = expression.expand();
 
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;A and B&quot;</span>, <span class="kw-2">&amp;</span>sql);
+        <span class="macro">assert_eq!</span>(<span class="string">"A and B"</span>, <span class="kw-2">&amp;</span>sql);
         <span class="macro">assert!</span>(params.is_empty());
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>expression_and_none() {
-        <span class="kw">let </span>expression = WhereCondition::new(<span class="string">&quot;A&quot;</span>, Vec::new()).and_where(WhereCondition::default());
+        <span class="kw">let </span>expression = WhereCondition::new(<span class="string">"A"</span>, Vec::new()).and_where(WhereCondition::default());
         <span class="kw">let </span>(sql, params) = expression.expand();
 
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;A&quot;</span>, <span class="kw-2">&amp;</span>sql);
+        <span class="macro">assert_eq!</span>(<span class="string">"A"</span>, <span class="kw-2">&amp;</span>sql);
         <span class="macro">assert!</span>(params.is_empty());
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>expression_none_and() {
-        <span class="kw">let </span>expression = WhereCondition::default().and_where(WhereCondition::new(<span class="string">&quot;A&quot;</span>, Vec::new()));
+        <span class="kw">let </span>expression = WhereCondition::default().and_where(WhereCondition::new(<span class="string">"A"</span>, Vec::new()));
         <span class="kw">let </span>(sql, params) = expression.expand();
 
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;A&quot;</span>, <span class="kw-2">&amp;</span>sql);
+        <span class="macro">assert_eq!</span>(<span class="string">"A"</span>, <span class="kw-2">&amp;</span>sql);
         <span class="macro">assert!</span>(params.is_empty());
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>expression_or() {
         <span class="kw">let </span>expression =
-            WhereCondition::new(<span class="string">&quot;A&quot;</span>, Vec::new()).or_where(WhereCondition::new(<span class="string">&quot;B&quot;</span>, Vec::new()));
+            WhereCondition::new(<span class="string">"A"</span>, Vec::new()).or_where(WhereCondition::new(<span class="string">"B"</span>, Vec::new()));
         <span class="kw">let </span>(sql, params) = expression.expand();
 
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;A or B&quot;</span>, <span class="kw-2">&amp;</span>sql);
+        <span class="macro">assert_eq!</span>(<span class="string">"A or B"</span>, <span class="kw-2">&amp;</span>sql);
         <span class="macro">assert!</span>(params.is_empty());
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>expression_or_none() {
-        <span class="kw">let </span>expression = WhereCondition::new(<span class="string">&quot;A&quot;</span>, Vec::new()).or_where(WhereCondition::default());
+        <span class="kw">let </span>expression = WhereCondition::new(<span class="string">"A"</span>, Vec::new()).or_where(WhereCondition::default());
         <span class="kw">let </span>(sql, params) = expression.expand();
 
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;A&quot;</span>, <span class="kw-2">&amp;</span>sql);
+        <span class="macro">assert_eq!</span>(<span class="string">"A"</span>, <span class="kw-2">&amp;</span>sql);
         <span class="macro">assert!</span>(params.is_empty());
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>expression_none_or() {
-        <span class="kw">let </span>expression = WhereCondition::default().or_where(WhereCondition::new(<span class="string">&quot;A&quot;</span>, Vec::new()));
+        <span class="kw">let </span>expression = WhereCondition::default().or_where(WhereCondition::new(<span class="string">"A"</span>, Vec::new()));
         <span class="kw">let </span>(sql, params) = expression.expand();
 
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;A&quot;</span>, <span class="kw-2">&amp;</span>sql);
+        <span class="macro">assert_eq!</span>(<span class="string">"A"</span>, <span class="kw-2">&amp;</span>sql);
         <span class="macro">assert!</span>(params.is_empty());
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>expression_complex_no_precedence() {
-        <span class="kw">let </span>expression = WhereCondition::new(<span class="string">&quot;A&quot;</span>, Vec::new())
-            .and_where(WhereCondition::new(<span class="string">&quot;B&quot;</span>, Vec::new()))
-            .or_where(WhereCondition::new(<span class="string">&quot;C&quot;</span>, Vec::new()));
+        <span class="kw">let </span>expression = WhereCondition::new(<span class="string">"A"</span>, Vec::new())
+            .and_where(WhereCondition::new(<span class="string">"B"</span>, Vec::new()))
+            .or_where(WhereCondition::new(<span class="string">"C"</span>, Vec::new()));
         <span class="kw">let </span>(sql, params) = expression.expand();
 
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;A and B or C&quot;</span>, <span class="kw-2">&amp;</span>sql);
+        <span class="macro">assert_eq!</span>(<span class="string">"A and B or C"</span>, <span class="kw-2">&amp;</span>sql);
         <span class="macro">assert!</span>(params.is_empty());
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>expression_complex_with_precedence() {
         <span class="kw">let </span>sub_expression =
-            WhereCondition::new(<span class="string">&quot;A&quot;</span>, Vec::new()).or_where(WhereCondition::new(<span class="string">&quot;B&quot;</span>, Vec::new()));
-        <span class="kw">let </span>expression = WhereCondition::new(<span class="string">&quot;C&quot;</span>, Vec::new()).and_where(sub_expression);
+            WhereCondition::new(<span class="string">"A"</span>, Vec::new()).or_where(WhereCondition::new(<span class="string">"B"</span>, Vec::new()));
+        <span class="kw">let </span>expression = WhereCondition::new(<span class="string">"C"</span>, Vec::new()).and_where(sub_expression);
         <span class="kw">let </span>(sql, params) = expression.expand();
 
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;C and (A or B)&quot;</span>, <span class="kw-2">&amp;</span>sql);
+        <span class="macro">assert_eq!</span>(<span class="string">"C and (A or B)"</span>, <span class="kw-2">&amp;</span>sql);
         <span class="macro">assert!</span>(params.is_empty());
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>expression_complex_with_self_precedence() {
-        <span class="kw">let </span>sub_expression = WhereCondition::new(<span class="string">&quot;C&quot;</span>, Vec::new());
-        <span class="kw">let </span>expression = WhereCondition::new(<span class="string">&quot;A&quot;</span>, Vec::new())
-            .or_where(WhereCondition::new(<span class="string">&quot;B&quot;</span>, Vec::new()))
+        <span class="kw">let </span>sub_expression = WhereCondition::new(<span class="string">"C"</span>, Vec::new());
+        <span class="kw">let </span>expression = WhereCondition::new(<span class="string">"A"</span>, Vec::new())
+            .or_where(WhereCondition::new(<span class="string">"B"</span>, Vec::new()))
             .and_where(sub_expression);
         <span class="kw">let </span>(sql, params) = expression.expand();
 
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;(A or B) and C&quot;</span>, <span class="kw-2">&amp;</span>sql);
+        <span class="macro">assert_eq!</span>(<span class="string">"(A or B) and C"</span>, <span class="kw-2">&amp;</span>sql);
         <span class="macro">assert!</span>(params.is_empty());
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>expression_complex_with_both_precedence() {
         <span class="kw">let </span>sub_expression =
-            WhereCondition::new(<span class="string">&quot;C&quot;</span>, Vec::new()).or_where(WhereCondition::new(<span class="string">&quot;D&quot;</span>, Vec::new()));
-        <span class="kw">let </span>expression = WhereCondition::new(<span class="string">&quot;A&quot;</span>, Vec::new())
-            .or_where(WhereCondition::new(<span class="string">&quot;B&quot;</span>, Vec::new()))
+            WhereCondition::new(<span class="string">"C"</span>, Vec::new()).or_where(WhereCondition::new(<span class="string">"D"</span>, Vec::new()));
+        <span class="kw">let </span>expression = WhereCondition::new(<span class="string">"A"</span>, Vec::new())
+            .or_where(WhereCondition::new(<span class="string">"B"</span>, Vec::new()))
             .and_where(sub_expression);
         <span class="kw">let </span>(sql, params) = expression.expand();
 
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;(A or B) and (C or D)&quot;</span>, <span class="kw-2">&amp;</span>sql);
+        <span class="macro">assert_eq!</span>(<span class="string">"(A or B) and (C or D)"</span>, <span class="kw-2">&amp;</span>sql);
         <span class="macro">assert!</span>(params.is_empty());
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>expression_sql_with_parameter() {
-        <span class="kw">let </span>expression = WhereCondition::new(<span class="string">&quot;A &gt; ?*::pg_type&quot;</span>, <span class="macro">vec!</span>[Value::Integer(<span class="number">0</span>)]);
+        <span class="kw">let </span>expression = WhereCondition::new(<span class="string">"A &gt; ?*::pg_type"</span>, <span class="macro">vec!</span>[Value::Integer(<span class="number">0</span>)]);
         <span class="kw">let </span>(sql, params) = expression.expand();
 
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;A &gt; ?1::pg_type&quot;</span>, <span class="kw-2">&amp;</span>sql);
+        <span class="macro">assert_eq!</span>(<span class="string">"A &gt; ?1::pg_type"</span>, <span class="kw-2">&amp;</span>sql);
         <span class="macro">assert_eq!</span>(<span class="number">1</span>, params.len());
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>expression_sql_with_multiple_parameters() {
-        <span class="kw">let </span>expression = WhereCondition::new(<span class="string">&quot;A &gt; ?*&quot;</span>, <span class="macro">vec!</span>[Value::Integer(<span class="number">0</span>)])
-            .and_where(WhereCondition::new(<span class="string">&quot;B = ?*&quot;</span>, <span class="macro">vec!</span>[Value::Integer(<span class="number">1</span>)]));
+        <span class="kw">let </span>expression = WhereCondition::new(<span class="string">"A &gt; ?*"</span>, <span class="macro">vec!</span>[Value::Integer(<span class="number">0</span>)])
+            .and_where(WhereCondition::new(<span class="string">"B = ?*"</span>, <span class="macro">vec!</span>[Value::Integer(<span class="number">1</span>)]));
         <span class="kw">let </span>(sql, params) = expression.expand();
 
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;A &gt; ?1 and B = ?2&quot;</span>, <span class="kw-2">&amp;</span>sql);
+        <span class="macro">assert_eq!</span>(<span class="string">"A &gt; ?1 and B = ?2"</span>, <span class="kw-2">&amp;</span>sql);
         <span class="macro">assert_eq!</span>(<span class="number">2</span>, params.len());
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>expression_where_in() {
-        <span class="kw">let </span>expression = WhereCondition::where_in(<span class="string">&quot;A&quot;</span>, <span class="macro">vec!</span>[Value::Integer(<span class="number">0</span>), Value::Integer(<span class="number">1</span>)]);
+        <span class="kw">let </span>expression = WhereCondition::where_in(<span class="string">"A"</span>, <span class="macro">vec!</span>[Value::Integer(<span class="number">0</span>), Value::Integer(<span class="number">1</span>)]);
         <span class="kw">let </span>(sql, params) = expression.expand();
 
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;A in (?1, ?2)&quot;</span>.to_string(), sql);
+        <span class="macro">assert_eq!</span>(<span class="string">"A in (?1, ?2)"</span>.to_string(), sql);
         <span class="macro">assert_eq!</span>(<span class="number">2</span>, params.len());
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>expression_sql_with_multiple_parameters_and_where_in() {
-        <span class="kw">let </span>expression = WhereCondition::new(<span class="string">&quot;A &gt; ?*&quot;</span>, <span class="macro">vec!</span>[Value::Integer(<span class="number">0</span>)])
-            .or_where(WhereCondition::new(<span class="string">&quot;B&quot;</span>, Vec::new()))
+        <span class="kw">let </span>expression = WhereCondition::new(<span class="string">"A &gt; ?*"</span>, <span class="macro">vec!</span>[Value::Integer(<span class="number">0</span>)])
+            .or_where(WhereCondition::new(<span class="string">"B"</span>, Vec::new()))
             .and_where(WhereCondition::where_in(
-                <span class="string">&quot;C&quot;</span>,
+                <span class="string">"C"</span>,
                 <span class="macro">vec!</span>[
                     Value::Integer(<span class="number">100</span>),
                     Value::Integer(<span class="number">101</span>),
@@ -691,16 +692,16 @@
 
         <span class="kw">let </span>(sql, params) = expression.expand();
 
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;(A &gt; ?1 or B) and C in (?2, ?3, ?4)&quot;</span>, <span class="kw-2">&amp;</span>sql);
+        <span class="macro">assert_eq!</span>(<span class="string">"(A &gt; ?1 or B) and C in (?2, ?3, ?4)"</span>, <span class="kw-2">&amp;</span>sql);
         <span class="macro">assert_eq!</span>(<span class="number">4</span>, params.len());
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>parameters_tosql() {
-        <span class="kw">let </span>expression = WhereCondition::new(<span class="string">&quot;a = ?*&quot;</span>, <span class="macro">vec!</span>[Value::String(<span class="string">&quot;whatever&quot;</span>.into())]);
+        <span class="kw">let </span>expression = WhereCondition::new(<span class="string">"a = ?*"</span>, <span class="macro">vec!</span>[Value::String(<span class="string">"whatever"</span>.into())]);
         <span class="kw">let </span>(sql, params) = expression.expand();
 
-        <span class="macro">assert_eq!</span>(<span class="string">&quot;a = ?1&quot;</span>, <span class="kw-2">&amp;</span>sql);
+        <span class="macro">assert_eq!</span>(<span class="string">"a = ?1"</span>, <span class="kw-2">&amp;</span>sql);
         <span class="macro">assert_eq!</span>(<span class="number">1</span>, params.len());
     }
 }

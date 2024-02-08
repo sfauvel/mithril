@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-common/src/digesters/cardano_immutable_digester.rs`."><title>cardano_immutable_digester.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-common/src/digesters/cardano_immutable_digester.rs`."><title>cardano_immutable_digester.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -559,7 +560,7 @@
                 })
             }
             <span class="prelude-val">Some</span>(<span class="kw">_</span>) =&gt; {
-                <span class="macro">info!</span>(<span class="self">self</span>.logger, <span class="string">&quot;#compute_digest&quot;</span>; <span class="string">&quot;beacon&quot; </span>=&gt; #<span class="question-mark">?</span>beacon, <span class="string">&quot;nb_of_immutables&quot; </span>=&gt; immutables.len());
+                <span class="macro">info!</span>(<span class="self">self</span>.logger, <span class="string">"#compute_digest"</span>; <span class="string">"beacon" </span>=&gt; #<span class="question-mark">?</span>beacon, <span class="string">"nb_of_immutables" </span>=&gt; immutables.len());
 
                 <span class="kw">let </span>cached_values = <span class="kw">match </span><span class="self">self</span>.cache_provider.as_ref() {
                     <span class="prelude-val">None </span>=&gt; BTreeMap::from_iter(immutables.into_iter().map(|i| (i, <span class="prelude-val">None</span>))),
@@ -568,7 +569,7 @@
                         <span class="prelude-val">Err</span>(error) =&gt; {
                             <span class="macro">warn!</span>(
                                 <span class="self">self</span>.logger,
-                                <span class="string">&quot;Error while getting cached immutable files digests: {}&quot;</span>, error
+                                <span class="string">"Error while getting cached immutable files digests: {}"</span>, error
                             );
                             BTreeMap::from_iter(immutables.into_iter().map(|i| (i, <span class="prelude-val">None</span>)))
                         }
@@ -586,13 +587,13 @@
                     </span>.map_err(|e| ImmutableDigesterError::DigestComputationError(e.into()))<span class="question-mark">??</span>;
                 <span class="kw">let </span>digest = hex::encode(hash);
 
-                <span class="macro">debug!</span>(<span class="self">self</span>.logger, <span class="string">&quot;#computed digest: {:?}&quot;</span>, digest);
+                <span class="macro">debug!</span>(<span class="self">self</span>.logger, <span class="string">"#computed digest: {:?}"</span>, digest);
 
                 <span class="kw">if let </span><span class="prelude-val">Some</span>(cache_provider) = <span class="self">self</span>.cache_provider.as_ref() {
                     <span class="kw">if let </span><span class="prelude-val">Err</span>(error) = cache_provider.store(new_cache_entries).<span class="kw">await </span>{
                         <span class="macro">warn!</span>(
                             <span class="self">self</span>.logger,
-                            <span class="string">&quot;Error while storing new immutable files digests to cache: {}&quot;</span>, error
+                            <span class="string">"Error while storing new immutable files digests to cache: {}"</span>, error
                         );
                     }
                 }
@@ -630,7 +631,7 @@
         };
 
         <span class="kw">if </span>progress.report(ix) {
-            <span class="macro">info!</span>(logger, <span class="string">&quot;hashing: {}&quot;</span>, <span class="kw-2">&amp;</span>progress);
+            <span class="macro">info!</span>(logger, <span class="string">"hashing: {}"</span>, <span class="kw-2">&amp;</span>progress);
         }
     }
 
@@ -654,8 +655,8 @@
 }
 
 <span class="kw">impl </span>std::fmt::Display <span class="kw">for </span>Progress {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), std::fmt::Error&gt; {
-        <span class="macro">write!</span>(f, <span class="string">&quot;{}/{} ({}%)&quot;</span>, <span class="self">self</span>.index, <span class="self">self</span>.total, <span class="self">self</span>.percent())
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), std::fmt::Error&gt; {
+        <span class="macro">write!</span>(f, <span class="string">"{}/{} ({}%)"</span>, <span class="self">self</span>.index, <span class="self">self</span>.total, <span class="self">self</span>.percent())
     }
 }
 
@@ -687,7 +688,7 @@
     }
 
     <span class="kw">fn </span>db_builder(dir_name: <span class="kw-2">&amp;</span>str) -&gt; DummyImmutablesDbBuilder {
-        DummyImmutablesDbBuilder::new(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;cardano_immutable_digester/{dir_name}&quot;</span>))
+        DummyImmutablesDbBuilder::new(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"cardano_immutable_digester/{dir_name}"</span>))
     }
 
     <span class="attr">#[test]
@@ -718,35 +719,35 @@
 
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>fail_if_no_file_in_folder() {
-        <span class="kw">let </span>immutable_db = db_builder(<span class="string">&quot;fail_if_no_file_in_folder&quot;</span>).build();
+        <span class="kw">let </span>immutable_db = db_builder(<span class="string">"fail_if_no_file_in_folder"</span>).build();
         <span class="kw">let </span>digester = CardanoImmutableDigester::new(<span class="prelude-val">None</span>, create_logger());
-        <span class="kw">let </span>beacon = Beacon::new(<span class="string">&quot;devnet&quot;</span>.to_string(), <span class="number">1</span>, <span class="number">1</span>);
+        <span class="kw">let </span>beacon = Beacon::new(<span class="string">"devnet"</span>.to_string(), <span class="number">1</span>, <span class="number">1</span>);
 
         <span class="kw">let </span>result = digester
             .compute_digest(<span class="kw-2">&amp;</span>immutable_db.dir, <span class="kw-2">&amp;</span>beacon)
             .<span class="kw">await
-            </span>.expect_err(<span class="string">&quot;compute_digest should have failed&quot;</span>);
+            </span>.expect_err(<span class="string">"compute_digest should have failed"</span>);
 
         <span class="macro">assert_eq!</span>(
             <span class="macro">format!</span>(
-                <span class="string">&quot;{:?}&quot;</span>,
+                <span class="string">"{:?}"</span>,
                 ImmutableDigesterError::NotEnoughImmutable {
                     expected_number: beacon.immutable_file_number,
                     found_number: <span class="prelude-val">None</span>,
                     db_dir: immutable_db.dir,
                 }
             ),
-            <span class="macro">format!</span>(<span class="string">&quot;{result:?}&quot;</span>)
+            <span class="macro">format!</span>(<span class="string">"{result:?}"</span>)
         );
     }
 
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>fail_if_a_invalid_file_is_in_immutable_folder() {
-        <span class="kw">let </span>immutable_db = db_builder(<span class="string">&quot;fail_if_no_immutable_exist&quot;</span>)
-            .with_non_immutables(<span class="kw-2">&amp;</span>[<span class="string">&quot;not_immutable&quot;</span>])
+        <span class="kw">let </span>immutable_db = db_builder(<span class="string">"fail_if_no_immutable_exist"</span>)
+            .with_non_immutables(<span class="kw-2">&amp;</span>[<span class="string">"not_immutable"</span>])
             .build();
         <span class="kw">let </span>digester = CardanoImmutableDigester::new(<span class="prelude-val">None</span>, create_logger());
-        <span class="kw">let </span>beacon = Beacon::new(<span class="string">&quot;devnet&quot;</span>.to_string(), <span class="number">1</span>, <span class="number">1</span>);
+        <span class="kw">let </span>beacon = Beacon::new(<span class="string">"devnet"</span>.to_string(), <span class="number">1</span>, <span class="number">1</span>);
 
         <span class="macro">assert!</span>(digester
             .compute_digest(<span class="kw-2">&amp;</span>immutable_db.dir, <span class="kw-2">&amp;</span>beacon)
@@ -756,60 +757,60 @@
 
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>fail_if_theres_only_the_uncompleted_immutable_trio() {
-        <span class="kw">let </span>immutable_db = db_builder(<span class="string">&quot;fail_if_theres_only_the_uncompleted_immutable_trio&quot;</span>)
+        <span class="kw">let </span>immutable_db = db_builder(<span class="string">"fail_if_theres_only_the_uncompleted_immutable_trio"</span>)
             .append_immutable_trio()
             .build();
         <span class="kw">let </span>digester = CardanoImmutableDigester::new(<span class="prelude-val">None</span>, create_logger());
-        <span class="kw">let </span>beacon = Beacon::new(<span class="string">&quot;devnet&quot;</span>.to_string(), <span class="number">1</span>, <span class="number">1</span>);
+        <span class="kw">let </span>beacon = Beacon::new(<span class="string">"devnet"</span>.to_string(), <span class="number">1</span>, <span class="number">1</span>);
 
         <span class="kw">let </span>result = digester
             .compute_digest(<span class="kw-2">&amp;</span>immutable_db.dir, <span class="kw-2">&amp;</span>beacon)
             .<span class="kw">await
-            </span>.expect_err(<span class="string">&quot;compute_digest should&#39;ve failed&quot;</span>);
+            </span>.expect_err(<span class="string">"compute_digest should've failed"</span>);
 
         <span class="macro">assert_eq!</span>(
             <span class="macro">format!</span>(
-                <span class="string">&quot;{:?}&quot;</span>,
+                <span class="string">"{:?}"</span>,
                 ImmutableDigesterError::NotEnoughImmutable {
                     expected_number: beacon.immutable_file_number,
                     found_number: <span class="prelude-val">None</span>,
                     db_dir: immutable_db.dir,
                 }
             ),
-            <span class="macro">format!</span>(<span class="string">&quot;{result:?}&quot;</span>)
+            <span class="macro">format!</span>(<span class="string">"{result:?}"</span>)
         );
     }
 
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>fail_if_less_immutable_than_what_required_in_beacon() {
-        <span class="kw">let </span>immutable_db = db_builder(<span class="string">&quot;fail_if_less_immutable_than_what_required_in_beacon&quot;</span>)
+        <span class="kw">let </span>immutable_db = db_builder(<span class="string">"fail_if_less_immutable_than_what_required_in_beacon"</span>)
             .with_immutables(<span class="kw-2">&amp;</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])
             .append_immutable_trio()
             .build();
         <span class="kw">let </span>digester = CardanoImmutableDigester::new(<span class="prelude-val">None</span>, create_logger());
-        <span class="kw">let </span>beacon = Beacon::new(<span class="string">&quot;devnet&quot;</span>.to_string(), <span class="number">1</span>, <span class="number">10</span>);
+        <span class="kw">let </span>beacon = Beacon::new(<span class="string">"devnet"</span>.to_string(), <span class="number">1</span>, <span class="number">10</span>);
 
         <span class="kw">let </span>result = digester
             .compute_digest(<span class="kw-2">&amp;</span>immutable_db.dir, <span class="kw-2">&amp;</span>beacon)
             .<span class="kw">await
-            </span>.expect_err(<span class="string">&quot;compute_digest should&#39;ve failed&quot;</span>);
+            </span>.expect_err(<span class="string">"compute_digest should've failed"</span>);
 
         <span class="macro">assert_eq!</span>(
             <span class="macro">format!</span>(
-                <span class="string">&quot;{:?}&quot;</span>,
+                <span class="string">"{:?}"</span>,
                 ImmutableDigesterError::NotEnoughImmutable {
                     expected_number: beacon.immutable_file_number,
                     found_number: <span class="prelude-val">Some</span>(<span class="number">5</span>),
                     db_dir: immutable_db.dir,
                 }
             ),
-            <span class="macro">format!</span>(<span class="string">&quot;{result:?}&quot;</span>)
+            <span class="macro">format!</span>(<span class="string">"{result:?}"</span>)
         );
     }
 
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>can_compute_hash_of_a_hundred_immutable_file_trio() {
-        <span class="kw">let </span>immutable_db = db_builder(<span class="string">&quot;can_compute_hash_of_a_hundred_immutable_file_trio&quot;</span>)
+        <span class="kw">let </span>immutable_db = db_builder(<span class="string">"can_compute_hash_of_a_hundred_immutable_file_trio"</span>)
             .with_immutables(<span class="kw-2">&amp;</span>(<span class="number">1</span>..=<span class="number">100</span>).collect::&lt;Vec&lt;ImmutableFileNumber&gt;&gt;())
             .append_immutable_trio()
             .build();
@@ -818,22 +819,22 @@
             <span class="prelude-val">Some</span>(Arc::new(MemoryImmutableFileDigestCacheProvider::default())),
             logger.clone(),
         );
-        <span class="kw">let </span>beacon = Beacon::new(<span class="string">&quot;devnet&quot;</span>.to_string(), <span class="number">1</span>, <span class="number">100</span>);
+        <span class="kw">let </span>beacon = Beacon::new(<span class="string">"devnet"</span>.to_string(), <span class="number">1</span>, <span class="number">100</span>);
 
         <span class="kw">let </span>result = digester
             .compute_digest(<span class="kw-2">&amp;</span>immutable_db.dir, <span class="kw-2">&amp;</span>beacon)
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;compute_digest must not fail&quot;</span>);
+            </span>.expect(<span class="string">"compute_digest must not fail"</span>);
 
         <span class="macro">assert_eq!</span>(
-            <span class="string">&quot;a27fd67e495c2c77e4b6b0af9925b2b0bc39656c56adfad4aaab9f20fae49122&quot;</span>.to_string(),
+            <span class="string">"a27fd67e495c2c77e4b6b0af9925b2b0bc39656c56adfad4aaab9f20fae49122"</span>.to_string(),
             result
         )
     }
 
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>digests_are_stored_into_cache_provider() {
-        <span class="kw">let </span>immutable_db = db_builder(<span class="string">&quot;digests_are_stored_into_cache_provider&quot;</span>)
+        <span class="kw">let </span>immutable_db = db_builder(<span class="string">"digests_are_stored_into_cache_provider"</span>)
             .with_immutables(<span class="kw-2">&amp;</span>[<span class="number">1</span>, <span class="number">2</span>])
             .append_immutable_trio()
             .build();
@@ -841,17 +842,17 @@
         <span class="kw">let </span>cache = Arc::new(MemoryImmutableFileDigestCacheProvider::default());
         <span class="kw">let </span>logger = create_logger();
         <span class="kw">let </span>digester = CardanoImmutableDigester::new(<span class="prelude-val">Some</span>(cache.clone()), logger.clone());
-        <span class="kw">let </span>beacon = Beacon::new(<span class="string">&quot;devnet&quot;</span>.to_string(), <span class="number">1</span>, <span class="number">2</span>);
+        <span class="kw">let </span>beacon = Beacon::new(<span class="string">"devnet"</span>.to_string(), <span class="number">1</span>, <span class="number">2</span>);
 
         digester
             .compute_digest(<span class="kw-2">&amp;</span>immutable_db.dir, <span class="kw-2">&amp;</span>beacon)
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;compute_digest must not fail&quot;</span>);
+            </span>.expect(<span class="string">"compute_digest must not fail"</span>);
 
         <span class="kw">let </span>cached_entries = cache
             .get(immutables.clone())
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;Cache read should not fail&quot;</span>);
+            </span>.expect(<span class="string">"Cache read should not fail"</span>);
         <span class="kw">let </span>expected: BTreeMap&lt;<span class="kw">_</span>, <span class="kw">_</span>&gt; = immutables
             .into_iter()
             .map(|i| {
@@ -866,7 +867,7 @@
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>computed_digest_with_cold_or_hot_or_without_any_cache_are_equals() {
         <span class="kw">let </span>immutable_db = DummyImmutablesDbBuilder::new(
-            <span class="string">&quot;computed_digest_with_cold_or_hot_or_without_any_cache_are_equals&quot;</span>,
+            <span class="string">"computed_digest_with_cold_or_hot_or_without_any_cache_are_equals"</span>,
         )
         .with_immutables(<span class="kw-2">&amp;</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])
         .append_immutable_trio()
@@ -877,37 +878,37 @@
             <span class="prelude-val">Some</span>(Arc::new(MemoryImmutableFileDigestCacheProvider::default())),
             logger.clone(),
         );
-        <span class="kw">let </span>beacon = Beacon::new(<span class="string">&quot;devnet&quot;</span>.to_string(), <span class="number">1</span>, <span class="number">3</span>);
+        <span class="kw">let </span>beacon = Beacon::new(<span class="string">"devnet"</span>.to_string(), <span class="number">1</span>, <span class="number">3</span>);
 
         <span class="kw">let </span>without_cache_digest = no_cache_digester
             .compute_digest(<span class="kw-2">&amp;</span>immutable_db.dir, <span class="kw-2">&amp;</span>beacon)
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;compute_digest must not fail&quot;</span>);
+            </span>.expect(<span class="string">"compute_digest must not fail"</span>);
 
         <span class="kw">let </span>cold_cache_digest = cache_digester
             .compute_digest(<span class="kw-2">&amp;</span>immutable_db.dir, <span class="kw-2">&amp;</span>beacon)
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;compute_digest must not fail&quot;</span>);
+            </span>.expect(<span class="string">"compute_digest must not fail"</span>);
 
         <span class="kw">let </span>full_cache_digest = cache_digester
             .compute_digest(<span class="kw-2">&amp;</span>immutable_db.dir, <span class="kw-2">&amp;</span>beacon)
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;compute_digest must not fail&quot;</span>);
+            </span>.expect(<span class="string">"compute_digest must not fail"</span>);
 
         <span class="macro">assert_eq!</span>(
             without_cache_digest, full_cache_digest,
-            <span class="string">&quot;Digests with or without cache should be the same&quot;
+            <span class="string">"Digests with or without cache should be the same"
         </span>);
 
         <span class="macro">assert_eq!</span>(
             cold_cache_digest, full_cache_digest,
-            <span class="string">&quot;Digests with cold or with hot cache should be the same&quot;
+            <span class="string">"Digests with cold or with hot cache should be the same"
         </span>);
     }
 
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>hash_computation_is_quicker_with_a_full_cache() {
-        <span class="kw">let </span>immutable_db = db_builder(<span class="string">&quot;hash_computation_is_quicker_with_a_full_cache&quot;</span>)
+        <span class="kw">let </span>immutable_db = db_builder(<span class="string">"hash_computation_is_quicker_with_a_full_cache"</span>)
             .with_immutables(<span class="kw-2">&amp;</span>(<span class="number">1</span>..=<span class="number">50</span>).collect::&lt;Vec&lt;ImmutableFileNumber&gt;&gt;())
             .append_immutable_trio()
             .set_file_size(<span class="number">65536</span>)
@@ -915,36 +916,36 @@
         <span class="kw">let </span>cache = MemoryImmutableFileDigestCacheProvider::default();
         <span class="kw">let </span>logger = create_logger();
         <span class="kw">let </span>digester = CardanoImmutableDigester::new(<span class="prelude-val">Some</span>(Arc::new(cache)), logger.clone());
-        <span class="kw">let </span>beacon = Beacon::new(<span class="string">&quot;devnet&quot;</span>.to_string(), <span class="number">1</span>, <span class="number">50</span>);
+        <span class="kw">let </span>beacon = Beacon::new(<span class="string">"devnet"</span>.to_string(), <span class="number">1</span>, <span class="number">50</span>);
 
         <span class="kw">let </span>now = Instant::now();
         digester
             .compute_digest(<span class="kw-2">&amp;</span>immutable_db.dir, <span class="kw-2">&amp;</span>beacon)
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;compute_digest must not fail&quot;</span>);
+            </span>.expect(<span class="string">"compute_digest must not fail"</span>);
         <span class="kw">let </span>elapsed_without_cache = now.elapsed();
 
         <span class="kw">let </span>now = Instant::now();
         digester
             .compute_digest(<span class="kw-2">&amp;</span>immutable_db.dir, <span class="kw-2">&amp;</span>beacon)
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;compute_digest must not fail&quot;</span>);
+            </span>.expect(<span class="string">"compute_digest must not fail"</span>);
         <span class="kw">let </span>elapsed_with_cache = now.elapsed();
 
-        <span class="comment">// Note real performance doesn&#39;t matter here, the purpose is only to check that the computation
+        <span class="comment">// Note real performance doesn't matter here, the purpose is only to check that the computation
         // time is faster with cache.
         // We set the limit to 90% to avoid flakiness and ensure that the cache is useful (Note: Real
         // performance is around ~100 times faster in debug).
         </span><span class="macro">assert!</span>(
             elapsed_with_cache &lt; (elapsed_without_cache * <span class="number">9 </span>/ <span class="number">10</span>),
-            <span class="string">&quot;digest computation with full cache should be faster than without cache,\
-            time elapsed: with cache {elapsed_with_cache:?}, without cache {elapsed_without_cache:?}&quot;
+            <span class="string">"digest computation with full cache should be faster than without cache,\
+            time elapsed: with cache {elapsed_with_cache:?}, without cache {elapsed_without_cache:?}"
         </span>);
     }
 
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>cache_read_failure_dont_block_computation() {
-        <span class="kw">let </span>immutable_db = db_builder(<span class="string">&quot;cache_read_failure_dont_block_computation&quot;</span>)
+        <span class="kw">let </span>immutable_db = db_builder(<span class="string">"cache_read_failure_dont_block_computation"</span>)
             .with_immutables(<span class="kw-2">&amp;</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])
             .append_immutable_trio()
             .build();
@@ -952,40 +953,40 @@
         cache.expect_get().returning(|<span class="kw">_</span>| <span class="prelude-val">Ok</span>(BTreeMap::new()));
         cache.expect_store().returning(|<span class="kw">_</span>| {
             <span class="prelude-val">Err</span>(ImmutableDigesterCacheProviderError::Store(
-                ImmutableDigesterCacheStoreError::Io(io::Error::new(io::ErrorKind::Other, <span class="string">&quot;error&quot;</span>)),
+                ImmutableDigesterCacheStoreError::Io(io::Error::new(io::ErrorKind::Other, <span class="string">"error"</span>)),
             ))
         });
         <span class="kw">let </span>logger = create_logger();
         <span class="kw">let </span>digester = CardanoImmutableDigester::new(<span class="prelude-val">Some</span>(Arc::new(cache)), logger.clone());
-        <span class="kw">let </span>beacon = Beacon::new(<span class="string">&quot;devnet&quot;</span>.to_string(), <span class="number">1</span>, <span class="number">3</span>);
+        <span class="kw">let </span>beacon = Beacon::new(<span class="string">"devnet"</span>.to_string(), <span class="number">1</span>, <span class="number">3</span>);
 
         digester
             .compute_digest(<span class="kw-2">&amp;</span>immutable_db.dir, <span class="kw-2">&amp;</span>beacon)
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;compute_digest must not fail even with cache write failure&quot;</span>);
+            </span>.expect(<span class="string">"compute_digest must not fail even with cache write failure"</span>);
     }
 
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>cache_write_failure_dont_block_computation() {
-        <span class="kw">let </span>immutable_db = db_builder(<span class="string">&quot;cache_write_failure_dont_block_computation&quot;</span>)
+        <span class="kw">let </span>immutable_db = db_builder(<span class="string">"cache_write_failure_dont_block_computation"</span>)
             .with_immutables(<span class="kw-2">&amp;</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])
             .append_immutable_trio()
             .build();
         <span class="kw">let </span><span class="kw-2">mut </span>cache = MockImmutableFileDigestCacheProvider::new();
         cache.expect_get().returning(|<span class="kw">_</span>| {
             <span class="prelude-val">Err</span>(ImmutableDigesterCacheProviderError::Get(
-                ImmutableDigesterCacheGetError::Io(io::Error::new(io::ErrorKind::Other, <span class="string">&quot;error&quot;</span>)),
+                ImmutableDigesterCacheGetError::Io(io::Error::new(io::ErrorKind::Other, <span class="string">"error"</span>)),
             ))
         });
         cache.expect_store().returning(|<span class="kw">_</span>| <span class="prelude-val">Ok</span>(()));
         <span class="kw">let </span>logger = create_logger();
         <span class="kw">let </span>digester = CardanoImmutableDigester::new(<span class="prelude-val">Some</span>(Arc::new(cache)), logger.clone());
-        <span class="kw">let </span>beacon = Beacon::new(<span class="string">&quot;devnet&quot;</span>.to_string(), <span class="number">1</span>, <span class="number">3</span>);
+        <span class="kw">let </span>beacon = Beacon::new(<span class="string">"devnet"</span>.to_string(), <span class="number">1</span>, <span class="number">3</span>);
 
         digester
             .compute_digest(<span class="kw-2">&amp;</span>immutable_db.dir, <span class="kw-2">&amp;</span>beacon)
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;compute_digest must not fail even with cache read failure&quot;</span>);
+            </span>.expect(<span class="string">"compute_digest must not fail even with cache read failure"</span>);
     }
 }
 </code></pre></div></section></main></body></html>

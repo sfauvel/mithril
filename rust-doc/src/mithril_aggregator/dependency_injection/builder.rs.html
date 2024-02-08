@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-aggregator/src/dependency_injection/builder.rs`."><title>builder.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_aggregator" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `mithril-aggregator/src/dependency_injection/builder.rs`."><title>builder.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="mithril_aggregator" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1440,7 +1441,7 @@
 
 <span class="kw">use </span>mithril_common::{
     api_version::APIVersionProvider,
-    cardano_transaction_parser::TransactionParser,
+    cardano_transaction_parser::{CardanoTransactionParser, TransactionParser},
     certificate_chain::{CertificateVerifier, MithrilCertificateVerifier},
     chain_observer::{CardanoCliRunner, ChainObserver, ChainObserverBuilder, FakeObserver},
     crypto_helper::{
@@ -1466,7 +1467,7 @@
     },
     sqlite::SqliteConnection,
     store::adapter::{MemoryAdapter, SQLiteAdapter, StoreAdapter},
-    BeaconProvider, BeaconProviderImpl, CardanoTransactionParser,
+    BeaconProvider, BeaconProviderImpl,
 };
 
 <span class="kw">use crate</span>::{
@@ -1498,8 +1499,8 @@
 
 <span class="kw">use super</span>::{DependenciesBuilderError, EpochServiceWrapper, <span class="prelude-ty">Result</span>};
 
-<span class="kw">const </span>SQLITE_FILE: <span class="kw-2">&amp;</span>str = <span class="string">&quot;aggregator.sqlite3&quot;</span>;
-<span class="kw">const </span>SQLITE_FILE_CARDANO_TRANSACTION: <span class="kw-2">&amp;</span>str = <span class="string">&quot;cardano-transaction.sqlite3&quot;</span>;
+<span class="kw">const </span>SQLITE_FILE: <span class="kw-2">&amp;</span>str = <span class="string">"aggregator.sqlite3"</span>;
+<span class="kw">const </span>SQLITE_FILE_CARDANO_TRANSACTION: <span class="kw-2">&amp;</span>str = <span class="string">"cardano-transaction.sqlite3"</span>;
 
 <span class="doccomment">/// ## Dependencies container builder
 ///
@@ -1699,7 +1700,7 @@
                 <span class="self">self</span>.configuration.get_sqlite_dir().join(sqlite_file_name)
             }
             <span class="kw">_ </span>=&gt; {
-                <span class="kw">if </span><span class="self">self</span>.configuration.data_stores_directory.to_string_lossy() == <span class="string">&quot;:memory:&quot; </span>{
+                <span class="kw">if </span><span class="self">self</span>.configuration.data_stores_directory.to_string_lossy() == <span class="string">":memory:" </span>{
                     <span class="self">self</span>.configuration.data_stores_directory.clone()
                 } <span class="kw">else </span>{
                     <span class="self">self</span>.configuration
@@ -1713,7 +1714,7 @@
             .map(Arc::new)
             .map_err(|e| DependenciesBuilderError::Initialization {
                 message: <span class="macro">format!</span>(
-                    <span class="string">&quot;SQLite initialization: could not open connection with string &#39;{}&#39;.&quot;</span>,
+                    <span class="string">"SQLite initialization: could not open connection with string '{}'."</span>,
                     path.display()
                 ),
                 error: <span class="prelude-val">Some</span>(e.into()),
@@ -1732,34 +1733,34 @@
 
         <span class="comment">// configure session
         </span>connection
-            .execute(<span class="string">&quot;pragma journal_mode = wal; pragma synchronous = normal;&quot;</span>)
+            .execute(<span class="string">"pragma journal_mode = wal; pragma synchronous = normal;"</span>)
             .map_err(|e| DependenciesBuilderError::Initialization {
-                message: <span class="string">&quot;SQLite initialization: could not enable WAL.&quot;</span>.to_string(),
+                message: <span class="string">"SQLite initialization: could not enable WAL."</span>.to_string(),
                 error: <span class="prelude-val">Some</span>(e.into()),
             })<span class="question-mark">?</span>;
 
         connection
-            .execute(<span class="string">&quot;pragma foreign_keys=true&quot;</span>)
+            .execute(<span class="string">"pragma foreign_keys=true"</span>)
             .map_err(|e| DependenciesBuilderError::Initialization {
-                message: <span class="string">&quot;SQLite initialization: could not enable FOREIGN KEY support.&quot;</span>.to_string(),
+                message: <span class="string">"SQLite initialization: could not enable FOREIGN KEY support."</span>.to_string(),
                 error: <span class="prelude-val">Some</span>(e.into()),
             })<span class="question-mark">?</span>;
 
         db_checker
             .apply()
             .<span class="kw">await
-            </span>.with_context(|| <span class="string">&quot;Database migration error&quot;</span>)<span class="question-mark">?</span>;
+            </span>.with_context(|| <span class="string">"Database migration error"</span>)<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(connection)
     }
 
     <span class="kw">async fn </span>drop_sqlite_connections(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw">if let </span><span class="prelude-val">Some</span>(connection) = <span class="kw-2">&amp;</span><span class="self">self</span>.sqlite_connection {
-            <span class="kw">let _ </span>= connection.execute(<span class="string">&quot;pragma analysis_limit=400; pragma optimize;&quot;</span>);
+            <span class="kw">let _ </span>= connection.execute(<span class="string">"pragma analysis_limit=400; pragma optimize;"</span>);
         }
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(connection) = <span class="kw-2">&amp;</span><span class="self">self</span>.transaction_sqlite_connection {
-            <span class="kw">let _ </span>= connection.execute(<span class="string">&quot;pragma analysis_limit=400; pragma optimize;&quot;</span>);
+            <span class="kw">let _ </span>= connection.execute(<span class="string">"pragma analysis_limit=400; pragma optimize;"</span>);
         }
     }
 
@@ -1827,7 +1828,7 @@
                         .to_owned()
                         .ok_or_else(|| {
                             DependenciesBuilderError::MissingConfiguration(
-                                <span class="string">&quot;snapshot_bucket_name&quot;</span>.to_string(),
+                                <span class="string">"snapshot_bucket_name"</span>.to_string(),
                             )
                         })<span class="question-mark">?</span>;
 
@@ -1878,9 +1879,9 @@
         {
             ExecutionEnvironment::Production =&gt; {
                 <span class="kw">let </span>adapter =
-                    SQLiteAdapter::new(<span class="string">&quot;pending_certificate&quot;</span>, <span class="self">self</span>.get_sqlite_connection().<span class="kw">await</span><span class="question-mark">?</span>)
+                    SQLiteAdapter::new(<span class="string">"pending_certificate"</span>, <span class="self">self</span>.get_sqlite_connection().<span class="kw">await</span><span class="question-mark">?</span>)
                         .map_err(|e| DependenciesBuilderError::Initialization {
-                            message: <span class="string">&quot;Cannot create SQLite adapter for PendingCertificate Store.&quot;
+                            message: <span class="string">"Cannot create SQLite adapter for PendingCertificate Store."
                                 </span>.to_string(),
                             error: <span class="prelude-val">Some</span>(e.into()),
                         })<span class="question-mark">?</span>;
@@ -1890,7 +1891,7 @@
             <span class="kw">_ </span>=&gt; {
                 <span class="kw">let </span>adapter = MemoryAdapter::new(<span class="prelude-val">None</span>).map_err(|e| {
                     DependenciesBuilderError::Initialization {
-                        message: <span class="string">&quot;Cannot create Memory adapter for PendingCertificate Store.&quot;
+                        message: <span class="string">"Cannot create Memory adapter for PendingCertificate Store."
                             </span>.to_string(),
                         error: <span class="prelude-val">Some</span>(e.into()),
                     }
@@ -1985,7 +1986,7 @@
                 <span class="kw">let </span>cardano_network = <span class="kw-2">&amp;</span><span class="self">self
                     </span>.configuration
                     .get_network()
-                    .with_context(|| <span class="string">&quot;Dependencies Builder can not get Cardano network while building the chain observer&quot;</span>)<span class="question-mark">?</span>;
+                    .with_context(|| <span class="string">"Dependencies Builder can not get Cardano network while building the chain observer"</span>)<span class="question-mark">?</span>;
                 <span class="kw">let </span>chain_observer_builder = ChainObserverBuilder::new(
                     chain_observer_type,
                     cardano_node_socket_path,
@@ -1995,7 +1996,7 @@
 
                 chain_observer_builder
                     .build()
-                    .with_context(|| <span class="string">&quot;Dependencies Builder can not build chain observer&quot;</span>)<span class="question-mark">?
+                    .with_context(|| <span class="string">"Dependencies Builder can not build chain observer"</span>)<span class="question-mark">?
             </span>}
             <span class="kw">_ </span>=&gt; Arc::new(FakeObserver::default()),
         };
@@ -2017,7 +2018,7 @@
             <span class="self">self</span>.configuration.cardano_cli_path.clone(),
             <span class="self">self</span>.configuration.cardano_node_socket_path.clone(),
             <span class="self">self</span>.configuration.get_network().with_context(|| {
-                <span class="string">&quot;Dependencies Builder can not get Cardano network while building cardano cli runner&quot;
+                <span class="string">"Dependencies Builder can not get Cardano network while building cardano cli runner"
             </span>})<span class="question-mark">?</span>,
         );
 
@@ -2038,7 +2039,7 @@
             <span class="self">self</span>.get_chain_observer().<span class="kw">await</span><span class="question-mark">?</span>,
             <span class="self">self</span>.get_immutable_file_observer().<span class="kw">await</span><span class="question-mark">?</span>,
             <span class="self">self</span>.configuration.get_network().with_context(|| {
-                <span class="string">&quot;Dependencies Builder can not get Cardano network while building beacon provider&quot;
+                <span class="string">"Dependencies Builder can not get Cardano network while building beacon provider"
             </span>})<span class="question-mark">?</span>,
         );
 
@@ -2080,7 +2081,7 @@
     ) -&gt; <span class="prelude-ty">Result</span>&lt;Arc&lt;<span class="kw">dyn </span>ImmutableFileDigestCacheProvider&gt;&gt; {
         <span class="kw">let </span>cache_provider = JsonImmutableFileDigestCacheProviderBuilder::new(
             <span class="kw-2">&amp;</span><span class="self">self</span>.configuration.data_stores_directory,
-            <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;immutables_digests_{}.json&quot;</span>, <span class="self">self</span>.configuration.network),
+            <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"immutables_digests_{}.json"</span>, <span class="self">self</span>.configuration.network),
         )
         .with_logger(<span class="self">self</span>.get_logger().<span class="kw">await</span><span class="question-mark">?</span>)
         .should_reset_digests_cache(<span class="self">self</span>.configuration.reset_digests_cache)
@@ -2186,7 +2187,7 @@
                 <span class="kw">let </span>ongoing_snapshot_directory = <span class="self">self
                     </span>.configuration
                     .snapshot_directory
-                    .join(<span class="string">&quot;pending_snapshot&quot;</span>);
+                    .join(<span class="string">"pending_snapshot"</span>);
 
                 <span class="kw">let </span>algorithm = <span class="kw">match </span><span class="self">self</span>.configuration.snapshot_compression_algorithm {
                     CompressionAlgorithm::Gzip =&gt; SnapshotterCompressionAlgorithm::Gzip,
@@ -2244,7 +2245,7 @@
                 )
                 .map_err(|e| DependenciesBuilderError::Initialization {
                     message: <span class="macro">format!</span>(
-                        <span class="string">&quot;Could not decode hex key to build genesis verifier: &#39;{}&#39;&quot;</span>,
+                        <span class="string">"Could not decode hex key to build genesis verifier: '{}'"</span>,
                         <span class="self">self</span>.configuration.genesis_verification_key
                     ),
                     error: <span class="prelude-val">Some</span>(e),
@@ -2294,7 +2295,7 @@
             )
             .build(<span class="self">self</span>.get_chain_observer().<span class="kw">await</span><span class="question-mark">?</span>)
             .map_err(|e| DependenciesBuilderError::Initialization {
-                message: <span class="string">&quot;Could not build EraReader as dependency.&quot;</span>.to_string(),
+                message: <span class="string">"Could not build EraReader as dependency."</span>.to_string(),
                 error: <span class="prelude-val">Some</span>(e.into()),
             })<span class="question-mark">?</span>,
             <span class="kw">_ </span>=&gt; Arc::new(EraReaderDummyAdapter::from_markers(<span class="macro">vec!</span>[EraMarker::new(
@@ -2322,7 +2323,7 @@
             </span>.get_current_beacon()
             .<span class="kw">await
             </span>.map_err(|e| DependenciesBuilderError::Initialization {
-                message: <span class="string">&quot;Error while building EraChecker&quot;</span>.to_string(),
+                message: <span class="string">"Error while building EraChecker"</span>.to_string(),
                 error: <span class="prelude-val">Some</span>(e),
             })<span class="question-mark">?
             </span>.epoch;
@@ -2332,13 +2333,13 @@
             </span>.read_era_epoch_token(current_epoch)
             .<span class="kw">await
             </span>.map_err(|e| DependenciesBuilderError::Initialization {
-                message: <span class="string">&quot;Error while building EraChecker&quot;</span>.to_string(),
+                message: <span class="string">"Error while building EraChecker"</span>.to_string(),
                 error: <span class="prelude-val">Some</span>(e.into()),
             })<span class="question-mark">?</span>;
         <span class="kw">let </span>era_checker = Arc::new(EraChecker::new(
             era_epoch_token.get_current_supported_era().map_err(|e| {
                 DependenciesBuilderError::Initialization {
-                    message: <span class="string">&quot;Error while building EraChecker&quot;</span>.to_string(),
+                    message: <span class="string">"Error while building EraChecker"</span>.to_string(),
                     error: <span class="prelude-val">Some</span>(e),
                 }
             })<span class="question-mark">?</span>,
@@ -2380,7 +2381,7 @@
             .<span class="number">1
             </span>.as_ref()
             .cloned()
-            .expect(<span class="string">&quot;Transmitter&lt;EventMessage&gt; should be set.&quot;</span>))
+            .expect(<span class="string">"Transmitter&lt;EventMessage&gt; should be set."</span>))
     }
 
     <span class="doccomment">/// Return the channel receiver setup for the [EventStore]. Since this
@@ -2397,7 +2398,7 @@
 
         receiver.ok_or_else(|| {
             DependenciesBuilderError::InconsistentState(
-                <span class="string">&quot;Receiver&lt;EventMessage&gt; has already been given and is not clonable.&quot;</span>.to_string(),
+                <span class="string">"Receiver&lt;EventMessage&gt; has already been given and is not clonable."</span>.to_string(),
             )
         })
     }
@@ -2515,7 +2516,7 @@
         <span class="kw">let </span>snapshotter = <span class="self">self</span>.build_snapshotter().<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="kw">let </span>snapshot_uploader = <span class="self">self</span>.build_snapshot_uploader().<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="kw">let </span>cardano_node_version = Version::parse(<span class="kw-2">&amp;</span><span class="self">self</span>.configuration.cardano_node_version)
-            .map_err(|e| DependenciesBuilderError::Initialization { message: <span class="macro">format!</span>(<span class="string">&quot;Could not parse configuration setting &#39;cardano_node_version&#39; value &#39;{}&#39; as Semver.&quot;</span>, <span class="self">self</span>.configuration.cardano_node_version), error: <span class="prelude-val">Some</span>(e.into()) })<span class="question-mark">?</span>;
+            .map_err(|e| DependenciesBuilderError::Initialization { message: <span class="macro">format!</span>(<span class="string">"Could not parse configuration setting 'cardano_node_version' value '{}' as Semver."</span>, <span class="self">self</span>.configuration.cardano_node_version), error: <span class="prelude-val">Some</span>(e.into()) })<span class="question-mark">?</span>;
         <span class="kw">let </span>cardano_immutable_files_full_artifact_builder =
             Arc::new(CardanoImmutableFilesFullArtifactBuilder::new(
                 <span class="kw-2">&amp;</span>cardano_node_version,
@@ -2645,12 +2646,12 @@
                 </span>.get_current_epoch()
                 .<span class="kw">await
                 </span>.map_err(|e| DependenciesBuilderError::Initialization {
-                    message: <span class="string">&quot;cannot create aggregator runner: failed to retrieve current epoch.&quot;
+                    message: <span class="string">"cannot create aggregator runner: failed to retrieve current epoch."
                         </span>.to_string(),
                     error: <span class="prelude-val">Some</span>(e.into()),
                 })<span class="question-mark">?
                 </span>.ok_or(DependenciesBuilderError::Initialization {
-                    message: <span class="string">&quot;cannot build aggregator runner: no epoch returned.&quot;</span>.to_string(),
+                    message: <span class="string">"cannot build aggregator runner: no epoch returned."</span>.to_string(),
                     error: <span class="prelude-val">None</span>,
                 })<span class="question-mark">?</span>;
             <span class="kw">let </span>(work_epoch, epoch_to_sign, next_epoch_to_sign) = <span class="kw">match </span>current_epoch {
@@ -2667,12 +2668,12 @@
                 .get_protocol_parameters(work_epoch)
                 .<span class="kw">await
                 </span>.map_err(|e| DependenciesBuilderError::Initialization {
-                    message: <span class="string">&quot;can not create aggregator runner&quot;</span>.to_string(),
+                    message: <span class="string">"can not create aggregator runner"</span>.to_string(),
                     error: <span class="prelude-val">Some</span>(e),
                 })<span class="question-mark">?
                 </span>.is_none()
             {
-                <span class="macro">debug!</span>(<span class="string">&quot;First launch, will use the configured protocol parameters for the current and next epoch certificate&quot;</span>);
+                <span class="macro">debug!</span>(<span class="string">"First launch, will use the configured protocol parameters for the current and next epoch certificate"</span>);
 
                 <span class="kw">for </span>epoch <span class="kw">in </span>[work_epoch, epoch_to_sign, next_epoch_to_sign] {
                     protocol_parameters_store
@@ -2682,7 +2683,7 @@
                         )
                         .<span class="kw">await
                         </span>.map_err(|e| DependenciesBuilderError::Initialization {
-                            message: <span class="string">&quot;can not create aggregator runner&quot;</span>.to_string(),
+                            message: <span class="string">"can not create aggregator runner"</span>.to_string(),
                             error: <span class="prelude-val">Some</span>(e),
                         })<span class="question-mark">?</span>;
                 }
@@ -2693,7 +2694,7 @@
         <span class="kw">let </span>config = AggregatorConfig::new(
             <span class="self">self</span>.configuration.run_interval,
             <span class="self">self</span>.configuration.get_network().with_context(|| {
-                <span class="string">&quot;Dependencies Builder can not get Cardano network while creating aggregator runner&quot;
+                <span class="string">"Dependencies Builder can not get Cardano network while creating aggregator runner"
             </span>})<span class="question-mark">?</span>,
             <span class="kw-2">&amp;</span><span class="self">self</span>.configuration.db_directory.clone(),
         );
@@ -2704,7 +2705,7 @@
         )
         .<span class="kw">await
         </span>.map_err(|e| DependenciesBuilderError::Initialization {
-            message: <span class="string">&quot;Cannot initialize Aggregator runtime.&quot;</span>.to_string(),
+            message: <span class="string">"Cannot initialize Aggregator runtime."</span>.to_string(),
             error: <span class="prelude-val">Some</span>(e.into()),
         })<span class="question-mark">?</span>;
 
@@ -2749,7 +2750,7 @@
     <span class="doccomment">/// Create [TickerService] instance.
     </span><span class="kw">pub async fn </span>build_ticker_service(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Arc&lt;<span class="kw">dyn </span>TickerService&gt;&gt; {
         <span class="kw">let </span>network = <span class="self">self</span>.configuration.get_network().with_context(|| {
-            <span class="string">&quot;Dependencies Builder can not get Cardano network while building ticker service&quot;
+            <span class="string">"Dependencies Builder can not get Cardano network while building ticker service"
         </span>})<span class="question-mark">?</span>;
         <span class="kw">let </span>chain_observer = <span class="self">self</span>.get_chain_observer().<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="kw">let </span>immutable_observer = <span class="self">self</span>.get_immutable_file_observer().<span class="kw">await</span><span class="question-mark">?</span>;
