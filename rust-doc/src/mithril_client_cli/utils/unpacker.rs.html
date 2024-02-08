@@ -206,7 +206,7 @@
     </span>UnpackDirectoryAlreadyExists(PathBuf),
 
     <span class="doccomment">/// Cannot write in the given directory.
-    </span><span class="attr">#[error(<span class="string">&quot;Unpack directory &#39;{0}&#39; is not writable.&quot;</span>)]
+    </span><span class="attr">#[error(<span class="string">&quot;Unpack directory &#39;{0}&#39; is not writable, please check own or parents&#39; permissions and ownership.&quot;</span>)]
     </span>UnpackDirectoryIsNotWritable(PathBuf, <span class="attr">#[source] </span>StdError),
 }
 
@@ -284,7 +284,7 @@
         );
     }
 
-    <span class="comment">// This test is not runned on Windows because `set_readonly` is not working on Windows 7+
+    <span class="comment">// This test is not run on Windows because `set_readonly` is not working on Windows 7+
     // https://doc.rust-lang.org/std/fs/struct.Permissions.html#method.set_readonly
     </span><span class="attr">#[cfg(not(target_os = <span class="string">&quot;windows&quot;</span>))]
     #[test]
