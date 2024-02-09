@@ -1187,8 +1187,8 @@
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>test_cli_testnet_runner() {
         <span class="kw">let </span>runner = CardanoCliRunner::new(
-            PathBuf::new().join(<span class="string">"cardano-cli"</span>),
-            PathBuf::new().join(<span class="string">"/tmp/whatever.sock"</span>),
+            PathBuf::from(<span class="string">"cardano-cli"</span>),
+            PathBuf::from(<span class="string">"/tmp/whatever.sock"</span>),
             CardanoNetwork::TestNet(<span class="number">10</span>),
         );
 
@@ -1199,8 +1199,8 @@
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>test_cli_devnet_runner() {
         <span class="kw">let </span>runner = CardanoCliRunner::new(
-            PathBuf::new().join(<span class="string">"cardano-cli"</span>),
-            PathBuf::new().join(<span class="string">"/tmp/whatever.sock"</span>),
+            PathBuf::from(<span class="string">"cardano-cli"</span>),
+            PathBuf::from(<span class="string">"/tmp/whatever.sock"</span>),
             CardanoNetwork::DevNet(<span class="number">25</span>),
         );
 
@@ -1211,8 +1211,8 @@
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>test_cli_mainnet_runner() {
         <span class="kw">let </span>runner = CardanoCliRunner::new(
-            PathBuf::new().join(<span class="string">"cardano-cli"</span>),
-            PathBuf::new().join(<span class="string">"/tmp/whatever.sock"</span>),
+            PathBuf::from(<span class="string">"cardano-cli"</span>),
+            PathBuf::from(<span class="string">"/tmp/whatever.sock"</span>),
             CardanoNetwork::MainNet,
         );
 

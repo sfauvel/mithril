@@ -1099,7 +1099,7 @@
     // todo: Maybe we want more granular errors, rather than only `BatchPathInvalid`
     </span><span class="kw">pub fn </span>check(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        batch_val: <span class="kw-2">&amp;</span>Vec&lt;MTLeaf&gt;,
+        batch_val: <span class="kw-2">&amp;</span>[MTLeaf],
         proof: <span class="kw-2">&amp;</span>BatchPath&lt;D&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(), MerkleTreeError&lt;D&gt;&gt;
     <span class="kw">where
