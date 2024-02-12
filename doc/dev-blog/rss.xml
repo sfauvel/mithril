@@ -4,10 +4,28 @@
         <title>Mithril. A complete guide. Blog</title>
         <link>https://mithril.network/doc/dev-blog</link>
         <description>Mithril. A complete guide. Blog</description>
-        <lastBuildDate>Tue, 23 Jan 2024 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 08 Feb 2024 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Mithril SanchoNet network released]]></title>
+            <link>https://mithril.network/doc/dev-blog/2024/02/08/testing-sanchonet-network-available</link>
+            <guid>https://mithril.network/doc/dev-blog/2024/02/08/testing-sanchonet-network-available</guid>
+            <pubDate>Thu, 08 Feb 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[The release of the Mithril SanchoNet testing network]]></description>
+            <content:encoded><![CDATA[<h3 class="anchor anchorWithStickyNavbar_LWe7" id="the-release-of-the-mithril-sanchonet-testing-network">The release of the Mithril SanchoNet testing network<a href="https://mithril.network/doc/dev-blog/2024/02/08/testing-sanchonet-network-available#the-release-of-the-mithril-sanchonet-testing-network" class="hash-link" aria-label="Direct link to The release of the Mithril SanchoNet testing network" title="Direct link to The release of the Mithril SanchoNet testing network">​</a></h3>
+<p>The Mithril team has released the new <a href="https://mithril.network/explorer/?aggregator=https%3A%2F%2Faggregator.testing-sanchonet.api.mithril.network%2Faggregator" target="_blank" rel="noopener noreferrer"><code>testing-sanchonet</code></a>  Mithril network.</p>
+<p>Mithril pioneer stake pool operators (SPOs) are welcome to run a <a href="https://mithril.network/doc/next/manual/getting-started/run-signer-node" target="_blank" rel="noopener noreferrer">Mithril signer</a> on this network, with configuration parameters available <a href="https://mithril.network/doc/manual/developer-docs/references/#mithril-networks" target="_blank" rel="noopener noreferrer">here</a>.</p>
+<p>It's important to note that this network will serve as the primary platform for experimenting with unstable features of the Mithril networks in the future, such as the Cardano transactions set signatures or peer-to-peer (P2P) networking.</p>
+<p>The unstable features are consistently developed and deployed to the SanchoNet testing network directly from the <code>main</code> branch of the Mithril repository. Therefore, Mithril nodes operating on this network must be either built from the <code>main</code> branch or use pre-built binaries from the <a href="https://github.com/input-output-hk/mithril/releases/tag/unstable" target="_blank" rel="noopener noreferrer"><code>unstable release</code></a>. Failure to update Mithril nodes to the latest unstable version or encountering a bug during development could result in operational disruptions.</p>
+<p>Note that the <code>testing-sanchonet</code> network undergoes continuous monitoring, and its availability status is reported on this <a href="https://mithril.cronitorstatus.com/" target="_blank" rel="noopener noreferrer">status page</a>.</p>
+<p>For any inquiries or assistance, don't hesitate to reach out to the team on the <a href="https://discord.gg/5kaErDKDRq" target="_blank" rel="noopener noreferrer">Discord channel</a>.</p>]]></content:encoded>
+            <category>cardano</category>
+            <category>sanchonet</category>
+            <category>spo</category>
+            <category>testing</category>
+        </item>
         <item>
             <title><![CDATA[Mithril client npm package is released!]]></title>
             <link>https://mithril.network/doc/dev-blog/2024/01/23/mithril-client-npm-package-released</link>
