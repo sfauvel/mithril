@@ -412,6 +412,8 @@
 <a href="#411" id="411">411</a>
 <a href="#412" id="412">412</a>
 <a href="#413" id="413">413</a>
+<a href="#414" id="414">414</a>
+<a href="#415" id="415">415</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>anyhow::{anyhow, Context};
 <span class="kw">use </span>async_trait::async_trait;
 <span class="kw">use </span>sqlite::Connection;
@@ -422,7 +424,6 @@
     cardano_transaction_parser::CardanoTransactionParser,
     chain_observer::{CardanoCliRunner, ChainObserver, ChainObserverBuilder, ChainObserverType},
     crypto_helper::{OpCert, ProtocolPartyId, SerDeShelleyFileFormat},
-    database::{ApplicationNodeType, DatabaseVersionChecker, SqlMigration},
     digesters::{
         cache::{ImmutableFileDigestCacheProvider, JsonImmutableFileDigestCacheProviderBuilder},
         ImmutableFileObserver,
@@ -434,9 +435,12 @@
         MithrilSignableBuilderService, MithrilStakeDistributionSignableBuilder,
         SignableBuilderService,
     },
+    BeaconProvider, BeaconProviderImpl, StdResult,
+};
+<span class="kw">use </span>mithril_persistence::{
+    database::{ApplicationNodeType, DatabaseVersionChecker, SqlMigration},
     sqlite::SqliteConnection,
     store::{adapter::SQLiteAdapter, StakeStore},
-    BeaconProvider, BeaconProviderImpl, StdResult,
 };
 
 <span class="kw">use crate</span>::{

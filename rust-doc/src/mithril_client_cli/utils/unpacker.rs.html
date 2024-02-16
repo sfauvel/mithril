@@ -168,7 +168,6 @@
 <a href="#167" id="167">167</a>
 <a href="#168" id="168">168</a>
 <a href="#169" id="169">169</a>
-<a href="#170" id="170">170</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>human_bytes::human_bytes;
 <span class="kw">use </span>std::{
     fs::{create_dir_all, remove_dir},
@@ -176,7 +175,7 @@
 };
 <span class="kw">use </span>thiserror::Error;
 
-<span class="kw">use </span>mithril_common::{entities::CompressionAlgorithm, StdError, StdResult};
+<span class="kw">use </span>mithril_client::{common::CompressionAlgorithm, MithrilError, MithrilResult};
 
 <span class="doccomment">/// Check and unpack a downloaded archive in a given directory.
 </span><span class="attr">#[derive(Default)]
@@ -208,7 +207,7 @@
 
     <span class="doccomment">/// Cannot write in the given directory.
     </span><span class="attr">#[error(<span class="string">"Unpack directory '{0}' is not writable, please check own or parents' permissions and ownership."</span>)]
-    </span>UnpackDirectoryIsNotWritable(PathBuf, <span class="attr">#[source] </span>StdError),
+    </span>UnpackDirectoryIsNotWritable(PathBuf, <span class="attr">#[source] </span>MithrilError),
 }
 
 <span class="kw">impl </span>SnapshotUnpacker {
@@ -218,7 +217,7 @@
         pathdir: <span class="kw-2">&amp;</span>Path,
         size: u64,
         compression_algorithm: CompressionAlgorithm,
-    ) -&gt; StdResult&lt;()&gt; {
+    ) -&gt; MithrilResult&lt;()&gt; {
         <span class="kw">if </span>pathdir.exists() {
             <span class="kw">return </span><span class="prelude-val">Err</span>(
                 SnapshotUnpackerError::UnpackDirectoryAlreadyExists(pathdir.to_owned()).into(),
@@ -247,7 +246,6 @@
 <span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>test {
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
-    <span class="kw">use </span>mithril_common::entities::CompressionAlgorithm;
     <span class="kw">use </span>std::fs::remove_dir_all;
 
     <span class="kw">fn </span>create_temporary_empty_directory(name: <span class="kw-2">&amp;</span>str) -&gt; PathBuf {

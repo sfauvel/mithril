@@ -655,9 +655,9 @@
 
 <span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
-    <span class="kw">use </span>mithril_common::sqlite::SqliteConnection;
     <span class="kw">use </span>mithril_common::test_utils::test_http_server::test_http_server;
     <span class="kw">use </span>mithril_common::StdResult;
+    <span class="kw">use </span>mithril_persistence::sqlite::SqliteConnection;
     <span class="kw">use </span>sqlite::Connection;
     <span class="kw">use </span>std::collections::{BTreeMap, BTreeSet};
     <span class="kw">use </span>std::convert::Infallible;

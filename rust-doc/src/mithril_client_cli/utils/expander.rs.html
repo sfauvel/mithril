@@ -93,7 +93,7 @@
 <a href="#92" id="92">92</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>anyhow::anyhow;
 <span class="kw">use </span>futures::Future;
-<span class="kw">use </span>mithril_common::StdResult;
+<span class="kw">use </span>mithril_client::MithrilResult;
 
 <span class="doccomment">/// Utilities to expand aliases into their associated ids.
 </span><span class="kw">pub struct </span>ExpanderUtils;
@@ -104,8 +104,8 @@
     /// Otherwise, returns the provided id as is.
     </span><span class="kw">pub async fn </span>expand_eventual_id_alias(
         id: <span class="kw-2">&amp;</span>str,
-        get_list_of_ids: <span class="kw">impl </span>Future&lt;Output = StdResult&lt;Vec&lt;String&gt;&gt;&gt;,
-    ) -&gt; StdResult&lt;String&gt; {
+        get_list_of_ids: <span class="kw">impl </span>Future&lt;Output = MithrilResult&lt;Vec&lt;String&gt;&gt;&gt;,
+    ) -&gt; MithrilResult&lt;String&gt; {
         <span class="kw">if </span>id.to_lowercase() == <span class="string">"latest" </span>{
             <span class="kw">let </span>list = get_list_of_ids.<span class="kw">await</span><span class="question-mark">?</span>;
             <span class="kw">let </span>last_element = list.first().ok_or_else(|| <span class="macro">anyhow!</span>(<span class="string">"Entity not found"</span>))<span class="question-mark">?</span>;
@@ -120,7 +120,7 @@
 </span><span class="kw">mod </span>tests {
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
 
-    <span class="kw">async fn </span>get_list_of_ids(ids: Vec&lt;<span class="kw-2">&amp;</span>str&gt;) -&gt; StdResult&lt;Vec&lt;String&gt;&gt; {
+    <span class="kw">async fn </span>get_list_of_ids(ids: Vec&lt;<span class="kw-2">&amp;</span>str&gt;) -&gt; MithrilResult&lt;Vec&lt;String&gt;&gt; {
         <span class="prelude-val">Ok</span>(ids.iter().map(|h| h.to_string()).collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;())
     }
 

@@ -1091,14 +1091,18 @@
 <a href="#1090" id="1090">1090</a>
 <a href="#1091" id="1091">1091</a>
 <a href="#1092" id="1092">1092</a>
+<a href="#1093" id="1093">1093</a>
+<a href="#1094" id="1094">1094</a>
+<a href="#1095" id="1095">1095</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>anyhow::Context;
 <span class="kw">use </span>mithril_common::{
     entities::{Epoch, ProtocolMessage, SignedEntityType, SingleSignatures},
-    sqlite::{
-        HydrationError, Projection, Provider, SourceAlias, SqLiteEntity, SqliteConnection,
-        WhereCondition,
-    },
     StdResult,
+};
+<span class="kw">use </span>mithril_persistence::database::SignedEntityTypeHydrator;
+<span class="kw">use </span>mithril_persistence::sqlite::{
+    HydrationError, Projection, Provider, SourceAlias, SqLiteEntity, SqliteConnection,
+    WhereCondition,
 };
 
 <span class="kw">use </span>chrono::{DateTime, Utc};
@@ -1210,7 +1214,8 @@
                 <span class="string">"Integer field open_message.signed_entity_type_id cannot be turned into usize: {e}"
             </span>)
         })<span class="question-mark">?</span>;
-        <span class="kw">let </span>signed_entity_type = SignedEntityType::hydrate(signed_entity_type_id, <span class="kw-2">&amp;</span>beacon_str)<span class="question-mark">?</span>;
+        <span class="kw">let </span>signed_entity_type =
+            SignedEntityTypeHydrator::hydrate(signed_entity_type_id, <span class="kw-2">&amp;</span>beacon_str)<span class="question-mark">?</span>;
         <span class="kw">let </span>is_certified = row.read::&lt;i64, <span class="kw">_</span>&gt;(<span class="number">5</span>) != <span class="number">0</span>;
         <span class="kw">let </span>datetime = <span class="kw-2">&amp;</span>row.read::&lt;<span class="kw-2">&amp;</span>str, <span class="kw">_</span>&gt;(<span class="number">7</span>);
         <span class="kw">let </span>created_at =
@@ -1717,7 +1722,8 @@ order by open_message.created_at desc, open_message.rowid desc
 
 <span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
-    <span class="kw">use </span>mithril_common::{entities::Beacon, sqlite::SourceAlias};
+    <span class="kw">use </span>mithril_common::entities::Beacon;
+    <span class="kw">use </span>mithril_persistence::sqlite::SourceAlias;
     <span class="kw">use </span>sqlite::Connection;
 
     <span class="kw">use </span><span class="kw">crate</span>::database::provider::{

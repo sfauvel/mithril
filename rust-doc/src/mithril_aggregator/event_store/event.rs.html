@@ -230,11 +230,11 @@
 
 <span class="kw">use </span>std::{collections::HashMap, sync::Arc};
 
-<span class="kw">use </span>mithril_common::sqlite::{
+<span class="kw">use </span>mithril_common::StdResult;
+<span class="kw">use </span>mithril_persistence::sqlite::{
     HydrationError, Projection, Provider, SourceAlias, SqLiteEntity, SqliteConnection,
     WhereCondition,
 };
-<span class="kw">use </span>mithril_common::StdResult;
 
 <span class="doccomment">/// Event that is sent from a thread to be persisted.
 </span><span class="attr">#[derive(Debug, Clone)]

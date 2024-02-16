@@ -1424,6 +1424,8 @@
 <a href="#1423" id="1423">1423</a>
 <a href="#1424" id="1424">1424</a>
 <a href="#1425" id="1425">1425</a>
+<a href="#1426" id="1426">1426</a>
+<a href="#1427" id="1427">1427</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>anyhow::Context;
 <span class="kw">use </span>semver::Version;
 <span class="kw">use </span>slog::Logger;
@@ -1447,7 +1449,6 @@
     crypto_helper::{
         ProtocolGenesisSigner, ProtocolGenesisVerificationKey, ProtocolGenesisVerifier,
     },
-    database::{ApplicationNodeType, DatabaseVersionChecker, SqlMigration},
     digesters::{
         cache::{ImmutableFileDigestCacheProvider, JsonImmutableFileDigestCacheProviderBuilder},
         CardanoImmutableDigester, DumbImmutableFileObserver, ImmutableDigester,
@@ -1465,9 +1466,12 @@
         CardanoTransactionsSignableBuilder, MithrilSignableBuilderService, SignableBuilderService,
         TransactionStore,
     },
+    BeaconProvider, BeaconProviderImpl,
+};
+<span class="kw">use </span>mithril_persistence::{
+    database::{ApplicationNodeType, DatabaseVersionChecker, SqlMigration},
     sqlite::SqliteConnection,
     store::adapter::{MemoryAdapter, SQLiteAdapter, StoreAdapter},
-    BeaconProvider, BeaconProviderImpl,
 };
 
 <span class="kw">use crate</span>::{

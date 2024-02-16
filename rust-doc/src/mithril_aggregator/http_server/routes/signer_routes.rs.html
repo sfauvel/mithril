@@ -901,9 +901,9 @@
     <span class="kw">use </span>mithril_common::{
         crypto_helper::ProtocolRegistrationError,
         messages::RegisterSignerMessage,
-        store::adapter::AdapterError,
         test_utils::{apispec::APISpec, fake_data},
     };
+    <span class="kw">use </span>mithril_persistence::store::adapter::AdapterError;
     <span class="kw">use </span>mockall::predicate::eq;
     <span class="kw">use </span>serde_json::Value::Null;
     <span class="kw">use </span>warp::{http::Method, test::request};

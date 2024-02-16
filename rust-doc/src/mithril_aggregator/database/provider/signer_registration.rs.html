@@ -892,13 +892,13 @@
         Epoch, HexEncodedOpCert, HexEncodedVerificationKey, HexEncodedVerificationKeySignature,
         PartyId, Signer, SignerWithStake, Stake,
     },
-    sqlite::{
-        EntityCursor, HydrationError, Projection, Provider, SourceAlias, SqLiteEntity,
-        SqliteConnection, WhereCondition,
-    },
-    store::adapter::AdapterError,
     StdResult,
 };
+<span class="kw">use </span>mithril_persistence::sqlite::{
+    EntityCursor, HydrationError, Projection, Provider, SourceAlias, SqLiteEntity,
+    SqliteConnection, WhereCondition,
+};
+<span class="kw">use </span>mithril_persistence::store::adapter::AdapterError;
 
 <span class="kw">use </span><span class="kw">crate</span>::VerificationKeyStorer;
 

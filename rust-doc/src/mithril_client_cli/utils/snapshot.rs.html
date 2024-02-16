@@ -82,22 +82,20 @@
 <a href="#81" id="81">81</a>
 <a href="#82" id="82">82</a>
 <a href="#83" id="83">83</a>
-<a href="#84" id="84">84</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>anyhow::anyhow;
 <span class="kw">use </span>futures::Future;
 <span class="kw">use </span>indicatif::{MultiProgress, ProgressBar};
 <span class="kw">use </span>std::time::Duration;
 
 <span class="kw">use </span><span class="kw">super</span>::SnapshotUnpackerError;
-<span class="kw">use </span>mithril_client::MithrilResult;
-<span class="kw">use </span>mithril_common::{StdError, StdResult};
+<span class="kw">use </span>mithril_client::{MithrilError, MithrilResult};
 
 <span class="doccomment">/// Utility functions for to the Snapshot commands
 </span><span class="kw">pub struct </span>SnapshotUtils;
 
 <span class="kw">impl </span>SnapshotUtils {
     <span class="doccomment">/// Handle the error return by `check_prerequisites`
-    </span><span class="kw">pub fn </span>check_disk_space_error(error: StdError) -&gt; StdResult&lt;String&gt; {
+    </span><span class="kw">pub fn </span>check_disk_space_error(error: MithrilError) -&gt; MithrilResult&lt;String&gt; {
         <span class="kw">if let </span><span class="prelude-val">Some</span>(SnapshotUnpackerError::NotEnoughSpace {
             left_space: <span class="kw">_</span>,
             pathdir: <span class="kw">_</span>,

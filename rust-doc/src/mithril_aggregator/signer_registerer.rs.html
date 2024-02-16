@@ -465,7 +465,6 @@
 <a href="#464" id="464">464</a>
 <a href="#465" id="465">465</a>
 <a href="#466" id="466">466</a>
-<a href="#467" id="467">467</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>anyhow::{anyhow, Context};
 <span class="kw">use </span>async_trait::async_trait;
 <span class="kw">use </span>std::sync::Arc;
@@ -755,13 +754,12 @@
 </span><span class="kw">mod </span>tests {
     <span class="kw">use </span>std::{collections::HashMap, sync::Arc};
 
-    <span class="kw">use </span>mithril_common::test_utils::fake_data;
     <span class="kw">use </span>mithril_common::{
         chain_observer::FakeObserver,
         entities::{Epoch, PartyId, Signer, SignerWithStake},
-        store::adapter::MemoryAdapter,
-        test_utils::MithrilFixtureBuilder,
+        test_utils::{fake_data, MithrilFixtureBuilder},
     };
+    <span class="kw">use </span>mithril_persistence::store::adapter::MemoryAdapter;
 
     <span class="kw">use crate</span>::{
         MithrilSignerRegisterer, SignerRegisterer, SignerRegistrationRoundOpener,

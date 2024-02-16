@@ -637,23 +637,14 @@
 <a href="#636" id="636">636</a>
 <a href="#637" id="637">637</a>
 <a href="#638" id="638">638</a>
-<a href="#639" id="639">639</a>
-<a href="#640" id="640">640</a>
-<a href="#641" id="641">641</a>
-<a href="#642" id="642">642</a>
-<a href="#643" id="643">643</a>
-<a href="#644" id="644">644</a>
-<a href="#645" id="645">645</a>
-<a href="#646" id="646">646</a>
-<a href="#647" id="647">647</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>mithril_common::{
     entities::{Beacon, BlockNumber, CardanoTransaction, ImmutableFileNumber, TransactionHash},
     signable_builder::TransactionStore,
-    sqlite::{
-        HydrationError, Projection, Provider, SourceAlias, SqLiteEntity, SqliteConnection,
-        WhereCondition,
-    },
     StdResult,
+};
+<span class="kw">use </span>mithril_persistence::sqlite::{
+    HydrationError, Projection, Provider, SourceAlias, SqLiteEntity, SqliteConnection,
+    WhereCondition,
 };
 
 <span class="kw">use </span>anyhow::Context;
@@ -770,9 +761,7 @@
         <span class="kw">let </span>aliases = SourceAlias::new(<span class="kw-2">&amp;</span>[(<span class="string">"{:cardano_tx:}"</span>, <span class="string">"cardano_tx"</span>)]);
         <span class="kw">let </span>projection = <span class="self">Self</span>::Entity::get_projection().expand(aliases);
 
-        <span class="macro">format!</span>(
-            <span class="string">"select {projection} from cardano_tx where {condition} order by transaction_hash desc"
-        </span>)
+        <span class="macro">format!</span>(<span class="string">"select {projection} from cardano_tx where {condition} order by rowid"</span>)
     }
 }
 
@@ -853,7 +842,7 @@
         <span class="self">Self </span>{ connection }
     }
 
-    <span class="doccomment">/// Return all the [CardanoTransactionRecord]s in the database.
+    <span class="doccomment">/// Return all the [CardanoTransactionRecord]s in the database using chronological order.
     </span><span class="kw">pub async fn </span>get_all_transactions(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; StdResult&lt;Vec&lt;CardanoTransactionRecord&gt;&gt; {
         <span class="kw">let </span>provider = CardanoTransactionProvider::new(<span class="kw-2">&amp;</span><span class="self">self</span>.connection);
         <span class="kw">let </span>filters = WhereCondition::default();
@@ -862,7 +851,8 @@
         <span class="prelude-val">Ok</span>(transactions.collect())
     }
 
-    <span class="doccomment">/// Return all the [CardanoTransactionRecord]s in the database up to the given beacon.
+    <span class="doccomment">/// Return all the [CardanoTransactionRecord]s in the database up to the given beacon using
+    /// chronological order.
     </span><span class="kw">pub async fn </span>get_transactions_up_to(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         beacon: <span class="kw-2">&amp;</span>Beacon,
@@ -943,7 +933,7 @@
 
 <span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
-    <span class="kw">use </span>mithril_common::sqlite::SourceAlias;
+    <span class="kw">use </span>mithril_persistence::sqlite::SourceAlias;
     <span class="kw">use </span>sqlite::Connection;
 
     <span class="kw">use crate</span>::{dependency_injection::DependenciesBuilder, Configuration};
@@ -1199,14 +1189,7 @@
             .<span class="kw">await
             </span>.unwrap();
 
-        <span class="macro">assert_eq!</span>(
-            cardano_transactions[<span class="number">0</span>..=<span class="number">14</span>]
-                .iter()
-                .cloned()
-                .rev()
-                .collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;(),
-            transaction_result
-        );
+        <span class="macro">assert_eq!</span>(cardano_transactions[<span class="number">0</span>..=<span class="number">14</span>].to_vec(), transaction_result);
 
         <span class="kw">let </span>transaction_result = repository
             .get_up_to(<span class="kw-2">&amp;</span>Beacon::new(<span class="string">""</span>.to_string(), <span class="number">1</span>, <span class="number">300</span>))
@@ -1214,7 +1197,7 @@
             </span>.unwrap();
 
         <span class="macro">assert_eq!</span>(
-            cardano_transactions.into_iter().rev().collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;(),
+            cardano_transactions.into_iter().collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;(),
             transaction_result
         );
 
@@ -1251,7 +1234,6 @@
         <span class="kw">let </span>transactions_result = repository.get_all_transactions().<span class="kw">await</span>.unwrap();
         <span class="kw">let </span>transactions_expected: Vec&lt;CardanoTransactionRecord&gt; = cardano_transactions
             .iter()
-            .rev()
             .map(|tx| tx.clone().into())
             .collect();
 

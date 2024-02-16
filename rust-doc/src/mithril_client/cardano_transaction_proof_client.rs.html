@@ -379,9 +379,9 @@
     }
 
     <span class="doccomment">/// Get proofs that the given subset of transactions is included in the Cardano transactions set.
-    </span><span class="kw">pub async fn </span>get_proofs(
+    </span><span class="kw">pub async fn </span>get_proofs&lt;T: ToString&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        transactions_hashes: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>str],
+        transactions_hashes: <span class="kw-2">&amp;</span>[T],
     ) -&gt; MithrilResult&lt;CardanoTransactionsProofs&gt; {
         <span class="kw">match </span><span class="self">self
             </span>.aggregator_client

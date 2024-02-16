@@ -1312,8 +1312,8 @@
 <span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
     <span class="kw">use </span>mithril_common::entities::PartyId;
-    <span class="kw">use </span>mithril_common::store::adapter::MemoryAdapter;
     <span class="kw">use </span>mithril_common::test_utils::{fake_data, MithrilFixture, MithrilFixtureBuilder};
+    <span class="kw">use </span>mithril_persistence::store::adapter::MemoryAdapter;
     <span class="kw">use </span>std::collections::{BTreeSet, HashMap};
 
     <span class="kw">use </span><span class="kw">crate</span>::services::epoch_service::tests::ServiceBuilderParameters::WithFutureProtocolParameters;

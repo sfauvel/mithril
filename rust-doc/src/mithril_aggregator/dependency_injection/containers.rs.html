@@ -279,7 +279,6 @@
 <a href="#278" id="278">278</a>
 <a href="#279" id="279">279</a>
 <a href="#280" id="280">280</a>
-<a href="#281" id="281">281</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::sync::Arc;
 <span class="kw">use </span>tokio::sync::RwLock;
 
@@ -293,11 +292,10 @@
     entities::{Epoch, ProtocolParameters, SignerWithStake, StakeDistribution},
     era::{EraChecker, EraReader},
     signable_builder::{SignableBuilderService, TransactionStore},
-    sqlite::SqliteConnection,
-    store::StakeStorer,
     test_utils::MithrilFixture,
     BeaconProvider,
 };
+<span class="kw">use </span>mithril_persistence::{sqlite::SqliteConnection, store::StakeStorer};
 
 <span class="kw">use crate</span>::{
     configuration::<span class="kw-2">*</span>,

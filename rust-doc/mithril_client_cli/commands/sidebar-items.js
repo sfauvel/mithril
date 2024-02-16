@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["mithril_stake_distribution","snapshot"]};
+window.SIDEBAR_ITEMS = {"mod":["cardano_transaction","mithril_stake_distribution","snapshot"]};

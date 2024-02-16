@@ -221,7 +221,7 @@
 </span><span class="attr">#[cfg_attr(test, automock)]
 #[async_trait]
 </span><span class="kw">pub trait </span>TransactionsRetriever: Sync + Send {
-    <span class="doccomment">/// Get transactions up to given beacon
+    <span class="doccomment">/// Get transactions up to given beacon using chronological order
     </span><span class="kw">async fn </span>get_up_to(<span class="kw-2">&amp;</span><span class="self">self</span>, beacon: <span class="kw-2">&amp;</span>Beacon) -&gt; StdResult&lt;Vec&lt;CardanoTransaction&gt;&gt;;
 }
 

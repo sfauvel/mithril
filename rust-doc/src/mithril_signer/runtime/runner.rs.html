@@ -904,10 +904,6 @@
 <a href="#903" id="903">903</a>
 <a href="#904" id="904">904</a>
 <a href="#905" id="905">905</a>
-<a href="#906" id="906">906</a>
-<a href="#907" id="907">907</a>
-<a href="#908" id="908">908</a>
-<a href="#909" id="909">909</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>anyhow::Context;
 <span class="kw">use </span>async_trait::async_trait;
 <span class="kw">use </span>slog_scope::{debug, info, trace, warn};
@@ -917,15 +913,13 @@
 </span><span class="kw">use </span>mockall::automock;
 
 <span class="kw">use </span>mithril_common::crypto_helper::{KESPeriod, OpCert, ProtocolOpCert, SerDeShelleyFileFormat};
-<span class="kw">use </span>mithril_common::entities::{PartyId, ProtocolParameters, SignedEntityType};
-<span class="kw">use </span>mithril_common::{
-    entities::{
-        Beacon, CertificatePending, Epoch, EpochSettings, ProtocolMessage, ProtocolMessagePartKey,
-        Signer, SignerWithStake, SingleSignatures,
-    },
-    store::StakeStorer,
-    StdResult,
+<span class="kw">use </span>mithril_common::entities::{
+    Beacon, CertificatePending, Epoch, EpochSettings, PartyId, ProtocolMessage,
+    ProtocolMessagePartKey, ProtocolParameters, SignedEntityType, Signer, SignerWithStake,
+    SingleSignatures,
 };
+<span class="kw">use </span>mithril_common::StdResult;
+<span class="kw">use </span>mithril_persistence::store::StakeStorer;
 
 <span class="kw">use crate</span>::{Configuration, MithrilProtocolInitializerBuilder};
 
@@ -1375,13 +1369,11 @@
             MithrilSignableBuilderService, MithrilStakeDistributionSignableBuilder,
             TransactionStore,
         },
-        store::{
-            adapter::{DumbStoreAdapter, MemoryAdapter},
-            StakeStore, StakeStorer,
-        },
         test_utils::{fake_data, MithrilFixtureBuilder},
         BeaconProvider, BeaconProviderImpl, CardanoNetwork,
     };
+    <span class="kw">use </span>mithril_persistence::store::adapter::{DumbStoreAdapter, MemoryAdapter};
+    <span class="kw">use </span>mithril_persistence::store::{StakeStore, StakeStorer};
     <span class="kw">use </span>mockall::mock;
     <span class="kw">use </span>std::{
         path::{Path, PathBuf},

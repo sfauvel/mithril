@@ -147,7 +147,7 @@
 <span class="kw">use </span>tokio::sync::RwLock;
 
 <span class="kw">use </span>mithril_common::entities::CertificatePending;
-<span class="kw">use </span>mithril_common::store::adapter::StoreAdapter;
+<span class="kw">use </span>mithril_persistence::store::adapter::StoreAdapter;
 
 <span class="kw">type </span>Adapter = Box&lt;<span class="kw">dyn </span>StoreAdapter&lt;Key = String, Record = CertificatePending&gt;&gt;;
 
@@ -209,8 +209,8 @@
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
 
     <span class="kw">use </span>mithril_common::entities::{Beacon, SignedEntityType};
-    <span class="kw">use </span>mithril_common::store::adapter::DumbStoreAdapter;
     <span class="kw">use </span>mithril_common::test_utils::fake_data;
+    <span class="kw">use </span>mithril_persistence::store::adapter::DumbStoreAdapter;
 
     <span class="kw">async fn </span>get_certificate_pending_store(is_populated: bool) -&gt; CertificatePendingStore {
         <span class="kw">let </span><span class="kw-2">mut </span>adapter: DumbStoreAdapter&lt;String, CertificatePending&gt; = DumbStoreAdapter::new();

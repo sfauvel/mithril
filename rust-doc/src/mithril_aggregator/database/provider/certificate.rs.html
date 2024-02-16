@@ -1474,7 +1474,6 @@
 <a href="#1473" id="1473">1473</a>
 <a href="#1474" id="1474">1474</a>
 <a href="#1475" id="1475">1475</a>
-<a href="#1476" id="1476">1476</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>anyhow::anyhow;
 <span class="kw">use </span>async_trait::async_trait;
 <span class="kw">use </span>chrono::{DateTime, Utc};
@@ -1492,11 +1491,10 @@
         CertificateListItemMessage, CertificateListItemMessageMetadata, CertificateMessage,
         CertificateMetadataMessagePart,
     },
-    sqlite::{
-        EntityCursor, HydrationError, Projection, Provider, SourceAlias, SqLiteEntity,
-        WhereCondition,
-    },
     StdResult,
+};
+<span class="kw">use </span>mithril_persistence::sqlite::{
+    EntityCursor, HydrationError, Projection, Provider, SourceAlias, SqLiteEntity, WhereCondition,
 };
 
 <span class="attr">#[cfg(test)]

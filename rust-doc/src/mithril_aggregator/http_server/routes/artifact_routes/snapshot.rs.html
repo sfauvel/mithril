@@ -736,9 +736,9 @@
     <span class="kw">use </span>mithril_common::{
         entities::{Beacon, SignedEntityType},
         messages::ToMessageAdapter,
-        sqlite::HydrationError,
         test_utils::{apispec::APISpec, fake_data},
     };
+    <span class="kw">use </span>mithril_persistence::sqlite::HydrationError;
     <span class="kw">use </span>serde_json::Value::Null;
     <span class="kw">use </span>warp::{http::Method, test::request};
 

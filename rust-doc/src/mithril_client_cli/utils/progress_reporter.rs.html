@@ -218,7 +218,7 @@
 <a href="#217" id="217">217</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>chrono::Utc;
 <span class="kw">use </span>indicatif::{MultiProgress, ProgressBar, ProgressDrawTarget};
-<span class="kw">use </span>mithril_common::StdResult;
+<span class="kw">use </span>mithril_client::MithrilResult;
 <span class="kw">use </span>slog_scope::warn;
 <span class="kw">use </span>std::{
     ops::Deref,
@@ -265,7 +265,7 @@
     }
 
     <span class="doccomment">/// Report the current step
-    </span><span class="kw">pub fn </span>report_step(<span class="kw-2">&amp;</span><span class="self">self</span>, step_number: u16, text: <span class="kw-2">&amp;</span>str) -&gt; StdResult&lt;()&gt; {
+    </span><span class="kw">pub fn </span>report_step(<span class="kw-2">&amp;</span><span class="self">self</span>, step_number: u16, text: <span class="kw-2">&amp;</span>str) -&gt; MithrilResult&lt;()&gt; {
         <span class="kw">match </span><span class="self">self</span>.output_type {
             ProgressOutputType::JsonReporter =&gt; <span class="macro">println!</span>(
                 <span class="string">r#"{{"timestamp": "{timestamp}", "step_num": {step_number}, "total_steps": {number_of_steps}, "message": "{text}"}}"#</span>,

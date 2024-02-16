@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"enum":["ApplicationNodeType"],"struct":["DatabaseVersion","DatabaseVersionChecker","DatabaseVersionProvider","DatabaseVersionUpdater","SqlMigration"],"type":["DbVersion"]};

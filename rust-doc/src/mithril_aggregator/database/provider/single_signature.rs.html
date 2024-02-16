@@ -527,11 +527,11 @@
 
 <span class="kw">use </span>mithril_common::{
     entities::{Epoch, HexEncodedSingleSignature, LotteryIndex, SingleSignatures},
-    sqlite::{
-        EntityCursor, HydrationError, Projection, Provider, SourceAlias, SqLiteEntity,
-        SqliteConnection, WhereCondition,
-    },
     StdError, StdResult,
+};
+<span class="kw">use </span>mithril_persistence::sqlite::{
+    EntityCursor, HydrationError, Projection, Provider, SourceAlias, SqLiteEntity,
+    SqliteConnection, WhereCondition,
 };
 
 <span class="kw">use </span><span class="kw">super</span>::OpenMessageRecord;
